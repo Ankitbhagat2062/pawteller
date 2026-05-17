@@ -109,3 +109,21 @@ export const trustPrinciples = [
     icon: "🔎",
   },
 ] as const;
+
+export const toc = [
+  { id: "acceptance", label: "Acceptance of Terms" },
+  { id: "calculators", label: "Use of Calculators" },
+  {
+    id: "educational-disclaimer",
+    label: "Educational Information Disclaimer",
+  },
+  { id: "no-vet-advice", label: "No Veterinary Advice" },
+  { id: "availability", label: "Website Availability" },
+  { id: "ip", label: "Intellectual Property" },
+  { id: "submissions", label: "User Submissions" },
+  { id: "third-party", label: "Third-Party Links" },
+  { id: "limitation", label: "Limitation of Liability" },
+  { id: "changes", label: "Changes to Terms" },
+  { id: "contact", label: "Contact" },
+];
+
