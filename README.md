@@ -34,3 +34,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+src/
+├── app/                  # Next.js App Router (SSG/ISR routes)
+│   ├── (marketing)/      # Group for home, about, contact, privacy
+│   ├── blog/             # MDX blog dynamic routes ([slug])
+│   ├── quiz/             # Multi-step breed quiz funnel
+│   ├── [calculator]/     # Dynamic or static routes for the 6 calculators
+│   └── api/              # Lightweight route handlers (Resend email triggers)
+├── components/           # Reusable UI elements
+│   ├── ui/               # Atom components (buttons, inputs, cards)
+│   ├── shared/           # Layout pieces (Header, Footer, ThemeToggle)
+│   ├── calculators/      # Individual logic for each pet tool
+│   └── quiz/             # Quiz steps and progress bar
+├── content/              # MDX files for blog posts
+├── hooks/                # Custom React hooks (e.g., useLocalStorage for tracking)
+├── lib/                  # Helper functions, SEO/Schema utilities, MDX parsers
+└── styles/               # Global Tailwind configurations
