@@ -15,19 +15,19 @@ function DogImages() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <DogImage
-        src="/dog-1.jpg"
+        src="/dog-1.png"
         alt="Happy dog"
-        className="aspect-[4/3] w-full rounded-3xl object-cover"
+        className="aspect-4/3 w-full rounded-3xl object-cover"
       />
       <DogImage
-        src="/dog-2.jpg"
+        src="/dog-2.png"
         alt="Cute puppy"
-        className="aspect-[4/3] w-full rounded-3xl object-cover"
+        className="aspect-4/3 w-full rounded-3xl object-cover"
       />
       <DogImage
-        src="/dog-3.jpg"
+        src="/dog-3.png"
         alt="Dog outdoors"
-        className="aspect-[4/3] w-full rounded-3xl object-cover"
+        className="aspect-4/3 w-full rounded-3xl object-cover"
       />
     </div>
   );

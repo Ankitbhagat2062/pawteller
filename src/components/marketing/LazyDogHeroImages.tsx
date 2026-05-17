@@ -30,16 +30,16 @@ export default function LazyDogHeroImages() {
     <div ref={ref} className="mt-8">
       {shouldRender ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <DogImage src="/dog-1.jpg" alt="Happy dog" />
-          <DogImage src="/dog-2.jpg" alt="Cute puppy" />
-          <DogImage src="/dog-3.jpg" alt="Dog outdoors" />
+          <DogImage src="/dog-1.png" alt="Happy dog" />
+          <DogImage src="/dog-2.png" alt="Cute puppy" />
+          <DogImage src="/dog-3.png" alt="Dog outdoors" />
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className="aspect-[4/3] w-full rounded-3xl bg-zinc-200/60 dark:bg-zinc-800/60"
+              className="aspect-4/3 w-full rounded-3xl bg-zinc-200/60 dark:bg-zinc-800/60"
             />
           ))}
         </div>
@@ -51,16 +51,19 @@ export default function LazyDogHeroImages() {
 function DogImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="overflow-hidden rounded-3xl">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(max-width: 1024px) 50vw, 33vw"
-        className="aspect-[4/3] w-full object-cover"
-        loading="lazy"
-        placeholder="empty"
-      />
+      <div className="relative aspect-4/3 w-full">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 1024px) 50vw, 33vw"
+          className="object-cover"
+          loading="lazy"
+          placeholder="empty"
+        />
+      </div>
     </div>
   );
 }
+
 
