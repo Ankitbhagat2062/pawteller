@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { PawPrint, Dumbbell, Utensils, Baby, Sparkles, LineChart } from "lucide-react";
 
-import ThemeToggle from "@/components/shared/ThemeToggle";
 import IconBadge from "@/components/shared/IconBadge";
 import LazyDogHeroImages from "@/components/marketing/LazyDogHeroImages";
-
-
+import { articles, calculators } from "@/lib/constant";
+import Image from "next/image";
 
 function SectionHeader({
   eyebrow,
@@ -28,154 +26,9 @@ function SectionHeader({
   );
 }
 
-const calculators = [
-  {
-    title: "Dog Age Calculator",
-    description: "Convert your pup’s age to life stages and milestones.",
-    link: "/calculators/dog-age",
-    badge: { bg: "#d1fae5", fg: "#065f46", icon: PawPrint },
-  },
-  {
-    title: "Puppy Weight Calculator",
-    description: "Estimate future weight using growth patterns.",
-    link: "/calculators/puppy-weight",
-    badge: { bg: "#bfdbfe", fg: "#1d4ed8", icon: Dumbbell },
-  },
-  {
-    title: "Dog Food Calculator",
-    description: "Get feeding guidance based on size and goals.",
-    link: "/calculators/dog-food",
-    badge: { bg: "#fde68a", fg: "#92400e", icon: Utensils },
-  },
-  {
-    title: "Dog Pregnancy Calculator",
-    description: "Track weeks and key stages from conception.",
-    link: "/calculators/dog-pregnancy",
-    badge: { bg: "#fbcfe8", fg: "#9d174d", icon: Baby },
-  },
-  {
-    title: "Dog Name Generator",
-    description: "Find a name that fits your dog’s personality.",
-    link: "/calculators/dog-name",
-    badge: { bg: "#dcfce7", fg: "#166534", icon: Sparkles },
-  },
-  {
-    title: "Dog Growth Calculator",
-    description: "Visualize growth pace and next milestones.",
-    link: "/calculators/dog-growth",
-    badge: { bg: "#c7d2fe", fg: "#3730a3", icon: LineChart },
-  },
-];
-
-const articles = [
-  {
-    category: "Nutrition",
-    title: "How to Calculate Daily Calories for Growing Dogs",
-    excerpt:
-      "A simple way to estimate calories by weight, activity, and growth stage—then adjust with your vet’s guidance.",
-    minutes: 6,
-    date: "Updated weekly",
-  },
-  {
-    category: "Health",
-    title: "From Puppy to Senior: Growth Milestones That Matter",
-    excerpt:
-      "A practical timeline of what “normal” growth can look like—and signs to discuss with your veterinarian early.",
-    minutes: 8,
-    date: "Updated weekly",
-  },
-  {
-    category: "Breeds",
-    title: "Understanding Breed Size: Small, Medium, and Large",
-    excerpt:
-      "Breed size affects growth pace and adult weight. Use these insights to set realistic expectations.",
-    minutes: 5,
-    date: "Updated weekly",
-  },
-];
-
 export default function Home() {
   return (
     <div className="min-h-full w-full bg-zinc-50 font-sans text-navy dark:bg-black dark:text-navy-50">
-      {/* Top navigation */}
-      <header className="sticky top-0 z-40 bg-white/85 backdrop-blur dark:bg-black/70">
-        <div className="mx-auto flex w-full max-w-360 items-center justify-between px-8 py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">
-              <PawPrint className="h-5 w-5" aria-hidden />
-            </div>
-            <div className="leading-tight">
-              <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">PetCalc</p>
-              <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Fast, SEO-focused calculators</p>
-            </div>
-          </div>
-
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
-            {[
-              "Home",
-              "Calculators",
-              "Blog",
-              "Quiz",
-              "About",
-              "Contact",
-            ].map((label) => {
-              const href =
-                label === "Home"
-                  ? "#home"
-                  : label === "Calculators"
-                    ? "/calculators"
-                    : label === "Blog"
-                      ? "/blog"
-                      : label === "Quiz"
-                        ? "/quiz"
-                        : label === "About"
-                          ? "/about"
-                          : "/contact";
-              return (
-                <Link
-                  key={label}
-                  href={href}
-                  className="text-sm font-semibold text-navy/80 hover:text-navy dark:text-navy-50/80 dark:hover:text-navy-50"
-                >
-                  {label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <div className="flex md:hidden">
-              <button
-                type="button"
-                aria-label="Open menu"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-black/8 bg-white dark:border-white/10 dark:bg-black"
-              >
-                <span aria-hidden>☰</span>
-              </button>
-            </div>
-
-            <ThemeToggle />
-
-            <Link
-              href="/calculators"
-              className="hidden items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:inline-flex"
-            >
-              Start Calculator
-              <span aria-hidden className="text-base">
-                →
-              </span>
-            </Link>
-
-            <Link
-              href="/calculators"
-              className="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:hidden"
-              aria-label="Start Calculator"
-            >
-              Start
-            </Link>
-          </div>
-        </div>
-      </header>
 
       <main id="home" className="mx-auto w-full max-w-360 px-8">
         {/* Hero */}
@@ -348,12 +201,24 @@ export default function Home() {
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {articles.map((a) => (
+            {articles.map((a, idx) => (
               <article
                 key={a.title}
                 className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition hover:shadow-md dark:bg-white/5 dark:ring-white/10"
               >
-                <div className="flex items-center justify-between gap-3">
+                <div className="overflow-hidden rounded-2xl">
+                  {/* Uses existing public/dog-*.png assets */}
+                  <Image
+                    src={idx === 0 ? "/dog-1.png" : idx === 1 ? "/dog-2.png" : "/dog-3.png"}
+                    alt={a.title}
+                    width={400}
+                    height={240}
+                    className="aspect-video w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="mt-4 flex items-center justify-between gap-3">
                   <span className="inline-flex items-center rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold text-emerald-900 dark:text-emerald-200">
                     {a.category}
                   </span>
@@ -374,109 +239,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="pb-14" aria-label="Footer">
-          <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10">
-            <div className="grid gap-8 md:grid-cols-12">
-              <div className="md:col-span-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">
-                    <PawPrint className="h-5 w-5" aria-hidden />
-                  </div>
-                  <div>
-                    <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">PetCalc</p>
-                    <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Reliable pet insights, fast.</p>
-                  </div>
-                </div>
-
-                <p className="mt-4 text-sm leading-6 text-navy/70 dark:text-navy-50/70">
-                  Built for dog owners who want clarity. Our calculators and guides help you act confidently—today.
-                </p>
-
-                <div className="mt-5 flex items-center gap-3">
-                  {[
-                    { label: "X", txt: "𝕏" },
-                    { label: "Facebook", txt: "f" },
-                    { label: "Instagram", txt: "⌁" },
-                    { label: "YouTube", txt: "▶" },
-                  ].map((s) => (
-                    <a
-                      key={s.label}
-                      href="#"
-                      aria-label={s.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-2xl bg-zinc-50 text-navy/70 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-navy-50/70 dark:ring-white/10"
-                    >
-                      <span aria-hidden>{s.txt}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <div className="md:col-span-8 md:flex md:justify-end">
-                <div className="grid w-full gap-6 sm:grid-cols-3">
-                  <div>
-                    <p className="text-sm font-extrabold text-navy dark:text-navy-50">Calculators</p>
-                    <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
-                      {[
-                        ["Dog Age", "/calculators/dog-age"],
-                        ["Puppy Growth", "/calculators/dog-growth"],
-                        ["Dog Food", "/calculators/dog-food"],
-                        ["Dog Pregnancy", "/calculators/dog-pregnancy"],
-                      ].map(([t, href]) => (
-                        <li key={t}>
-                          <Link href={href} className="hover:underline">
-                            {t}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-extrabold text-navy dark:text-navy-50">Resources</p>
-                    <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
-                      {[
-                        ["Blog", "/blog"],
-                        ["Quiz", "/quiz"],
-                        ["About", "/about"],
-                        ["Contact", "/contact"],
-                      ].map(([t, href]) => (
-                        <li key={t}>
-                          <Link href={href} className="hover:underline">
-                            {t}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-extrabold text-navy dark:text-navy-50">Company</p>
-                    <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
-                      {[
-                        ["Privacy", "/privacy"],
-                        ["Terms", "/terms"],
-                        ["Support", "#"],
-                        ["Careers", "#"],
-                      ].map(([t, href]) => (
-                        <li key={t}>
-                          <a href={href} className="hover:underline">
-                            {t}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 flex flex-col gap-2 border-t border-black/5 pt-6 text-xs font-semibold text-zinc-500 dark:border-white/10 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
-              <span>© {new Date().getFullYear()} PetCalc. All rights reserved.</span>
-              <span>Not medical advice. Use with your veterinarian.</span>
-            </div>
-          </div>
-        </footer>
       </main>
     </div>
   );
