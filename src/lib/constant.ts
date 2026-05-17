@@ -47,6 +47,7 @@ export const articles = [
             "A simple way to estimate calories by weight, activity, and growth stage—then adjust with your vet’s guidance.",
         minutes: 6,
         date: "Updated weekly",
+        imageSrc: '/dog-1.png'
     },
     {
         category: "Health",
@@ -55,6 +56,7 @@ export const articles = [
             "A practical timeline of what “normal” growth can look like—and signs to discuss with your veterinarian early.",
         minutes: 8,
         date: "Updated weekly",
+        imageSrc: '/dog-2.png'
     },
     {
         category: "Breeds",
@@ -63,5 +65,24 @@ export const articles = [
             "Breed size affects growth pace and adult weight. Use these insights to set realistic expectations.",
         minutes: 5,
         date: "Updated weekly",
+        imageSrc: '/dog-3.png'
     },
 ];
+
+export const badges = [
+    { icon: "🧠", label: "Vet-informed guidance" },
+    { icon: "⚡", label: "Lightweight & fast" },
+    { icon: "🔎", label: "SEO-friendly reads" },
+]
+
+export const homeImages = [
+    { src: "/dog-1.png", alt: "Happy dog tracking visualization" },
+    { src: "/dog-2.png", alt: "Puppy standard weight progress layout" },
+    { src: "/dog-3.png", alt: "Active dog health checks outdoors" }
+]
+
+export const features = [
+    { title: "Dog Age", href: "/calculators/dog-age" },
+    { title: "Puppy Growth", href: "/calculators/dog-growth" },
+    { title: "Feeding Guidelines", href: "/calculators/dog-food" },
+]
