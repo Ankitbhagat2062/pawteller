@@ -86,3 +86,26 @@ export const features = [
     { title: "Puppy Growth", href: "/calculators/dog-growth" },
     { title: "Feeding Guidelines", href: "/calculators/dog-food" },
 ]
+
+export const trustPrinciples = [
+  {
+    title: "Simple Tools",
+    description: "Fast calculators that answer the question you came for—no clutter.",
+    icon: "⚡",
+  },
+  {
+    title: "Clear Guidance",
+    description: "Plain-language steps so you know what to do next (and when to ask your vet).",
+    icon: "🧭",
+  },
+  {
+    title: "Built For Dog Owners",
+    description: "Every guide is written with daily routines in mind: food, growth, and care decisions.",
+    icon: "🐶",
+  },
+  {
+    title: "Always Improving",
+    description: "We keep refining content for clarity and search—so you can find what you need quickly.",
+    icon: "🔎",
+  },
+] as const;
