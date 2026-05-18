@@ -4,7 +4,7 @@ import Link from "next/link";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
 export const metadata: Metadata = {
-  title: "Privacy Policy | PetCalc",
+  title: "Privacy Policy | pawteller",
   description: "Learn how PetCalc collects, secures, and handles your data safely. Read our straightforward privacy commitments and data practices.",
   alternates: {
     canonical: "https://pawteller.com/privacy",
