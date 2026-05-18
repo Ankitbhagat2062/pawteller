@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React from 'react'
 import ThemeToggle from './ThemeToggle';
 import { PawPrint } from 'lucide-react';
 
@@ -12,7 +11,7 @@ const Navbar = () => {
             <PawPrint className="h-5 w-5" aria-hidden />
           </div>
           <div className="leading-tight">
-            <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">PetCalc</p>
+            <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">pawteller</p>
             <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Fast, SEO-focused calculators</p>
           </div>
         </div>
@@ -28,7 +27,7 @@ const Navbar = () => {
           ].map((label) => {
             const href =
               label === "Home"
-                ? "#home"
+                ? "/"
                 : label === "Calculators"
                   ? "/calculators"
                   : label === "Blog"

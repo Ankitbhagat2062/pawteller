@@ -1,10 +1,9 @@
 import { PawPrint } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 
 const Footer = () => {
   return (
-     <footer className="pb-14" aria-label="Footer">
+     <footer className="pb-14 m-10" aria-label="Footer">
           <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10">
             <div className="grid gap-8 md:grid-cols-12">
               <div className="md:col-span-4">
@@ -13,7 +12,7 @@ const Footer = () => {
                     <PawPrint className="h-5 w-5" aria-hidden />
                   </div>
                   <div>
-                    <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">PetCalc</p>
+                    <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">pawteller</p>
                     <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Reliable pet insights, fast.</p>
                   </div>
                 </div>
@@ -101,7 +100,7 @@ const Footer = () => {
             </div>
 
             <div className="mt-8 flex flex-col gap-2 border-t border-black/5 pt-6 text-xs font-semibold text-zinc-500 dark:border-white/10 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
-              <span>© {new Date().getFullYear()} PetCalc. All rights reserved.</span>
+              <span>© {new Date().getFullYear()} pawteller. All rights reserved.</span>
               <span>Not medical advice. Use with your veterinarian.</span>
             </div>
           </div>

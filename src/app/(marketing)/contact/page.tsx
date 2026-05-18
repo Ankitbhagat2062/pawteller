@@ -1,12 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PawPrint, ShieldCheck, Sparkles, Users } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 
-const Contact = () => {
+// 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY
+export const metadata: Metadata = {
+  title: "Contact Us | pawteller",
+  description: "Have questions, feedback, or content suggestions? Get in touch with the pawteller team for reliable pet calculator support and partnership options.",
+  alternates: {
+    canonical: "https://pawteller.com/contact",
+  },
+};
+
+export default function Contact() {
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-      {/* Hero */}
+    <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 font-sans">
+      {/* Hero Header Area */}
       <section
         aria-label="Contact hero"
         className="mt-6 min-h-62.5 rounded-3xl bg-white px-6 py-12 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10 sm:px-10"
@@ -14,28 +23,28 @@ const Contact = () => {
         <div className="max-w-2xl">
           <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
             <PawPrint className="h-4 w-4" aria-hidden />
-            Contact PetCalc
+            Contact pawteller
           </p>
 
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-navy dark:text-navy-50 sm:text-4xl">
-            Contact PetCalc
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
+            Contact pawteller
           </h1>
 
-          <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300 md:text-lg">
+          <p className="mt-4 text-base leading-7 text-slate-600 dark:text-zinc-300 md:text-lg">
             Have questions, feedback, partnerships, or content suggestions? Send us a note and
-            well get back to you with clear next steps.
+            we will get back to you with clear next steps.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="#contact-form"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition duration-150 hover:bg-emerald-700"
             >
-              Send a message <span aria-hidden className="ml-1">\u2192</span>
+              Send a message <span aria-hidden className="ml-1">→</span>
             </a>
             <Link
               href="/calculators"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition hover:bg-white dark:bg-white/5 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-white/5 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10"
             >
               Try a calculator
             </Link>
@@ -43,7 +52,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Form + Support */}
+      {/* Form and Support Section Grid */}
       <section className="mt-10">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
           {/* Contact Form Card */}
@@ -57,7 +66,7 @@ const Contact = () => {
                   <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                     Message us
                   </h2>
-                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
                     Quick form, clear labels. We read every message.
                   </p>
                 </div>
@@ -106,7 +115,7 @@ const Contact = () => {
                     />
                   </div>
 
-                  {/* Topic */}
+                  {/* Topic Dropdown Framework */}
                   <div>
                     <label
                       htmlFor="topic"
@@ -118,7 +127,7 @@ const Contact = () => {
                       id="topic"
                       name="topic"
                       required
-                      className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-white/5 dark:text-slate-50"
+                      className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-white/5 dark:text-slate-50 h-11"
                       defaultValue=""
                     >
                       <option value="" disabled>
@@ -131,7 +140,7 @@ const Contact = () => {
                     </select>
                   </div>
 
-                  {/* Message */}
+                  {/* Message Input Frame */}
                   <div>
                     <label
                       htmlFor="message"
@@ -145,19 +154,19 @@ const Contact = () => {
                       rows={5}
                       required
                       className="mt-2 block w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-white/5 dark:text-slate-50"
-                      placeholder="Tell us what youd like help with (or what we can improve)."
+                      placeholder="Tell us what you would like help with (or what we can improve)."
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="mt-1 w-full rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/25"
+                    className="mt-1 w-full rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition duration-150 hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/25"
                   >
                     Send Message
                   </Button>
 
-                  <p className="text-xs font-semibold leading-5 text-slate-600 dark:text-slate-300">
-                    By sending, you agree to be contacted about your request. PetCalc isnt a
+                  <p className="text-xs font-semibold leading-5 text-slate-500 dark:text-zinc-400">
+                    By sending, you agree to be contacted about your request. pawteller is not a
                     medical provider.
                   </p>
                 </div>
@@ -165,14 +174,14 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Support info */}
+          {/* Sidebar Contextual Blocks */}
           <div className="lg:col-span-5">
             <div className="space-y-4">
               <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-white/5 dark:ring-white/10">
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
+                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
                   >
                     <Users className="h-5 w-5" />
                   </span>
@@ -180,7 +189,7 @@ const Contact = () => {
                     <p className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                       General Questions
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
                       Ask about using calculators, reading guides, or getting started.
                     </p>
                   </div>
@@ -191,7 +200,7 @@ const Contact = () => {
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
+                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
                   >
                     <ShieldCheck className="h-5 w-5" />
                   </span>
@@ -199,8 +208,8 @@ const Contact = () => {
                     <p className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                       Content Feedback
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                      Help us improve clarity, tone, or structure—so its easier to act.
+                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
+                      Help us improve clarity, tone, or structure—so it is easier to act.
                     </p>
                   </div>
                 </div>
@@ -210,7 +219,7 @@ const Contact = () => {
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
+                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
                   >
                     <Sparkles className="h-5 w-5" />
                   </span>
@@ -218,7 +227,7 @@ const Contact = () => {
                     <p className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                       Partnerships
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
                       Interested in collaboration? Share your idea and goals.
                     </p>
                   </div>
@@ -229,7 +238,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ Context Component */}
       <section className="mt-10" aria-label="Frequently asked questions">
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-white/5 dark:ring-white/10">
           <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
@@ -237,7 +246,7 @@ const Contact = () => {
               <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                 Quick answers
               </h2>
-              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-zinc-300">
                 Before you message, here are the most common contact topics.
               </p>
             </div>
@@ -247,7 +256,7 @@ const Contact = () => {
                 {[
                   {
                     q: "Do you provide veterinary advice?",
-                    a: "PetCalc is educational only. If youre worried about your dog, contact a qualified veterinarian.",
+                    a: "pawteller content is educational only. If you are worried about your dog, contact a qualified veterinarian.",
                   },
                   {
                     q: "How fast will you respond?",
@@ -255,7 +264,7 @@ const Contact = () => {
                   },
                   {
                     q: "Can I suggest a calculator or article?",
-                    a: "Yes—use the form and choose Content suggestions. We review ideas regularly.",
+                    a: "Yes—use the form and choose Content suggestions. We review ideas regularly.",
                   },
                 ].map((item) => (
                   <article
@@ -265,7 +274,9 @@ const Contact = () => {
                     <p className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                       {item.q}
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.a}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-zinc-300">
+                      {item.a}
+                    </p>
                   </article>
                 ))}
               </div>
@@ -274,7 +285,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Related links */}
+      {/* Discover Internal Navigation Elements */}
       <section className="mt-10" aria-label="Related links">
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-white/5 dark:ring-white/10">
           <div className="grid gap-6 md:grid-cols-12 md:items-center">
@@ -282,8 +293,8 @@ const Contact = () => {
               <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                 Related links
               </h2>
-              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                Explore more PetCalc resources.
+              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
+                Explore more pawteller resources.
               </p>
             </div>
 
@@ -291,32 +302,32 @@ const Contact = () => {
               <div className="grid gap-4 sm:grid-cols-3">
                 <Link
                   href="/about"
-                  className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
+                  className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                     About
                   </span>
-                  <span aria-hidden className="text-lg">\u2192</span>
+                  <span aria-hidden className="text-lg">→</span>
                 </Link>
 
                 <Link
                   href="/blog"
-                  className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
+                  className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                     Blog
                   </span>
-                  <span aria-hidden className="text-lg">\u2192</span>
+                  <span aria-hidden className="text-lg">→</span>
                 </Link>
 
                 <Link
                   href="/calculators"
-                  className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
+                  className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                     Featured Calculators
                   </span>
-                  <span aria-hidden className="text-lg">\u2192</span>
+                  <span aria-hidden className="text-lg">→</span>
                 </Link>
               </div>
             </div>
@@ -324,11 +335,8 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Bottom spacer to preserve footer rhythm / CLS safety */}
-      <div className="min-h-10" aria-hidden />
+      {/* Exact spacing geometry allocation to ensure structural stability */}
+      <div className="h-10" aria-hidden="true" />
     </main>
   );
-};
-
-export default Contact;
-
+}
