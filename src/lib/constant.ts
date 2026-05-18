@@ -127,3 +127,41 @@ export const toc = [
   { id: "contact", label: "Contact" },
 ];
 
+export const SECTIONS = [
+  {
+    id: "information-we-collect",
+    title: "Information We Collect",
+  },
+  {
+    id: "how-we-use-information",
+    title: "How We Use Information",
+  },
+  {
+    id: "email-subscriptions",
+    title: "Email Subscriptions",
+  },
+  {
+    id: "analytics",
+    title: "Analytics",
+  },
+  {
+    id: "advertising",
+    title: "Advertising",
+  },
+  {
+    id: "cookies",
+    title: "Cookies",
+  },
+  {
+    id: "third-party-services",
+    title: "Third-Party Services",
+  },
+  {
+    id: "data-rights",
+    title: "Data Rights",
+  },
+  {
+    id: "contact",
+    title: "Contact",
+  },
+] as const;
