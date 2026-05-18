@@ -82,7 +82,7 @@ export default function Contact() {
                 </div>
               </div>
 
-               <ContactForm />
+              <ContactForm />
             </div>
           </div>
 
