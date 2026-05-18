@@ -36,12 +36,12 @@ export default function Contact() {
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
+            <Link
               href="#contact-form"
               className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition duration-150 hover:bg-emerald-700"
             >
               Send a message <span aria-hidden className="ml-1">→</span>
-            </a>
+            </Link>
             <Link
               href="/calculators"
               className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-white/5 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10"

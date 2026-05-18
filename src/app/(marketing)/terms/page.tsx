@@ -19,7 +19,7 @@ export default function TermsPage() {
       <main id="terms" className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10 sm:p-10">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-            
+
             {/* Desktop Navigation Column */}
             <div className="lg:col-span-4 lg:sticky lg:top-24">
               <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-800/80 dark:text-emerald-200/90">
@@ -30,12 +30,12 @@ export default function TermsPage() {
                   <ul className="space-y-1 text-sm font-semibold text-slate-800 dark:text-slate-100">
                     {toc.map((item) => (
                       <li key={item.id}>
-                        <a
+                        <Link
                           href={`#${item.id}`}
                           className="block rounded-xl px-3 py-2 text-slate-700 transition hover:bg-white/80 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-white/5 dark:hover:text-white"
                         >
                           {item.label}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -74,13 +74,13 @@ export default function TermsPage() {
                   <p className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Jump to a section</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {toc.map((item) => (
-                      <a
+                      <Link
                         key={item.id}
                         href={`#${item.id}`}
                         className="rounded-full bg-white/70 px-3 py-1.5 text-xs font-bold text-emerald-800 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-emerald-200 dark:ring-white/10"
                       >
                         {item.label.split(" ")[0]}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
