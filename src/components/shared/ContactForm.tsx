@@ -95,7 +95,6 @@ export default function ContactForm() {
               onChange={(e) => setTopic(e.target.value)}
               required
               className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-white/5 dark:text-slate-50 h-11"
-              defaultValue=""
             >
               <option value="" disabled>
                 Select a topic
