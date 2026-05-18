@@ -4,12 +4,12 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="pb-14 m-10" aria-label="Footer">
-      <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10">
+      <div className="rounded-3xl bg-[#2D4A3E] text-white p-8 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10">
         <div className="grid gap-8 md:grid-cols-12">
           <div className="md:col-span-4">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">
-                <PawPrint className="h-5 w-5" aria-hidden />
+                <PawPrint className="h-5 w-5 text-black" aria-hidden />
               </div>
               <div>
                 <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">
@@ -39,7 +39,7 @@ const Footer = () => {
                   aria-label={s.label}
                   className="flex h-10 w-10 items-center justify-center rounded-2xl bg-zinc-50 text-navy/70 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-navy-50/70 dark:ring-white/10"
                 >
-                  <span aria-hidden>{s.txt}</span>
+                  <span aria-hidden className="text-black">{s.txt}</span>
                 </Link>
               ))}
             </div>

@@ -55,6 +55,7 @@ export const articles = [
     minutes: 6,
     date: "Updated weekly",
     imageSrc: "/dog-1.png",
+    bgColor: "bg-[#F5C6A5]"
   },
   {
     category: "Health",
@@ -64,6 +65,7 @@ export const articles = [
     minutes: 8,
     date: "Updated weekly",
     imageSrc: "/dog-2.png",
+    bgColor: "bg-[#C6D9C6]"
   },
   {
     category: "Breeds",
@@ -73,6 +75,7 @@ export const articles = [
     minutes: 5,
     date: "Updated weekly",
     imageSrc: "/dog-3.png",
+    bgColor: "bg-[#F1D9A8]"
   },
 ];
 

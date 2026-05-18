@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen w-full bg-zinc-50 font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
+    <div className="min-h-screen w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
       <main
         id="about"
         className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8"

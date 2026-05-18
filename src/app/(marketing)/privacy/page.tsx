@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function Privacy() {
   return (
-    <div className="w-full min-h-screen bg-zinc-50/50 dark:bg-zinc-950 font-sans text-slate-900 dark:text-slate-50 pb-16">
+    <div className="w-full min-h-screen dark:bg-zinc-950 font-sans text-slate-900 dark:text-slate-50 pb-16">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <header className="py-8 sm:py-10">
           <div className="rounded-3xl bg-white/60 p-5 ring-1 ring-slate-200/50 backdrop-blur dark:bg-white/5 dark:ring-white/10 sm:p-8">

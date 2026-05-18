@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import IconBadge from "@/components/shared/IconBadge";
 import {
   articles,
@@ -46,20 +46,17 @@ export default function Home() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
-      />
+      <script type="application/ld+json">{JSON.stringify(jsonLdSchema)}</script>
 
-      <div className="w-full bg-zinc-50 font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
+      <div className="w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
         <main
           id="home"
           className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
         >
           {/* Hero Section */}
-          <section className="relative mt-6 overflow-hidden rounded-3xl bg-emerald-500/10 px-6 pt-10 pb-14 md:px-10 md:pt-14 md:pb-16">
+          <section className="relative mt-6 overflow-hidden bg-[#f3ded3] px-6 pt-10 pb-9 sm:px-8 md:px-10 md:pt-8 md:pb-8 dark:rounded-3xl dark:bg-emerald-500/10 dark:pt-14 dark:pb-16">
             <div
-              className="absolute inset-0 pointer-events-none"
+              className="absolute inset-0 pointer-events-none hidden dark:block"
               aria-hidden="true"
             >
               <div className="absolute -right-8 top-8 h-28 w-28 rounded-[32px] bg-emerald-500/10" />
@@ -67,22 +64,33 @@ export default function Home() {
             </div>
 
             <div className="relative grid gap-8 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-7">
-                <p className="text-sm font-semibold tracking-tight text-emerald-800 dark:text-emerald-300">
+              <div className="lg:col-span-8">
+                <p className="hidden text-sm font-semibold tracking-normal text-emerald-800 dark:block dark:text-emerald-300">
                   Pet health made simple
                 </p>
 
-                <h1 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl md:text-5xl">
-                  Everything You Need to Understand Your Dog's Growth
+                <h1 className="max-w-3xl font-[Georgia,serif] text-[4.2rem] font-black leading-[0.9] tracking-normal text-[#271b16] dark:mt-3 dark:font-sans dark:text-5xl dark:font-extrabold dark:leading-tight dark:text-slate-50 sm:text-[5.4rem] md:text-[6.25rem]">
+                  <span className="block">Smart</span>
+                  <span className="block">calculators</span>
+                  <span className="block">
+                    for your{" "}
+                    <span className="font-[Georgia,serif] font-black italic text-[#d06a49]">
+                      best
+                    </span>
+                  </span>
+                  <span className="block font-[Georgia,serif] font-black italic text-[#d06a49]">
+                    friend
+                    <span className="text-[#271b16]">.</span>
+                  </span>
                 </h1>
 
-                <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 md:text-lg">
-                  Accurate dog calculators, expert articles, and personalized
-                  insights—so you can make confident decisions for every stage
-                  of your best friend’s life.
+                <p className="mt-7 max-w-3xl text-[1.45rem] leading-9 tracking-normal text-[#6d5c54] dark:mt-4 dark:max-w-2xl dark:text-base dark:leading-7 dark:text-slate-300 md:text-[1.6rem] md:leading-10">
+                  Predict your puppy&apos;s adult size. Decode dog years. Plan
+                  portions. Find the perfect breed. All in one beautifully
+                  simple place &mdash; backed by veterinary science.
                 </p>
 
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-6 hidden flex-col gap-3 sm:flex-row sm:items-center dark:flex">
                   <Link
                     href="/calculators/dog-age"
                     className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
@@ -97,7 +105,7 @@ export default function Home() {
                   </Link>
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-6 hidden flex-wrap gap-3 dark:flex">
                   {badges.map((badge) => (
                     <div
                       key={badge.label}
@@ -113,7 +121,7 @@ export default function Home() {
               </div>
 
               {/* HIGH PERFORMANCE MEDIA TRACK FIX */}
-              <div className="lg:col-span-5 w-full">
+              <div className="hidden w-full dark:block lg:col-span-4">
                 {/* On mobile devices we scroll sideways rather than dropping vertically down the screen */}
                 <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-none snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-x-visible sm:pb-0">
                   {homeImages.map((image, index) => (
@@ -271,7 +279,8 @@ export default function Home() {
               {articles.map((article) => (
                 <article
                   key={article.title}
-                  className="flex flex-col justify-between rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60 dark:bg-slate-900 dark:ring-slate-800 transition hover:shadow-md"
+                  className={` ${article.bgColor} flex flex-col justify-between rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 dark:bg-slate-900 dark:ring-slate-800 transition 
+                  hover:shadow-md`}
                 >
                   <div>
                     <div className="overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">

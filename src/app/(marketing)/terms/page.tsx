@@ -16,7 +16,7 @@ const lastUpdated = "May 17, 2026";
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen w-full bg-zinc-50 font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50 pb-20">
+    <div className="min-h-screen w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50 pb-20">
       <main
         id="terms"
         className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8"

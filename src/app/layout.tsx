@@ -47,10 +47,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`h-full font-sans antialiased ${inter.variable}`}
     >
-      <body className="flex min-h-full flex-col bg-zinc-50 dark:bg-zinc-950">
+      <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          <div className="flex-1 flex flex-col">{children}</div>
+          <div className="flex-1 flex flex-col bg-[#FDF8F1]">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
