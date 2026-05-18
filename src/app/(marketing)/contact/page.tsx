@@ -19,7 +19,7 @@ export default function Contact() {
       {/* Hero Header Area */}
       <section
         aria-label="Contact hero"
-        className="mt-6 min-h-62.5 rounded-3xl bg-white px-6 py-12 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10 sm:px-10"
+        className="mt-6 min-h-62.5 rounded-3xl bg-white px-6 py-12 shadow-sm ring-1 ring-black/5 dark:bg-zinc-950/40 dark:ring-white/10 sm:px-10"
       >
         <div className="max-w-2xl">
           <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
@@ -48,7 +48,7 @@ export default function Contact() {
             </Link>
             <Link
               href="/calculators"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-white/5 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-zinc-950/30 dark:border-white/10 dark:text-slate-200 dark:hover:bg-zinc-950/50"
             >
               Try a calculator
             </Link>
@@ -63,7 +63,7 @@ export default function Contact() {
           <div className="lg:col-span-7">
             <div
               id="contact-form"
-              className="min-h-105 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-white/5 dark:ring-white/10"
+              className="min-h-105 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-zinc-950/30 dark:ring-white/10"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -181,7 +181,7 @@ export default function Contact() {
           {/* Sidebar Contextual Blocks */}
           <div className="lg:col-span-5">
             <div className="space-y-4">
-              <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-white/5 dark:ring-white/10">
+              <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-zinc-950/30 dark:ring-white/10">
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
@@ -201,7 +201,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-white/5 dark:ring-white/10">
+              <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-zinc-950/30 dark:ring-white/10">
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
@@ -221,7 +221,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-white/5 dark:ring-white/10">
+              <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-7 dark:bg-zinc-950/30 dark:ring-white/10">
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
@@ -246,7 +246,7 @@ export default function Contact() {
 
       {/* FAQ Context Component */}
       <section className="mt-10" aria-label="Frequently asked questions">
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-white/5 dark:ring-white/10">
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-zinc-950/30 dark:ring-white/10">
           <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
             <div className="lg:col-span-5">
               <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
@@ -293,7 +293,7 @@ export default function Contact() {
 
       {/* Discover Internal Navigation Elements */}
       <section className="mt-10" aria-label="Related links">
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-white/5 dark:ring-white/10">
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-10 dark:bg-zinc-950/30 dark:ring-white/10">
           <div className="grid gap-6 md:grid-cols-12 md:items-center">
             <div className="md:col-span-5">
               <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">

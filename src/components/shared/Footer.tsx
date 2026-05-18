@@ -1,124 +1,176 @@
-import { PawPrint } from "lucide-react";
+'use client";'
 import Link from "next/link";
 
-const Footer = () => {
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface FooterSection {
+  title: string;
+  links: FooterLink[];
+}
+const footerSections: FooterSection[] = [
+  {
+    title: "Tools",
+    links: [
+      { label: "Breed Calculator", href: "/calculators/breed" },
+      { label: "Food Calculator", href: "/calculators/food" },
+      { label: "Age Calculator", href: "/calculators/age" },
+      { label: "Weight Tracker", href: "/calculators/weight" },
+    ],
+  },
+  {
+    title: "Content",
+    links: [
+      { label: "Breed Quiz", href: "/quiz" },
+      { label: "Blog", href: "/blog" },
+      { label: "Care Guides", href: "/guides" },
+      { label: "Pet Health", href: "/health" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
+      { label: "Cookie Policy", href: "/cookies" },
+      { label: "Contact Us", href: "/contact" },
+    ],
+  },
+];
+
+function ArrowIcon() {
   return (
-    <footer className="pb-14 m-10" aria-label="Footer">
-      <div className="rounded-3xl bg-[#2D4A3E] text-white p-8 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10">
-        <div className="grid gap-8 md:grid-cols-12">
-          <div className="md:col-span-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">
-                <PawPrint className="h-5 w-5 text-black" aria-hidden />
-              </div>
-              <div>
-                <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">
-                  pawteller
-                </p>
-                <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-                  Reliable pet insights, fast.
-                </p>
-              </div>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="shrink-0"
+    >
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
+  );
+}
+
+
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="border-t border-border bg-[#2d4a3e] dark:bg-secondary/50">
+      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        {/* Newsletter Section */}
+        <div className="mb-16 rounded-2xl bg-card p-8 shadow-sm lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-md">
+              <h2 className="text-balance text-xl font-semibold text-foreground lg:text-2xl">
+                Stay Updated with Pet Care Tips
+              </h2>
+              <p className="mt-2 text-pretty text-muted-foreground">
+                Get weekly insights on pet health, breed guides, and exclusive
+                content delivered to your inbox.
+              </p>
             </div>
-
-            <p className="mt-4 text-sm leading-6 text-navy/70 dark:text-navy-50/70">
-              Built for dog owners who want clarity. Our calculators and guides
-              help you act confidently—today.
-            </p>
-
-            <div className="mt-5 flex items-center gap-3">
-              {[
-                { label: "X", txt: "𝕏" },
-                { label: "Facebook", txt: "f" },
-                { label: "Instagram", txt: "⌁" },
-                { label: "YouTube", txt: "▶" },
-              ].map((s) => (
-                <Link
-                  key={s.label}
-                  href="#"
-                  aria-label={s.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-2xl bg-zinc-50 text-navy/70 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-navy-50/70 dark:ring-white/10"
-                >
-                  <span aria-hidden className="text-black">{s.txt}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="md:col-span-8 md:flex md:justify-end">
-            <div className="grid w-full gap-6 sm:grid-cols-3">
-              <div>
-                <p className="text-sm font-extrabold text-navy dark:text-navy-50">
-                  Calculators
-                </p>
-                <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
-                  {[
-                    ["Dog Age", "/calculators/dog-age"],
-                    ["Puppy Growth", "/calculators/dog-growth"],
-                    ["Dog Food", "/calculators/dog-food"],
-                    ["Dog Pregnancy", "/calculators/dog-pregnancy"],
-                  ].map(([t, href]) => (
-                    <li key={t}>
-                      <Link href={href} className="hover:underline">
-                        {t}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <p className="text-sm font-extrabold text-navy dark:text-navy-50">
-                  Resources
-                </p>
-                <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
-                  {[
-                    ["Blog", "/blog"],
-                    ["Quiz", "/quiz"],
-                    ["About", "/about"],
-                    ["Contact", "/contact"],
-                  ].map(([t, href]) => (
-                    <li key={t}>
-                      <Link href={href} className="hover:underline">
-                        {t}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <p className="text-sm font-extrabold text-navy dark:text-navy-50">
-                  Company
-                </p>
-                <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
-                  {[
-                    ["Privacy", "/privacy"],
-                    ["Terms", "/terms"],
-                    ["Support", "#"],
-                    ["Careers", "#"],
-                  ].map(([t, href]) => (
-                    <li key={t}>
-                      <a href={href} className="hover:underline">
-                        {t}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <form
+              className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row"
+              
+            >
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                placeholder="Enter your email"
+                required
+                className="h-12 flex-1 rounded-full border border-border bg-background px-5 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+              <button
+                type="submit"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 hover:shadow-md"
+              >
+                Subscribe
+                <ArrowIcon />
+              </button>
+            </form>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-2 border-t border-black/5 pt-6 text-xs font-semibold text-zinc-500 dark:border-white/10 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            © {new Date().getFullYear()} pawteller. All rights reserved.
-          </span>
-          <span>Not medical advice. Use with your veterinarian.</span>
+        {/* Links Grid */}
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:gap-12">
+          {/* Brand Column */}
+          <div className="col-span-2 md:col-span-1">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 transition-opacity duration-200 hover:opacity-80"
+              aria-label="Pawteller Home"
+            >
+              <img
+                src="/vercel.svg"
+                alt="Pawteller logo"
+                className="h-8 w-auto"
+              />
+              <span className="text-lg font-semibold tracking-tight text-foreground">
+                Pawteller
+              </span>
+            </Link>
+            <p className="mt-4 max-w-xs text-pretty text-sm text-muted-foreground">
+              Your trusted companion for pet care insights, breed information,
+              and tools to help your furry friend thrive.
+            </p>
+          </div>
+
+          {/* Link Sections */}
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
+                {section.title}
+              </h3>
+              <ul className="mt-4 flex flex-col gap-3" role="list">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
+          <p className="text-sm text-muted-foreground">
+            © {currentYear} Pawteller. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <Link
+              href="/accessibility"
+              className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+            >
+              Accessibility
+            </Link>
+            <Link
+              href="/sitemap"
+              className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+            >
+              Sitemap
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
