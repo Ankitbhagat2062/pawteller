@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 // 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY
 export const metadata: Metadata = {
   title: "Contact Us | pawteller",
-  description: "Have questions, feedback, or content suggestions? Get in touch with the pawteller team for reliable pet calculator support and partnership options.",
+  description:
+    "Have questions, feedback, or content suggestions? Get in touch with the pawteller team for reliable pet calculator support and partnership options.",
   alternates: {
     canonical: "https://pawteller.com/contact",
   },
@@ -31,8 +32,8 @@ export default function Contact() {
           </h1>
 
           <p className="mt-4 text-base leading-7 text-slate-600 dark:text-zinc-300 md:text-lg">
-            Have questions, feedback, partnerships, or content suggestions? Send us a note and
-            we will get back to you with clear next steps.
+            Have questions, feedback, partnerships, or content suggestions? Send
+            us a note and we will get back to you with clear next steps.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -40,7 +41,10 @@ export default function Contact() {
               href="#contact-form"
               className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition duration-150 hover:bg-emerald-700"
             >
-              Send a message <span aria-hidden className="ml-1">→</span>
+              Send a message{" "}
+              <span aria-hidden className="ml-1">
+                →
+              </span>
             </Link>
             <Link
               href="/calculators"
@@ -166,8 +170,8 @@ export default function Contact() {
                   </Button>
 
                   <p className="text-xs font-semibold leading-5 text-slate-500 dark:text-zinc-400">
-                    By sending, you agree to be contacted about your request. pawteller is not a
-                    medical provider.
+                    By sending, you agree to be contacted about your request.
+                    pawteller is not a medical provider.
                   </p>
                 </div>
               </form>
@@ -190,7 +194,8 @@ export default function Contact() {
                       General Questions
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
-                      Ask about using calculators, reading guides, or getting started.
+                      Ask about using calculators, reading guides, or getting
+                      started.
                     </p>
                   </div>
                 </div>
@@ -209,7 +214,8 @@ export default function Contact() {
                       Content Feedback
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
-                      Help us improve clarity, tone, or structure—so it is easier to act.
+                      Help us improve clarity, tone, or structure—so it is
+                      easier to act.
                     </p>
                   </div>
                 </div>
@@ -307,7 +313,9 @@ export default function Contact() {
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                     About
                   </span>
-                  <span aria-hidden className="text-lg">→</span>
+                  <span aria-hidden className="text-lg">
+                    →
+                  </span>
                 </Link>
 
                 <Link
@@ -317,7 +325,9 @@ export default function Contact() {
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                     Blog
                   </span>
-                  <span aria-hidden className="text-lg">→</span>
+                  <span aria-hidden className="text-lg">
+                    →
+                  </span>
                 </Link>
 
                 <Link
@@ -327,7 +337,9 @@ export default function Contact() {
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
                     Featured Calculators
                   </span>
-                  <span aria-hidden className="text-lg">→</span>
+                  <span aria-hidden className="text-lg">
+                    →
+                  </span>
                 </Link>
               </div>
             </div>

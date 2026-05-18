@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import IconBadge from "@/components/shared/IconBadge";
-import { articles, badges, calculators, features, homeImages } from "@/lib/constant";
+import {
+  articles,
+  badges,
+  calculators,
+  features,
+  homeImages,
+} from "@/lib/constant";
 
 interface SectionHeaderProps {
   eyebrow?: string;
@@ -27,14 +33,15 @@ export default function Home() {
   const jsonLdSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Pawteller",
-    "url": "https://pawteller.com",
-    "description": "Premium modern pet-care platform and informational calculators.",
-    "potentialAction": {
+    name: "Pawteller",
+    url: "https://pawteller.com",
+    description:
+      "Premium modern pet-care platform and informational calculators.",
+    potentialAction: {
       "@type": "SearchAction",
-      "target": "https://pawteller.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+      target: "https://pawteller.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (
@@ -45,11 +52,16 @@ export default function Home() {
       />
 
       <div className="w-full bg-zinc-50 font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
-        <main id="home" className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-
+        <main
+          id="home"
+          className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
+        >
           {/* Hero Section */}
           <section className="relative mt-6 overflow-hidden rounded-3xl bg-emerald-500/10 px-6 pt-10 pb-14 md:px-10 md:pt-14 md:pb-16">
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div
+              className="absolute inset-0 pointer-events-none"
+              aria-hidden="true"
+            >
               <div className="absolute -right-8 top-8 h-28 w-28 rounded-[32px] bg-emerald-500/10" />
               <div className="absolute -left-10 bottom-8 h-24 w-24 rounded-[28px] bg-emerald-500/5" />
             </div>
@@ -65,7 +77,9 @@ export default function Home() {
                 </h1>
 
                 <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 md:text-lg">
-                  Accurate dog calculators, expert articles, and personalized insights—so you can make confident decisions for every stage of your best friend’s life.
+                  Accurate dog calculators, expert articles, and personalized
+                  insights—so you can make confident decisions for every stage
+                  of your best friend’s life.
                 </p>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -103,8 +117,8 @@ export default function Home() {
                 {/* On mobile devices we scroll sideways rather than dropping vertically down the screen */}
                 <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-none snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-x-visible sm:pb-0">
                   {homeImages.map((image, index) => (
-                    <div 
-                      key={image.src} 
+                    <div
+                      key={image.src}
                       className="min-w-[75%] sm:min-w-0 shrink-0 snap-center overflow-hidden rounded-3xl bg-slate-200 dark:bg-slate-800 shadow-sm ring-1 ring-black/5"
                     >
                       <div className="relative aspect-16/10 w-full min-h-35">
@@ -125,10 +139,17 @@ export default function Home() {
                 <div className="mt-6 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60 dark:bg-slate-900 dark:ring-slate-800">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-bold text-slate-900 dark:text-slate-50">Quick start</p>
-                      <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Pick a tool, get clarity instantly.</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-slate-50">
+                        Quick start
+                      </p>
+                      <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+                        Pick a tool, get clarity instantly.
+                      </p>
                     </div>
-                    <div className="rounded-2xl bg-emerald-500/10 px-3 py-2 text-emerald-700 dark:text-emerald-400" aria-hidden="true">
+                    <div
+                      className="rounded-2xl bg-emerald-500/10 px-3 py-2 text-emerald-700 dark:text-emerald-400"
+                      aria-hidden="true"
+                    >
                       <span>🐕</span>
                     </div>
                   </div>
@@ -140,8 +161,13 @@ export default function Home() {
                         href={row.href}
                         className="group flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 shadow-sm transition hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-900"
                       >
-                        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{row.title}</span>
-                        <span aria-hidden="true" className="text-base text-slate-400 transition group-hover:translate-x-0.5">
+                        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                          {row.title}
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          className="text-base text-slate-400 transition group-hover:translate-x-0.5"
+                        >
                           →
                         </span>
                       </Link>
@@ -176,8 +202,13 @@ export default function Home() {
                           {calc.description}
                         </p>
                         <p className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                          <span className="group-hover:underline">Open calculator</span>
-                          <span aria-hidden="true" className="transition group-hover:translate-x-0.5">
+                          <span className="group-hover:underline">
+                            Open calculator
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="transition group-hover:translate-x-0.5"
+                          >
                             →
                           </span>
                         </p>
@@ -200,7 +231,8 @@ export default function Home() {
                   Which Dog Breed is Right For You?
                 </h2>
                 <p className="mt-3 max-w-2xl text-sm font-medium leading-6 text-amber-950/80">
-                  Match your lifestyle with a breed profile that fits—size, temperament, energy, and growth expectations.
+                  Match your lifestyle with a breed profile that fits—size,
+                  temperament, energy, and growth expectations.
                 </p>
               </div>
               <div className="md:col-span-4 md:text-right">
@@ -218,12 +250,19 @@ export default function Home() {
           <section className="py-14" aria-label="Latest dog care guides">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <SectionHeader eyebrow="Latest Updates" title="Latest Dog Care Guides" />
+                <SectionHeader
+                  eyebrow="Latest Updates"
+                  title="Latest Dog Care Guides"
+                />
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                  Practical, expert-backed reads built to be easy to search and easy to apply.
+                  Practical, expert-backed reads built to be easy to search and
+                  easy to apply.
                 </p>
               </div>
-              <Link href="/blog" className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+              <Link
+                href="/blog"
+                className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
                 View all articles
               </Link>
             </div>
@@ -269,7 +308,10 @@ export default function Home() {
                     <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
                       {article.date}
                     </span>
-                    <Link href={`/blog/${article.category}`} className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+                    <Link
+                      href={`/blog/${article.category}`}
+                      className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                    >
                       Read Article
                     </Link>
                   </div>
@@ -277,7 +319,6 @@ export default function Home() {
               ))}
             </div>
           </section>
-
         </main>
       </div>
     </>

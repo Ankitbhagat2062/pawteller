@@ -20,7 +20,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Pawteller | Premium Growth & Pet Health Insights",
-  description: "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
+  description:
+    "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
   metadataBase: new URL("https://pawteller.com"),
   alternates: {
     canonical: "/",

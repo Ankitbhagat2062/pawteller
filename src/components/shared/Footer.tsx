@@ -1,5 +1,5 @@
-import { PawPrint } from 'lucide-react'
-import Link from 'next/link'
+import { PawPrint } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -12,13 +12,18 @@ const Footer = () => {
                 <PawPrint className="h-5 w-5" aria-hidden />
               </div>
               <div>
-                <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">pawteller</p>
-                <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Reliable pet insights, fast.</p>
+                <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">
+                  pawteller
+                </p>
+                <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                  Reliable pet insights, fast.
+                </p>
               </div>
             </div>
 
             <p className="mt-4 text-sm leading-6 text-navy/70 dark:text-navy-50/70">
-              Built for dog owners who want clarity. Our calculators and guides help you act confidently—today.
+              Built for dog owners who want clarity. Our calculators and guides
+              help you act confidently—today.
             </p>
 
             <div className="mt-5 flex items-center gap-3">
@@ -43,7 +48,9 @@ const Footer = () => {
           <div className="md:col-span-8 md:flex md:justify-end">
             <div className="grid w-full gap-6 sm:grid-cols-3">
               <div>
-                <p className="text-sm font-extrabold text-navy dark:text-navy-50">Calculators</p>
+                <p className="text-sm font-extrabold text-navy dark:text-navy-50">
+                  Calculators
+                </p>
                 <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
                   {[
                     ["Dog Age", "/calculators/dog-age"],
@@ -61,7 +68,9 @@ const Footer = () => {
               </div>
 
               <div>
-                <p className="text-sm font-extrabold text-navy dark:text-navy-50">Resources</p>
+                <p className="text-sm font-extrabold text-navy dark:text-navy-50">
+                  Resources
+                </p>
                 <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
                   {[
                     ["Blog", "/blog"],
@@ -79,7 +88,9 @@ const Footer = () => {
               </div>
 
               <div>
-                <p className="text-sm font-extrabold text-navy dark:text-navy-50">Company</p>
+                <p className="text-sm font-extrabold text-navy dark:text-navy-50">
+                  Company
+                </p>
                 <ul className="mt-3 space-y-2 text-sm font-semibold text-navy/70 dark:text-navy-50/70">
                   {[
                     ["Privacy", "/privacy"],
@@ -100,12 +111,14 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 flex flex-col gap-2 border-t border-black/5 pt-6 text-xs font-semibold text-zinc-500 dark:border-white/10 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} pawteller. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} pawteller. All rights reserved.
+          </span>
           <span>Not medical advice. Use with your veterinarian.</span>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
