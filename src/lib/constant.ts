@@ -7,7 +7,7 @@ import {
   Utensils,
 } from "lucide-react";
 
-export const calculators = [
+export const calculators: CalculatorProps[] = [
   {
     title: "Dog Age Calculator",
     description: "Convert your pup’s age to life stages and milestones.",
@@ -46,7 +46,7 @@ export const calculators = [
   },
 ];
 
-export const articles = [
+export const articles: ArticleProps[] = [
   {
     category: "Nutrition",
     title: "How to Calculate Daily Calories for Growing Dogs",
@@ -85,19 +85,19 @@ export const badges = [
   { icon: "🔎", label: "SEO-friendly reads" },
 ];
 
-export const homeImages = [
+export const homeImages: homeImageProps[] = [
   { src: "/dog-1.png", alt: "Happy dog tracking visualization" },
   { src: "/dog-2.png", alt: "Puppy standard weight progress layout" },
   { src: "/dog-3.png", alt: "Active dog health checks outdoors" },
 ];
 
-export const features = [
+export const features: featureProps[] = [
   { title: "Dog Age", href: "/calculators/dog-age" },
   { title: "Puppy Growth", href: "/calculators/dog-growth" },
   { title: "Feeding Guidelines", href: "/calculators/dog-food" },
 ];
 
-export const trustPrinciples = [
+export const trustPrinciples: { title: string; description: string; icon: string }[] = [
   {
     title: "Simple Tools",
     description:
@@ -124,7 +124,7 @@ export const trustPrinciples = [
   },
 ] as const;
 
-export const toc = [
+export const toc : {id : string , label : string }[] = [
   { id: "acceptance", label: "Acceptance of Terms" },
   { id: "calculators", label: "Use of Calculators" },
   {
@@ -141,7 +141,7 @@ export const toc = [
   { id: "contact", label: "Contact" },
 ];
 
-export const SECTIONS = [
+export const SECTIONS: SectionProps[] = [
   {
     id: "information-we-collect",
     title: "Information We Collect",
@@ -195,5 +195,84 @@ export const SECTIONS = [
     title: "Contact",
     content:
       "Questions about this Privacy Policy, privacy requests, or data concerns can be sent to: support@pawteller.com. We will respond as soon as reasonably possible.",
+  },
+] as const;
+
+
+export const featuredCalculatorCards: featuredCalculatorCardProps[] = [
+  {
+    title: "Dog Age Calculator",
+    displayTitle: "Dog Age",
+    description: "Dog years -> human years",
+    bg: "bg-[#f5c5a3]",
+    darkBg: "dark:bg-[#3c261d]",
+    className: "",
+  },
+  {
+    title: "Puppy Weight Calculator",
+    displayTitle: "Puppy Weight",
+    description: "Predict adult size",
+    bg: "bg-[#c6d9c6]",
+    darkBg: "dark:bg-[#21372b]",
+    className: "lg:row-span-2",
+    imageSrc: "/dog-1.png",
+    imageAlt: "Golden retriever puppy lying down",
+    badge: "Most Loved",
+  },
+  {
+    title: "Dog Food Calculator",
+    displayTitle: "Food Portion",
+    description: "Daily calories & cups",
+    bg: "bg-[#f1d9a8]",
+    darkBg: "dark:bg-[#3a301d]",
+    className: "",
+  },
+  {
+    title: "Dog Pregnancy Calculator",
+    displayTitle: "Pregnancy",
+    description: "Due date & timeline",
+    bg: "bg-[#f2ada4]",
+    darkBg: "dark:bg-[#3d2424]",
+    className: "",
+  },
+  {
+    title: "Dog Name Generator",
+    displayTitle: "Name Generator",
+    description: "Perfect name in seconds",
+    bg: "bg-[#d6cbe8]",
+    darkBg: "dark:bg-[#2d2940]",
+    className: "",
+  },
+  {
+    title: "Dog Growth Calculator",
+    displayTitle: "Growth Curve",
+    description: "Track week by week",
+    bg: "bg-[#bcdceb]",
+    darkBg: "dark:bg-[#203642]",
+    className: "",
+  },
+] as const;
+
+export const dogLifeStages: dogLifeStageProps[] = [
+  {
+    icon: "🐶",
+    age: "8 WKS",
+    stage: "Puppy",
+    weight: "~8 lbs",
+    className: "lg:mt-0",
+  },
+  {
+    icon: "🐕",
+    age: "6 MO",
+    stage: "Adolescent",
+    weight: "~45 lbs",
+    className: "lg:mt-8",
+  },
+  {
+    icon: "🐕",
+    age: "2 YR",
+    stage: "Adult",
+    weight: "~70 lbs",
+    className: "lg:mt-14",
   },
 ] as const;

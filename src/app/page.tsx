@@ -9,102 +9,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { articles, calculators } from "@/lib/constant";
-
-interface featuredCalculatorCardProps {
-  title: string;
-  displayTitle: string;
-  description: string;
-  bg: string;
-  darkBg: string;
-  className: string;
-  imageSrc?: string;
-  imageAlt?: string;
-  badge?: string;
-}
-
-const featuredCalculatorCards: featuredCalculatorCardProps[] = [
-  {
-    title: "Dog Age Calculator",
-    displayTitle: "Dog Age",
-    description: "Dog years -> human years",
-    bg: "bg-[#f5c5a3]",
-    darkBg: "dark:bg-[#3c261d]",
-    className: "",
-  },
-  {
-    title: "Puppy Weight Calculator",
-    displayTitle: "Puppy Weight",
-    description: "Predict adult size",
-    bg: "bg-[#c6d9c6]",
-    darkBg: "dark:bg-[#21372b]",
-    className: "lg:row-span-2",
-    imageSrc: "/dog-1.png",
-    imageAlt: "Golden retriever puppy lying down",
-    badge: "Most Loved",
-  },
-  {
-    title: "Dog Food Calculator",
-    displayTitle: "Food Portion",
-    description: "Daily calories & cups",
-    bg: "bg-[#f1d9a8]",
-    darkBg: "dark:bg-[#3a301d]",
-    className: "",
-  },
-  {
-    title: "Dog Pregnancy Calculator",
-    displayTitle: "Pregnancy",
-    description: "Due date & timeline",
-    bg: "bg-[#f2ada4]",
-    darkBg: "dark:bg-[#3d2424]",
-    className: "",
-  },
-  {
-    title: "Dog Name Generator",
-    displayTitle: "Name Generator",
-    description: "Perfect name in seconds",
-    bg: "bg-[#d6cbe8]",
-    darkBg: "dark:bg-[#2d2940]",
-    className: "",
-  },
-  {
-    title: "Dog Growth Calculator",
-    displayTitle: "Growth Curve",
-    description: "Track week by week",
-    bg: "bg-[#bcdceb]",
-    darkBg: "dark:bg-[#203642]",
-    className: "",
-  },
-] as const;
-
-const dogLifeStages = [
-  {
-    icon: "🐶",
-    age: "8 WKS",
-    stage: "Puppy",
-    weight: "~8 lbs",
-    className: "lg:mt-0",
-  },
-  {
-    icon: "🐕",
-    age: "6 MO",
-    stage: "Adolescent",
-    weight: "~45 lbs",
-    className: "lg:mt-8",
-  },
-  {
-    icon: "🐕",
-    age: "2 YR",
-    stage: "Adult",
-    weight: "~70 lbs",
-    className: "lg:mt-14",
-  },
-] as const;
-
-interface SectionHeaderProps {
-  eyebrow?: string;
-  title: string;
-}
+import { articles, calculators, dogLifeStages, featuredCalculatorCards } from "@/lib/constant";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
   return (
@@ -261,7 +166,7 @@ export default function Home() {
             aria-label="Featured calculators"
           >
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[285px] lg:gap-5">
-              {calculators.map((calc) => {
+              {calculators.map((calc : CalculatorProps) => {
                 const Icon = calc.badge.icon;
                 const card = featuredCalculatorCards.find(
                   (item) => item.title === calc.title,
@@ -362,7 +267,7 @@ export default function Home() {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3 lg:min-h-64 lg:items-start lg:gap-3">
-                {dogLifeStages.map((item) => (
+                {dogLifeStages.map((item : dogLifeStageProps) => (
                   <article
                     key={item.stage}
                     className={`flex aspect-[1.08/1] min-h-36 flex-col rounded-[14px] bg-[#fbf6ed] p-5 text-[#17120f] shadow-none sm:min-h-43 lg:min-h-43 ${item.className}`}
