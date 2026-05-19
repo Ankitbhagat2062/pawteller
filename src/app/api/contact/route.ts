@@ -3,13 +3,16 @@ import { Resend } from "resend";
 
 // Initialize Resend with your API key from .env.local
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-if (!RESEND_API_KEY) {
-  throw new Error("Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)");
-}
 
-const resend = new Resend(RESEND_API_KEY);
 
 export async function POST(request: Request) {
+  if (!RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" },
+      { status: 500 }
+    );
+  }
+  const resend = new Resend(RESEND_API_KEY);
   try {
     const { name, email, topic, message } = await request.json();
 

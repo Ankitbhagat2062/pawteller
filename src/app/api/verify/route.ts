@@ -4,13 +4,16 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Subscriber from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-if (!RESEND_API_KEY) {
-  throw new Error("Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)");
-}
-
-const resend = new Resend(RESEND_API_KEY);
 
 export async function GET(request: Request) {
+  if (!RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" },
+      { status: 500 }
+    );
+  }
+  
+  const resend = new Resend(RESEND_API_KEY);
   const { searchParams } = new URL(request.url);
   const token = searchParams.get("token");
 

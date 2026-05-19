@@ -5,13 +5,16 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Subscriber from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-if (!RESEND_API_KEY) {
-  throw new Error("Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)");
-}
 
-const resend = new Resend(RESEND_API_KEY);
 
 export async function POST(request: Request) {
+  if (!RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" },
+      { status: 500 }
+    );
+  }
+  const resend = new Resend(RESEND_API_KEY);
   try {
     const { email } = await request.json();
     if (!email)
@@ -49,7 +52,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
     return NextResponse.json(
-      { error: "An unexpected error occurred" }, 
+      { error: "An unexpected error occurred" },
       { status: 500 },
     );
   }
