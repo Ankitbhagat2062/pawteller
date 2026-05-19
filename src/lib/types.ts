@@ -13,16 +13,6 @@ export interface CalculatorProps {
   badge: badgeType;
 }
 
-export interface ArticleProps {
-  category: string;
-  title: string;
-  excerpt: string;
-  minutes: number;
-  date: string;
-  imageSrc: string;
-  bgColor: string;
-}
-
 export interface homeImageProps {
   src: string;
   alt: string;
@@ -62,4 +52,20 @@ export interface featuredCalculatorCardProps {
   imageSrc?: string;
   imageAlt?: string;
   badge?: string;
+}
+export interface contentProps {
+  title: string;
+  description: string;
+  time?: string;
+}
+export interface BlogPost {
+  imageSrc: string;
+  title: string;
+  description: string;
+  url: string;
+  totalTime: string;
+  content: contentProps[],
+  category:string,
+  date?:string,
+  bgColor?:string
 }

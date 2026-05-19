@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  articles,
+  blogPosts,
   calculators,
   dogLifeStages,
   featuredCalculatorCards,
@@ -369,7 +369,7 @@ export default function Home() {
 
                 <div className="relative aspect-4/3 min-h-56 w-full overflow-hidden rounded-2xl bg-[#e4dbc9] ring-1 ring-black/5 sm:aspect-16/10 md:min-h-80 lg:min-h-84 dark:bg-[#22382d] dark:ring-white/10">
                   <Image
-                    src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b"
+                    src="https://images.unsplash.com/photo-1560743641-3914f2c45636"
                     alt="Two happy dogs sitting together in tall grass"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 492px"
@@ -403,10 +403,10 @@ export default function Home() {
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
+              {blogPosts.map((article) => (
                 <article
-                  key={article.title}
-                  className={`${article.bgColor} mb-6 inline-block w-full break-inside-avoid rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800 
+                  key={article.category}
+                  className={`${article?.bgColor} mb-6 inline-block w-full break-inside-avoid rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800 
           `}
                 >
                   <div className="flex min-h-full flex-col justify-between">
@@ -429,7 +429,7 @@ export default function Home() {
                           {article.category}
                         </span>
                         <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                          {article.minutes} min read
+                          {article.totalTime} min read
                         </span>
                       </div>
 
@@ -437,16 +437,16 @@ export default function Home() {
                         {article.title}
                       </h3>
                       <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        {article.excerpt}
+                        {article.description}
                       </p>
                     </div>
 
                     <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
                       <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
-                        {article.date}
+                        {article?.date}
                       </span>
                       <Link
-                        href={`/blog/${article.category}`}
+                        href={`${article.url}`}
                         className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                       >
                         {"Read Article"}
