@@ -18,15 +18,15 @@ export async function POST(request: Request) {
 
     // Send the email to YOUR own email address
     const data = await resend.emails.send({
-      from: "Contact Form <website@yourdomain.com>", // Must be a verified domain in Resend
-      to: "your-personal-email@gmail.com", // Where YOU want to receive the messages
+      from: `<${process.env.FROM_MAIL}>`, // Must be a verified domain in Resend
+      to: email, // Where YOU want to receive the messages
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Message Received</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Topic:</strong> ${topic}</p>
-        <p><strong>Message:</strong></p>
+        <p><strong>Message:</strong> ${message}</p>
         <p>${message}</p>
       `,
     });

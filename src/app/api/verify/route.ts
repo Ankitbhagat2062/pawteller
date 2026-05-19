@@ -34,7 +34,7 @@ export async function GET(request: Request) {
 
     // Deliver the Welcome Email and Features Overview
     await resend.emails.send({
-      from: "Welcome <hello@yourdomain.com>",
+      from: `Welcome <${process.env.FROM_MAIL}>`,
       to: subscriber.email,
       subject: "Welcome to our Newsletter!",
       html: `

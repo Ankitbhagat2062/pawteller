@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     // Send the Verification Email via Resend
     await resend.emails.send({
-      from: "Newsletter <newsletter@yourdomain.com>",
+      from: `<${process.env.FROM_MAIL}>`,
       to: email,
       subject: "Verify your subscription",
       html: `
