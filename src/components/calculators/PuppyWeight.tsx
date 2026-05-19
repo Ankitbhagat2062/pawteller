@@ -1,9 +1,4 @@
-
 const PuppyWeight = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-export default PuppyWeight
+  return <div></div>;
+};
+export default PuppyWeight;

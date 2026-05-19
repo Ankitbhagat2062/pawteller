@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
-import  Navbar from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,7 +50,9 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          <div className="flex-1 flex flex-col bg-[#FDF8F1] dark:bg-black">{children}</div>
+          <div className="flex-1 flex flex-col bg-[#FDF8F1] dark:bg-black">
+            {children}
+          </div>
           <Footer />
         </ThemeProvider>
       </body>

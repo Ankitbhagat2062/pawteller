@@ -1,10 +1,5 @@
-
 const DogAge = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default DogAge
+export default DogAge;

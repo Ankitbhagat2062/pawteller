@@ -1,7 +1,6 @@
+import { PawPrint, ShieldCheck, Sparkles, Users } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PawPrint, ShieldCheck, Sparkles, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/shared/ContactForm";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY

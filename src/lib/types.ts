@@ -1,18 +1,19 @@
+import type { LucideIcon } from "lucide-react";
 
-type badgeType = {
+export type badgeType = {
   bg: string;
   fg: string;
-  icon: React.ComponentType<any>;
-}
+  icon: LucideIcon;
+};
 
-interface CalculatorProps {
+export interface CalculatorProps {
   title: string;
   description: string;
   link: string;
   badge: badgeType;
 }
 
-interface ArticleProps {
+export interface ArticleProps {
   category: string;
   title: string;
   excerpt: string;
@@ -22,23 +23,23 @@ interface ArticleProps {
   bgColor: string;
 }
 
-interface homeImageProps {
+export interface homeImageProps {
   src: string;
   alt: string;
 }
 
-interface featureProps {
+export interface featureProps {
   title: string;
   href: string;
 }
 
-interface SectionProps {
+export interface SectionProps {
   id: string;
   title: string;
   content: string;
 }
 
-interface dogLifeStageProps {
+export interface dogLifeStageProps {
   icon: string;
   age: string;
   stage: string;
@@ -46,12 +47,12 @@ interface dogLifeStageProps {
   className: string;
 }
 
-interface SectionHeaderProps {
+export interface SectionHeaderProps {
   eyebrow?: string;
   title: string;
 }
 
-interface featuredCalculatorCardProps {
+export interface featuredCalculatorCardProps {
   title: string;
   displayTitle: string;
   description: string;

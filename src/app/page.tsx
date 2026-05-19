@@ -9,7 +9,17 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { articles, calculators, dogLifeStages, featuredCalculatorCards } from "@/lib/constant";
+import {
+  articles,
+  calculators,
+  dogLifeStages,
+  featuredCalculatorCards,
+} from "@/lib/constant";
+import type {
+  CalculatorProps,
+  dogLifeStageProps,
+  SectionHeaderProps,
+} from "@/lib/types";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
   return (
@@ -56,28 +66,29 @@ export default function Home() {
               <div className="lg:col-span-6">
                 <p className="inline-flex h-7 items-center gap-2 rounded-full bg-[#ead8cd] px-4 text-[0.72rem] font-medium uppercase tracking-[0.28em] text-[#3f342f] dark:bg-emerald-500/10 dark:text-emerald-300">
                   <PawPrint className="h-3.5 w-3.5" aria-hidden="true" />
-                  For dog parents who care
+                  {"For dog parents who care deeply"}
                 </p>
 
                 <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[4rem] font-black leading-[0.9] tracking-normal text-[#2a1b15] sm:text-[5.25rem] lg:text-[5.6rem]">
                   <span className="block">Smart</span>
                   <span className="block">calculators</span>
                   <span className="block">
-                    for your{" "}
+                    {"for your"}{" "}
                     <span className="font-[Georgia,serif] font-black italic text-[#d36c4a]">
-                      best
+                      {"best"}
                     </span>
                   </span>
                   <span className="block font-[Georgia,serif] font-black italic text-[#d36c4a]">
-                    friend
+                    {"friend"}
                     <span className="text-[#2a1b15]">.</span>
                   </span>
                 </h1>
 
                 <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f5049] md:text-xl md:leading-9">
-                  Predict your puppy&apos;s adult size. Decode dog years. Plan
-                  portions. Find the perfect breed. All in one beautifully
-                  simple place &mdash; backed by veterinary science.
+                  {"Predict your puppy"}&apos;
+                  {`s adult size. Decode dog years. Plan
+                  portions. Find the perfect breed. All in one beautifully`}
+                  {" simple place"} &mdash; {"backed by veterinary science."}
                 </p>
 
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -85,14 +96,14 @@ export default function Home() {
                     href="/calculators/dog-growth"
                     className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#df7959] px-7 text-sm font-bold text-white shadow-[0_12px_24px_rgba(170,88,61,0.24)] transition hover:bg-[#cf6848]"
                   >
-                    Start with Puppy Weight
+                    {"Start with Puppy Weight"}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link
                     href="/quiz"
                     className="inline-flex h-12 items-center justify-center rounded-full border border-[#d2c5bd] bg-[#fbf8f3] px-7 text-sm font-bold text-[#2a1b15] shadow-sm transition hover:bg-white"
                   >
-                    Find My Breed
+                    {"Find My Breed Match"}
                   </Link>
                 </div>
 
@@ -108,11 +119,11 @@ export default function Home() {
                     ))}
                   </div>
                   <p>
-                    Loved by{" "}
+                    {"                    Loved by"}{" "}
                     <span className="font-extrabold text-[#2a1b15]">
                       12,000+
                     </span>{" "}
-                    dog parents
+                    {" dog parents"}
                   </p>
                 </div>
               </div>
@@ -136,10 +147,10 @@ export default function Home() {
                       className="h-4 w-4 text-[#d36c4a]"
                       aria-hidden="true"
                     />
-                    Adult weight
+                    {"Adult weight"}
                   </p>
                   <p className="mt-2 font-[Georgia,serif] text-3xl leading-none">
-                    62 lbs
+                    {" 62 lbs"}
                   </p>
                   <p className="mt-1 text-xs text-[#7b6b63]">at 18 months</p>
                 </div>
@@ -147,13 +158,13 @@ export default function Home() {
                 <div className="absolute -right-2 bottom-10 rounded-2xl bg-[#315846] px-5 py-4 text-white shadow-[0_18px_34px_rgba(34,52,43,0.28)] sm:-right-6 lg:-right-9">
                   <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.12em] text-white/78">
                     <Cake className="h-4 w-4" aria-hidden="true" />
-                    Human age
+                    {" Human age"}
                   </p>
                   <p className="mt-2 font-[Georgia,serif] text-4xl leading-none">
-                    36 yrs
+                    {" 36 yrs"}
                   </p>
                   <p className="mt-1 text-xs text-white/70">
-                    Buddy is a young adult
+                    {"Buddy is a young adult"}
                   </p>
                 </div>
               </div>
@@ -166,7 +177,7 @@ export default function Home() {
             aria-label="Featured calculators"
           >
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[285px] lg:gap-5">
-              {calculators.map((calc : CalculatorProps) => {
+              {calculators.map((calc: CalculatorProps) => {
                 const Icon = calc.badge.icon;
                 const card = featuredCalculatorCards.find(
                   (item) => item.title === calc.title,
@@ -219,7 +230,7 @@ export default function Home() {
                       )}
 
                       <p className="inline-flex items-center gap-2 text-xs font-extrabold text-[#17372f] dark:text-[#a6d4bd]">
-                        <span>Try it</span>
+                        <span>{"Try it"}</span>
                         <ArrowRight
                           className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
                           aria-hidden="true"
@@ -239,35 +250,39 @@ export default function Home() {
             <div className="mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(520px,0.95fr)] lg:items-center">
               <div className="max-w-145">
                 <p className="text-[0.68rem] font-bold uppercase tracking-[0.42em] text-[#e77855]">
-                  The story of every dog
+                  {" The story of every dog"}
                 </p>
                 <h2
                   id="dog-life-stage-title"
                   className="mt-5 max-w-140 font-[Georgia,serif] text-4xl leading-[0.98] tracking-normal text-[#fbf6ed] sm:text-5xl lg:text-[3.35rem]"
                 >
-                  From tiny paws to wise old soul &mdash; we&apos;ll be your
-                  guide.
+                  {"From tiny paws to wise old soul"} &mdash; we&apos;ll{" "}
+                  {`be your
+                  guide.`}
                 </h2>
                 <p className="mt-6 max-w-145 text-base leading-7 text-[#fbf6ed]/82">
-                  Dogs grow up fast. One month they fit in your palm, the next
-                  they&apos;re hogging the couch. Pawteller turns the science of
-                  dog development into beautiful, easy-to-understand answers
-                  &mdash; so you can spend less time worrying and more time
-                  playing fetch.
+                  {`Dogs grow up fast. One month they fit in your palm, the next
+                  they`}
+                  &apos;
+                  {`re hogging the couch. Pawteller turns the science of
+                  dog development into beautiful, easy-to-understand answers`}
+                  &mdash;
+                  {` so you can spend less time worrying and more time
+                  playing fetch.`}
                 </p>
                 <Button
                   asChild
                   className="mt-9 h-12 rounded-full bg-[#e57655] px-7 text-sm font-bold text-white shadow-none hover:bg-[#d96848]"
                 >
                   <Link href="/quiz">
-                    Find your perfect breed
+                    {"Find your perfect breed match"}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3 lg:min-h-64 lg:items-start lg:gap-3">
-                {dogLifeStages.map((item : dogLifeStageProps) => (
+                {dogLifeStages.map((item: dogLifeStageProps) => (
                   <article
                     key={item.stage}
                     className={`flex aspect-[1.08/1] min-h-36 flex-col rounded-[14px] bg-[#fbf6ed] p-5 text-[#17120f] shadow-none sm:min-h-43 lg:min-h-43 ${item.className}`}
@@ -295,14 +310,14 @@ export default function Home() {
             <div className="grid gap-6 md:grid-cols-12 md:items-center">
               <div className="md:col-span-8">
                 <p className="text-sm font-bold uppercase tracking-wider text-amber-950 opacity-80">
-                  Dog Breed Quiz
+                  {"Dog Breed Quiz"}
                 </p>
                 <h2 className="mt-1 text-2xl font-extrabold tracking-tight md:text-3xl">
-                  Which Dog Breed is Right For You?
+                  {"Which Dog Breed is Right For You?"}
                 </h2>
                 <p className="mt-3 max-w-2xl text-sm font-medium leading-6 text-amber-950/80">
-                  Match your lifestyle with a breed profile that fits—size,
-                  temperament, energy, and growth expectations.
+                  {`                  Match your lifestyle with a breed profile that fits—size,
+                  temperament, energy, and growth expectations.`}
                 </p>
               </div>
               <div className="md:col-span-4 md:text-right">
@@ -310,7 +325,7 @@ export default function Home() {
                   href="/quiz"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-slate-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-slate-900"
                 >
-                  Start The Quiz Now
+                  {" Start The Quiz Now"}
                 </Link>
               </div>
             </div>
@@ -324,28 +339,29 @@ export default function Home() {
               <div className="grid gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(420px,1fr)] lg:items-center lg:gap-16">
                 <div className="max-w-md text-center sm:text-left">
                   <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-[#d76d47] dark:text-[#f09a75]">
-                    Free quiz - 2 minutes
+                    {"Free quiz - 2 minutes"}
                   </p>
                   <h2
                     id="breed-quiz-feature-title"
                     className="mt-4 font-[Georgia,serif] text-4xl leading-[0.96] tracking-normal text-[#2a1b15] sm:text-5xl lg:text-[2.85rem] dark:text-[#fbf6ed]"
                   >
-                    Which dog breed fits{" "}
+                    {"Which dog breed fits"}{" "}
                     <span className="italic text-[#315846] dark:text-[#a6d4bd]">
-                      your life?
+                      {"your life?"}
                     </span>
                   </h2>
                   <p className="mt-5 text-sm leading-6 text-[#493a34] sm:max-w-sm sm:text-[0.95rem] dark:text-[#d7cdbd]">
-                    Answer 6 quick questions about your lifestyle and we&apos;ll
-                    match you with your top 3 breeds, personalized to your home,
-                    energy and family.
+                    {"Answer 6 quick questions about your lifestyle and we"}
+                    &apos;ll
+                    {`                    match you with your top 3 breeds, personalized to your home,
+                    energy and family.`}
                   </p>
                   <Button
                     asChild
                     className="mt-8 h-11 rounded-full bg-[#315846] px-6 text-xs font-medium text-white shadow-[0_10px_20px_rgba(49,88,70,0.16)] hover:bg-[#294b3b] dark:bg-[#f09a75] dark:text-[#1d140f] dark:shadow-none dark:hover:bg-[#f3a984]"
                   >
                     <Link href="/quiz">
-                      Take the quiz
+                      {"Take the quiz"}
                       <Sparkles className="h-4 w-4" aria-hidden="true" />
                     </Link>
                   </Button>
@@ -364,7 +380,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-          
+
           {/* Knowledge Base */}
           <section className="py-14" aria-label="Latest dog care guides">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -374,15 +390,15 @@ export default function Home() {
                   title="Latest Dog Care Guides"
                 />
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                  Practical, expert-backed reads built to be easy to search and
-                  easy to apply.
+                  {` Practical, expert-backed reads built to be easy to search and
+                  easy to apply.`}
                 </p>
               </div>
               <Link
                 href="/blog"
                 className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
               >
-                View all articles
+                {"View all articles"}
               </Link>
             </div>
 
@@ -433,7 +449,7 @@ export default function Home() {
                         href={`/blog/${article.category}`}
                         className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                       >
-                        Read Article
+                        {"Read Article"}
                       </Link>
                     </div>
                   </div>

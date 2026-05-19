@@ -1,4 +1,6 @@
-'use client";'
+"use client";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface FooterLink {
@@ -40,27 +42,6 @@ const footerSections: FooterSection[] = [
   },
 ];
 
-function ArrowIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className="shrink-0"
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
-  );
-}
-
-
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -72,19 +53,16 @@ export function Footer() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-md">
               <h2 className="text-balance text-xl font-semibold text-foreground lg:text-2xl">
-                Stay Updated with Pet Care Tips
+                {"Stay Updated with Pet Care Tips"}
               </h2>
               <p className="mt-2 text-pretty text-muted-foreground">
-                Get weekly insights on pet health, breed guides, and exclusive
-                content delivered to your inbox.
+                {`Get weekly insights on pet health, breed guides, and exclusive
+                content delivered to your inbox.`}
               </p>
             </div>
-            <form
-              className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row"
-              
-            >
+            <form className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row">
               <label htmlFor="newsletter-email" className="sr-only">
-                Email address
+                {"Email address"}
               </label>
               <input
                 id="newsletter-email"
@@ -97,8 +75,8 @@ export function Footer() {
                 type="submit"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 hover:shadow-md"
               >
-                Subscribe
-                <ArrowIcon />
+                {"Subscribe"}
+                <ArrowRight />
               </button>
             </form>
           </div>
@@ -113,18 +91,20 @@ export function Footer() {
               className="inline-flex items-center gap-2 transition-opacity duration-200 hover:opacity-80"
               aria-label="Pawteller Home"
             >
-              <img
+              <Image
                 src="/vercel.svg"
                 alt="Pawteller logo"
                 className="h-8 w-auto"
+                width={200}
+                height={40}
               />
               <span className="text-lg font-semibold tracking-tight text-foreground">
-                Pawteller
+                {" Pawteller"}
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-pretty text-sm text-muted-foreground">
-              Your trusted companion for pet care insights, breed information,
-              and tools to help your furry friend thrive.
+              {` Your trusted companion for pet care insights, breed information,
+              and tools to help your furry friend thrive.`}
             </p>
           </div>
 
@@ -134,7 +114,7 @@ export function Footer() {
               <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
                 {section.title}
               </h3>
-              <ul className="mt-4 flex flex-col gap-3" role="list">
+              <ul className="mt-4 flex flex-col gap-3">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -153,20 +133,20 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Pawteller. All rights reserved.
+            {" ©"} {currentYear} {"Pawteller. All rights reserved."}
           </p>
           <div className="flex items-center gap-6">
             <Link
               href="/accessibility"
               className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
-              Accessibility
+              {"              Accessibility"}
             </Link>
             <Link
               href="/sitemap"
               className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
-              Sitemap
+              {"Sitemap"}
             </Link>
           </div>
         </div>

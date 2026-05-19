@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose, { type Document, type Model, Schema } from "mongoose";
 
 export interface ISubscriber extends Document {
   email: string;
@@ -8,13 +8,20 @@ export interface ISubscriber extends Document {
 }
 
 const SubscriberSchema: Schema = new Schema({
-  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
   isVerified: { type: Boolean, default: false },
   verificationToken: { type: String, required: true, unique: true },
   createdAt: { type: Date, default: Date.now },
 });
 
 const Subscriber: Model<ISubscriber> =
-  mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
+  mongoose.models.Subscriber ||
+  mongoose.model<ISubscriber>("Subscriber", SubscriberSchema);
 
 export default Subscriber;

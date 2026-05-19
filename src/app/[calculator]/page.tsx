@@ -23,7 +23,9 @@ type PageProps = {
   };
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const slug = params.calculator;
   const title = slug
     ? `${slug.replace(/-/g, " ")} calculator | pawteller`
@@ -31,7 +33,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title,
-    description: "Use pawteller calculators to estimate growth and nutrition details for your dog.",
+    description:
+      "Use pawteller calculators to estimate growth and nutrition details for your dog.",
   };
 }
 
@@ -68,4 +71,3 @@ export default function CalculatorPage({ params }: PageProps) {
     </main>
   );
 }
-

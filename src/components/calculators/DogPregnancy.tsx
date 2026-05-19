@@ -1,10 +1,5 @@
-
 const DogPregnancy = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default DogPregnancy
+export default DogPregnancy;

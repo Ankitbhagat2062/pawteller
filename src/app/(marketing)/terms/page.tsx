@@ -273,10 +273,10 @@ export default function TermsPage() {
                     Changes to Terms
                   </h2>
                   <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
-                    We may update these Terms from time to time. The "Last
+                    {`  We may update these Terms from time to time. The "Last
                     updated" date above reflects the most recent revision.
                     Continued use of the website means you accept the updated
-                    Terms.
+                    Terms.`}
                   </p>
                 </section>
 

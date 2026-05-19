@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import {
-  PawPrint,
-  Flame,
   FileText,
-  Search,
+  Flame,
   Heart,
+  PawPrint,
+  Search,
   ShieldAlert,
 } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { trustPrinciples } from "@/lib/constant";
 
 // 1. PERFECT SEO SETUP WITH TARGETED SEO PLACEMENT

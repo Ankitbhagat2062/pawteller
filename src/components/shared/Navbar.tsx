@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import ThemeToggle from './ThemeToggle';
-import { PawPrint } from 'lucide-react';
+import { PawPrint } from "lucide-react";
+import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   return (
@@ -11,42 +11,41 @@ const Navbar = () => {
             <PawPrint className="h-5 w-5" aria-hidden />
           </div>
           <div className="leading-tight">
-            <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">Pawteller</p>
-            <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Fast, SEO-focused calculators</p>
+            <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">
+              {"Pawteller"}
+            </p>
+            <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+              {"              Fast, SEO-focused calculators"}
+            </p>
           </div>
         </div>
 
         <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
-          {[
-            "Home",
-            "Calculators",
-            "Blog",
-            "Quiz",
-            "About",
-            "Contact",
-          ].map((label) => {
-            const href =
-              label === "Home"
-                ? "/"
-                : label === "Calculators"
-                  ? "/calculators"
-                  : label === "Blog"
-                    ? "/blog"
-                    : label === "Quiz"
-                      ? "/quiz"
-                      : label === "About"
-                        ? "/about"
-                        : "/contact";
-            return (
-              <Link
-                key={label}
-                href={href}
-                className="text-sm font-semibold text-navy/80 hover:text-navy dark:text-navy-50/80 dark:hover:text-navy-50"
-              >
-                {label}
-              </Link>
-            );
-          })}
+          {["Home", "Calculators", "Blog", "Quiz", "About", "Contact"].map(
+            (label) => {
+              const href =
+                label === "Home"
+                  ? "/"
+                  : label === "Calculators"
+                    ? "/calculators"
+                    : label === "Blog"
+                      ? "/blog"
+                      : label === "Quiz"
+                        ? "/quiz"
+                        : label === "About"
+                          ? "/about"
+                          : "/contact";
+              return (
+                <Link
+                  key={label}
+                  href={href}
+                  className="text-sm font-semibold text-navy/80 hover:text-navy dark:text-navy-50/80 dark:hover:text-navy-50"
+                >
+                  {label}
+                </Link>
+              );
+            },
+          )}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -66,9 +65,9 @@ const Navbar = () => {
             href="/calculators"
             className="hidden items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:inline-flex"
           >
-            Start Calculator
+            {"Start Calculator"}
             <span aria-hidden className="text-base">
-              →
+              {" →"}
             </span>
           </Link>
 
@@ -77,12 +76,12 @@ const Navbar = () => {
             className="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:hidden"
             aria-label="Start Calculator"
           >
-            Start
+            {"Start"}
           </Link>
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

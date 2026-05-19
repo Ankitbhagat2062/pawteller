@@ -6,6 +6,15 @@ import {
   Sparkles,
   Utensils,
 } from "lucide-react";
+import type {
+  ArticleProps,
+  CalculatorProps,
+  dogLifeStageProps,
+  featuredCalculatorCardProps,
+  featureProps,
+  homeImageProps,
+  SectionProps,
+} from "./types";
 
 export const calculators: CalculatorProps[] = [
   {
@@ -55,7 +64,7 @@ export const articles: ArticleProps[] = [
     minutes: 6,
     date: "Updated weekly",
     imageSrc: "/dog-1.png",
-    bgColor: "bg-[#F5C6A5]"
+    bgColor: "bg-[#F5C6A5]",
   },
   {
     category: "Health",
@@ -65,7 +74,7 @@ export const articles: ArticleProps[] = [
     minutes: 8,
     date: "Updated weekly",
     imageSrc: "/dog-2.png",
-    bgColor: "bg-[#C6D9C6]"
+    bgColor: "bg-[#C6D9C6]",
   },
   {
     category: "Breeds",
@@ -75,7 +84,7 @@ export const articles: ArticleProps[] = [
     minutes: 5,
     date: "Updated weekly",
     imageSrc: "/dog-3.png",
-    bgColor: "bg-[#F1D9A8]"
+    bgColor: "bg-[#F1D9A8]",
   },
 ];
 
@@ -97,7 +106,11 @@ export const features: featureProps[] = [
   { title: "Feeding Guidelines", href: "/calculators/dog-food" },
 ];
 
-export const trustPrinciples: { title: string; description: string; icon: string }[] = [
+export const trustPrinciples: {
+  title: string;
+  description: string;
+  icon: string;
+}[] = [
   {
     title: "Simple Tools",
     description:
@@ -124,7 +137,7 @@ export const trustPrinciples: { title: string; description: string; icon: string
   },
 ] as const;
 
-export const toc : {id : string , label : string }[] = [
+export const toc: { id: string; label: string }[] = [
   { id: "acceptance", label: "Acceptance of Terms" },
   { id: "calculators", label: "Use of Calculators" },
   {
@@ -197,7 +210,6 @@ export const SECTIONS: SectionProps[] = [
       "Questions about this Privacy Policy, privacy requests, or data concerns can be sent to: support@pawteller.com. We will respond as soon as reasonably possible.",
   },
 ] as const;
-
 
 export const featuredCalculatorCards: featuredCalculatorCardProps[] = [
   {
