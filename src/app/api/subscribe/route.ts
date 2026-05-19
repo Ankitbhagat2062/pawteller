@@ -4,7 +4,12 @@ import { Resend } from "resend";
 import { connectToDatabase } from "@/lib/mongodb";
 import Subscriber from "@/models/subscriber";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+if (!RESEND_API_KEY) {
+  throw new Error("Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)");
+}
+
+const resend = new Resend(RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
