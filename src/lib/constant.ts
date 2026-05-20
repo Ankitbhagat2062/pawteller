@@ -15,6 +15,7 @@ import type {
   homeImageProps,
   SectionProps,
 } from "./types";
+import type { quizDataProps } from "@/lib/types";
 
 export const calculators: CalculatorProps[] = [
   {
@@ -397,3 +398,37 @@ export const dogLifeStages: dogLifeStageProps[] = [
     className: "lg:mt-14",
   },
 ] as const;
+
+
+export const quizData : quizDataProps = {
+  banner: "The Breed Match Quiz",
+  title: "Which dog breed fits your life?",
+  totalQuestions: 6,
+  estimatedTime: "2 minutes",
+  steps: [
+    {
+      question: "What's your home like?",
+      options: ["Apartment", "House with yard"],
+    },
+    {
+      question: "How active is your lifestyle?",
+      options: ["Mostly chill", "Daily walks", "Always on the move"],
+    },
+    {
+      question: "Kids at home?",
+      options: ["Yes, little ones", "No kids"],
+    },
+    {
+      question: "First-time dog owner?",
+      options: ["First-timer", "Experienced"],
+    },
+    {
+      question: "Shedding tolerance?",
+      options: ["Low shed please", "Shedding is fine"],
+    },
+    {
+      question: "Preferred size?",
+      options: ["Small", "Medium", "Large", "Any size"],
+    },
+  ],
+};

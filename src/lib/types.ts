@@ -78,3 +78,15 @@ export interface contentProps {
   description: string;
   time?: string;
 }
+
+interface stepsProps {
+  question: string;
+  options: string[];
+}
+export interface quizDataProps {
+  banner:string;
+  title:string;
+  totalQuestions:number;
+  estimatedTime:string;
+  steps: stepsProps[]
+}
