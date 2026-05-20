@@ -47,7 +47,8 @@ export default function Contact() {
               </span>
             </Link>
             <Link
-              href="/calculators" aria-label="Try the calculator "
+              href="/calculators"
+              aria-label="Try Pawteller calculators to estimate your dog’s growth, age, and nutrition"
               className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-zinc-950/30 dark:border-white/10 dark:text-slate-200 dark:hover:bg-zinc-950/50"
             >
               Try a calculator
@@ -238,7 +239,8 @@ export default function Contact() {
                 </Link>
 
                 <Link
-                  href="/calculators" aria-label="Try Dog's Age Calculator"
+                  href="/calculators"
+                  aria-label="Try calculators for your dog’s growth, age, and daily care"
                   className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">

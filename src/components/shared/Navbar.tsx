@@ -63,7 +63,8 @@ const Navbar = () => {
           <ThemeToggle />
 
           <Link
-            href="/calculators" aria-label="Find the best name for your dog"
+            href="/calculators"
+            aria-label="Browse calculators for your dog (growth, age, nutrition)"
             className="hidden items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:inline-flex"
           >
             {"Start Calculator"}
@@ -75,7 +76,7 @@ const Navbar = () => {
           <Link
             href="/calculators"
             className="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:hidden"
-            aria-label="Start Calculator"
+            aria-label="Browse calculators for your dog"
           >
             {"Start"}
           </Link>

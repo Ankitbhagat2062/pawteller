@@ -189,7 +189,8 @@ export default function Home() {
                 return (
                   <Link
                     key={calc.title}
-                    href={calc.link} aria-label={`Calculate your ${calc.title}`}
+                    href={calc.link}
+                    aria-label={`Open ${displayTitle} calculator`}
                     className={`group relative flex min-h-55 overflow-hidden rounded-[20px] p-7 text-[#17372f] ring-1 ring-black/5 transition duration-200 hover:-translate-y-0.5 hover:shadow-md sm:min-h-62.5 lg:min-h-0 dark:text-[#e8f1eb] dark:ring-white/10 dark:hover:shadow-none ${card?.bg ?? "bg-white"} ${card?.darkBg ?? "dark:bg-slate-900"} ${card?.className ?? ""}`}
                   >
                     {card?.badge && (
