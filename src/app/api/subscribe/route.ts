@@ -10,7 +10,9 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 export async function POST(request: Request) {
   if (!RESEND_API_KEY) {
     return NextResponse.json(
-      { error: "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" },
+      { error: 
+        "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" 
+      },
       { status: 500 }
     );
   }

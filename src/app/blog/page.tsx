@@ -4,7 +4,8 @@ import BlogListingPage from "@/components/shared/BlogListing";
 // 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE BLOG
 export const metadata: Metadata = {
   title: "Expert Pet Care Guides, Tips & Calculators | pawteller",
-  description: "Explore data-driven insights, veterinarian-vetted puppy growth tracking tips, dog nutrition guides, and care advice to keep your pup healthy.",
+  description: 
+  "Explore data-driven insights, veterinarian-vetted puppy growth tracking tips, dog nutrition guides, and care advice to keep your pup healthy.",
   
   // Prevents duplicate URL content indexing penalties
   alternates: {

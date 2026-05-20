@@ -1,4 +1,4 @@
-import { contentProps } from "@/lib/types";
+import type { contentProps } from "@/lib/types";
 import Link from "next/link";
 
 interface BlogContentProps {
@@ -8,8 +8,8 @@ interface BlogContentProps {
 export function BlogContent({ content }: BlogContentProps) {
   return (
     <article className="prose prose-neutral dark:prose-invert max-w-none">
-      {content.map((section, index) => (
-        <section key={index} className="mb-6 md:mb-8">
+      {content.map((section,) => (
+        <section key={section.title} className="mb-6 md:mb-8">
           <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2 md:mb-3">
             {section.title}
           </h2>
@@ -18,7 +18,7 @@ export function BlogContent({ content }: BlogContentProps) {
               if (part === "Dog Food Calculator") {
                 return (
                   <Link
-                    key={i}
+                    key={part.replace(' ','')[i]}
                     href="/calculator/food"
                     className="text-orange-600 dark:text-orange-400 hover:underline"
                   >

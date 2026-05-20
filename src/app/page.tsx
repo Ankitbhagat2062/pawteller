@@ -53,8 +53,7 @@ export default function Home() {
 
   return (
     <>
-      <script type="application/ld+json">{JSON.stringify(jsonLdSchema)}</script>
-
+      {/* JSON-LD should be emitted in the head via Next Metadata to avoid client script warnings */}
       <div className="w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
         <main
           id="home"

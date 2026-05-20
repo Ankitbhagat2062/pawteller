@@ -13,6 +13,10 @@ export interface CalculatorProps {
   badge: badgeType;
 }
 
+export interface BlogPostPageProps {
+  params: Promise<{ blogPost: string }>
+}
+
 export interface homeImageProps {
   src: string;
   alt: string;
