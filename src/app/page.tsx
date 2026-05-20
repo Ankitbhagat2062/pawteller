@@ -92,7 +92,7 @@ export default function Home() {
 
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
-                    href="/calculators/dog-growth"
+                    href="/calculators/puppy-weight"
                     aria-label="Calculate your dog’s growth"
                     className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#df7959] px-7 text-sm font-bold text-white shadow-[0_12px_24px_rgba(170,88,61,0.24)] transition hover:bg-[#cf6848]"
                   >
