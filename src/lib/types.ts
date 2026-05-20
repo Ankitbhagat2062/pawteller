@@ -69,3 +69,8 @@ export interface BlogPost {
   date?:string,
   bgColor?:string
 }
+export interface contentProps {
+  title: string;
+  description: string;
+  time?: string;
+}

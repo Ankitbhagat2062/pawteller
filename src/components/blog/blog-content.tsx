@@ -1,0 +1,58 @@
+import { contentProps } from "@/lib/types";
+import Link from "next/link";
+
+interface BlogContentProps {
+  content: contentProps[];
+}
+
+export function BlogContent({ content }: BlogContentProps) {
+  return (
+    <article className="prose prose-neutral dark:prose-invert max-w-none">
+      {content.map((section, index) => (
+        <section key={index} className="mb-6 md:mb-8">
+          <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2 md:mb-3">
+            {section.title}
+          </h2>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            {section.description.split(/(Dog Food Calculator|Puppy Weight Calculator|Dog Age Calculator)/).map((part, i) => {
+              if (part === "Dog Food Calculator") {
+                return (
+                  <Link
+                    key={i}
+                    href="/calculator/food"
+                    className="text-orange-600 dark:text-orange-400 hover:underline"
+                  >
+                    {part}
+                  </Link>
+                );
+              }
+              if (part === "Puppy Weight Calculator") {
+                return (
+                  <Link
+                    key={i}
+                    href="/calculator/weight"
+                    className="text-orange-600 dark:text-orange-400 hover:underline"
+                  >
+                    {part}
+                  </Link>
+                );
+              }
+              if (part === "Dog Age Calculator") {
+                return (
+                  <Link
+                    key={i}
+                    href="/calculator/age"
+                    className="text-orange-600 dark:text-orange-400 hover:underline"
+                  >
+                    {part}
+                  </Link>
+                );
+              }
+              return part;
+            })}
+          </p>
+        </section>
+      ))}
+    </article>
+  );
+}
