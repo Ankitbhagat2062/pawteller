@@ -5,6 +5,7 @@ import DogGrowth from "@/components/calculators/DogGrowth";
 import DogName from "@/components/calculators/DogName";
 import DogPregnancy from "@/components/calculators/DogPregnancy";
 import PuppyWeight from "@/components/calculators/PuppyWeight";
+import Script from "next/script";
 
 const SLUG_TO_COMPONENT = {
   "dog-age": DogAge,
@@ -51,6 +52,8 @@ export default function CalculatorPage({ params }: PageProps) {
     : "Calculator";
 
   return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
     <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
         {headingText}
@@ -69,5 +72,6 @@ export default function CalculatorPage({ params }: PageProps) {
         </section>
       )}
     </main>
+    </>
   );
 }

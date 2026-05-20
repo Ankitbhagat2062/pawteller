@@ -8,6 +8,7 @@ import { blogPosts } from "@/lib/constant";
 import type { BlogPost, BlogPostPageProps } from "@/lib/types";
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
@@ -88,6 +89,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const readTime = readTimeMatch ? readTimeMatch[1] : "5 min";
 
   return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
     <main className="min-h-screen bg-background mx-auto px-4 my-4">
       <div className="max-w-2xl mx-auto px-4 py-6 md:py-10">
         <BlogHeader category={post.category} readTime={readTime} />
@@ -160,5 +163,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         ))}
       </div>
     </main>
+    </>
   );
 }

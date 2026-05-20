@@ -1,4 +1,7 @@
 import type { Metadata, Viewport } from "next";
+
+// Added for Google site verification
+
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
@@ -20,6 +23,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Pawteller | Premium Growth & Pet Health Insights",
+  // Google site verification
+  other: {
+    "google-site-verification": "ZyaMR3UjskuwYs7Po4SO9sz0NlVrUcelBO4ED4F1-KA",
+  },
   description:
     "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
   metadataBase: new URL("https://pawteller.com"),

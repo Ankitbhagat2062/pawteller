@@ -20,6 +20,7 @@ import type {
   dogLifeStageProps,
   SectionHeaderProps,
 } from "@/lib/types";
+import Script from "next/script";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
   return (
@@ -53,7 +54,15 @@ export default function Home() {
 
   return (
     <>
-      {/* JSON-LD should be emitted in the head via Next Metadata to avoid client script warnings */}
+<Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
+      {/* JSON-LD + gtag should be in head for best practice; using Next Script with ids */}
+      <Script
+        id="jsonld-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+      >
+        {JSON.stringify(jsonLdSchema)}
+      </Script>
       <div className="w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
         <main
           id="home"

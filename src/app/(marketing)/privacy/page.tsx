@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SECTIONS } from "@/lib/constant";
+import Script from "next/script";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
 export const metadata: Metadata = {
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
 
 export default function Privacy() {
   return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
     <div className="w-full min-h-screen dark:bg-zinc-950 font-sans text-slate-900 dark:text-slate-50 pb-16">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <header className="py-8 sm:py-10">
@@ -116,5 +119,6 @@ export default function Privacy() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { toc } from "@/lib/constant";
+import Script from "next/script";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
 export const metadata: Metadata = {
@@ -16,6 +17,8 @@ const lastUpdated = "May 17, 2026";
 
 export default function TermsPage() {
   return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
     <div className="min-h-screen w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50 pb-20">
       <main
         id="terms"
@@ -336,5 +339,6 @@ export default function TermsPage() {
         </section>
       </main>
     </div>
+    </>
   );
 }

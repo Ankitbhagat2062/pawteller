@@ -9,6 +9,7 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 import { trustPrinciples } from "@/lib/constant";
+import Script from "next/script";
 
 // 1. PERFECT SEO SETUP WITH TARGETED SEO PLACEMENT
 export const metadata: Metadata = {
@@ -22,6 +23,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
     <div className="min-h-screen w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
       <main
         id="about"
@@ -322,5 +325,6 @@ export default function AboutPage() {
         </section>
       </main>
     </div>
+    </>
   );
 }

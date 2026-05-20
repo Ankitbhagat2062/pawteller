@@ -1,9 +1,12 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Script from "next/script";
 
 export default function BlogNotFound() {
   return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
     <main className="min-h-screen bg-background flex items-center justify-center">
       <div className="max-w-md mx-auto px-4 text-center">
         <h1 className="text-4xl font-bold text-foreground mb-4">
@@ -21,5 +24,6 @@ export default function BlogNotFound() {
         </Button>
       </div>
     </main>
+    </>
   );
 }
