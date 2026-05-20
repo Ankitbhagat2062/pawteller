@@ -149,7 +149,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {article.totalTime}
                 </span>
                 <Link
-                  href={article.url}
+                  href={article.url} aria-label={`Read articles about ${article.title}`}
                   className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                 >
                   {"Read Article"}

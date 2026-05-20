@@ -14,7 +14,7 @@ export default function BlogNotFound() {
           been moved or deleted.
         </p>
         <Button asChild>
-          <Link href="/blog">
+          <Link href="/blog" aria-label="Move to blog page">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to All Articles
           </Link>

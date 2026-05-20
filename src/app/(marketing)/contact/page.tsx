@@ -38,7 +38,7 @@ export default function Contact() {
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
-              href="#contact-form"
+              href="#contact-form" aria-label="Contact Us"
               className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition duration-150 hover:bg-emerald-700"
             >
               Send a message{" "}
@@ -47,7 +47,7 @@ export default function Contact() {
               </span>
             </Link>
             <Link
-              href="/calculators"
+              href="/calculators" aria-label="Try the calculator "
               className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-zinc-950/30 dark:border-white/10 dark:text-slate-200 dark:hover:bg-zinc-950/50"
             >
               Try a calculator
@@ -214,7 +214,7 @@ export default function Contact() {
             <div className="md:col-span-7">
               <div className="grid gap-4 sm:grid-cols-3">
                 <Link
-                  href="/about"
+                  href="/about" aria-label=" Move to the about page"
                   className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -226,7 +226,7 @@ export default function Contact() {
                 </Link>
 
                 <Link
-                  href="/blog"
+                  href="/blog" aria-label="Read articles about dog"
                   className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -238,7 +238,7 @@ export default function Contact() {
                 </Link>
 
                 <Link
-                  href="/calculators"
+                  href="/calculators" aria-label="Try Dog's Age Calculator"
                   className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                 >
                   <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">

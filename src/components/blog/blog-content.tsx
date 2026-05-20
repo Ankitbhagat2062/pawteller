@@ -19,7 +19,7 @@ export function BlogContent({ content }: BlogContentProps) {
                 return (
                   <Link
                     key={part.replace(' ','')[i]}
-                    href="/calculator/food"
+                    href="/calculator/food" aria-label="Calculate your dog's food"
                     className="text-orange-600 dark:text-orange-400 hover:underline"
                   >
                     {part}
@@ -30,7 +30,7 @@ export function BlogContent({ content }: BlogContentProps) {
                 return (
                   <Link
                     key={i}
-                    href="/calculator/weight"
+                    href="/calculator/weight" aria-label="Calculate how much your dog's weight is equivalent to human weight"
                     className="text-orange-600 dark:text-orange-400 hover:underline"
                   >
                     {part}
@@ -41,7 +41,7 @@ export function BlogContent({ content }: BlogContentProps) {
                 return (
                   <Link
                     key={i}
-                    href="/calculator/age"
+                    href="/calculator/age" aria-label="Calculate how much is dog's age equivalent o human age"
                     className="text-orange-600 dark:text-orange-400 hover:underline"
                   >
                     {part}

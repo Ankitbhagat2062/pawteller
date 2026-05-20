@@ -21,8 +21,8 @@ export function CtaCard() {
         asChild
         className="bg-orange-600 hover:bg-orange-700 text-white"
       >
-        <Link href="/quiz">
-          Take the quiz
+        <Link href="/quiz" aria-label="Take a quiz to find your perfect dog's breed">
+          Take the quiz 
           <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>

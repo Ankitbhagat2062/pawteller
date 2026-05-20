@@ -93,13 +93,14 @@ export default function Home() {
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
                     href="/calculators/dog-growth"
+                    aria-label="Calculate your dog’s growth"
                     className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#df7959] px-7 text-sm font-bold text-white shadow-[0_12px_24px_rgba(170,88,61,0.24)] transition hover:bg-[#cf6848]"
                   >
                     {"Start with Puppy Weight"}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link
-                    href="/quiz"
+                    href="/quiz" aria-label="start a quiz and predict your puppy's adult size"
                     className="inline-flex h-12 items-center justify-center rounded-full border border-[#d2c5bd] bg-[#fbf8f3] px-7 text-sm font-bold text-[#2a1b15] shadow-sm transition hover:bg-white"
                   >
                     {"Find My Breed Match"}
@@ -188,7 +189,7 @@ export default function Home() {
                 return (
                   <Link
                     key={calc.title}
-                    href={calc.link}
+                    href={calc.link} aria-label={`Calculate your ${calc.title}`}
                     className={`group relative flex min-h-55 overflow-hidden rounded-[20px] p-7 text-[#17372f] ring-1 ring-black/5 transition duration-200 hover:-translate-y-0.5 hover:shadow-md sm:min-h-62.5 lg:min-h-0 dark:text-[#e8f1eb] dark:ring-white/10 dark:hover:shadow-none ${card?.bg ?? "bg-white"} ${card?.darkBg ?? "dark:bg-slate-900"} ${card?.className ?? ""}`}
                   >
                     {card?.badge && (
@@ -273,7 +274,7 @@ export default function Home() {
                   asChild
                   className="mt-9 h-12 rounded-full bg-[#e57655] px-7 text-sm font-bold text-white shadow-none hover:bg-[#d96848]"
                 >
-                  <Link href="/quiz">
+                  <Link href="/quiz" aria-label="start a quiz to know about how dog grows different than human">
                     {"Find your perfect breed match"}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
@@ -321,7 +322,7 @@ export default function Home() {
               </div>
               <div className="md:col-span-4 md:text-right">
                 <Link
-                  href="/quiz"
+                  href="/quiz" aria-label="Start the quiz to find which dog breed is best for you"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-slate-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-slate-900"
                 >
                   {" Start The Quiz Now"}
@@ -359,7 +360,7 @@ export default function Home() {
                     asChild
                     className="mt-8 h-11 rounded-full bg-[#315846] px-6 text-xs font-medium text-white shadow-[0_10px_20px_rgba(49,88,70,0.16)] hover:bg-[#294b3b] dark:bg-[#f09a75] dark:text-[#1d140f] dark:shadow-none dark:hover:bg-[#f3a984]"
                   >
-                    <Link href="/quiz">
+                    <Link href="/quiz" aria-label="random quiz to find whether you dog isbest for you or not">
                       {"Take the quiz"}
                       <Sparkles className="h-4 w-4" aria-hidden="true" />
                     </Link>
@@ -394,7 +395,7 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                href="/blog"
+                href="/blog" aria-label="start reading blog about the dog"
                 className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
               >
                 {"View all articles"}
@@ -449,7 +450,7 @@ export default function Home() {
                           {article?.date}
                         </span>
                         <Link
-                          href={`${article.url}`}
+                          href={`${article.url}`} aria-label={` Read article about ${article.title}`}
                           className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                         >
                           {"Read Article"}

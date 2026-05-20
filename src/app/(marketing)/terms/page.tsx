@@ -34,7 +34,7 @@ export default function TermsPage() {
                     {toc.map((item) => (
                       <li key={item.id}>
                         <Link
-                          href={`#${item.id}`}
+                          href={`#${item.id}`} aria-label={`Learn more about ${item.label}`}
                           className="block rounded-xl px-3 py-2 text-slate-700 transition hover:bg-white/80 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-white/5 dark:hover:text-white"
                         >
                           {item.label}
@@ -83,7 +83,7 @@ export default function TermsPage() {
                     {toc.map((item) => (
                       <Link
                         key={item.id}
-                        href={`#${item.id}`}
+                        href={`#${item.id}`} aria-label={`Learn more about ${item.label}`}
                         className="rounded-full bg-white/70 px-3 py-1.5 text-xs font-bold text-emerald-800 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-emerald-200 dark:ring-white/10"
                       >
                         {item.label.split(" ")[0]}
@@ -310,19 +310,19 @@ export default function TermsPage() {
                   <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex flex-wrap gap-2">
                       <Link
-                        href="/privacy"
+                        href="/privacy" aria-label="Read our website privacy Policy"
                         className="inline-flex items-center justify-center rounded-full bg-emerald-500/10 px-5 py-2.5 text-sm font-bold text-emerald-800 ring-1 ring-black/5 transition hover:bg-emerald-500/15 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-white/10"
                       >
                         Privacy Policy
                       </Link>
                       <Link
-                        href="/contact"
+                        href="/contact" aria-label="Give us feedback"
                         className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-800 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-100 dark:ring-white/10"
                       >
                         Contact
                       </Link>
                       <Link
-                        href="/about"
+                        href="/about" aria-label="Learn more about pawteller.com"
                         className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-800 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-100 dark:ring-white/10"
                       >
                         About

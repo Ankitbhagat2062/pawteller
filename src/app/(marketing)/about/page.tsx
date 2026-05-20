@@ -48,13 +48,13 @@ export default function AboutPage() {
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
-                  href="/calculators/dog-age"
+                  href="/calculators/dog-age" aria-label="calculate your dog's age"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
                 >
                   Calculate your dog’s age <span aria-hidden="true">→</span>
                 </Link>
                 <Link
-                  href="/blog"
+                  href="/blog" aria-label="Read article about dog's age"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition hover:bg-white dark:bg-zinc-950/30 dark:border-white/10 dark:text-slate-200 dark:hover:bg-zinc-950/50"
                 >
                   Read practical guides{" "}
@@ -232,7 +232,7 @@ export default function AboutPage() {
               <div className="lg:col-span-5">
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Link
-                    href="/calculators/dog-age"
+                    href="/calculators/dog-food" aria-label="calculate how much food you need for your dog"
                     className="flex items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                   >
                     <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -243,7 +243,7 @@ export default function AboutPage() {
                     </span>
                   </Link>
                   <Link
-                    href="/blog"
+                    href="/blog" aria-label="Read articles about Dog's food"
                     className="flex items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                   >
                     <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -254,7 +254,7 @@ export default function AboutPage() {
                     </span>
                   </Link>
                   <Link
-                    href="/quiz"
+                    href="/quiz" aria-label="Take an quiz for how much you know about Dog's food"
                     className="flex items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20 sm:col-span-2"
                   >
                     <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -312,7 +312,7 @@ export default function AboutPage() {
             </div>
             <div className="md:col-span-4 md:text-right">
               <Link
-                href="/calculators/dog-food"
+                href="/calculators/dog-growth" aria-label="Take quiz about know about Dog's Growth"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
               >
                 Start with a calculator <span aria-hidden="true">→</span>

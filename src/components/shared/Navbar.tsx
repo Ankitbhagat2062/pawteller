@@ -39,6 +39,7 @@ const Navbar = () => {
                 <Link
                   key={label}
                   href={href}
+                  aria-label={`Navigate to ${label}`}
                   className="text-sm font-semibold text-navy/80 hover:text-navy dark:text-navy-50/80 dark:hover:text-navy-50"
                 >
                   {label}
@@ -62,7 +63,7 @@ const Navbar = () => {
           <ThemeToggle />
 
           <Link
-            href="/calculators"
+            href="/calculators" aria-label="Find the best name for your dog"
             className="hidden items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:inline-flex"
           >
             {"Start Calculator"}

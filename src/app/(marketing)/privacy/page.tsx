@@ -53,7 +53,7 @@ export default function Privacy() {
                 {SECTIONS.map((section) => (
                   <li key={section.id}>
                     <Link
-                      href={`#${section.id}`}
+                      href={`#${section.id}`} aria-label={`Learn more about ${section.title}`}
                       className="block text-sm font-semibold text-slate-600 transition duration-150 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
                     >
                       {section.title}
@@ -99,7 +99,7 @@ export default function Privacy() {
                   </div>
                   <div className="flex items-center">
                     <a
-                      href="mailto:support@pawteller.com"
+                      href="mailto:support@pawteller.com" aria-label="Email us"
                       className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-600 px-5 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
                     >
                       Contact Support

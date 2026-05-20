@@ -12,7 +12,7 @@ export function BlogHeader({ category, readTime }: BlogHeaderProps) {
     <header className="mb-6 md:mb-8">
       <div className="flex items-center justify-between mb-4 md:mb-6">
         <Link
-          href="/blog"
+          href="/blog" aria-label="Move to articles page"
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
