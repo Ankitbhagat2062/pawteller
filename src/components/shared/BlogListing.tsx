@@ -68,7 +68,7 @@ function BlogCard({ post }: { post: BlogPost }) {
     </article>
   );
 }
-
+let post : BlogPost;
 export default function BlogListing() {
   return (
     <section
@@ -104,14 +104,16 @@ export default function BlogListing() {
           {blogPosts.length > 0 ? (
             (() => {
               const randomIndex = Math.floor(Math.random() * blogPosts.length);
-              const post = blogPosts[randomIndex];
+              post = blogPosts[randomIndex];
               return <BlogCard key={post.url} post={post} />;
             })()
           ) : null}
         </div>
       </div>
       <div className="mt-8 max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((article) => (
+        {blogPosts
+          .filter((article) => article.url !== post.url)
+          .map((article) => (
           <article
             key={article.category}
             className={`mb-6 inline-block w-full break-inside-avoid rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800 
