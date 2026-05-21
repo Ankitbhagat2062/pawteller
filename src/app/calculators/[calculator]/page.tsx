@@ -6,6 +6,7 @@ import DogName from "@/components/calculators/DogName";
 import DogPregnancy from "@/components/calculators/DogPregnancy";
 import PuppyWeight from "@/components/calculators/PuppyWeight";
 import Script from "next/script";
+import { notFound } from "next/navigation";
 
 const SLUG_TO_COMPONENT = {
   "dog-age": DogAge,
@@ -24,22 +25,30 @@ type PageProps = {
   };
 };
 
-
 export const metadata: Metadata = {
-  title: 'Dog Age Calculator | Convert Your Dog\'s Age to Human Years',
-  description: 'Accurate dog age calculator using modern veterinary science. Convert your dog\'s age to human years based on breed size. Learn how dog aging works scientifically.',
-  keywords: ['dog age calculator', 'dog years to human years', 'dog age converter', 'pet age calculator', 'veterinary science'],
-  authors: [{ name: 'Pet Care Team' }],
+  title: "Dog Age Calculator | Convert Your Dog's Age to Human Years",
+  description:
+    "Accurate dog age calculator using modern veterinary science. Convert your dog's age to human years based on breed size. Learn how dog aging works scientifically.",
+  keywords: [
+    "dog age calculator",
+    "dog years to human years",
+    "dog age converter",
+    "pet age calculator",
+    "veterinary science",
+  ],
+  authors: [{ name: "Pet Care Team" }],
   openGraph: {
-    title: 'Dog Age Calculator | Convert Your Dog\'s Age to Human Years',
-    description: 'Discover your dog\'s human age equivalent with our scientific dog age calculator based on veterinary research.',
-    type: 'website',
-    locale: 'en_US',
+    title: "Dog Age Calculator | Convert Your Dog's Age to Human Years",
+    description:
+      "Discover your dog's human age equivalent with our scientific dog age calculator based on veterinary research.",
+    type: "website",
+    locale: "en_US",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Dog Age Calculator',
-    description: 'Find out how old your dog is in human years using science-based calculations.',
+    card: "summary_large_image",
+    title: "Dog Age Calculator",
+    description:
+      "Find out how old your dog is in human years using science-based calculations.",
   },
   robots: {
     index: true,
@@ -47,37 +56,39 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   alternates: {
-    canonical: 'https://www.pawteller.com',
+    canonical: "https://www.pawteller.com",
   },
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
       },
       {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
       },
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: "/icon.svg",
+        type: "image/svg+xml",
       },
     ],
-    apple: '/apple-icon.png',
+    apple: "/apple-icon.png",
   },
-}
+};
 
 export default async function CalculatorPage({ params }: PageProps) {
-  const {calculator} = await params;
-  const normalizedSlug = calculator?.toLowerCase() as CalculatorSlug | undefined;
-console.log(calculator)
+  const { calculator } = await params;
+  const normalizedSlug = calculator?.toLowerCase() as
+    | CalculatorSlug
+    | undefined;
+  console.log(calculator);
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
@@ -88,22 +99,19 @@ console.log(calculator)
 
   return (
     <>
-    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
-    <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-
-      {Component ? (
-        <section className="">
-          <Component />
-        </section>
-      ) : (
-        <section className="mt-6">
-          <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
-            Calculator not found for this link. Please choose one of the
-            supported tools.
-          </p>
-        </section>
-      )}
-    </main>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+      ></Script>
+      <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        {Component ? (
+          <section className="">
+            <Component />
+          </section>
+        ) : (
+          notFound()
+        )}
+      </main>
     </>
   );
 }

@@ -32,10 +32,7 @@ function BlogCard({ post }: { post: BlogPost }) {
         {/* Content Container */}
         <div className="flex flex-1 flex-col justify-center gap-3 p-6 md:gap-4 md:p-8 lg:p-10">
           {/* Banner/Category */}
-          <span
-            className="text-xs font-semibold uppercase tracking-widest text-blog-accent"
-            aria-label="Article categories and reading time"
-          >
+          <span className="text-xs font-semibold uppercase tracking-widest text-blog-accent">
             {post.totalTime}
           </span>
 
@@ -68,7 +65,10 @@ function BlogCard({ post }: { post: BlogPost }) {
     </article>
   );
 }
-let post : BlogPost;
+const featuredPost =
+    blogPosts.length > 0
+      ? blogPosts[Math.floor(Math.random() * blogPosts.length)]
+      : undefined;
 export default function BlogListing() {
   return (
     <section
@@ -101,67 +101,61 @@ export default function BlogListing() {
           role="feed"
           aria-label="Blog articles"
         >
-          {blogPosts.length > 0 ? (
-            (() => {
-              const randomIndex = Math.floor(Math.random() * blogPosts.length);
-              post = blogPosts[randomIndex];
-              return <BlogCard key={post.url} post={post} />;
-            })()
-          ) : null}
+         {featuredPost ? <BlogCard key={featuredPost.url} post={featuredPost} /> : null}
         </div>
       </div>
       <div className="mt-8 max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {blogPosts
-          .filter((article) => article.url !== post.url)
+          .filter((article) => article.url !== featuredPost?.url)
           .map((article) => (
-          <article
-            key={article.category}
-            className={`mb-6 inline-block w-full break-inside-avoid rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800 
+            <article
+              key={article.url}
+              className={`mb-6 inline-block w-full break-inside-avoid rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800 
                 `}
-          >
-            <div className="flex min-h-full flex-col justify-between">
-              <div>
-                <div className="overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                  <div className="relative aspect-video w-full">
-                    <Image
-                      src={article.imageSrc || "/dog-1.png"}
-                      alt={article.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 350px"
-                      className="object-cover"
-                      loading="lazy"
-                    />
+            >
+              <div className="flex min-h-full flex-col justify-between">
+                <div>
+                  <div className="overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                    <div className="relative aspect-video w-full">
+                      <Image
+                        src={article.imageSrc || "/dog-1.png"}
+                        alt={article.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 350px"
+                        className="object-cover"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
+
+                  <div className="mt-4 flex items-center justify-between gap-3">
+                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                      {article.totalTime} min read
+                    </span>
+                  </div>
+
+                  <h3 className="mt-3 text-base font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                    {article.title}
+                  </h3>
+                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                    {article.description}
+                  </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                    {article.totalTime} min read
+                <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
+                  <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
+                    {article.totalTime}
                   </span>
+                  <Link
+                    href={article.url} aria-label={`Read articles about ${article.title}`}
+                    className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                  >
+                    {"Read Article"}
+                  </Link>
                 </div>
-
-                <h3 className="mt-3 text-base font-bold tracking-tight text-slate-900 dark:text-slate-50">
-                  {article.title}
-                </h3>
-                <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                  {article.description}
-                </p>
               </div>
-
-              <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
-                <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
-                  {article.totalTime}
-                </span>
-                <Link
-                  href={`/${article.url}`} aria-label={`Read articles about ${article.title}`}
-                  className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
-                >
-                  {"Read Article"}
-                </Link>
-              </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
       </div>
     </section>
   );

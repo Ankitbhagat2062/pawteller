@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { QuizComponent } from '@/components/quiz/QuizComponent';
+import { QuizComponent } from "@/components/quiz/QuizComponent";
 
 // 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE QUIZ
 export const metadata: Metadata = {
   title: "Interactive Dog Breed & Health Quiz | pawteller",
-  description: "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
-  
+  description:
+    "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
+
   // Prevents duplicate URL content indexing penalties
   alternates: {
     canonical: "https://pawteller.com/quiz",
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
   // Rich visual configuration for social media platforms (Facebook, LinkedIn, Discord)
   openGraph: {
     title: "Interactive Dog Breed & Health Quiz | pawteller",
-    description: "Test your pet care knowledge and unlock customized health insights for your dog.",
+    description:
+      "Test your pet care knowledge and unlock customized health insights for your dog.",
     url: "https://pawteller.com/quiz",
     siteName: "pawteller",
     locale: "en_US",
@@ -33,7 +35,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Interactive Dog Breed & Health Quiz | pawteller",
-    description: "Test your pet care knowledge and unlock customized health insights for your dog.",
+    description:
+      "Test your pet care knowledge and unlock customized health insights for your dog.",
     images: ["https://pawteller.com/og-quiz.png"],
   },
 

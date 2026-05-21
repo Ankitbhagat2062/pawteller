@@ -14,7 +14,7 @@ export interface CalculatorProps {
 }
 
 export interface BlogPostPageProps {
-  params: Promise<{ blogPost: string }>
+  params: Promise<{ blogPost: string }>;
 }
 
 export interface homeImageProps {
@@ -57,21 +57,16 @@ export interface featuredCalculatorCardProps {
   imageAlt?: string;
   badge?: string;
 }
-export interface contentProps {
-  title: string;
-  description: string;
-  time?: string;
-}
 export interface BlogPost {
   imageSrc: string;
   title: string;
   description: string;
   url: string;
   totalTime: string;
-  content: contentProps[],
-  category:string,
-  date?:string,
-  bgColor?:string
+  content: contentProps[];
+  category: string;
+  date?: string;
+  bgColor?: string;
 }
 export interface contentProps {
   title: string;
@@ -84,9 +79,9 @@ interface stepsProps {
   options: string[];
 }
 export interface quizDataProps {
-  banner:string;
-  title:string;
-  totalQuestions:number;
-  estimatedTime:string;
-  steps: stepsProps[]
+  banner: string;
+  title: string;
+  totalQuestions: number;
+  estimatedTime: string;
+  steps: stepsProps[];
 }

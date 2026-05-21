@@ -17,7 +17,10 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+      ></Script>
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 font-sans">
         {/* Hero Header Area */}
         <section
@@ -35,13 +38,14 @@ export default function Contact() {
             </h1>
 
             <p className="mt-4 text-base leading-7 text-slate-600 dark:text-zinc-300 md:text-lg">
-              Have questions, feedback, partnerships, or content suggestions? Send
-              us a note and we will get back to you with clear next steps.
+              Have questions, feedback, partnerships, or content suggestions?
+              Send us a note and we will get back to you with clear next steps.
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
-                href="#contact-form" aria-label="Contact Us"
+                href="#contact-form"
+                aria-label="Contact Us"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition duration-150 hover:bg-emerald-700"
               >
                 Send a message{" "}
@@ -218,7 +222,8 @@ export default function Contact() {
               <div className="md:col-span-7">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Link
-                    href="/about" aria-label=" Move to the about page"
+                    href="/about"
+                    aria-label=" Move to the about page"
                     className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                   >
                     <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -230,7 +235,8 @@ export default function Contact() {
                   </Link>
 
                   <Link
-                    href="/blog" aria-label="Read articles about dog"
+                    href="/blog"
+                    aria-label="Read articles about dog"
                     className="flex min-h-16 items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition duration-150 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
                   >
                     <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">

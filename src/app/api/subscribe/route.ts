@@ -6,14 +6,14 @@ import Subscriber from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-
 export async function POST(request: Request) {
   if (!RESEND_API_KEY) {
     return NextResponse.json(
-      { error: 
-        "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" 
+      {
+        error:
+          "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
   const resend = new Resend(RESEND_API_KEY);
@@ -24,9 +24,16 @@ export async function POST(request: Request) {
 
     await connectToDatabase();
 
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+    const fromMail = process.env.FROM_MAIL;
+    if (!appUrl || !fromMail) {
+      return NextResponse.json(
+        { error: "Missing NEXT_PUBLIC_APP_URL or FROM_MAIL env var" },
+        { status: 500 },
+      );
+    }
     const token = crypto.randomBytes(32).toString("hex");
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/verify?token=${token}`;
-
+    const verificationUrl = `${appUrl}/api/verify?token=${token}`;
     // Find existing unverified user or create a new entry
     await Subscriber.findOneAndUpdate(
       { email: email.toLowerCase() },
@@ -36,7 +43,7 @@ export async function POST(request: Request) {
 
     // Send the Verification Email via Resend
     await resend.emails.send({
-      from: `<${process.env.FROM_MAIL}>`,
+      from: `<${fromMail}>`,
       to: email,
       subject: "Verify your subscription",
       html: `
