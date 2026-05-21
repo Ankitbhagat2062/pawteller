@@ -85,3 +85,15 @@ export interface quizDataProps {
   estimatedTime: string;
   steps: stepsProps[];
 }
+
+
+export interface CalculatorState {
+  weight: number
+  lifeStage: string
+  activityLevel: string
+}
+
+export interface Results {
+  dailyCalories: number
+  cupsPerDay: number
+}

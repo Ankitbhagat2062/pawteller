@@ -454,3 +454,18 @@ export const quizData: quizDataProps = {
     },
   ],
 };
+
+
+export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
+  'Puppy': 2.5,
+  'Adult': 1.8,
+  'Senior': 1.4,
+  'Pregnant': 3.0,
+}
+
+export const ACTIVITY_MULTIPLIERS: Record<string, number> = {
+  'Sedentary': 1.2,
+  'Moderate walks': 1.5,
+  'Very active': 1.8,
+  'Extremely active': 2.0,
+}
