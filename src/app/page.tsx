@@ -54,7 +54,6 @@ export default function Home() {
 
   return (
     <>
-<Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
       {/* JSON-LD + gtag should be in head for best practice; using Next Script with ids */}
       <Script
         id="jsonld-schema"
