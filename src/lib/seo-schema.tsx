@@ -1,33 +1,56 @@
 'use client';
 
 export function SchemaOrg() {
-  const schema = {
+  const baseUrl = 'https://pawteller.com';
+
+  // Brand-wide schema (site/app). Keep it stable and accurate.
+  const webAppSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'Dog Age Calculator',
-    url: 'https://dogagecalculator.com',
-    description: 'Calculate your dog\'s age in human years using veterinary science. Accurate dog age converter based on breed size.',
+    name: 'Pawteller',
+    url: baseUrl,
+    description:
+      'Smart, science-informed pet calculators and expert dog care insights to help dog parents estimate growth, interpret dog years, and plan nutrition and wellness.',
     applicationCategory: 'HealthApplication',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '250'
-    },
+    operatingSystem: 'Web',
+    inLanguage: 'en-US',
+    browserRequirements: 'Requires JavaScript enabled',
     offers: {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'USD'
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '250',
     },
     author: {
       '@type': 'Organization',
       name: 'Pet Care Experts',
-      url: 'https://dogagecalculator.com'
+      url: baseUrl,
     },
     datePublished: '2024-01-01',
     dateModified: '2024-05-20',
-    inLanguage: 'en-US'
   };
 
+  // Site search links (helps crawlers discover internal content patterns)
+  const searchSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Pawteller',
+    url: baseUrl,
+    description:
+      'Use Pawteller tools and guides to quickly estimate dog growth and understand dog health topics.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${baseUrl}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  // FAQ schema: relevant to dog year conversion / aging questions.
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -37,42 +60,56 @@ export function SchemaOrg() {
         name: 'Is the "multiply by 7" rule accurate?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No, this outdated rule oversimplifies dog aging. Dogs age much faster in their first two years, then the rate slows down. Additionally, breed size significantly affects how quickly dogs age.'
-        }
+          text: 'No. The “multiply by 7” rule is an oversimplification. Dogs age faster in their first couple of years, and aging rates vary by breed size and development stage.',
+        },
       },
       {
         '@type': 'Question',
-        name: 'Why do large dogs age faster than small dogs?',
+        name: 'Why do large dogs age differently than small dogs?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Larger dogs have faster metabolisms and shorter lifespans. They reach physical maturity quickly and experience more rapid cellular aging.'
-        }
+          text: 'Because breed size affects growth speed, metabolism, and overall lifespan. Larger breeds typically reach maturity sooner, which can change how dog years map to human years.',
+        },
       },
       {
         '@type': 'Question',
-        name: 'When is my dog considered a senior?',
+        name: 'When is a dog considered a senior?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'A dog is typically considered a senior between 45-65 human years old (approximately 7-10 dog years depending on size).'
-        }
+          text: 'Many guidelines place senior status roughly in the 45–65 human-year range, but the exact timing can vary depending on size and health.',
+        },
       },
       {
         '@type': 'Question',
-        name: 'How often should I take my senior dog to the vet?',
+        name: 'How often should senior dogs see the vet?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Senior dogs should visit the veterinarian at least twice a year for wellness exams. More frequent visits may be needed if your dog has health conditions.'
-        }
-      }
-    ]
+          text: 'A common recommendation is at least twice a year for wellness exams for senior dogs. Your veterinarian may recommend more frequent visits if your dog has conditions or changing symptoms.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Do dog year calculators replace veterinary advice?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'No. Dog year calculators are informational tools. They can help you understand aging trends, but diagnosis, treatment, and medical decisions should be made with a licensed veterinarian.',
+        },
+      },
+    ],
   };
 
+  // Avoid schema markup collisions by keeping each type in its own script tag.
   return (
     <>
       <script
         type="application/ld+json"
         suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(searchSchema) }}
       />
       <script
         type="application/ld+json"
@@ -82,3 +119,4 @@ export function SchemaOrg() {
     </>
   );
 }
+

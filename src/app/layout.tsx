@@ -68,7 +68,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 bg-gradient-to-br from-background via-background to-accent/5 transition-colors duration-300">
+      <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 bg-linear-to-br from-background via-background to-accent/5 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
           <div className="flex-1 flex flex-col bg-[#FDF8F1] dark:bg-black">
