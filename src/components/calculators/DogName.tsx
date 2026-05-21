@@ -1,10 +1,5 @@
-
 const DogName = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default DogName
+export default DogName;

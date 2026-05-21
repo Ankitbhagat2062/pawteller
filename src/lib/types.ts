@@ -1,44 +1,39 @@
+import type { LucideIcon } from "lucide-react";
 
-type badgeType = {
+export type badgeType = {
   bg: string;
   fg: string;
-  icon: React.ComponentType<any>;
-}
+  icon: LucideIcon;
+};
 
-interface CalculatorProps {
+export interface CalculatorProps {
   title: string;
   description: string;
   link: string;
   badge: badgeType;
 }
 
-interface ArticleProps {
-  category: string;
-  title: string;
-  excerpt: string;
-  minutes: number;
-  date: string;
-  imageSrc: string;
-  bgColor: string;
+export interface BlogPostPageProps {
+  params: Promise<{ blogPost: string }>;
 }
 
-interface homeImageProps {
+export interface homeImageProps {
   src: string;
   alt: string;
 }
 
-interface featureProps {
+export interface featureProps {
   title: string;
   href: string;
 }
 
-interface SectionProps {
+export interface SectionProps {
   id: string;
   title: string;
   content: string;
 }
 
-interface dogLifeStageProps {
+export interface dogLifeStageProps {
   icon: string;
   age: string;
   stage: string;
@@ -46,12 +41,12 @@ interface dogLifeStageProps {
   className: string;
 }
 
-interface SectionHeaderProps {
+export interface SectionHeaderProps {
   eyebrow?: string;
   title: string;
 }
 
-interface featuredCalculatorCardProps {
+export interface featuredCalculatorCardProps {
   title: string;
   displayTitle: string;
   description: string;
@@ -61,4 +56,44 @@ interface featuredCalculatorCardProps {
   imageSrc?: string;
   imageAlt?: string;
   badge?: string;
+}
+export interface BlogPost {
+  imageSrc: string;
+  title: string;
+  description: string;
+  url: string;
+  totalTime: string;
+  content: contentProps[];
+  category: string;
+  date?: string;
+  bgColor?: string;
+}
+export interface contentProps {
+  title: string;
+  description: string;
+  time?: string;
+}
+
+interface stepsProps {
+  question: string;
+  options: string[];
+}
+export interface quizDataProps {
+  banner: string;
+  title: string;
+  totalQuestions: number;
+  estimatedTime: string;
+  steps: stepsProps[];
+}
+
+
+export interface CalculatorState {
+  weight: number
+  lifeStage: string
+  activityLevel: string
+}
+
+export interface Results {
+  dailyCalories: number
+  cupsPerDay: number
 }

@@ -2,8 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
-import  Navbar from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
+import { SchemaOrg } from "@/lib/seo-schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,6 +21,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Pawteller | Premium Growth & Pet Health Insights",
+  // Google site verification
+  other: {
+    "google-site-verification": "ZyaMR3UjskuwYs7Po4SO9sz0NlVrUcelBO4ED4F1-KA",
+  },
   description:
     "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
   metadataBase: new URL("https://pawteller.com"),
@@ -47,10 +52,28 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`h-full font-sans antialiased ${inter.variable}`}
     >
-      <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950">
+      <head>
+        <SchemaOrg />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 bg-linear-to-br from-background via-background to-accent/5 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          <div className="flex-1 flex flex-col bg-[#FDF8F1] dark:bg-black">{children}</div>
+          <div className="flex-1 flex flex-col bg-[#FDF8F1] dark:bg-black">
+            {children}
+          </div>
           <Footer />
         </ThemeProvider>
       </body>

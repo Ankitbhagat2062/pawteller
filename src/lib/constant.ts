@@ -6,6 +6,16 @@ import {
   Sparkles,
   Utensils,
 } from "lucide-react";
+import type {
+  BlogPost,
+  CalculatorProps,
+  dogLifeStageProps,
+  featuredCalculatorCardProps,
+  featureProps,
+  homeImageProps,
+  SectionProps,
+} from "./types";
+import type { quizDataProps } from "@/lib/types";
 
 export const calculators: CalculatorProps[] = [
   {
@@ -46,36 +56,168 @@ export const calculators: CalculatorProps[] = [
   },
 ];
 
-export const articles: ArticleProps[] = [
+export const blogPosts: BlogPost[] = [
   {
-    category: "Nutrition",
-    title: "How to Calculate Daily Calories for Growing Dogs",
-    excerpt:
-      "A simple way to estimate calories by weight, activity, and growth stage—then adjust with your vet’s guidance.",
-    minutes: 6,
-    date: "Updated weekly",
-    imageSrc: "/dog-1.png",
-    bgColor: "bg-[#F5C6A5]"
+    title: "How fast do puppies grow? A week-by-week guide",
+    description:
+      "From wobbly first steps to full-grown floof — here's exactly what to expect in every stage.",
+    imageSrc: "https://images.unsplash.com/photo-1591160690555-5debfba289f0",
+    url: "/blog/puppy-growth-tracker",
+    totalTime: "Featured · Growth · 6 min",
+    content: [
+      {
+        title: "The newborn phase",
+        description:
+          "Newborn puppies are blind, deaf, and entirely dependent on their mother. They spend 90% of their time sleeping and the other 10% nursing. By week 2, eyes start to open.",
+        time: "Week 1-2",
+      },
+      {
+        title: "First steps",
+        description:
+          "Tiny legs start working. Puppies begin to walk, play, and respond to sound. Solid food is introduced around 4 weeks.",
+        time: "Week 3-4",
+      },
+      {
+        title: "The socialization window",
+        description:
+          "This is the most important developmental window of your puppy’s life. Positive exposure to people, sounds, and other animals shapes who they’ll become.",
+        time: "Week 5-8",
+      },
+      {
+        time: "Month 3–6",
+        title: "The growth sprint",
+        description:
+          "Puppies hit their biggest growth phase. Large breeds may gain 2–4 lbs per week. Use our Puppy Weight Calculator to track their curve.",
+      },
+      {
+        time: "Month 6–12",
+        title: "Adolescent dog",
+        description:
+          " Growth slows. Sexual maturity arrives. Training matters now more than ever — puppies test boundaries like teenagers.",
+      },
+      {
+        time: "Year 1–2 ",
+        title: " Adult dog",
+        description:
+          "Most small/medium breeds are fully grown by 12 months. Large/giant breeds may grow until 18–24 months.",
+      },
+    ],
+    category: "Growth",
+    date: "Updated Weekly",
+    bgColor: "bg-[#F5C6A5]",
   },
   {
+    title: "Decoding dog years: the science behind aging",
+    description:
+      "Why the “multiply by 7” rule is wrong, and what to use instead.",
+    imageSrc: "https://images.unsplash.com/photo-1523480717984-24cba35ae1ef",
+    url: "/blog/dog-years-to-human-years",
+    totalTime: "Health · 4 min",
     category: "Health",
-    title: "From Puppy to Senior: Growth Milestones That Matter",
-    excerpt:
-      "A practical timeline of what “normal” growth can look like—and signs to discuss with your veterinarian early.",
-    minutes: 8,
-    date: "Updated weekly",
-    imageSrc: "/dog-2.png",
-    bgColor: "bg-[#C6D9C6]"
+    date: "Updated Weekly",
+    bgColor: "bg-[#C6D9C6]",
+    content: [
+      {
+        title: "The 7-year myth",
+        description:
+          "The popular “1 dog year = 7 human years” rule comes from rough lifespan averages — not biology. Dogs don’t age linearly.",
+      },
+      {
+        title: "The real formula",
+        description:
+          "Year 1 ≈ 15 human years. Year 2 adds 9. After that, small breeds age ~4 years/year, medium ~5, large ~6, giant ~7. Our Dog Age Calculator uses this veterinary framework.",
+      },
+      {
+        title: "Why bigger dogs age faster",
+        description:
+          "Researchers think it’s tied to faster cell division and shorter telomere length in large breeds. A Great Dane at 6 is biologically similar to a Chihuahua at 10.",
+      },
+      {
+        title: "When to call your dog “senior”",
+        description:
+          "Small breeds: 10–11. Medium: 8–9. Large: 7–8. Giant: 5–6. Senior care — joint support, slower food, more vet visits — should start then.",
+      },
+    ],
   },
   {
-    category: "Breeds",
-    title: "Understanding Breed Size: Small, Medium, and Large",
-    excerpt:
-      "Breed size affects growth pace and adult weight. Use these insights to set realistic expectations.",
-    minutes: 5,
-    date: "Updated weekly",
-    imageSrc: "/dog-3.png",
-    bgColor: "bg-[#F1D9A8]"
+    title: "Choosing the right breed: 7 questions to ask first",
+    description:
+      "Before falling for that adorable face, run through this checklist.",
+    imageSrc: "https://images.unsplash.com/photo-1560743641-3914f2c45636",
+    url: "/blog/puppy-training-basics",
+    totalTime: "Training · Behavior · 8 min",
+    category: "Lifestyle",
+    date: "Updated Weekly",
+    bgColor: "bg-[#F1D9A8]",
+    content: [
+      {
+        title: "1. How much daily exercise can you guarantee?",
+        description:
+          "A Border Collie needs 2+ hours daily. A Bulldog is happy with 30 minutes. Mismatch = unhappy dog + frustrated human.",
+      },
+      {
+        title: "2. How much space do you have?",
+        description:
+          "Apartments suit small/medium low-energy breeds. Big yards suit working breeds.",
+      },
+      {
+        title: "3. Allergy or shedding concerns?",
+        description:
+          "Poodles, Bichons, and Schnauzers shed minimally. Huskies and Golden Retrievers shed constantly.",
+      },
+      {
+        title: "4. Family situation?",
+        description:
+          "Some breeds adore kids (Labs, Goldens, Beagles). Others prefer adult-only homes.",
+      },
+      {
+        title: "5. Experience level?",
+        description:
+          "First-time owner? Skip Akitas and Cane Corsos. Start with a Cavalier King Charles or Lab.",
+      },
+      {
+        title: "6. Time budget?",
+        description:
+          "Long-coated breeds need weekly grooming. Working breeds need daily mental stimulation.",
+      },
+      {
+        title: "7. Lifespan expectations?",
+        description:
+          "Small breeds often live 14–16 years. Giants average 7–9. Plan emotionally and financially.",
+      },
+    ],
+  },
+  {
+    title: "Feeding your puppy: portions that actually work",
+    description: "A simple framework for calculating calories at every stage.",
+    imageSrc: "https://images.unsplash.com/photo-1444212477490-ca407925329e",
+    url: "/blog/feeding-your-puppy",
+    totalTime: "Nutrition 🕐  5 min",
+    category: "Nutrition",
+    date: "Updated Weekly",
+    bgColor: "bg-[#F1D9A8]",
+    content: [
+      {
+        title: "Start with RER",
+        description:
+          "Resting Energy Requirement = 70 × (weight in kg)^0.75. That’s the baseline calories your dog burns just existing.",
+      },
+      {
+        title: "Then multiply by life-stage factor",
+        description:
+          "Puppies under 4 months: RER × 3. Puppies 4–9 months: RER × 2.5. Puppies 9–12 months: RER × 2. Active adults: RER × 1.6. Couch potatoes: RER × 1.4.",
+      },
+      {
+        title: "Convert to cups",
+        description:
+          "Most dry kibble is around 350 kcal/cup. Always check your bag — premium foods can be 400+. Our Dog Food Calculator handles this for you.",
+      },
+      {
+        title: "How many meals?",
+        description:
+          "Puppies under 4 months: 4 small meals. Older puppies: 3 meals. Adults: 2 meals. Splitting reduces tummy upset and stabilizes energy.",
+      },
+    ],
   },
 ];
 
@@ -97,7 +239,11 @@ export const features: featureProps[] = [
   { title: "Feeding Guidelines", href: "/calculators/dog-food" },
 ];
 
-export const trustPrinciples: { title: string; description: string; icon: string }[] = [
+export const trustPrinciples: {
+  title: string;
+  description: string;
+  icon: string;
+}[] = [
   {
     title: "Simple Tools",
     description:
@@ -124,7 +270,7 @@ export const trustPrinciples: { title: string; description: string; icon: string
   },
 ] as const;
 
-export const toc : {id : string , label : string }[] = [
+export const toc: { id: string; label: string }[] = [
   { id: "acceptance", label: "Acceptance of Terms" },
   { id: "calculators", label: "Use of Calculators" },
   {
@@ -198,7 +344,6 @@ export const SECTIONS: SectionProps[] = [
   },
 ] as const;
 
-
 export const featuredCalculatorCards: featuredCalculatorCardProps[] = [
   {
     title: "Dog Age Calculator",
@@ -215,7 +360,7 @@ export const featuredCalculatorCards: featuredCalculatorCardProps[] = [
     bg: "bg-[#c6d9c6]",
     darkBg: "dark:bg-[#21372b]",
     className: "lg:row-span-2",
-    imageSrc: "/dog-1.png",
+    imageSrc: "https://images.unsplash.com/photo-1591160690555-5debfba289f0",
     imageAlt: "Golden retriever puppy lying down",
     badge: "Most Loved",
   },
@@ -276,3 +421,51 @@ export const dogLifeStages: dogLifeStageProps[] = [
     className: "lg:mt-14",
   },
 ] as const;
+
+export const quizData: quizDataProps = {
+  banner: "The Breed Match Quiz",
+  title: "Which dog breed fits your life?",
+  totalQuestions: 6,
+  estimatedTime: "2 minutes",
+  steps: [
+    {
+      question: "What's your home like?",
+      options: ["Apartment", "House with yard"],
+    },
+    {
+      question: "How active is your lifestyle?",
+      options: ["Mostly chill", "Daily walks", "Always on the move"],
+    },
+    {
+      question: "Kids at home?",
+      options: ["Yes, little ones", "No kids"],
+    },
+    {
+      question: "First-time dog owner?",
+      options: ["First-timer", "Experienced"],
+    },
+    {
+      question: "Shedding tolerance?",
+      options: ["Low shed please", "Shedding is fine"],
+    },
+    {
+      question: "Preferred size?",
+      options: ["Small", "Medium", "Large", "Any size"],
+    },
+  ],
+};
+
+
+export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
+  'Puppy': 2.5,
+  'Adult': 1.8,
+  'Senior': 1.4,
+  'Pregnant': 3.0,
+}
+
+export const ACTIVITY_MULTIPLIERS: Record<string, number> = {
+  'Sedentary': 1.2,
+  'Moderate walks': 1.5,
+  'Very active': 1.8,
+  'Extremely active': 2.0,
+}
