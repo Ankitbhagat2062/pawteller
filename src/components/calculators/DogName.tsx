@@ -1,5 +1,7 @@
+import { DogNameGenerator } from "./dogNameComponents/DogNameGenerator";
+
 const DogName = () => {
-  return <div></div>;
+  return <DogNameGenerator />;
 };
 
 export default DogName;

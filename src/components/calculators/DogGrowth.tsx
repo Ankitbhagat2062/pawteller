@@ -1,13 +1,13 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FooterSection } from "@/components/calculators/doggrowthcomponents/DogGrowthFooterSection";
+import { MaturitySection } from "@/components/calculators/doggrowthcomponents/MaturitySection";
+import { PuppyForm } from "@/components/calculators/doggrowthcomponents/PuppyForm";
+import { ResultCard } from "@/components/calculators/doggrowthcomponents/ResultCard";
 import { calculatePuppyGrowth } from "@/lib/constant";
 import type { GrowthInfo } from "@/lib/types";
-import { FooterSection } from "@/components/shared/DogGrowthFooterSection";
-import { MaturitySection } from "@/components/shared/MaturitySection";
-import { PuppyForm } from "@/components/shared/PuppyForm";
-import { ResultCard } from "@/components/shared/ResultCard";
 
 const PUPPY_IMAGE =
   "https://images.unsplash.com/photo-1633722715463-d30628cff756?w=200&h=200&fit=crop";
@@ -19,7 +19,11 @@ export default function DogGrowth() {
   const [initialized, setInitialized] = useState(false);
 
   // 1. Keep handleCalculate as a plain, clean function
-  const handleCalculate = (breed: string, ageMonths: number, weightLbs: number) => {
+  const handleCalculate = (
+    breed: string,
+    ageMonths: number,
+    weightLbs: number,
+  ) => {
     setLoading(true);
     setError(null);
 

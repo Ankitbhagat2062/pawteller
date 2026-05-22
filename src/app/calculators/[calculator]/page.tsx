@@ -88,7 +88,7 @@ export default async function CalculatorPage({ params }: PageProps) {
   const normalizedSlug = calculator?.toLowerCase() as
     | CalculatorSlug
     | undefined;
-  
+
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;

@@ -105,3 +105,25 @@ export interface GrowthInfo {
   monthsToMaturity: number;
   warningMessage?: string;
 }
+
+export interface DogName {
+  name: string;
+  gender: "Male" | "Female" | "Unisex";
+  size: "Small" | "Medium" | "Large" | "Extra Large";
+  personalities: string[];
+  description?: string;
+}
+
+export interface Category {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  personalities: string[];
+}
+
+export interface BreedData {
+  name: string;
+  typicalRange: [number, number];
+  growthCurve: number[]; // Weight at each month (0-18)
+}
