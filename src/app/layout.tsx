@@ -54,19 +54,6 @@ export default function RootLayout({
     >
       <head>
         <SchemaOrg />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              } catch (e) {}
-            `,
-          }}
-        />
       </head>
       <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 bg-linear-to-br from-background via-background to-accent/5 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

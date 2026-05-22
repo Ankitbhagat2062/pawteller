@@ -1,14 +1,14 @@
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import Script from "next/script";
 import { BlogContent } from "@/components/blog/blog-content";
+import { BlogFeaturedImage } from "@/components/blog/blog-featured-image";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { CtaCard } from "@/components/blog/cta-card";
-import { BlogFeaturedImage } from "@/components/blog/blog-featured-image";
 import { blogPosts } from "@/lib/constant";
 import type { BlogPost, BlogPostPageProps } from "@/lib/types";
-import Link from "next/link";
-import Image from "next/image";
-import Script from "next/script";
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.url === `/blog/${slug}`);

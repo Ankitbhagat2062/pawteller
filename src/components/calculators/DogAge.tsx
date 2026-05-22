@@ -1,7 +1,10 @@
 "use client";
 
+import { Info } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -9,10 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card } from "@/components/ui/card";
-import { Info } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Input } from "@/components/ui/input";
 
 const DogAgeCalculator = () => {
   const [dogAge, setDogAge] = useState<number>(10);
@@ -290,9 +290,9 @@ const DogAgeCalculator = () => {
                   color:
                     "from-red-500/20 to-red-600/20 border-red-200/50 dark:border-red-800/50",
                 },
-              ].map((item, idx) => (
+              ].map((item) => (
                 <Card
-                  key={idx}
+                  key={item.size}
                   className={`p-4 bg-gradient-to-br ${item.color} border`}
                 >
                   <h4 className="font-semibold text-foreground mb-2">
@@ -333,9 +333,9 @@ const DogAgeCalculator = () => {
                   q: "How often should I take my senior dog to the vet?",
                   a: "Senior dogs should visit the veterinarian at least twice a year for wellness exams. More frequent visits may be needed if your dog has health conditions.",
                 },
-              ].map((item, idx) => (
+              ].map((item) => (
                 <Card
-                  key={idx}
+                  key={item.q}
                   className="p-4 md:p-6 border-border/60 hover:border-border transition-colors"
                 >
                   <h3 className="font-semibold text-foreground mb-2">

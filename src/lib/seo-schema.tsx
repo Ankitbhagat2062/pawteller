@@ -96,21 +96,15 @@ export function SchemaOrg() {
   // Avoid schema markup collisions by keeping each type in its own script tag.
   return (
     <>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(searchSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify(webAppSchema)}
+      </script>
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify(searchSchema)}
+      </script>
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify(faqSchema)}
+      </script>
     </>
   );
 }

@@ -1,43 +1,43 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { BREED_NAMES } from '@/lib/constant'
+} from "@/components/ui/select";
+import { BREED_NAMES } from "@/lib/constant";
 
 interface PuppyFormProps {
-  onSubmit: (breed: string, ageMonths: number, weightLbs: number) => void
-  disabled?: boolean
+  onSubmit: (breed: string, ageMonths: number, weightLbs: number) => void;
+  disabled?: boolean;
 }
 
 export function PuppyForm({ onSubmit, disabled }: PuppyFormProps) {
-  const [breed, setBreed] = useState('Labrador Retriever')
-  const [ageMonths, setAgeMonths] = useState(3)
-  const [weightLbs, setWeightLbs] = useState(25)
+  const [breed, setBreed] = useState("Labrador Retriever");
+  const [ageMonths, setAgeMonths] = useState(3);
+  const [weightLbs, setWeightLbs] = useState(25);
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(1, Math.min(18, Number(e.target.value) || 0))
-    setAgeMonths(value)
-    onSubmit(breed, value, weightLbs)
-  }
+    const value = Math.max(1, Math.min(18, Number(e.target.value) || 0));
+    setAgeMonths(value);
+    onSubmit(breed, value, weightLbs);
+  };
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0.1, Number(e.target.value) || 0)
-    setWeightLbs(value)
-    onSubmit(breed, ageMonths, value)
-  }
+    const value = Math.max(0.1, Number(e.target.value) || 0);
+    setWeightLbs(value);
+    onSubmit(breed, ageMonths, value);
+  };
 
   const handleBreedChange = (value: string) => {
-    setBreed(value)
-    onSubmit(value, ageMonths, weightLbs)
-  }
+    setBreed(value);
+    onSubmit(value, ageMonths, weightLbs);
+  };
 
   return (
     <div className="space-y-6">
@@ -45,7 +45,11 @@ export function PuppyForm({ onSubmit, disabled }: PuppyFormProps) {
         <Label htmlFor="breed" className="text-sm font-medium text-foreground">
           Breed
         </Label>
-        <Select value={breed} onValueChange={handleBreedChange} disabled={disabled}>
+        <Select
+          value={breed}
+          onValueChange={handleBreedChange}
+          disabled={disabled}
+        >
           <SelectTrigger
             id="breed"
             className="w-full bg-background border-input text-foreground"
@@ -54,7 +58,11 @@ export function PuppyForm({ onSubmit, disabled }: PuppyFormProps) {
           </SelectTrigger>
           <SelectContent className="bg-background border-input">
             {BREED_NAMES.map((breedName) => (
-              <SelectItem key={breedName} value={breedName} className="text-foreground">
+              <SelectItem
+                key={breedName}
+                value={breedName}
+                className="text-foreground"
+              >
                 {breedName}
               </SelectItem>
             ))}
@@ -99,5 +107,5 @@ export function PuppyForm({ onSubmit, disabled }: PuppyFormProps) {
         Updates instantly as you type
       </p>
     </div>
-  )
+  );
 }

@@ -20,7 +20,6 @@ import type {
   dogLifeStageProps,
   SectionHeaderProps,
 } from "@/lib/types";
-import Script from "next/script";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
   return (
@@ -55,10 +54,9 @@ export default function Home() {
   return (
     <>
       {/* JSON-LD gtag should be in head for best practice; using Next Script with ids */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
-      />
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify(jsonLdSchema)}
+      </script>
       <div className="w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
         <main
           id="home"
@@ -419,7 +417,9 @@ export default function Home() {
 
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {(() => {
-                const dayOfYear = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+                const dayOfYear = Math.floor(
+                  Date.now() / (1000 * 60 * 60 * 24),
+                );
                 const startIndex = dayOfYear % blogPosts.length;
                 const selectedArticles = [
                   blogPosts[startIndex % blogPosts.length],

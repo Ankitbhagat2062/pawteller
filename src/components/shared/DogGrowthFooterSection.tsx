@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function FooterSection() {
   return (
@@ -10,15 +10,11 @@ export function FooterSection() {
         asChild
         className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-full"
       >
-        <Link href="/calculators/dog-feeding">How much to feed →</Link>
+        <Link href="/calculators/dog-food">How much to feed →</Link>
       </Button>
-      <Button
-        variant="ghost"
-        asChild
-        className="text-foreground font-medium"
-      >
+      <Button variant="ghost" asChild className="text-foreground font-medium">
         <Link href="/calculators/dog-age">Dog age calculator</Link>
       </Button>
     </div>
-  )
+  );
 }

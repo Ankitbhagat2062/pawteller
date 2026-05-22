@@ -6,6 +6,7 @@ import {
   Sparkles,
   Utensils,
 } from "lucide-react";
+import type { quizDataProps } from "@/lib/types";
 import type {
   BlogPost,
   CalculatorProps,
@@ -16,7 +17,6 @@ import type {
   homeImageProps,
   SectionProps,
 } from "./types";
-import type { quizDataProps } from "@/lib/types";
 
 export const calculators: CalculatorProps[] = [
   {
@@ -456,136 +456,173 @@ export const quizData: quizDataProps = {
   ],
 };
 
-
 export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
-  'Puppy': 2.5,
-  'Adult': 1.8,
-  'Senior': 1.4,
-  'Pregnant': 3.0,
-}
+  Puppy: 2.5,
+  Adult: 1.8,
+  Senior: 1.4,
+  Pregnant: 3.0,
+};
 
 export const ACTIVITY_MULTIPLIERS: Record<string, number> = {
-  'Sedentary': 1.2,
-  'Moderate walks': 1.5,
-  'Very active': 1.8,
-  'Extremely active': 2.0,
-}
+  Sedentary: 1.2,
+  "Moderate walks": 1.5,
+  "Very active": 1.8,
+  "Extremely active": 2.0,
+};
 
 export interface BreedData {
-  name: string
-  typicalRange: [number, number]
-  growthCurve: number[] // Weight at each month (0-18)
+  name: string;
+  typicalRange: [number, number];
+  growthCurve: number[]; // Weight at each month (0-18)
 }
 
 // Puppy weight growth data by breed (in lbs)
 // Based on veterinary growth curves for typical breed development
 export const BREED_DATA: Record<string, BreedData> = {
-  'Labrador Retriever': {
-    name: 'Labrador Retriever',
+  "Labrador Retriever": {
+    name: "Labrador Retriever",
     typicalRange: [55, 80],
-    growthCurve: [1.5, 5, 10, 16, 22, 28, 34, 39, 44, 48, 52, 55, 58, 60, 62, 65, 68, 72, 75],
+    growthCurve: [
+      1.5, 5, 10, 16, 22, 28, 34, 39, 44, 48, 52, 55, 58, 60, 62, 65, 68, 72,
+      75,
+    ],
   },
-  'Golden Retriever': {
-    name: 'Golden Retriever',
+  "Golden Retriever": {
+    name: "Golden Retriever",
     typicalRange: [55, 75],
-    growthCurve: [1.5, 5, 10, 16, 22, 28, 34, 39, 44, 48, 52, 55, 58, 60, 62, 65, 68, 72, 75],
+    growthCurve: [
+      1.5, 5, 10, 16, 22, 28, 34, 39, 44, 48, 52, 55, 58, 60, 62, 65, 68, 72,
+      75,
+    ],
   },
-  'German Shepherd': {
-    name: 'German Shepherd',
+  "German Shepherd": {
+    name: "German Shepherd",
     typicalRange: [50, 90],
-    growthCurve: [1.5, 5, 12, 20, 30, 40, 48, 55, 62, 68, 72, 75, 78, 80, 82, 85, 87, 89, 90],
+    growthCurve: [
+      1.5, 5, 12, 20, 30, 40, 48, 55, 62, 68, 72, 75, 78, 80, 82, 85, 87, 89,
+      90,
+    ],
   },
-  'French Bulldog': {
-    name: 'French Bulldog',
+  "French Bulldog": {
+    name: "French Bulldog",
     typicalRange: [28, 30],
-    growthCurve: [0.5, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 26, 27, 28, 29, 30],
+    growthCurve: [
+      0.5, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 26, 27, 28, 29, 30,
+    ],
   },
-  'Beagle': {
-    name: 'Beagle',
+  Beagle: {
+    name: "Beagle",
     typicalRange: [24, 30],
-    growthCurve: [0.5, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 23, 24, 25, 26, 27, 28, 30],
+    growthCurve: [
+      0.5, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 23, 24, 25, 26, 27, 28, 30,
+    ],
   },
-  'Poodle (Standard)': {
-    name: 'Poodle (Standard)',
+  "Poodle (Standard)": {
+    name: "Poodle (Standard)",
     typicalRange: [45, 70],
-    growthCurve: [1.5, 4, 8, 14, 20, 28, 35, 40, 45, 50, 55, 58, 61, 63, 65, 67, 68, 69, 70],
+    growthCurve: [
+      1.5, 4, 8, 14, 20, 28, 35, 40, 45, 50, 55, 58, 61, 63, 65, 67, 68, 69, 70,
+    ],
   },
-  'Bulldog': {
-    name: 'Bulldog',
+  Bulldog: {
+    name: "Bulldog",
     typicalRange: [40, 50],
-    growthCurve: [1, 3, 6, 10, 14, 18, 22, 26, 30, 33, 36, 38, 40, 42, 44, 45, 46, 48, 50],
+    growthCurve: [
+      1, 3, 6, 10, 14, 18, 22, 26, 30, 33, 36, 38, 40, 42, 44, 45, 46, 48, 50,
+    ],
   },
-  'Dachshund': {
-    name: 'Dachshund',
+  Dachshund: {
+    name: "Dachshund",
     typicalRange: [16, 32],
-    growthCurve: [0.3, 1, 2, 3.5, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 32],
+    growthCurve: [
+      0.3, 1, 2, 3.5, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 32,
+    ],
   },
-  'Siberian Husky': {
-    name: 'Siberian Husky',
+  "Siberian Husky": {
+    name: "Siberian Husky",
     typicalRange: [45, 60],
-    growthCurve: [1.5, 5, 10, 16, 24, 32, 38, 43, 48, 51, 54, 56, 57, 58, 58.5, 59, 59.5, 60, 60],
+    growthCurve: [
+      1.5, 5, 10, 16, 24, 32, 38, 43, 48, 51, 54, 56, 57, 58, 58.5, 59, 59.5,
+      60, 60,
+    ],
   },
-  'Chihuahua': {
-    name: 'Chihuahua',
+  Chihuahua: {
+    name: "Chihuahua",
     typicalRange: [2, 6],
-    growthCurve: [0.1, 0.3, 0.6, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.3, 5.5, 5.7, 5.8, 5.9, 6, 6],
+    growthCurve: [
+      0.1, 0.3, 0.6, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.3, 5.5, 5.7, 5.8, 5.9,
+      6, 6,
+    ],
   },
-  'Shih Tzu': {
-    name: 'Shih Tzu',
+  "Shih Tzu": {
+    name: "Shih Tzu",
     typicalRange: [9, 16],
-    growthCurve: [0.2, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15.5, 16],
+    growthCurve: [
+      0.2, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15.5, 16,
+    ],
   },
-  'Cocker Spaniel': {
-    name: 'Cocker Spaniel',
+  "Cocker Spaniel": {
+    name: "Cocker Spaniel",
     typicalRange: [25, 30],
-    growthCurve: [0.5, 2, 4, 7, 10, 13, 16, 19, 21, 23, 24, 25, 26, 27, 27.5, 28, 28.5, 29, 30],
+    growthCurve: [
+      0.5, 2, 4, 7, 10, 13, 16, 19, 21, 23, 24, 25, 26, 27, 27.5, 28, 28.5, 29,
+      30,
+    ],
   },
-}
+};
 
-export const BREED_NAMES = Object.keys(BREED_DATA).sort()
+export const BREED_NAMES = Object.keys(BREED_DATA).sort();
 
 export function calculatePuppyGrowth(
   breed: string,
   currentAgeMonths: number,
-  currentWeightLbs: number
+  currentWeightLbs: number,
 ): GrowthInfo {
-  const breedData = BREED_DATA[breed]
+  const breedData = BREED_DATA[breed];
   if (!breedData) {
-    throw new Error(`Breed ${breed} not found`)
+    throw new Error(`Breed ${breed} not found`);
   }
 
   if (currentAgeMonths < 1 || currentAgeMonths > 18) {
-    throw new Error('Age must be between 1 and 18 months')
+    throw new Error("Age must be between 1 and 18 months");
   }
 
   if (currentWeightLbs < 0.1) {
-    throw new Error('Weight must be greater than 0')
+    throw new Error("Weight must be greater than 0");
   }
 
-  const currentBreedWeight = breedData.growthCurve[Math.floor(currentAgeMonths)] || breedData.growthCurve[breedData.growthCurve.length - 1]
-  
+  const currentBreedWeight =
+    breedData.growthCurve[Math.floor(currentAgeMonths)] ||
+    breedData.growthCurve[breedData.growthCurve.length - 1];
+
   // Calculate growth rate and predict adult weight
-  const growthRate = currentWeightLbs / currentBreedWeight
-  const predictedAdultWeight = Math.round(breedData.growthCurve[breedData.growthCurve.length - 1] * growthRate)
-  
-  const percentageGrown = Math.round((currentWeightLbs / (breedData.growthCurve[breedData.growthCurve.length - 1] * growthRate)) * 100)
-  
-  let warningMessage: string | undefined
-  const [min, max] = breedData.typicalRange
+  const growthRate = currentWeightLbs / currentBreedWeight;
+  const predictedAdultWeight = Math.round(
+    breedData.growthCurve[breedData.growthCurve.length - 1] * growthRate,
+  );
+
+  const percentageGrown = Math.round(
+    (currentWeightLbs /
+      (breedData.growthCurve[breedData.growthCurve.length - 1] * growthRate)) *
+      100,
+  );
+
+  let warningMessage: string | undefined;
+  const [min, max] = breedData.typicalRange;
   if (predictedAdultWeight > max * 1.15) {
-    warningMessage = 'Slightly larger than typical — monitor with your vet.'
+    warningMessage = "Slightly larger than typical — monitor with your vet.";
   } else if (predictedAdultWeight < min * 0.85) {
-    warningMessage = 'Slightly smaller than typical — consult with your vet.'
+    warningMessage = "Slightly smaller than typical — consult with your vet.";
   }
 
   // Find when puppy reaches 95% of adult weight (maturity)
-  let monthsToMaturity = 18
-  const targetWeight = predictedAdultWeight * 0.95
-  const scaledCurve = breedData.growthCurve.map(w => w * growthRate)
+  let monthsToMaturity = 18;
+  const targetWeight = predictedAdultWeight * 0.95;
+  const scaledCurve = breedData.growthCurve.map((w) => w * growthRate);
   for (let i = 0; i < scaledCurve.length; i++) {
     if (scaledCurve[i] >= targetWeight) {
-      monthsToMaturity = i
-      break
+      monthsToMaturity = i;
+      break;
     }
   }
 
@@ -596,12 +633,28 @@ export function calculatePuppyGrowth(
     growthCurve: scaledCurve,
     monthsToMaturity,
     warningMessage,
-  }
+  };
 }
 
 export const MATURITY_STAGES = [
-  { category: 'Toy', range: '9 mo', description: 'Reaches adult size around 9 months' },
-  { category: 'Small', range: '12 mo', description: 'Reaches adult size around 12 months' },
-  { category: 'Medium', range: '15 mo', description: 'Reaches adult size around 15 months' },
-  { category: 'Large/Giant', range: '18–24 mo', description: 'Reaches adult size around 18-24 months' },
-]
+  {
+    category: "Toy",
+    range: "9 mo",
+    description: "Reaches adult size around 9 months",
+  },
+  {
+    category: "Small",
+    range: "12 mo",
+    description: "Reaches adult size around 12 months",
+  },
+  {
+    category: "Medium",
+    range: "15 mo",
+    description: "Reaches adult size around 15 months",
+  },
+  {
+    category: "Large/Giant",
+    range: "18–24 mo",
+    description: "Reaches adult size around 18-24 months",
+  },
+];

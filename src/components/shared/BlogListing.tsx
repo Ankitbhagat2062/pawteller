@@ -1,8 +1,8 @@
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import type { BlogPost } from "@/lib/types";
 import { blogPosts } from "@/lib/constant";
+import type { BlogPost } from "@/lib/types";
 
 function BlogCard({ post }: { post: BlogPost }) {
   return (
@@ -66,9 +66,9 @@ function BlogCard({ post }: { post: BlogPost }) {
   );
 }
 const featuredPost =
-    blogPosts.length > 0
-      ? blogPosts[Math.floor(Math.random() * blogPosts.length)]
-      : undefined;
+  blogPosts.length > 0
+    ? blogPosts[Math.floor(Math.random() * blogPosts.length)]
+    : undefined;
 export default function BlogListing() {
   return (
     <section
@@ -101,7 +101,9 @@ export default function BlogListing() {
           role="feed"
           aria-label="Blog articles"
         >
-         {featuredPost ? <BlogCard key={featuredPost.url} post={featuredPost} /> : null}
+          {featuredPost ? (
+            <BlogCard key={featuredPost.url} post={featuredPost} />
+          ) : null}
         </div>
       </div>
       <div className="mt-8 max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -147,7 +149,8 @@ export default function BlogListing() {
                     {article.totalTime}
                   </span>
                   <Link
-                    href={article.url} aria-label={`Read articles about ${article.title}`}
+                    href={article.url}
+                    aria-label={`Read articles about ${article.title}`}
                     className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                   >
                     {"Read Article"}

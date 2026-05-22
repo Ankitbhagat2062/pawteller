@@ -1,5 +1,5 @@
-import type { contentProps } from "@/lib/types";
 import Link from "next/link";
+import type { contentProps } from "@/lib/types";
 
 interface BlogContentProps {
   content: contentProps[];
@@ -54,7 +54,8 @@ export function BlogContent({ content }: BlogContentProps) {
                   return (
                     <Link
                       key={compositeKey}
-                     href="/calculators/dog-age" aria-label="Calculate how much your dog's age is equivalent to human age"
+                      href="/calculators/dog-age"
+                      aria-label="Calculate how much your dog's age is equivalent to human age"
                       className="text-orange-600 dark:text-orange-400 hover:underline"
                     >
                       {part}

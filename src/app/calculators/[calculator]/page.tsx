@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Script from "next/script";
 import DogAge from "@/components/calculators/DogAge";
 import DogFood from "@/components/calculators/DogFood";
 import DogGrowth from "@/components/calculators/DogGrowth";
 import DogName from "@/components/calculators/DogName";
 import DogPregnancy from "@/components/calculators/DogPregnancy";
 import PuppyWeight from "@/components/calculators/PuppyWeight";
-import Script from "next/script";
-import { notFound } from "next/navigation";
 
 const SLUG_TO_COMPONENT = {
   "dog-age": DogAge,
@@ -92,11 +92,6 @@ export default async function CalculatorPage({ params }: PageProps) {
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
-
-  const headingText = calculator
-    ? `${calculator.replace(/-/g, " ")} calculator`
-    : "Calculator";
-
   return (
     <>
       <Script
