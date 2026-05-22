@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { type GrowthInfo } from '@/lib/types'
 import { calculatePuppyGrowth } from '@/lib/constant'
@@ -15,7 +15,7 @@ export default function DogGrowth() {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
+  const [initialized, setInitialized] = useState(false)
   const handleCalculate = (breed: string, ageMonths: number, weightLbs: number) => {
     setLoading(true)
     setError(null)
@@ -32,9 +32,12 @@ export default function DogGrowth() {
   }
 
   // Initialize with default calculation
-  if (!growthInfo && !error) {
-    handleCalculate('Labrador Retriever', 3, 25)
-  }
+  useEffect(() => {
+    if (!initialized) {
+      handleCalculate('Labrador Retriever', 3, 25)
+      setInitialized(true)
+    }
+  }, [initialized])
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -50,7 +53,7 @@ export default function DogGrowth() {
               How big will your <em className="not-italic font-normal">puppy</em> get?
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-             {` Predict your puppy's adult weight in seconds. We use breed-specific growth
+              {` Predict your puppy's adult weight in seconds. We use breed-specific growth
               curves built from veterinary data to give you the most accurate forecast —
               plus a beautiful chart to watch their journey.`}
             </p>

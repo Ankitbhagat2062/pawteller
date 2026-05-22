@@ -41,11 +41,14 @@ export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
         </div>
 
         {puppyImage && (
-          <div className="w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-white bg-opacity-20 shrink-0 ml-4">
+          <div className="w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-white bg-opacity-20 shrink-0 ml-4 relative">
             <Image
               src={puppyImage}
               alt="Puppy"
-              className="w-full h-full object-cover"
+              fill
+              sizes="(min-width: 768px) 96px, 80px"
+              loading="lazy"
+              className="object-cover"
             />
           </div>
         )}

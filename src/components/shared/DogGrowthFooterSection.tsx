@@ -10,7 +10,7 @@ export function FooterSection() {
         asChild
         className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-full"
       >
-        <Link href="/calculators/dog-feeding">How much to feed →</Link>
+        <Link href="/calculators/dog-food">How much to feed →</Link>
       </Button>
       <Button
         variant="ghost"
