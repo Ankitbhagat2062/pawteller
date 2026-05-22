@@ -50,3 +50,7 @@ src/
 ├── hooks/                # Custom React hooks (e.g., useLocalStorage for tracking)
 ├── lib/                  # Helper functions, SEO/Schema utilities, MDX parsers
 └── styles/               # Global Tailwind configurations
+
+<!-- "correctlint": "npm run lint -- --fix",
+    "eslint": "npx eslint . --fix"
+ -->

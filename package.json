@@ -9,8 +9,7 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "correctlint": "npm run lint -- --fix",
-    "eslint": "npx eslint . --fix"
+    "correctlint": "biome check --write"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",

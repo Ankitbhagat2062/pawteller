@@ -20,9 +20,9 @@ const SLUG_TO_COMPONENT = {
 type CalculatorSlug = keyof typeof SLUG_TO_COMPONENT;
 
 type PageProps = {
-  params: {
+  params: Promise<{
     calculator?: string;
-  };
+  }>;
 };
 
 export const metadata: Metadata = {
@@ -88,7 +88,7 @@ export default async function CalculatorPage({ params }: PageProps) {
   const normalizedSlug = calculator?.toLowerCase() as
     | CalculatorSlug
     | undefined;
-  console.log(calculator);
+  
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
