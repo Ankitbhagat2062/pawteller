@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import BlogListingPage from "@/components/shared/BlogListing";
+import BlogListingPage from "@/components/blog/BlogListing";
 
 // 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE BLOG
 export const metadata: Metadata = {

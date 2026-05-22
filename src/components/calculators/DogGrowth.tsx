@@ -1,13 +1,13 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FooterSection } from "@/components/calculators/doggrowthcomponents/DogGrowthFooterSection";
+import { MaturitySection } from "@/components/calculators/doggrowthcomponents/MaturitySection";
+import { PuppyForm } from "@/components/calculators/doggrowthcomponents/PuppyForm";
+import { ResultCard } from "@/components/calculators/doggrowthcomponents/ResultCard";
 import { calculatePuppyGrowth } from "@/lib/constant";
 import type { GrowthInfo } from "@/lib/types";
-import { FooterSection } from "../shared/DogGrowthFooterSection";
-import { MaturitySection } from "../shared/MaturitySection";
-import { PuppyForm } from "../shared/PuppyForm";
-import { ResultCard } from "../shared/ResultCard";
 
 const PUPPY_IMAGE =
   "https://images.unsplash.com/photo-1633722715463-d30628cff756?w=200&h=200&fit=crop";
@@ -17,13 +17,35 @@ export default function DogGrowth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
-  const handleCalculate = useCallback(
-    (breed: string, ageMonths: number, weightLbs: number) => {
+
+  // 1. Keep handleCalculate as a plain, clean function
+  const handleCalculate = (
+    breed: string,
+    ageMonths: number,
+    weightLbs: number,
+  ) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = calculatePuppyGrowth(breed, ageMonths, weightLbs);
+      setGrowthInfo(result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      setGrowthInfo(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 2. Initialize with default calculation on mount safely
+  useEffect(() => {
+    if (!initialized) {
+      // Run the logic inline to avoid dependency reference updates
       setLoading(true);
       setError(null);
-
       try {
-        const result = calculatePuppyGrowth(breed, ageMonths, weightLbs);
+        const result = calculatePuppyGrowth("Labrador Retriever", 3, 25);
         setGrowthInfo(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
@@ -31,17 +53,9 @@ export default function DogGrowth() {
       } finally {
         setLoading(false);
       }
-    },
-    [],
-  );
-
-  // Initialize with default calculation
-  useEffect(() => {
-    if (!initialized) {
-      handleCalculate("Labrador Retriever", 3, 25);
       setInitialized(true);
     }
-  }, [initialized, handleCalculate]);
+  }, [initialized]); // Only tracks the initialized boolean flag
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
