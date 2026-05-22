@@ -97,3 +97,13 @@ export interface Results {
   dailyCalories: number
   cupsPerDay: number
 }
+
+
+export interface GrowthInfo {
+  predictedWeight: number
+  typicalRange: [number, number]
+  percentageGrown: number
+  growthCurve: number[]
+  monthsToMaturity: number
+  warningMessage?: string
+}
