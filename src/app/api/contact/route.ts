@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     // Send the email to YOUR own email address
     const data = await resend.emails.send({
       from: `<${fromMail}>`,
-      to: contactInbox,// Where YOU want to receive the messages
+      to: contactInbox, // Where YOU want to receive the messages
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Message Received</h2>

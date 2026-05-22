@@ -58,7 +58,8 @@ export async function GET(request: Request) {
       `,
     });
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
+    const appUrl =
+      process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
     return NextResponse.redirect(new URL("/subscribed-success", appUrl));
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -1,43 +1,47 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { Loader2 } from 'lucide-react'
-import { type GrowthInfo } from '@/lib/types'
-import { calculatePuppyGrowth } from '@/lib/constant'
-import { PuppyForm } from '../shared/PuppyForm'
-import { ResultCard } from '../shared/ResultCard'
-import { MaturitySection } from '../shared/MaturitySection'
-import { FooterSection } from '../shared/DogGrowthFooterSection'
+import { Loader2 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { calculatePuppyGrowth } from "@/lib/constant";
+import type { GrowthInfo } from "@/lib/types";
+import { FooterSection } from "../shared/DogGrowthFooterSection";
+import { MaturitySection } from "../shared/MaturitySection";
+import { PuppyForm } from "../shared/PuppyForm";
+import { ResultCard } from "../shared/ResultCard";
 
-const PUPPY_IMAGE = 'https://images.unsplash.com/photo-1633722715463-d30628cff756?w=200&h=200&fit=crop'
+const PUPPY_IMAGE =
+  "https://images.unsplash.com/photo-1633722715463-d30628cff756?w=200&h=200&fit=crop";
 
 export default function DogGrowth() {
-  const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [initialized, setInitialized] = useState(false)
-  const handleCalculate = (breed: string, ageMonths: number, weightLbs: number) => {
-    setLoading(true)
-    setError(null)
+  const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [initialized, setInitialized] = useState(false);
+  const handleCalculate = useCallback(
+    (breed: string, ageMonths: number, weightLbs: number) => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const result = calculatePuppyGrowth(breed, ageMonths, weightLbs)
-      setGrowthInfo(result)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-      setGrowthInfo(null)
-    } finally {
-      setLoading(false)
-    }
-  }
+      try {
+        const result = calculatePuppyGrowth(breed, ageMonths, weightLbs);
+        setGrowthInfo(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+        setGrowthInfo(null);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   // Initialize with default calculation
   useEffect(() => {
     if (!initialized) {
-      handleCalculate('Labrador Retriever', 3, 25)
-      setInitialized(true)
+      handleCalculate("Labrador Retriever", 3, 25);
+      setInitialized(true);
     }
-  }, [initialized])
+  }, [initialized, handleCalculate]);
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -50,7 +54,8 @@ export default function DogGrowth() {
               <span>PUPPY WEIGHT CALCULATOR</span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-foreground">
-              How big will your <em className="not-italic font-normal">puppy</em> get?
+              How big will your{" "}
+              <em className="not-italic font-normal">puppy</em> get?
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
               {` Predict your puppy's adult weight in seconds. We use breed-specific growth
@@ -67,10 +72,7 @@ export default function DogGrowth() {
           {/* Form Section */}
           <div className="lg:col-span-1">
             <div className="bg-card border border-border rounded-xl p-6 sm:p-8 shadow-sm">
-              <PuppyForm
-                onSubmit={handleCalculate}
-                disabled={loading}
-              />
+              <PuppyForm onSubmit={handleCalculate} disabled={loading} />
             </div>
           </div>
 
@@ -127,15 +129,26 @@ export default function DogGrowth() {
                 Tips for Puppy Growth
               </h3>
               <ul className="text-muted-foreground space-y-2 leading-relaxed">
-                <li>• {`Monitor your puppy's weight regularly for accurate predictions`}</li>
-                <li>• Large breed puppies need special nutrition for healthy development</li>
-                <li>• Growth rates vary — consult your veterinarian for breed-specific advice</li>
-                <li>• Most puppies reach their adult weight between 9-24 months</li>
+                <li>
+                  •{" "}
+                  {`Monitor your puppy's weight regularly for accurate predictions`}
+                </li>
+                <li>
+                  • Large breed puppies need special nutrition for healthy
+                  development
+                </li>
+                <li>
+                  • Growth rates vary — consult your veterinarian for
+                  breed-specific advice
+                </li>
+                <li>
+                  • Most puppies reach their adult weight between 9-24 months
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

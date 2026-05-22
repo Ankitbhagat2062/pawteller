@@ -86,24 +86,22 @@ export interface quizDataProps {
   steps: stepsProps[];
 }
 
-
 export interface CalculatorState {
-  weight: number
-  lifeStage: string
-  activityLevel: string
+  weight: number;
+  lifeStage: string;
+  activityLevel: string;
 }
 
 export interface Results {
-  dailyCalories: number
-  cupsPerDay: number
+  dailyCalories: number;
+  cupsPerDay: number;
 }
 
-
 export interface GrowthInfo {
-  predictedWeight: number
-  typicalRange: [number, number]
-  percentageGrown: number
-  growthCurve: number[]
-  monthsToMaturity: number
-  warningMessage?: string
+  predictedWeight: number;
+  typicalRange: [number, number];
+  percentageGrown: number;
+  growthCurve: number[];
+  monthsToMaturity: number;
+  warningMessage?: string;
 }

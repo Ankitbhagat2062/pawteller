@@ -1,7 +1,6 @@
-
+import { ArrowLeft, PawPrint } from "lucide-react";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, PawPrint } from "lucide-react";
 
 const NotFound = () => {
   return (
@@ -107,19 +106,16 @@ const NotFound = () => {
                 </div>
 
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {[
-                    "Dog Age",
-                    "Puppy Weight",
-                    "Nutrition",
-                    "Breed Quiz",
-                  ].map((chip) => (
-                    <span
-                      key={chip}
-                      className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200"
-                    >
-                      {chip}
-                    </span>
-                  ))}
+                  {["Dog Age", "Puppy Weight", "Nutrition", "Breed Quiz"].map(
+                    (chip) => (
+                      <span
+                        key={chip}
+                        className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200"
+                      >
+                        {chip}
+                      </span>
+                    ),
+                  )}
                 </div>
 
                 <div className="mt-6 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-900/5 dark:bg-zinc-900/30 dark:ring-white/10">
@@ -140,4 +136,3 @@ const NotFound = () => {
 };
 
 export default NotFound;
-

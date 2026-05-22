@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { toc } from "@/lib/constant";
 import Script from "next/script";
+import { toc } from "@/lib/constant";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
 export const metadata: Metadata = {

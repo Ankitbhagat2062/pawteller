@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowLeft, ArrowRight, Dog, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { quizData } from "@/lib/constant";
-import { ArrowLeft, ArrowRight, Dog, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function QuizComponent() {
@@ -25,8 +25,7 @@ export function QuizComponent() {
     if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
     advanceTimeoutRef.current = setTimeout(() => {
       setCurrentStep((prev) => {
-        if (prev < quizData.totalQuestions - 1)
-          return prev + 1;
+        if (prev < quizData.totalQuestions - 1) return prev + 1;
         setIsComplete(true);
         return prev;
       });
@@ -77,7 +76,7 @@ export function QuizComponent() {
             <div className="space-y-3 text-left">
               {quizData.steps.map((step, index) => (
                 <div
-                  key={index}
+                  key={step.question}
                   className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 py-2 border-b border-border last:border-0"
                 >
                   <span className="text-muted-foreground text-sm">

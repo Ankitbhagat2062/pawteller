@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { Card } from '@/components/ui/card'
-import { MATURITY_STAGES } from '@/lib/constant'
+import { Card } from "@/components/ui/card";
+import { MATURITY_STAGES } from "@/lib/constant";
 
 export function MaturitySection() {
   return (
@@ -29,5 +29,5 @@ export function MaturitySection() {
         ))}
       </div>
     </div>
-  )
+  );
 }
