@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-export default async function sitemap(): MetadataRoute.Sitemap {
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://pawteller.com';
 
   // In production, fetch these dynamically from MongoDB/CMS
