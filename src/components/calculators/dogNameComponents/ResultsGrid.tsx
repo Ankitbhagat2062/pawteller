@@ -24,7 +24,7 @@ export function ResultsGrid({ names, onRefresh }: ResultsGridProps) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {names.map((dog) => (
           <div
-            key={`${dog.name}-${Math.random()}`}
+            key={`${dog.name}-${dog.size}-${dog.gender}`}
             className="bg-card border border-border rounded-lg p-4 text-center hover:shadow-md transition-all duration-200 dark:bg-slate-900 dark:border-slate-700 hover:border-green-500 dark:hover:border-green-500"
           >
             <p className="text-lg md:text-xl font-bold text-foreground mb-2">

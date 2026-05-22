@@ -1,14 +1,22 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { DogGender, DogSize, StartingLetter } from "@/lib/constant";
 
 interface FilterSectionProps {
-  gender: string;
-  size: string;
-  startingLetter: string;
-  onGenderChange: (value: string) => void;
-  onSizeChange: (value: string) => void;
-  onLetterChange: (value: string) => void;
+  gender: DogGender | "All";
+  size: DogSize | "All";
+  startingLetter: StartingLetter;
+  onGenderChange: (value: DogGender | "All") => void;
+  onSizeChange: (value: DogSize | "All") => void;
+  onLetterChange: (value: StartingLetter) => void;
   onGenerate: () => void;
 }
 
@@ -44,20 +52,20 @@ export function FilterSection({
             >
               Gender
             </label>
-            <div className="relative">
-              <select
+            <Select value={gender} onValueChange={onGenderChange}>
+              <SelectTrigger
                 id="dogGender"
-                value={gender}
-                onChange={(e) => onGenderChange(e.target.value)}
-                className="w-full appearance-none bg-background border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 cursor-pointer transition-all"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 cursor-pointer transition-all"
               >
-                <option value="All">All Genders</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Unisex">Unisex</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50 pointer-events-none" />
-            </div>
+                <SelectValue placeholder="Select gender" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="All">All Genders</SelectItem>
+                <SelectItem value="Male">Male</SelectItem>
+                <SelectItem value="Female">Female</SelectItem>
+                <SelectItem value="Unisex">Unisex</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Size Filter */}
@@ -68,21 +76,20 @@ export function FilterSection({
             >
               Dog Size
             </label>
-            <div className="relative">
-              <select
+            <Select value={size} onValueChange={onSizeChange}>
+              <SelectTrigger
                 id="dogSize"
-                value={size}
-                onChange={(e) => onSizeChange(e.target.value)}
-                className="w-full appearance-none bg-background border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 cursor-pointer transition-all"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 cursor-pointer transition-all"
               >
-                <option value="All">All Sizes</option>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-                <option value="Extra Large">Extra Large</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50 pointer-events-none" />
-            </div>
+                <SelectValue placeholder="Select size" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="All">All Sizes</SelectItem>
+                <SelectItem value="Small">Small</SelectItem>
+                <SelectItem value="Medium">Medium</SelectItem>
+                <SelectItem value="Large">Large</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Starting Letter Filter */}
@@ -93,32 +100,32 @@ export function FilterSection({
             >
               Starting Letter
             </label>
-            <div className="relative">
-              <select
+            <Select value={startingLetter} onValueChange={onLetterChange}>
+              <SelectTrigger
                 id="startingLetter"
-                value={startingLetter}
-                onChange={(e) => onLetterChange(e.target.value)}
-                className="w-full appearance-none bg-background border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 cursor-pointer transition-all"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 cursor-pointer transition-all"
               >
+                <SelectValue placeholder="Select a letter" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
                 {alphabet.map((letter) => (
-                  <option key={letter} value={letter}>
+                  <SelectItem key={letter} value={letter}>
                     {letter}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50 pointer-events-none" />
-            </div>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
         {/* Generate Button */}
-        <button
-          type="submit"
+        <Button
+          type="button"
           onClick={onGenerate}
           className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg dark:bg-green-600 dark:hover:bg-green-700"
         >
           ✨ Generate Names
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,19 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { generateDogNames } from "@/lib/constant";
+import { BestNamesSection } from "@/components/calculators/dogNameComponents/BestNameSection";
+import { CategoriesSection } from "@/components/calculators/dogNameComponents/CategoriesSection";
+import { FAQSection } from "@/components/calculators/dogNameComponents/FAQSection";
+import { FilterSection } from "@/components/calculators/dogNameComponents/FilterSection";
+import { HowToChooseSection } from "@/components/calculators/dogNameComponents/HowToChooseSection";
+import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
+import {
+  type DogGender,
+  type DogSize,
+  generateDogNames,
+  type StartingLetter,
+} from "@/lib/constant";
 import type { DogName } from "@/lib/types";
-import { BestNamesSection } from "./BestNameSection";
-import { CategoriesSection } from "./CategoriesSection";
-import { FAQSection } from "./FAQSection";
-import { FilterSection } from "./FilterSection";
-import { HowToChooseSection } from "./HowToChooseSection";
-import { ResultsGrid } from "./ResultsGrid";
 
+const INITIAL_GENDER: DogGender | "All" = "All";
+const INITIAL_SIZE: DogSize | "All" = "All";
+const INITIAL_STARTING_LETTER: StartingLetter = "All";
 export function DogNameGenerator() {
-  const [gender, setGender] = useState<string>("All");
-  const [size, setSize] = useState<string>("All");
-  const [startingLetter, setStartingLetter] = useState<string>("All");
+  const [gender, setGender] = useState<DogGender | "All">(INITIAL_GENDER);
+  const [size, setSize] = useState<DogSize | "All">(INITIAL_SIZE);
+  const [startingLetter, setStartingLetter] = useState<StartingLetter>(
+    INITIAL_STARTING_LETTER,
+  );
   const [results, setResults] = useState<DogName[]>([]);
 
   const handleGenerate = () => {
@@ -22,18 +32,25 @@ export function DogNameGenerator() {
   };
   // Generate initial names on mount
   useEffect(() => {
-    handleGenerate();
+    setResults(
+      generateDogNames(
+        INITIAL_GENDER,
+        INITIAL_SIZE,
+        INITIAL_STARTING_LETTER,
+        8,
+      ),
+    );
   }, []);
 
-  const handleGenderChange = (value: string) => {
+  const handleGenderChange = (value: DogGender | "All") => {
     setGender(value);
   };
 
-  const handleSizeChange = (value: string) => {
+  const handleSizeChange = (value: DogSize | "All") => {
     setSize(value);
   };
 
-  const handleLetterChange = (value: string) => {
+  const handleLetterChange = (value: StartingLetter) => {
     setStartingLetter(value);
   };
 

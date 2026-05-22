@@ -1,4 +1,4 @@
-import { DogNameGenerator } from "./dogNameComponents/DogNameGenerator";
+import { DogNameGenerator } from "@/components/calculators/dogNameComponents/DogNameGenerator";
 
 const DogName = () => {
   return <DogNameGenerator />;

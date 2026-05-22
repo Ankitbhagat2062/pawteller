@@ -1431,23 +1431,54 @@ export const categories: Category[] = [
   },
 ];
 
+export type DogGender = DogName["gender"];
+export type DogSize = DogName["size"];
+export type StartingLetter =
+  | "All"
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "O"
+  | "P"
+  | "Q"
+  | "R"
+  | "S"
+  | "T"
+  | "U"
+  | "V"
+  | "W"
+  | "X"
+  | "Y"
+  | "Z";
+
 export function generateDogNames(
-  gender?: string,
-  size?: string,
-  startingLetter?: string,
+  gender: DogGender | "All" = "All",
+  size: DogSize | "All" = "All",
+  startingLetter: StartingLetter = "All",
   count: number = 8,
 ): DogName[] {
   let filtered = [...dogNames];
 
-  if (gender && gender !== "All") {
+  if (gender !== "All") {
     filtered = filtered.filter((dog) => dog.gender === gender);
   }
 
-  if (size && size !== "All") {
+  if (size !== "All") {
     filtered = filtered.filter((dog) => dog.size === size);
   }
 
-  if (startingLetter && startingLetter !== "All") {
+  if (startingLetter !== "All") {
     filtered = filtered.filter(
       (dog) =>
         dog.name.charAt(0).toUpperCase() === startingLetter.toUpperCase(),

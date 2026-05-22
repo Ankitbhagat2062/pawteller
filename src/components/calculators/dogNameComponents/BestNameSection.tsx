@@ -50,7 +50,7 @@ export function BestNamesSection() {
             <div className="space-y-2">
               {(groupedNames[group.personality] || []).map((dog) => (
                 <div
-                  key={`${dog.name}-${dog.gender}`}
+                  key={`${dog.name}-${dog.gender}-${dog.size}`}
                   className="bg-card border border-border rounded-lg p-3 hover:border-green-500 transition-colors dark:bg-slate-900 dark:border-slate-700 dark:hover:border-green-500"
                 >
                   <p className="font-semibold text-foreground text-sm">
