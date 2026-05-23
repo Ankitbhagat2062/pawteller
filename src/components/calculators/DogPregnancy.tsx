@@ -1,5 +1,549 @@
-const DogPregnancy = () => {
-  return <div></div>;
-};
+"use client";
 
-export default DogPregnancy;
+import {
+  CalendarDays,
+  CheckCircle2,
+  PawPrint,
+  ShieldAlert,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  BREED_SIZE_LABELS,
+  FAQ_ITEMS,
+  GESTATION_DAYS,
+  TIMELINE_WEEKS,
+} from "@/lib/constant";
+import type { BreedSize, PregnancyResult } from "@/lib/types";
+import { cn } from "@/lib/utils";
+
+function addDaysToDate(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function daysBetween(from: Date, to: Date): number {
+  return Math.round((to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function formatLong(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function formatShort(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function getTodayString(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function getCareNote(daysElapsed: number): string {
+  if (daysElapsed <= 7)
+    return "Your dog is in the very early stages. Keep her routine stress-free. Most pregnancies last between 58–68 days, with 63 being the average. Consult your vet for an ultrasound around Day 25.";
+  if (daysElapsed <= 21)
+    return "Embryos are developing rapidly. Maintain a normal feeding routine and avoid intense exercise. A vet checkup is recommended.";
+  if (daysElapsed <= 35)
+    return "This is a critical growth stage. Schedule a vet visit for palpation or ultrasound confirmation. Nipple development becomes visible.";
+  if (daysElapsed <= 49)
+    return "Puppies are growing fast! Increase food intake gradually. Clear discharge is normal at this stage.";
+  if (daysElapsed <= 56)
+    return "Almost there! Begin preparing the whelping box. Monitor rectal temperature daily and watch for nesting behavior.";
+  return "Birth is imminent. Prepare your whelping area and keep your vet's number handy. Contact vet if pregnancy exceeds 68 days.";
+}
+
+function computeResult(
+  matingDateStr: string,
+  breedSize: BreedSize,
+): PregnancyResult {
+  const matingDate = new Date(`${matingDateStr}T00:00:00`);
+  const dueDate = addDaysToDate(matingDate, GESTATION_DAYS[breedSize]);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const daysElapsed = Math.max(0, daysBetween(matingDate, today));
+  const daysRemaining = Math.max(0, daysBetween(today, dueDate));
+  const currentWeek = Math.min(
+    9,
+    Math.max(1, Math.ceil((daysElapsed + 1) / 7)),
+  );
+  return {
+    dueDate,
+    daysRemaining,
+    currentWeek,
+    daysElapsed,
+    careNote: getCareNote(daysElapsed),
+  };
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <CheckCircle2
+      className={cn("shrink-0", className)}
+      aria-hidden="true"
+      color="#00C2A8"
+      size={16}
+    />
+  );
+}
+
+export default function DogPregnancy() {
+  const [matingDate, setMatingDate] = useState(getTodayString());
+  const [breedSize, setBreedSize] = useState<BreedSize>("small");
+  const [result, setResult] = useState<PregnancyResult | null>(null);
+
+  function handleEstimate() {
+    if (!matingDate) return;
+    setResult(computeResult(matingDate, breedSize));
+  }
+
+  const displayDate = matingDate
+    ? formatLong(new Date(`${matingDate}T00:00:00`))
+    : "Select a date";
+
+  return (
+    <div className="w-full min-h-screen bg-white dark:bg-gray-950">
+      {/* ── HERO ── */}
+      <section className="relative bg-[#E6F7F5] dark:bg-teal-950 overflow-hidden py-20 px-6 flex items-center justify-center min-h-105">
+        {/* Decorative heart */}
+        <div className="absolute right-[8%] top-[12%] opacity-20 pointer-events-none select-none hidden md:block">
+          <PawPrint
+            aria-hidden="true"
+            size={120}
+            color="#FF85A2"
+            className="shrink-0"
+          />
+        </div>
+        {/* Decorative calendar */}
+        <div className="absolute left-[6%] bottom-[8%] opacity-10 pointer-events-none select-none hidden md:block">
+          <CalendarDays
+            aria-hidden="true"
+            size={140}
+            color="#00C2A8"
+            className="shrink-0"
+          />
+        </div>
+
+        <div className="relative max-w-3xl w-full mx-auto text-center space-y-5">
+          {/* Vet badge */}
+          <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
+            <ShieldAlert
+              aria-hidden="true"
+              size={14}
+              color="#00C2A8"
+              className="shrink-0"
+            />
+            <span className="text-[#00C2A8] text-xs font-bold tracking-widest uppercase">
+              Veterinary Verified Logic
+            </span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
+            Dog Pregnancy Calculator
+          </h1>
+          <p className="text-lg md:text-xl font-medium text-[#1A2B3C]/70 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
+            {`Estimate your dog's due date, track pregnancy milestones
+						week-by-week, and prepare for your puppy's arrival with expert
+						guidance.`}
+          </p>
+        </div>
+      </section>
+
+      {/* ── CALCULATOR FORM ── */}
+      <section className="py-16 px-4 bg-white dark:bg-gray-950">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Form card */}
+          <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 sm:p-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Mating Date */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#1A2B3C] dark:text-white text-lg font-bold">
+                    Mating Date
+                  </span>
+                </div>
+                <div className="relative">
+                  <div className="flex items-center justify-between p-4 rounded-2xl border border-gray-100 dark:border-gray-600 bg-[#F9FAFB] dark:bg-gray-700 overflow-hidden">
+                    <span className="text-[#1A2B3C] dark:text-white text-lg font-medium flex-1 truncate">
+                      {displayDate}
+                    </span>
+                  </div>
+                  <input
+                    type="date"
+                    value={matingDate}
+                    onChange={(e) => setMatingDate(e.target.value)}
+                    max={getTodayString()}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                </div>
+                <p className="text-[#6B7280] dark:text-gray-400 text-sm">
+                  Select the day the mating occurred.
+                </p>
+              </div>
+
+              {/* Breed Size */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#1A2B3C] dark:text-white text-lg font-bold">
+                    Breed Size
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {(["small", "medium", "large", "giant"] as BreedSize[]).map(
+                    (size) => (
+                      <button
+                        key={size}
+                        type="button"
+                        onClick={() => setBreedSize(size)}
+                        className={cn(
+                          "py-3 rounded-xl border-2 text-sm font-bold text-center transition-colors",
+                          breedSize === size
+                            ? "border-[#00C2A8] bg-[#E6F7F5] text-[#00C2A8] dark:bg-teal-900/50"
+                            : "border-gray-200 dark:border-gray-600 text-[#6B7280] dark:text-gray-400 hover:border-[#00C2A8]/50",
+                        )}
+                      >
+                        {BREED_SIZE_LABELS[size]}
+                      </button>
+                    ),
+                  )}
+                </div>
+                <p className="text-[#6B7280] dark:text-gray-400 text-sm">
+                  Size impacts gestation variance slightly.
+                </p>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={handleEstimate}
+                className="w-full py-5 rounded-3xl bg-[#00C2A8] hover:bg-[#00a896] active:bg-[#009080] text-white text-xl font-bold text-center transition-colors shadow-[0_20px_25px_-5px_rgba(0,194,168,0.2),0_8px_10px_-6px_rgba(0,194,168,0.2)]"
+              >
+                Estimate Due Date
+              </button>
+            </div>
+          </div>
+
+          {/* Results card */}
+          {result && (
+            <div className="relative bg-[#1A2B3C] dark:bg-[#0d1825] rounded-3xl overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] p-8 sm:p-10">
+              {/* Glow blob */}
+              <div className="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-[#00C2A8]/20 blur-[48px] pointer-events-none" />
+
+              {/* Header */}
+              <div className="flex items-start gap-4 mb-8">
+                <div>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">
+                    Estimated Due Date
+                  </h2>
+                  <p className="text-[#00C2A8] text-sm font-bold tracking-[1.4px] uppercase mt-1">
+                    Pregnancy Forecast
+                  </p>
+                </div>
+              </div>
+
+              {/* Metrics */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+                <div className="col-span-2 md:col-span-1 rounded-2xl border border-white/10 bg-white/5 p-5 flex flex-col items-center gap-2">
+                  <span className="text-white/50 text-xs font-bold tracking-widest uppercase">
+                    Due Date
+                  </span>
+                  <span className="text-white text-xl sm:text-2xl font-black text-center leading-tight">
+                    {formatShort(result.dueDate)}
+                  </span>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-5 flex flex-col items-center gap-2">
+                  <span className="text-white/50 text-xs font-bold tracking-widest uppercase text-center">
+                    Days Remaining
+                  </span>
+                  <span className="text-[#FF85A2] text-4xl font-black">
+                    {result.daysRemaining}
+                  </span>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-5 flex flex-col items-center gap-2">
+                  <span className="text-white/50 text-xs font-bold tracking-widest uppercase text-center">
+                    Current Week
+                  </span>
+                  <span className="text-[#00C2A8] text-4xl font-black">
+                    {result.currentWeek}
+                  </span>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-5 flex flex-col items-center gap-2">
+                  <span className="text-white/50 text-xs font-bold tracking-widest uppercase text-center">
+                    Days Elapsed
+                  </span>
+                  <span className="text-white text-4xl font-black">
+                    {result.daysElapsed}
+                  </span>
+                </div>
+              </div>
+
+              {/* Care note */}
+              <div className="flex gap-3 items-start">
+                <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                  <span className="text-white font-bold">Care Note:</span>{" "}
+                  {result.careNote}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── TIMELINE ── */}
+      <section className="bg-[#F9FAFB] dark:bg-gray-900 py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white tracking-tight">
+              Dog Pregnancy Timeline
+            </h2>
+            <p className="text-[#6B7280] dark:text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
+              Track the amazing development of your puppies from fertilization
+              to birth with our week-by-week guide.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+            {TIMELINE_WEEKS.map((item) => (
+              <div
+                key={item.week}
+                className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-7 flex flex-col gap-3"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0">
+                  <span className="text-[#00C2A8] text-xl font-black">
+                    {item.week}
+                  </span>
+                </div>
+                <h3 className="text-[#1A2B3C] dark:text-white text-xl font-extrabold mt-1">
+                  {item.title}
+                </h3>
+                <p className="text-[#6B7280] dark:text-gray-400 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+                <ul className="space-y-2 mt-1">
+                  {item.tips.map((tip) => (
+                    <li key={tip} className="flex items-center gap-2">
+                      <CheckIcon className="text-[#00C2A8]" />
+                      <span className="text-[#1A2B3C]/70 dark:text-gray-400 text-xs font-bold">
+                        {tip}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center">
+            <button
+              type="button"
+              className="px-8 py-3 rounded-full border-2 border-[#00C2A8] text-[#00C2A8] text-base font-bold bg-white dark:bg-transparent hover:bg-[#E6F7F5] dark:hover:bg-teal-900/40 transition-colors"
+            >
+              View Full 9-Week Guide
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW LONG / VET SECTIONS ── */}
+      <section className="py-24 px-4 bg-white dark:bg-gray-950">
+        <div className="max-w-6xl mx-auto space-y-24">
+          {/* Row 1: text left, image right */}
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white leading-tight">
+                How Long Are Dogs Pregnant?
+              </h2>
+              <div className="space-y-4 text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
+                <p>
+                  The average gestation period for dogs is{" "}
+                  <strong className="font-bold">63 days</strong> (about 9
+                  weeks), though it can vary from 58 to 68 days.
+                </p>
+                <p>
+                  {`Variance often depends on the dog's breed and size. Smaller
+									breeds often have slightly shorter pregnancies, while larger
+									dogs may carry for the full term or slightly longer.`}
+                </p>
+              </div>
+              <div className="rounded-3xl border border-[#00C2A8]/20 bg-[#E6F7F5] dark:bg-teal-950 p-6 space-y-2">
+                <p className="text-[#00C2A8] text-lg font-bold">Pro Tip:</p>
+                <p className="text-[#1A2B3C]/80 dark:text-gray-300 text-sm leading-relaxed">
+                  Calculating from the date of ovulation is more accurate than
+                  mating date, as sperm can live inside the female for several
+                  days.
+                </p>
+              </div>
+            </div>
+            <div className="rounded-3xl overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] aspect-4/3">
+              <Image
+                src="https://api.builder.io/api/v1/image/assets/TEMP/0b5edf462e891ce094fd72356a06ea7e60ad8477?width=1072"
+                alt="Pregnant golden retriever resting comfortably on a soft rug"
+                width={536}
+                height={400}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Row 2: image left, text right */}
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="rounded-3xl overflow-hidden shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] aspect-4/3 order-2 md:order-1">
+              <Image
+                src="https://api.builder.io/api/v1/image/assets/TEMP/0f83f1a70d226ad853b44bf47e3d08159d468a55?width=1072"
+                alt="Veterinarian examining a dog"
+                width={536}
+                height={400}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="space-y-6 order-1 md:order-2">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white leading-tight">
+                When To Contact A Vet
+              </h2>
+              <p className="text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
+                While dog pregnancy is a natural process, there are signs that
+                require immediate professional attention to ensure the safety of
+                both mother and puppies.
+              </p>
+              <div className="space-y-3 pt-2">
+                {/* Alert: Abnormal Discharge */}
+                <div className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800">
+                  <div>
+                    <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
+                      Abnormal Discharge
+                    </h4>
+                    <p className="text-[#6B7280] dark:text-gray-400 text-sm">
+                      Bloody or foul-smelling discharge before the due date.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Alert: Overdue Pregnancy */}
+                <div className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800">
+                  <div>
+                    <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
+                      Overdue Pregnancy
+                    </h4>
+                    <p className="text-[#6B7280] dark:text-gray-400 text-sm">
+                      If the pregnancy lasts more than 68 days from mating.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Alert: Prolonged Labor */}
+                <div className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800">
+                  <div>
+                    <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
+                      Prolonged Labor
+                    </h4>
+                    <p className="text-[#6B7280] dark:text-gray-400 text-sm">
+                      Extreme straining for more than 45 mins without a puppy.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
+            Frequently Asked Questions
+          </h2>
+          <Accordion type="single" collapsible className="space-y-4">
+            {FAQ_ITEMS.map((item) => (
+              <AccordionItem
+                key={item.id}
+                value={item.id}
+                className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border-none px-6"
+              >
+                <AccordionTrigger className="text-[#1A2B3C] dark:text-white text-base sm:text-lg font-bold py-6 hover:no-underline">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-[#4B5563] dark:text-gray-400 text-base leading-relaxed pb-6">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* ── EXPLORE TOOLS ── */}
+      <section className="py-16 px-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[#1A2B3C]/40 dark:text-gray-500 text-xs font-black tracking-[4px] uppercase text-center mb-8">
+            Explore Other Dog Tools
+          </p>
+          <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+            <Link
+              href="/calculators/dog-growth"
+              className="flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0"></div>
+              <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#00C2A8] transition-colors">
+                Dog Growth Calculator
+              </span>
+            </Link>
+
+            <Link
+              href="/calculators/puppy-weight"
+              className="flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#EFF6FF] dark:bg-blue-900/30 flex items-center justify-center shrink-0"></div>
+              <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#3B82F6] transition-colors">
+                Puppy Weight Predictor
+              </span>
+            </Link>
+
+            <Link
+              href="/calculators/dog-name"
+              className="flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#FF85A2]/10 dark:bg-pink-900/30 flex items-center justify-center shrink-0"></div>
+              <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#FF85A2] transition-colors">
+                Dog Name Generator
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── DISCLAIMER ── */}
+      <section className="py-10 px-4 bg-white dark:bg-gray-950">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-[#9CA3AF] dark:text-gray-500 text-xs leading-relaxed">
+            Disclaimer: This calculator provides estimates based on typical
+            biological averages. Dog pregnancy can be complex and varies by
+            individual health and breed factors. We strongly recommend a
+            professional veterinary consultation, ultrasound, or X-ray to
+            confirm pregnancy status, puppy count, and overall health.
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
