@@ -6,7 +6,13 @@ import {
   Sparkles,
   Utensils,
 } from "lucide-react";
-import type { BreedData, Category, DogName, quizDataProps } from "@/lib/types";
+import type {
+  BreedData,
+  BreedSize,
+  Category,
+  DogName,
+  quizDataProps,
+} from "@/lib/types";
 import type {
   BlogPost,
   CalculatorProps,
@@ -1500,3 +1506,68 @@ export function getNamesByPersonality(
   const shuffled = filtered.sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count);
 }
+
+export const GESTATION_DAYS: Record<BreedSize, number> = {
+  small: 63,
+  medium: 63,
+  large: 63,
+  giant: 65,
+};
+
+export const BREED_SIZE_LABELS: Record<BreedSize, string> = {
+  small: "Small",
+  medium: "Medium",
+  large: "Large",
+  giant: "Giant",
+};
+
+export const TIMELINE_WEEKS = [
+  {
+    week: "W1",
+    title: "Conception & Early Growth",
+    description:
+      "Fertilization occurs in the oviducts. You may notice mild morning sickness. Maintain normal exercise but avoid intense training.",
+    tips: ["Normal feeding", "Monitor for behavior changes"],
+  },
+  {
+    week: "W4",
+    title: "Embryos Implanted",
+    description:
+      "The most critical stage. Puppies can be felt by a vet via palpation. Nipple development becomes visible.",
+    tips: ["Vet confirmation", "Clear discharge is normal"],
+  },
+  {
+    week: "W9",
+    title: "Whelping Is Near",
+    description:
+      'Puppies are fully formed. Mother becomes restless and starts "nesting". Monitor rectal temperature for drop.',
+    tips: ["Prepare whelping box", "Contact vet if over 65 days"],
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    id: "faq-1",
+    question: "Can I feed my dog puppy food during pregnancy?",
+    answer:
+      "Yes, from week 6 onwards, it's often recommended to switch to high-quality puppy food as it contains more calories and calcium needed for the developing puppies and milk production.",
+  },
+  {
+    id: "faq-2",
+    question: "How many puppies will my dog have?",
+    answer:
+      "Litter size depends heavily on breed and individual health. Small breeds typically have 1–4 puppies, while large breeds can have 6–12 or more. An ultrasound around day 25 or X-ray after day 55 can give an accurate count.",
+  },
+  {
+    id: "faq-3",
+    question: "Should I exercise my pregnant dog?",
+    answer:
+      "Light to moderate exercise is beneficial in early pregnancy. Avoid strenuous activity and rough play, especially in the final three weeks. Gentle walks are ideal throughout pregnancy.",
+  },
+  {
+    id: "faq-4",
+    question: "How do I know if labor has started?",
+    answer:
+      "Signs include restlessness, nesting behavior, loss of appetite, and a drop in rectal temperature below 100°F (37.8°C). Active labor begins with visible contractions and straining.",
+  },
+];

@@ -127,3 +127,13 @@ export interface BreedData {
   typicalRange: [number, number];
   growthCurve: number[]; // Weight at each month (0-18)
 }
+
+export type BreedSize = "small" | "medium" | "large" | "giant";
+
+export interface PregnancyResult {
+  dueDate: Date;
+  daysRemaining: number;
+  currentWeek: number;
+  daysElapsed: number;
+  careNote: string;
+}
