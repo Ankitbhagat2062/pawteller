@@ -1,5 +1,4 @@
 "use client";
-
 import {
   CalendarDays,
   CheckCircle2,
@@ -8,6 +7,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import {
   Accordion,
@@ -58,6 +59,8 @@ function getTodayString(): string {
   return `${y}-${m}-${d}`;
 }
 
+export const PREGNANCY_OVERDUE_DAYS = 65;
+
 function getCareNote(daysElapsed: number): string {
   if (daysElapsed <= 7)
     return "Your dog is in the very early stages. Keep her routine stress-free. Most pregnancies last between 58–68 days, with 63 being the average. Consult your vet for an ultrasound around Day 25.";
@@ -69,7 +72,7 @@ function getCareNote(daysElapsed: number): string {
     return "Puppies are growing fast! Increase food intake gradually. Clear discharge is normal at this stage.";
   if (daysElapsed <= 56)
     return "Almost there! Begin preparing the whelping box. Monitor rectal temperature daily and watch for nesting behavior.";
-  return "Birth is imminent. Prepare your whelping area and keep your vet's number handy. Contact vet if pregnancy exceeds 68 days.";
+  return `Birth is imminent. Prepare your whelping area and keep your vet's number handy. Contact vet if pregnancy exceeds ${PREGNANCY_OVERDUE_DAYS} days.`;
 }
 
 function computeResult(
@@ -176,9 +179,12 @@ export default function DogPregnancy() {
               {/* Mating Date */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-[#1A2B3C] dark:text-white text-lg font-bold">
+                  <label
+                    htmlFor="mating-date"
+                    className="text-[#1A2B3C] dark:text-white text-lg font-bold"
+                  >
                     Mating Date
-                  </span>
+                  </label>
                 </div>
                 <div className="relative">
                   <div className="flex items-center justify-between p-4 rounded-2xl border border-gray-100 dark:border-gray-600 bg-[#F9FAFB] dark:bg-gray-700 overflow-hidden">
@@ -188,6 +194,7 @@ export default function DogPregnancy() {
                   </div>
                   <input
                     type="date"
+                    id="mating-date"
                     value={matingDate}
                     onChange={(e) => setMatingDate(e.target.value)}
                     max={getTodayString()}
@@ -355,6 +362,7 @@ export default function DogPregnancy() {
 
           <div className="flex justify-center">
             <button
+              onClick={() => redirect("/blog")}
               type="button"
               className="px-8 py-3 rounded-full border-2 border-[#00C2A8] text-[#00C2A8] text-base font-bold bg-white dark:bg-transparent hover:bg-[#E6F7F5] dark:hover:bg-teal-900/40 transition-colors"
             >
@@ -445,7 +453,8 @@ export default function DogPregnancy() {
                       Overdue Pregnancy
                     </h4>
                     <p className="text-[#6B7280] dark:text-gray-400 text-sm">
-                      If the pregnancy lasts more than 68 days from mating.
+                      If the pregnancy lasts more than {PREGNANCY_OVERDUE_DAYS}{" "}
+                      days from mating.
                     </p>
                   </div>
                 </div>

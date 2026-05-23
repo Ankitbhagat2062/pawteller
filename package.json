@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "correctlint": "biome check --write --unsafe"
+    "correctlint": "biome check --write"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
