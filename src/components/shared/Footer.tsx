@@ -1,8 +1,8 @@
 "use client";
-import { footerSections } from "@/lib/constant";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { footerSections } from "@/lib/constant";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

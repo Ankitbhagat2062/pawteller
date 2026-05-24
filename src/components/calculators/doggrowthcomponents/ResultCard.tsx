@@ -12,7 +12,6 @@ import {
 } from "recharts";
 import type { ResultCardProps } from "@/lib/types";
 
-
 export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
   const chartData = growthInfo.growthCurve.map((weight, month) => ({
     month,

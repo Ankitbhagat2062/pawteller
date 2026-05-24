@@ -1553,7 +1553,7 @@ export const personalityGroups: PersonalityGroup[] = [
   { title: "Unique Names", personality: "Unique", icon: "✨" },
 ];
 
-import { FAQItem } from "@/lib/types";
+import type { FAQItem } from "@/lib/types";
 
 export const faqItems: FAQItem[] = [
   {

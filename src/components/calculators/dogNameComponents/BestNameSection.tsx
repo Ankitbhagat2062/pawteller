@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { getNamesByPersonality, personalityGroups } from "@/lib/constant";
 import type { DogName } from "@/lib/types";
 
-
-
 export function BestNamesSection() {
   const [groupedNames, setGroupedNames] = useState<Record<string, DogName[]>>(
     {},

@@ -148,7 +148,6 @@ export interface BlogContentProps {
   content: contentProps[];
 }
 
-
 export interface BlogFeaturedImageProps {
   src: string;
   alt: string;

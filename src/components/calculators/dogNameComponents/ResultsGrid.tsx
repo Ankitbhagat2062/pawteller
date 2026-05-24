@@ -1,7 +1,6 @@
 "use client";
 
-import { ResultsGridProps } from "@/lib/types";
-
+import type { ResultsGridProps } from "@/lib/types";
 
 export function ResultsGrid({ names, onRefresh }: ResultsGridProps) {
   return (

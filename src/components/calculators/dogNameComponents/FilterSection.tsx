@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FilterSectionProps } from "@/lib/types";
+import type { FilterSectionProps } from "@/lib/types";
 
 export function FilterSection({
   gender,
