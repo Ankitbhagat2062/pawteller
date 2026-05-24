@@ -1,9 +1,5 @@
+import { BlogFeaturedImageProps } from "@/lib/types";
 import Image from "next/image";
-
-interface BlogFeaturedImageProps {
-  src: string;
-  alt: string;
-}
 
 export function BlogFeaturedImage({ src, alt }: BlogFeaturedImageProps) {
   return (

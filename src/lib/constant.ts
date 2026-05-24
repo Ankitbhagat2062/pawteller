@@ -10,8 +10,13 @@ import type {
   BreedData,
   BreedSize,
   Category,
+  DogGender,
   DogName,
+  DogSize,
+  FooterSection,
+  PersonalityGroup,
   quizDataProps,
+  StartingLetter,
 } from "@/lib/types";
 import type {
   BlogPost,
@@ -1436,38 +1441,6 @@ export const categories: Category[] = [
     personalities: ["Unique", "Rare", "Special"],
   },
 ];
-
-export type DogGender = DogName["gender"];
-export type DogSize = DogName["size"];
-export type StartingLetter =
-  | "All"
-  | "A"
-  | "B"
-  | "C"
-  | "D"
-  | "E"
-  | "F"
-  | "G"
-  | "H"
-  | "I"
-  | "J"
-  | "K"
-  | "L"
-  | "M"
-  | "N"
-  | "O"
-  | "P"
-  | "Q"
-  | "R"
-  | "S"
-  | "T"
-  | "U"
-  | "V"
-  | "W"
-  | "X"
-  | "Y"
-  | "Z";
-
 export function generateDogNames(
   gender: DogGender | "All" = "All",
   size: DogSize | "All" = "All",
@@ -1569,5 +1542,78 @@ export const FAQ_ITEMS = [
     question: "How do I know if labor has started?",
     answer:
       "Signs include restlessness, nesting behavior, loss of appetite, and a drop in rectal temperature below 100°F (37.8°C). Active labor begins with visible contractions and straining.",
+  },
+];
+
+export const personalityGroups: PersonalityGroup[] = [
+  { title: "Playful Names", personality: "Playful", icon: "🎾" },
+  { title: "Smart Names", personality: "Smart", icon: "🧠" },
+  { title: "Gentle Names", personality: "Gentle", icon: "💚" },
+  { title: "Strong Names", personality: "Strong", icon: "💪" },
+  { title: "Unique Names", personality: "Unique", icon: "✨" },
+];
+
+import { FAQItem } from "@/lib/types";
+
+export const faqItems: FAQItem[] = [
+  {
+    question: "How many dog names should I consider?",
+    answer:
+      "We recommend generating at least 10-15 name options to choose from. This gives you plenty of variety to test and see what feels right for your new puppy or dog.",
+  },
+  {
+    question: "Can I change my dog's name if I've been using another one?",
+    answer:
+      "Yes! Dogs can learn new names at any age with consistent training and positive reinforcement. It may take a few weeks for them to adjust, but it&apos;s definitely possible.",
+  },
+  {
+    question: "What makes a good dog name?",
+    answer:
+      "Good dog names are short (1-2 syllables), easy to pronounce, don't sound like commands, and reflect your dog's personality. They should feel natural when you say them out loud.",
+  },
+  {
+    question: "Should I match the name to my dog's size?",
+    answer:
+      "While not necessary, many people prefer matching name style to dog size. Shorter, punchier names work great for small dogs, while longer, stronger names suit larger breeds. Ultimately, choose what feels right!",
+  },
+  {
+    question: "Are unique names better than popular ones?",
+    answer:
+      "It depends on your preference! Popular names are recognizable and classic, while unique names help your dog stand out. Both can work equally well as long as you love the name and your dog responds to it.",
+  },
+  {
+    question: "How do I test if a name works for my dog?",
+    answer:
+      "Try calling the name out loud in different situations. See if you feel comfortable saying it at the dog park, at the vet, and at home. Your dog will also give you feedback on whether they respond to the sound of the name.",
+  },
+];
+
+export const footerSections: FooterSection[] = [
+  {
+    title: "Tools",
+    links: [
+      { label: "Breed Calculator", href: "/calculators/dog-name" },
+      { label: "Food Calculator", href: "/calculators/dog-food" },
+      { label: "Age Calculator", href: "/calculators/dog-age" },
+      { label: "Weight Tracker", href: "/calculators/puppy-weight" },
+    ],
+  },
+  {
+    title: "Content",
+    links: [
+      { label: "Breed Quiz", href: "/quiz" },
+      { label: "Blog", href: "/blog" },
+      { label: "Care Guides", href: "/guides" },
+      { label: "Pet Health", href: "/health" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
+      { label: "Cookie Policy", href: "/cookies" },
+      { label: "Contact Us", href: "/contact" },
+    ],
   },
 ];

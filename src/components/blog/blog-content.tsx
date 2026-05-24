@@ -1,9 +1,5 @@
+import { BlogContentProps } from "@/lib/types";
 import Link from "next/link";
-import type { contentProps } from "@/lib/types";
-
-interface BlogContentProps {
-  content: contentProps[];
-}
 
 export function BlogContent({ content }: BlogContentProps) {
   return (

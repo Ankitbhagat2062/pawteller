@@ -1,11 +1,7 @@
 "use client";
 
-import type { DogName } from "@/lib/types";
+import { ResultsGridProps } from "@/lib/types";
 
-interface ResultsGridProps {
-  names: DogName[];
-  onRefresh: () => void;
-}
 
 export function ResultsGrid({ names, onRefresh }: ResultsGridProps) {
   return (

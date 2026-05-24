@@ -1,46 +1,8 @@
 "use client";
+import { footerSections } from "@/lib/constant";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-interface FooterLink {
-  label: string;
-  href: string;
-}
-
-interface FooterSection {
-  title: string;
-  links: FooterLink[];
-}
-const footerSections: FooterSection[] = [
-  {
-    title: "Tools",
-    links: [
-      { label: "Breed Calculator", href: "/calculators/dog-name" },
-      { label: "Food Calculator", href: "/calculators/dog-food" },
-      { label: "Age Calculator", href: "/calculators/dog-age" },
-      { label: "Weight Tracker", href: "/calculators/puppy-weight" },
-    ],
-  },
-  {
-    title: "Content",
-    links: [
-      { label: "Breed Quiz", href: "/quiz" },
-      { label: "Blog", href: "/blog" },
-      { label: "Care Guides", href: "/guides" },
-      { label: "Pet Health", href: "/health" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
-      { label: "Contact Us", href: "/contact" },
-    ],
-  },
-];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

@@ -10,12 +10,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { GrowthInfo } from "@/lib/types";
+import type { ResultCardProps } from "@/lib/types";
 
-interface ResultCardProps {
-  growthInfo: GrowthInfo;
-  puppyImage?: string;
-}
 
 export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
   const chartData = growthInfo.growthCurve.map((weight, month) => ({
