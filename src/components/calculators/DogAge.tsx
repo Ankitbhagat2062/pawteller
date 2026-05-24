@@ -221,7 +221,7 @@ const DogAgeCalculator = () => {
             </Card>
 
             {/* Result Card */}
-            <Card className="p-6 md:p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 shadow-sm hover:shadow-md transition-shadow">
+            <Card className="p-6 md:p-8 bg-linear-to-br from-primary/5 to-secondary/5 border-primary/20 shadow-sm hover:shadow-md transition-shadow">
               <div className="text-center">
                 <p className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">
                   Human Age Equivalent
@@ -293,7 +293,7 @@ const DogAgeCalculator = () => {
               ].map((item) => (
                 <Card
                   key={item.size}
-                  className={`p-4 bg-gradient-to-br ${item.color} border`}
+                  className={`p-4 bg-linear-to-br ${item.color} border`}
                 >
                   <h4 className="font-semibold text-foreground mb-2">
                     {item.size}
@@ -351,7 +351,7 @@ const DogAgeCalculator = () => {
 
           {/* Call to Action */}
           <section className="mt-16 text-center">
-            <Card className="p-8 md:p-12 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/30">
+            <Card className="p-8 md:p-12 bg-linear-to-r from-primary/10 to-secondary/10 border-primary/30">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                 Keep Your Dog Healthy
               </h2>
