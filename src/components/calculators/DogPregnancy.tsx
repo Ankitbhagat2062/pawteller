@@ -8,7 +8,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-import { redirect } from "next/navigation";
 import { useState } from "react";
 import {
   Accordion,
@@ -24,6 +23,7 @@ import {
 } from "@/lib/constant";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -113,7 +113,7 @@ export default function DogPregnancy() {
   const [matingDate, setMatingDate] = useState(getTodayString());
   const [breedSize, setBreedSize] = useState<BreedSize>("small");
   const [result, setResult] = useState<PregnancyResult | null>(null);
-
+  const router = useRouter();
   function handleEstimate() {
     if (!matingDate) return;
     setResult(computeResult(matingDate, breedSize));
@@ -362,7 +362,7 @@ export default function DogPregnancy() {
 
           <div className="flex justify-center">
             <button
-              onClick={() => redirect("/blog")}
+              onClick={() => router.push("/blog")}
               type="button"
               className="px-8 py-3 rounded-full border-2 border-[#00C2A8] text-[#00C2A8] text-base font-bold bg-white dark:bg-transparent hover:bg-[#E6F7F5] dark:hover:bg-teal-900/40 transition-colors"
             >

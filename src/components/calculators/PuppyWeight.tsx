@@ -15,7 +15,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useState } from "react";
+
 import {
   Accordion,
   AccordionContent,
@@ -190,22 +191,30 @@ interface PredictionResult {
   stopGrowing: string;
 }
 
+type Sex = "male" | "female" | "unknown";
+
 function calculatePrediction(
   breedName: string,
   ageMonths: number,
   currentWeightKg: number,
+  sex: Sex,
 ): PredictionResult | null {
   const breed = BREEDS.find((b) => b.name === breedName);
+
   if (!breed || ageMonths <= 0 || currentWeightKg <= 0) return null;
 
   const percentGrown = interpolateGrowth(breed.size, ageMonths);
   if (percentGrown <= 0) return null;
 
-  const predictedMid = currentWeightKg / (percentGrown / 100);
+  const sexFactor = sex === "male" ? 1.12 : sex === "female" ? 0.94 : 1;
+
+  const predictedMidBase = currentWeightKg / (percentGrown / 100);
+  const predictedMid = predictedMidBase * sexFactor;
   const breedMid = (breed.minKg + breed.maxKg) / 2;
   const ratio = predictedMid / breedMid;
 
   let status: PredictionResult["status"] = "On Track";
+
   let statusColor = "text-brand";
   if (ratio > 1.15) {
     status = "Above Average";
@@ -442,7 +451,7 @@ export default function Index() {
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [hasCalculated, setHasCalculated] = useState(false);
 
-  const handleCalculate = useCallback(() => {
+  const handleCalculate = () => {
     const ageMonths =
       ageUnit === "weeks" ? parseFloat(ageValue) / 4.33 : parseFloat(ageValue);
     const weightKg =
@@ -450,10 +459,19 @@ export default function Index() {
         ? parseFloat(weightValue) / 2.205
         : parseFloat(weightValue);
 
-    const res = calculatePrediction(selectedBreed, ageMonths, weightKg);
+    const sexParam: "male" | "female" | "unknown" =
+      sex === "Male" ? "male" : "female";
+
+    const res = calculatePrediction(
+      selectedBreed,
+      ageMonths,
+      weightKg,
+      sexParam,
+    );
+
     setResult(res);
     setHasCalculated(true);
-  }, [selectedBreed, ageValue, ageUnit, weightValue, weightUnit]);
+  };
 
   const ageMonthsForChart =
     ageUnit === "weeks"
@@ -540,7 +558,9 @@ export default function Index() {
                   <Image
                     src="https://api.builder.io/api/v1/image/assets/TEMP/125f32ab886c10beda3bee8eb9822323b654095b?width=1000"
                     alt="Happy Golden Retriever puppy"
-                    className="w-full h-full object-cover"
+                    fill
+                    priority
+                    className="object-cover"
                   />
                 </div>
               </div>
@@ -661,7 +681,11 @@ export default function Index() {
                     placeholder="e.g. 8.5"
                     className="flex-1 px-4 py-3 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
                   />
+                  <label htmlFor="weightUnit" className="sr-only">
+                    Weight Unit
+                  </label>
                   <select
+                    id="weightUnit"
                     value={weightUnit}
                     onChange={(e) =>
                       setWeightUnit(e.target.value as "kg" | "lbs")
@@ -710,7 +734,7 @@ export default function Index() {
 
               {/* Submit */}
               <button
-                type="submit"
+                type="button"
                 onClick={handleCalculate}
                 className="w-full py-4 rounded-xl bg-brand text-white font-extrabold text-base flex items-center justify-center gap-3 hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_10px_20px_-5px_rgba(32,201,151,0.35)]"
               >
@@ -751,7 +775,9 @@ export default function Index() {
                       </p>
                       <p className="text-foreground font-black">
                         <span className="text-3xl">
-                          {result.predictedMin}–{result.predictedMax}
+                          {weightUnit === "lbs"
+                            ? `${(result.predictedMin * 2.205).toFixed(1)}–${(result.predictedMax * 2.205).toFixed(1)}`
+                            : `${result.predictedMin}–${result.predictedMax}`}
                         </span>
                         <span className="text-base ml-1">{weightUnit}</span>
                       </p>
@@ -1136,7 +1162,11 @@ export default function Index() {
                 growth tracking reminders.
               </p>
               <div className="flex flex-col gap-3">
+                <label htmlFor="emailInput" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="emailInput"
                   type="email"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
@@ -1144,7 +1174,7 @@ export default function Index() {
                   className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                 />
                 <button
-                  type="submit"
+                  type="button"
                   className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                 >
                   Get Tracking Reminders

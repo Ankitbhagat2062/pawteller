@@ -1564,7 +1564,7 @@ export const faqItems: FAQItem[] = [
   {
     question: "Can I change my dog's name if I've been using another one?",
     answer:
-      "Yes! Dogs can learn new names at any age with consistent training and positive reinforcement. It may take a few weeks for them to adjust, but it&apos;s definitely possible.",
+      "Yes! Dogs can learn new names at any age with consistent training and positive reinforcement. It may take a few weeks for them to adjust, but it's definitely possible.",
   },
   {
     question: "What makes a good dog name?",
