@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   Accordion,
@@ -23,7 +24,6 @@ import {
 } from "@/lib/constant";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
