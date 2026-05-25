@@ -4,7 +4,6 @@ import {
   CalendarDays,
   ChevronRight,
   DollarSign,
-  FAQ,
   PawPrint,
   Scale,
   Sparkles,
@@ -349,10 +348,12 @@ export default function CalculatorsPage() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <FAQ
-                className="h-5 w-5 text-emerald-600 dark:text-emerald-300"
+              <span
+                className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-emerald-300"
                 aria-hidden="true"
-              />
+              >
+                ?
+              </span>
             </div>
           </div>
 
