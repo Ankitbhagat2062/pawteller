@@ -11,11 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BREED_NAMES } from "@/lib/constant";
-
-interface PuppyFormProps {
-  onSubmit: (breed: string, ageMonths: number, weightLbs: number) => void;
-  disabled?: boolean;
-}
+import type { PuppyFormProps } from "@/lib/types";
 
 export function PuppyForm({ onSubmit, disabled }: PuppyFormProps) {
   const [breed, setBreed] = useState("Labrador Retriever");

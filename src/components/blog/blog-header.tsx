@@ -1,11 +1,7 @@
 import { ArrowLeft, Clock } from "lucide-react";
 import Link from "next/link";
+import type { BlogHeaderProps } from "@/lib/types";
 import ThemeToggle from "../shared/ThemeToggle";
-
-interface BlogHeaderProps {
-  category: string;
-  readTime: string;
-}
 
 export function BlogHeader({ category, readTime }: BlogHeaderProps) {
   return (

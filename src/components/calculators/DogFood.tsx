@@ -170,7 +170,7 @@ export default function DogFood() {
           </Card>
 
           {/* Results Card */}
-          <div className="bg-gradient-to-br from-emerald-700 to-emerald-800 dark:from-emerald-900 dark:to-emerald-950 rounded-2xl p-6 sm:p-8 text-white">
+          <div className="bg-linear-to-br from-emerald-700 to-emerald-800 dark:from-emerald-900 dark:to-emerald-950 rounded-2xl p-6 sm:p-8 text-white">
             <div className="space-y-8">
               <div>
                 <p className="text-sm font-semibold tracking-wide uppercase opacity-90 mb-2">

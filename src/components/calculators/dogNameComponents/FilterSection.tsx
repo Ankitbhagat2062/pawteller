@@ -8,17 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { DogGender, DogSize, StartingLetter } from "@/lib/constant";
-
-interface FilterSectionProps {
-  gender: DogGender | "All";
-  size: DogSize | "All";
-  startingLetter: StartingLetter;
-  onGenderChange: (value: DogGender | "All") => void;
-  onSizeChange: (value: DogSize | "All") => void;
-  onLetterChange: (value: StartingLetter) => void;
-  onGenerate: () => void;
-}
+import type { FilterSectionProps } from "@/lib/types";
 
 export function FilterSection({
   gender,

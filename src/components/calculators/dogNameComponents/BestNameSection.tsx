@@ -1,22 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getNamesByPersonality } from "@/lib/constant";
+import { getNamesByPersonality, personalityGroups } from "@/lib/constant";
 import type { DogName } from "@/lib/types";
-
-interface PersonalityGroup {
-  title: string;
-  personality: string;
-  icon: string;
-}
-
-const personalityGroups: PersonalityGroup[] = [
-  { title: "Playful Names", personality: "Playful", icon: "🎾" },
-  { title: "Smart Names", personality: "Smart", icon: "🧠" },
-  { title: "Gentle Names", personality: "Gentle", icon: "💚" },
-  { title: "Strong Names", personality: "Strong", icon: "💪" },
-  { title: "Unique Names", personality: "Unique", icon: "✨" },
-];
 
 export function BestNamesSection() {
   const [groupedNames, setGroupedNames] = useState<Record<string, DogName[]>>(

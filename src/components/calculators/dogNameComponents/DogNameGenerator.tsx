@@ -7,13 +7,8 @@ import { FAQSection } from "@/components/calculators/dogNameComponents/FAQSectio
 import { FilterSection } from "@/components/calculators/dogNameComponents/FilterSection";
 import { HowToChooseSection } from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
-import {
-  type DogGender,
-  type DogSize,
-  generateDogNames,
-  type StartingLetter,
-} from "@/lib/constant";
-import type { DogName } from "@/lib/types";
+import { generateDogNames } from "@/lib/constant";
+import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";

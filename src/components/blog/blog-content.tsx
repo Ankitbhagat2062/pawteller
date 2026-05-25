@@ -1,9 +1,5 @@
 import Link from "next/link";
-import type { contentProps } from "@/lib/types";
-
-interface BlogContentProps {
-  content: contentProps[];
-}
+import type { BlogContentProps } from "@/lib/types";
 
 export function BlogContent({ content }: BlogContentProps) {
   return (
@@ -30,7 +26,7 @@ export function BlogContent({ content }: BlogContentProps) {
                   return (
                     <Link
                       key={compositeKey}
-                      href="/calculator/food"
+                      href="/calculator/dog-food"
                       aria-label="Calculate your dog's food"
                       className="text-orange-600 dark:text-orange-400 hover:underline"
                     >

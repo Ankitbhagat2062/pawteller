@@ -137,3 +137,95 @@ export interface PregnancyResult {
   daysElapsed: number;
   careNote: string;
 }
+
+export interface PersonalityGroup {
+  title: string;
+  personality: string;
+  icon: string;
+}
+
+export interface BlogContentProps {
+  content: contentProps[];
+}
+
+export interface BlogFeaturedImageProps {
+  src: string;
+  alt: string;
+}
+
+export interface BlogHeaderProps {
+  category: string;
+  readTime: string;
+}
+
+export interface PuppyFormProps {
+  onSubmit: (breed: string, ageMonths: number, weightLbs: number) => void;
+  disabled?: boolean;
+}
+
+export interface ResultCardProps {
+  growthInfo: GrowthInfo;
+  puppyImage?: string;
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export type DogGender = DogName["gender"];
+export type DogSize = DogName["size"];
+
+export type StartingLetter =
+  | "All"
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "O"
+  | "P"
+  | "Q"
+  | "R"
+  | "S"
+  | "T"
+  | "U"
+  | "V"
+  | "W"
+  | "X"
+  | "Y"
+  | "Z";
+
+export interface FilterSectionProps {
+  gender: DogGender | "All";
+  size: DogSize | "All";
+  startingLetter: StartingLetter;
+  onGenderChange: (value: DogGender | "All") => void;
+  onSizeChange: (value: DogSize | "All") => void;
+  onLetterChange: (value: StartingLetter) => void;
+  onGenerate: () => void;
+}
+
+export interface ResultsGridProps {
+  names: DogName[];
+  onRefresh: () => void;
+}
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterSection {
+  title: string;
+  links: FooterLink[];
+}

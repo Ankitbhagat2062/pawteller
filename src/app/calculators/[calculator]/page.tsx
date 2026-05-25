@@ -17,14 +17,6 @@ const SLUG_TO_COMPONENT = {
   "dog-name": DogName,
 } as const;
 
-type CalculatorSlug = keyof typeof SLUG_TO_COMPONENT;
-
-type PageProps = {
-  params: Promise<{
-    calculator?: string;
-  }>;
-};
-
 export const metadata: Metadata = {
   title: "Dog Age Calculator | Convert Your Dog's Age to Human Years",
   description:
@@ -82,7 +74,13 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
 };
+type CalculatorSlug = keyof typeof SLUG_TO_COMPONENT;
 
+type PageProps = {
+  params: Promise<{
+    calculator?: string;
+  }>;
+};
 export default async function CalculatorPage({ params }: PageProps) {
   const { calculator } = await params;
   const normalizedSlug = calculator?.toLowerCase() as
