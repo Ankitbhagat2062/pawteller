@@ -4,7 +4,7 @@ export async function connectToDatabase() {
   const MONGODB_URI = process.env.MONGODB_URI || "";
 
   if (!MONGODB_URI) {
-    return console.log(
+    throw new Error(
       "Please define the MONGODB_URI environment variable inside .env.local",
     );
   }
@@ -44,7 +44,5 @@ export async function connectToDatabase() {
     return cached.conn;
   }
 
-  connect().catch((err) => {
-    console.error("Failed to connect to MongoDB:", err);
-  });
+  return connect();
 }

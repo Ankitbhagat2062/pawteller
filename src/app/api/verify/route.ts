@@ -8,13 +8,14 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 export async function GET(request: Request) {
   if (!RESEND_API_KEY) {
     return NextResponse.json(
-      { error: 
-        "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" 
+      {
+        error:
+          "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
-  
+
   const resend = new Resend(RESEND_API_KEY);
   const { searchParams } = new URL(request.url);
   const token = searchParams.get("token");
@@ -30,8 +31,8 @@ export async function GET(request: Request) {
 
     // Find and update subscriber if the token matches
     const subscriber = await Subscriber.findOneAndUpdate(
-      { verificationToken: token },
-      { isVerified: true },
+      { verificationToken: token, isVerified: false },
+      { isVerified: true, verificationToken: null },
       { new: true },
     );
 
@@ -57,16 +58,14 @@ export async function GET(request: Request) {
       `,
     });
 
-    // Redirect to a specific confirmation page
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL}/subscribed-success`,
-    );
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
+    return NextResponse.redirect(new URL("/subscribed-success", appUrl));
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
     return NextResponse.json(
-      { error: "An unexpected error occurred" }, 
+      { error: "An unexpected error occurred" },
       { status: 500 },
     );
   }

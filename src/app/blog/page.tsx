@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   // Rich visual configuration for social media platforms (Facebook, LinkedIn, Discord)
   openGraph: {
     title: "Expert Pet Care Guides & Data Insights | pawteller",
-    description: "Explore data-driven insights, puppy growth tracking tips, and expert dog care advice.",
+    description:
+      "Explore data-driven insights, puppy growth tracking tips, and expert dog care advice.",
     url: "https://pawteller.com/blog",
     siteName: "pawteller",
     locale: "en_US",
@@ -35,7 +36,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Expert Pet Care Guides & Data Insights | pawteller",
-    description: "Explore data-driven insights, puppy growth tracking tips, and expert dog care advice.",
+    description:
+      "Explore data-driven insights, puppy growth tracking tips, and expert dog care advice.",
     images: ["https://pawteller.com/dog-2.png"],
   },
 
@@ -57,8 +59,19 @@ export const metadata: Metadata = {
 export default function Blog() {
   return (
     <>
-    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
-      <BlogListingPage />;
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+      ></Script>
+      <Script id="ga-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-ZVQNS9QQHG');
+        `}
+      </Script>
+      <BlogListingPage />
     </>
-  )
+  );
 }

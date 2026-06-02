@@ -16,10 +16,10 @@ const footerSections: FooterSection[] = [
   {
     title: "Tools",
     links: [
-      { label: "Breed Calculator", href: "/calculators/breed" },
-      { label: "Food Calculator", href: "/calculators/food" },
-      { label: "Age Calculator", href: "/calculators/age" },
-      { label: "Weight Tracker", href: "/calculators/weight" },
+      { label: "Breed Calculator", href: "/calculators/dog-name" },
+      { label: "Food Calculator", href: "/calculators/dog-food" },
+      { label: "Age Calculator", href: "/calculators/dog-age" },
+      { label: "Weight Tracker", href: "/calculators/puppy-weight" },
     ],
   },
   {
@@ -118,7 +118,8 @@ export function Footer() {
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
-                      href={link.href} aria-label={`Learn more about ${link.label}`}
+                      href={link.href}
+                      aria-label={`Learn more about ${link.label}`}
                       className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                     >
                       {link.label}
@@ -137,13 +138,15 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <Link
-              href="/accessibility" aria-label="Accessibility"
+              href="/accessibility"
+              aria-label="Accessibility"
               className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
               {"              Accessibility"}
             </Link>
             <Link
-              href="/sitemap" aria-label="Sitemap"
+              href="/sitemap"
+              aria-label="Sitemap"
               className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
               {"Sitemap"}

@@ -4,14 +4,22 @@ import { Resend } from "resend";
 // Initialize Resend with your API key from .env.local
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-
 export async function POST(request: Request) {
   if (!RESEND_API_KEY) {
     return NextResponse.json(
-      { error: 
-        "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)" 
+      {
+        error:
+          "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
       },
-      { status: 500 }
+      { status: 500 },
+    );
+  }
+  const fromMail = process.env.FROM_MAIL;
+  const contactInbox = process.env.CONTACT_INBOX_MAIL;
+  if (!fromMail || !contactInbox) {
+    return NextResponse.json(
+      { error: "Missing FROM_MAIL or CONTACT_INBOX_MAIL env var" },
+      { status: 500 },
     );
   }
   const resend = new Resend(RESEND_API_KEY);
@@ -28,8 +36,8 @@ export async function POST(request: Request) {
 
     // Send the email to YOUR own email address
     const data = await resend.emails.send({
-      from: `<${process.env.FROM_MAIL}>`, // Must be a verified domain in Resend
-      to: email, // Where YOU want to receive the messages
+      from: `<${fromMail}>`,
+      to: contactInbox,// Where YOU want to receive the messages
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Message Received</h2>
@@ -43,11 +51,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, data });
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    console.error("Contact route failed:", error);
     return NextResponse.json(
-      { error: "An unexpected error occurred" },
+      { error: "Failed to process request" },
       { status: 500 },
     );
   }

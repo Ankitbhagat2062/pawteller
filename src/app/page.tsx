@@ -54,15 +54,11 @@ export default function Home() {
 
   return (
     <>
-<Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"></Script>
-      {/* JSON-LD + gtag should be in head for best practice; using Next Script with ids */}
-      <Script
-        id="jsonld-schema"
+      {/* JSON-LD gtag should be in head for best practice; using Next Script with ids */}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
-      >
-        {JSON.stringify(jsonLdSchema)}
-      </Script>
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+      />
       <div className="w-full font-sans text-slate-900 dark:bg-zinc-950 dark:text-slate-50">
         <main
           id="home"
@@ -109,7 +105,8 @@ export default function Home() {
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link
-                    href="/quiz" aria-label="start a quiz and predict your puppy's adult size"
+                    href="/quiz"
+                    aria-label="start a quiz and predict your puppy's adult size"
                     className="inline-flex h-12 items-center justify-center rounded-full border border-[#d2c5bd] bg-[#fbf8f3] px-7 text-sm font-bold text-[#2a1b15] shadow-sm transition hover:bg-white"
                   >
                     {"Find My Breed Match"}
@@ -284,7 +281,10 @@ export default function Home() {
                   asChild
                   className="mt-9 h-12 rounded-full bg-[#e57655] px-7 text-sm font-bold text-white shadow-none hover:bg-[#d96848]"
                 >
-                  <Link href="/quiz" aria-label="start a quiz to know about how dog grows different than human">
+                  <Link
+                    href="/quiz"
+                    aria-label="start a quiz to learn how dogs age differently than humans"
+                  >
                     {"Find your perfect breed match"}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
@@ -332,7 +332,8 @@ export default function Home() {
               </div>
               <div className="md:col-span-4 md:text-right">
                 <Link
-                  href="/quiz" aria-label="Start the quiz to find which dog breed is best for you"
+                  href="/quiz"
+                  aria-label="Start the quiz to find which dog breed is best for you"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-slate-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-slate-900"
                 >
                   {" Start The Quiz Now"}
@@ -370,7 +371,10 @@ export default function Home() {
                     asChild
                     className="mt-8 h-11 rounded-full bg-[#315846] px-6 text-xs font-medium text-white shadow-[0_10px_20px_rgba(49,88,70,0.16)] hover:bg-[#294b3b] dark:bg-[#f09a75] dark:text-[#1d140f] dark:shadow-none dark:hover:bg-[#f3a984]"
                   >
-                    <Link href="/quiz" aria-label="random quiz to find whether you dog isbest for you or not">
+                    <Link
+                      href="/quiz"
+                      aria-label="Take a quiz to find the best dog breed for you"
+                    >
                       {"Take the quiz"}
                       <Sparkles className="h-4 w-4" aria-hidden="true" />
                     </Link>
@@ -405,7 +409,8 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                href="/blog" aria-label="start reading blog about the dog"
+                href="/blog"
+                aria-label="View all dog care articles"
                 className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
               >
                 {"View all articles"}
@@ -414,9 +419,13 @@ export default function Home() {
 
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {(() => {
-                const selectedArticles = [...blogPosts]
-                  .sort(() => Math.random() - 0.5)
-                  .slice(0, 3);
+                const dayOfYear = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+                const startIndex = dayOfYear % blogPosts.length;
+                const selectedArticles = [
+                  blogPosts[startIndex % blogPosts.length],
+                  blogPosts[(startIndex + 1) % blogPosts.length],
+                  blogPosts[(startIndex + 2) % blogPosts.length],
+                ];
 
                 return selectedArticles.map((article) => (
                   <article
@@ -460,7 +469,8 @@ export default function Home() {
                           {article?.date}
                         </span>
                         <Link
-                          href={`${article.url}`} aria-label={` Read article about ${article.title}`}
+                          href={`${article.url}`}
+                          aria-label={` Read article about ${article.title}`}
                           className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                         >
                           {"Read Article"}

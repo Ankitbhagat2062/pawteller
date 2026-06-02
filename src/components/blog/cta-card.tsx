@@ -17,12 +17,12 @@ export function CtaCard() {
       <p className="text-stone-300 text-sm md:text-base mb-4">
         Personalized to your lifestyle, home and energy.
       </p>
-      <Button
-        asChild
-        className="bg-orange-600 hover:bg-orange-700 text-white"
-      >
-        <Link href="/quiz" aria-label="Take a quiz to find your perfect dog's breed">
-          Take the quiz 
+      <Button asChild className="bg-orange-600 hover:bg-orange-700 text-white">
+        <Link
+          href="/quiz"
+          aria-label="Take a quiz to find your perfect dog's breed"
+        >
+          Take the quiz
           <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>
