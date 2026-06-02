@@ -42,11 +42,8 @@ export default function ContactForm() {
       setStatus("error");
     }
   };
-  if (!topic) {
-    setStatus("error");
-    return;
-  }
   return (
+
     <div className="max-w-md mx-auto p-6 bg-white dark:bg-black rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
 
