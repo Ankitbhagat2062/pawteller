@@ -70,7 +70,7 @@ export default function Home() {
                 </h1>
 
                 <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f5049] dark:text-[#b8b3b1] md:text-xl md:leading-9">
-                  {homepageCms.hero.descriptionLines[0].replace("puppy's", "puppy" + "'s")}
+                  {homepageCms.hero.descriptionLines[0]}
                 </p>
 
 
