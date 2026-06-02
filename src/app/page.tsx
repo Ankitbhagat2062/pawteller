@@ -46,13 +46,14 @@ export default function Home() {
           <section className="relative rounded-2xl left-1/2 mt-6 w-full -translate-x-1/2 overflow-hidden bg-[#f3ded3] px-6 py-16 sm:px-8 md:px-12 lg:px-16 lg:py-20 dark:rounded-3xl dark:bg-emerald-500/10">
             <div className="relative mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-6">
-                <p className="inline-flex h-7 items-center gap-2 rounded-full bg-[#ead8cd] px-4 text-[0.72rem] font-medium uppercase tracking-[0.28em] text-[#3f342f] dark:bg-emerald-500/10 dark:text-emerald-300">
+                <p className="inline-flex h-7 items-center gap-2 rounded-full bg-[#ead8cd] px-4 text-[0.5rem] sm:text-[0.72rem] font-medium 
+                uppercase tracking-[0.28em] text-[#3f342f] dark:bg-emerald-500/10 dark:text-emerald-300">
                   <PawPrint className="h-3.5 w-3.5" aria-hidden="true" />
                   {homepageCms.hero.badgeText}
                 </p>
 
-                <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[4rem] font-black leading-[0.9] tracking-normal text-[#2a1b15]
-                 dark:text-[#ad7e6b] sm:text-[5.25rem] lg:text-[5.6rem]">
+                <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[3rem] font-black leading-[0.9] tracking-normal 
+                text-[#2a1b15] dark:text-[#ad7e6b] sm:text-[5.25rem] lg:text-[5.6rem]">
                   <span className="block">{homepageCms.hero.h1Lines[0].text}</span>
                   <span className="block">{homepageCms.hero.h1Lines[1].text}</span>
                   <span className="block">

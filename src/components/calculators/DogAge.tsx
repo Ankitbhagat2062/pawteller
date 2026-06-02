@@ -151,7 +151,7 @@ const DogAgeCalculator = () => {
                 <span className="px-3 py-1 rounded-full bg-primary/10 text-primary">
                   Veterinary approved
                 </span>
-                <span className="px-3 py-1 rounded-full bg-secondary/10 text-secondary">
+                <span className="px-3 py-1 rounded-full bg-secondary/50 text-white">
                   Size-accurate
                 </span>
               </div>

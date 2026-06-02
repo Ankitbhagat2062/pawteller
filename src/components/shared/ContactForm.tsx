@@ -1,6 +1,13 @@
 "use client";
 import { type ChangeEvent, type FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -91,7 +98,7 @@ export default function ContactForm() {
             />
           </div>
 
-          {/* Topic Dropdown Framework */}
+          {/* Topic Dropdown */}
           <div>
             <label
               htmlFor="topic"
@@ -99,27 +106,50 @@ export default function ContactForm() {
             >
               {"Topic"}
             </label>
-            <select
-              id="topic"
-              name="topic"
+
+            <Select
               value={topic}
-              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                setTopic(e.target.value)
-              }
+              onValueChange={(value) => setTopic(value)}
               required
-              className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-white/5 dark:text-slate-50 h-11"
             >
-              <option value="" disabled>
-                {"Select a topic"}
-              </option>
-              <option value="general">{"General questions"}</option>
-              <option value="feedback">{"Content feedback"}</option>
-              <option value="partnerships">{"Partnerships"}</option>
-              <option value="suggestions">{"Content suggestions"}</option>
-            </select>
+              <SelectTrigger
+                id="topic"
+                className="mt-2 w-full h-11 rounded-2xl border border-slate-200 bg-white/70 px-4 text-sm text-slate-900 shadow-sm outline-none transition hover:-translate-y-0.5 hover:shadow-md focus-visible:border-emerald-500 focus-visible:ring-4 focus-visible:ring-emerald-500/25 dark:border-white/10 dark:bg-white/5 dark:text-slate-50"
+              >
+                <SelectValue placeholder="Select a topic" />
+              </SelectTrigger>
+
+              <SelectContent className="rounded-2xl border border-slate-200 bg-white p-2 shadow-lg dark:border-white/10 dark:bg-black">
+                <SelectItem
+                  value="general"
+                  className="cursor-pointer rounded-xl px-3 py-2 text-sm text-slate-900 focus:bg-emerald-50 dark:text-slate-50 dark:focus:bg-emerald-500/15"
+                >
+                  {"General questions"}
+                </SelectItem>
+                <SelectItem
+                  value="feedback"
+                  className="cursor-pointer rounded-xl px-3 py-2 text-sm text-slate-900 focus:bg-emerald-50 dark:text-slate-50 dark:focus:bg-emerald-500/15"
+                >
+                  {"Content feedback"}
+                </SelectItem>
+                <SelectItem
+                  value="partnerships"
+                  className="cursor-pointer rounded-xl px-3 py-2 text-sm text-slate-900 focus:bg-emerald-50 dark:text-slate-50 dark:focus:bg-emerald-500/15"
+                >
+                  {"Partnerships"}
+                </SelectItem>
+                <SelectItem
+                  value="suggestions"
+                  className="cursor-pointer rounded-xl px-3 py-2 text-sm text-slate-900 focus:bg-emerald-50 dark:text-slate-50 dark:focus:bg-emerald-500/15"
+                >
+                  {"Content suggestions"}
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Message Input Frame */}
+
           <div>
             <label
               htmlFor="message"

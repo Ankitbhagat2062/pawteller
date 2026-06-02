@@ -9,12 +9,12 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-[#2d4a3e] dark:bg-secondary/50">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
         <div className="mb-16 rounded-2xl bg-card p-8 shadow-sm lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-md">
-              <h2 className="text-balance text-xl font-semibold text-foreground lg:text-2xl">
+              <h2 className="text-balance text-xl font-semibold text-foreground sm:text-2xl">
                 {"Stay Updated with Pet Care Tips"}
               </h2>
               <p className="mt-2 text-pretty text-muted-foreground">
@@ -23,6 +23,7 @@ export function Footer() {
               </p>
             </div>
             <form className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row">
+                
               <label htmlFor="newsletter-email" className="sr-only">
                 {"Email address"}
               </label>
@@ -31,7 +32,7 @@ export function Footer() {
                 type="email"
                 placeholder="Enter your email"
                 required
-                className="h-12 flex-1 rounded-full border border-border bg-background px-5 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="h-11 flex-1 rounded-full border border-border bg-background p-4 text-base text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:px-5"
               />
               <button
                 type="submit"
