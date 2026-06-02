@@ -560,7 +560,7 @@ export default function Index() {
                     alt="Happy Golden Retriever puppy"
                     fill
                     priority
-                    className="object-cover"
+                    className="object-cover w-auto h-auto"
                   />
                 </div>
               </div>
@@ -584,11 +584,11 @@ export default function Index() {
       {/* ── Calculator Section ── */}
       <section
         id="calculator"
-        className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-14 lg:py-20"
+        className="max-w-360 mx-auto px-2 sm:px-5 md:px-10 lg:px-24 py-14 lg:py-20"
       >
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Form */}
-          <div className="bg-card border border-border rounded-3xl p-7 lg:p-8 shadow-sm">
+          <div className="bg-card border border-border rounded-3xl p-5 lg:p-8 shadow-sm">
             <div className="flex items-center gap-3 mb-7">
               <div className="w-11 h-11 rounded-xl bg-brand-light flex items-center justify-center shrink-0">
                 <Sparkles className="w-6 h-6 text-brand" />
