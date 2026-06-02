@@ -5,7 +5,6 @@ import "@/app/globals.css";
 import { Footer } from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { SchemaOrg } from "@/lib/seo-schema";
-import Head from "next/head";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,6 +39,9 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -56,9 +58,6 @@ export default function RootLayout({
       <head>
         <SchemaOrg />
       </head>
-      <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </Head>
       <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 bg-linear-to-br from-background via-background to-accent/5 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
