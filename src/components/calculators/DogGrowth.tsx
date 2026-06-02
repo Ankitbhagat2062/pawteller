@@ -10,7 +10,7 @@ import { calculatePuppyGrowth } from "@/lib/constant";
 import type { GrowthInfo } from "@/lib/types";
 
 const PUPPY_IMAGE =
-  "https://images.unsplash.com/photo-1633722715463-d30628cff756?w=200&h=200&fit=crop";
+  "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
 
 export default function DogGrowth() {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);

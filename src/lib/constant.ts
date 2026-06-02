@@ -18,6 +18,8 @@ import type {
   quizDataProps,
   StartingLetter,
 } from "@/lib/types";
+
+
 import type {
   BlogPost,
   CalculatorProps,
@@ -28,6 +30,16 @@ import type {
   homeImageProps,
   SectionProps,
 } from "./types";
+
+export const navItems =
+  [
+    { label: "Home", href: "/" },
+    { label: "Calculators", href: "/calculators" },
+    { label: "Blog", href: "/blog" },
+    { label: "Quiz", href: "/quiz" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ] as const;
 
 export const calculators: CalculatorProps[] = [
   {
@@ -609,7 +621,7 @@ export function calculatePuppyGrowth(
   const percentageGrown = Math.round(
     (currentWeightLbs /
       (breedData.growthCurve[breedData.growthCurve.length - 1] * growthRate)) *
-      100,
+    100,
   );
 
   let warningMessage: string | undefined;
@@ -668,10 +680,12 @@ export const dogNames: DogName[] = [
   // Male - Small
   {
     name: "Max",
+
     gender: "Male",
     size: "Small",
     personalities: ["Playful", "Classic"],
   },
+
   {
     name: "Charlie",
     gender: "Male",

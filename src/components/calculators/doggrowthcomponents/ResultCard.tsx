@@ -54,57 +54,75 @@ export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
         )}
       </div>
 
-      <div className="mt-8 bg-white bg-opacity-10 rounded-lg p-4">
+      <div className="mt-8 rounded-lg p-4">
         <ResponsiveContainer width="100%" height={240}>
           <AreaChart
             data={chartData}
             margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
           >
             <defs>
+              {/* Main area fill */}
               <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="rgba(255,255,255,0.8)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="rgba(255,255,255,0.1)"
-                  stopOpacity={0.1}
-                />
+                <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0.05)" />
               </linearGradient>
+
+              {/* Stroke glow */}
+              <filter id="weightGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
             </defs>
+
             <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="rgba(255,255,255,0.1)"
+              strokeDasharray="6 6"
+              stroke="rgba(255,255,255,0.12)"
+              vertical={false}
             />
             <XAxis
               dataKey="month"
-              stroke="rgba(255,255,255,0.6)"
+              stroke="rgba(255,255,255,0.65)"
               style={{ fontSize: "12px" }}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "rgba(255,255,255,0.8)" }}
             />
             <YAxis
-              stroke="rgba(255,255,255,0.6)"
+              stroke="rgba(255,255,255,0.65)"
               style={{ fontSize: "12px" }}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "rgba(255,255,255,0.8)" }}
+              width={48}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: "rgba(0,0,0,0.8)",
-                border: "1px solid rgba(255,255,255,0.2)",
-                borderRadius: "8px",
+                backgroundColor: "rgba(0,0,0,0.82)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                borderRadius: "12px",
                 color: "white",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
               }}
-              formatter={(value) => [`${value} lbs`, "Weight"]}
+              labelStyle={{ color: "rgba(255,255,255,0.9)" }}
+              formatter={(value: any) => [`${value} lbs`, "Weight"]}
               labelFormatter={(label) => `Month ${label}`}
             />
+
             <Area
               type="monotone"
               dataKey="weight"
-              stroke="white"
-              strokeWidth={2}
+              stroke="rgba(255,255,255,0.95)"
+              strokeWidth={2.5}
               fill="url(#colorWeight)"
               isAnimationActive={true}
+              filter="url(#weightGlow)"
+              dot={{ r: 2.2, fill: "white", stroke: "rgba(255,255,255,0.6)", strokeWidth: 1 }}
+              activeDot={{ r: 4, fill: "#10b981", stroke: "white", strokeWidth: 2 }}
             />
+
           </AreaChart>
         </ResponsiveContainer>
       </div>
