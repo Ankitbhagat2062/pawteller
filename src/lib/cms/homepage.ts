@@ -13,8 +13,14 @@ export type HomepageSeoCms = {
 
 export type HomepageHeroCms = {
     badgeText: string;
-    h1Lines: Array<{ text: string; italic?: boolean; highlight?: boolean }>;
-    descriptionLines: string[];
+    h1Lines: [
+        { text: string; italic?: boolean; highlight?: boolean },
+        { text: string; italic?: boolean; highlight?: boolean },
+        { text: string; italic?: boolean; highlight?: boolean },
+        { text: string; italic?: boolean; highlight?: boolean },
+        { text: string; italic?: boolean; highlight?: boolean },
+    ];
+    descriptionLines: string;
     primaryCta: { label: string; href: string; ariaLabel: string };
     secondaryCta: { label: string; href: string, ariaLabel: string };
     ratingLabelPrefix: string;
@@ -105,9 +111,8 @@ export const homepageCms: HomepageCms = {
             { text: "best", italic: true, highlight: true },
             { text: "friend", italic: true, highlight: true },
         ],
-        descriptionLines: [
+        descriptionLines:
             "Predict your puppy's adult size. Decode dog years. Plan portions. Find the perfect breed. All in one beautifully simple place — backed by veterinary science.",
-        ],
         primaryCta: { label: "Start with Puppy Weight", href: "/calculators/puppy-weight", ariaLabel: "Start using the puppy weight calculator" },
         secondaryCta: { label: "Find My Breed Match", href: "/quiz", ariaLabel: "Start the dog breed quiz to find your perfect breed match" },
         ratingLabelPrefix: "Loved by",

@@ -70,7 +70,8 @@ export default function Home() {
                 </h1>
 
                 <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f5049] dark:text-[#b8b3b1] md:text-xl md:leading-9">
-                  {homepageCms.hero.descriptionLines[0]}
+                  {homepageCms.hero.descriptionLines}
+
                 </p>
 
 
@@ -307,10 +308,12 @@ export default function Home() {
               <div className="md:col-span-4 md:text-right">
                 <Link
                   href={`${homepageCms.breedQuizCtas.leadGen.cta.href}`}
-                  aria-label={`${homepageCms.breedQuizCtas.leadGen.cta.ariaLabel}`}
+                  {...(homepageCms.breedQuizCtas.leadGen.cta.ariaLabel
+                    ? { "aria-label": homepageCms.breedQuizCtas.leadGen.cta.ariaLabel }
+                    : {})}
                   className="inline-flex h-12 items-center justify-center rounded-full bg-slate-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-slate-900"
                 >
-                  {`${homepageCms.breedQuizCtas.leadGen.cta.label}`}
+                  {homepageCms.breedQuizCtas.leadGen.cta.label}
                 </Link>
               </div>
             </div>
