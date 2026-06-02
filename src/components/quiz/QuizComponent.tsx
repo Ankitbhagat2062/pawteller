@@ -18,7 +18,8 @@ export function QuizComponent() {
   const progress = Math.round((currentStep / quizData.totalQuestions) * 100);
   const currentQuestion = quizData.steps[currentStep];
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;
@@ -40,7 +41,11 @@ export function QuizComponent() {
       if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
     };
   }, []);
-
+  const handleSubmitResults = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Send firstName and email to backend or analytics
+    console.log({ firstName, email, answers: selectedAnswers });
+  };
   const handleBack = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
   };
@@ -74,10 +79,13 @@ export function QuizComponent() {
               <span>Get your full personalized result</span>
             </div>
 
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
+           <form onSubmit={handleSubmitResults} className="space-y-3">
               <div>
                 <Input
                   type="text"
+                  value={firstName}
+                  name="firstName"
+                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Your first name"
                   required
                   className="w-full rounded-xl border border-gray-200/80 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#e0664d] focus:ring-1 focus:ring-[#e0664d] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-[#e0664d]"
@@ -87,6 +95,9 @@ export function QuizComponent() {
               <div>
                 <Input
                   type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   required
                   className="w-full rounded-xl border border-gray-200/80 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#e0664d] focus:ring-1 focus:ring-[#e0664d] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-[#e0664d]"
