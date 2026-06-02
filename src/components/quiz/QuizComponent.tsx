@@ -1,9 +1,11 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Dog, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, Dog, Mail } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { quizData } from "@/lib/constant";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function QuizComponent() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -16,6 +18,7 @@ export function QuizComponent() {
   const progress = Math.round((currentStep / quizData.totalQuestions) * 100);
   const currentQuestion = quizData.steps[currentStep];
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;
@@ -31,6 +34,7 @@ export function QuizComponent() {
       });
     }, 300);
   };
+
   useEffect(() => {
     return () => {
       if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
@@ -38,9 +42,7 @@ export function QuizComponent() {
   }, []);
 
   const handleBack = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
+    if (currentStep > 0) setCurrentStep(currentStep - 1);
   };
 
   const handleRestart = () => {
@@ -51,53 +53,66 @@ export function QuizComponent() {
 
   if (isComplete) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
-        <div className="w-full max-w-2xl text-center">
-          <div className="flex items-center justify-center gap-2 text-primary mb-4">
-            <Dog className="w-5 h-5" />
-            <span className="text-sm font-medium tracking-wide uppercase">
-              {quizData.banner}
-            </span>
+      <div className="min-h-screen bg-gray-50 p-4 transition-colors duration-300 dark:bg-gray-900">
+        <div className="mx-auto w-full max-w-xl text-center">
+          <div className="mb-4 flex items-center justify-center text-4xl animate-bounce sm:text-5xl">
+            🎉
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-foreground mb-6 text-balance">
-            Quiz Complete!
-          </h1>
-
-          <p className="text-muted-foreground mb-8">
-            Based on your answers, we&apos;d recommend breeds that match your
-            lifestyle.
+          <h2 className="font-serif text-3xl font-bold text-gray-800 dark:text-gray-100 sm:text-4xl">
+            We found your match!
+          </h2>
+          <p className="mt-2 text-sm font-medium text-gray-600 dark:text-gray-300 sm:text-base">
+            Your top breed is a{" "}
+            <span className="font-bold text-[#e0664d]">Poodle</span> ... plus 2 other strong
+            matches.
           </p>
 
-          <div className="bg-card rounded-2xl p-6 sm:p-8 shadow-sm border border-border mb-8">
-            <h2 className="text-xl font-semibold mb-4 text-card-foreground">
-              Your Answers:
-            </h2>
-            <div className="space-y-3 text-left">
-              {quizData.steps.map((step, index) => (
-                <div
-                  key={step.question}
-                  className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 py-2 border-b border-border last:border-0"
-                >
-                  <span className="text-muted-foreground text-sm">
-                    {step.question}
-                  </span>
-                  <span className="font-medium text-card-foreground">
-                    {selectedAnswers[index]}
-                  </span>
-                </div>
-              ))}
+          <div className="mt-6 rounded-2xl border border-orange-100/50 bg-[#fdf7f2] p-5 shadow-sm dark:border-gray-800 dark:bg-gray-800 sm:p-8">
+            <div className="mb-5 flex items-center justify-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400 sm:text-sm">
+              <Mail className="h-4 w-4" />
+              <span>Get your full personalized result</span>
             </div>
-          </div>
 
-          <button
-            type="button"
-            onClick={handleRestart}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
-          >
-            <RotateCcw className="w-4 h-4" />
-            Take Quiz Again
-          </button>
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
+              <div>
+                <Input
+                  type="text"
+                  placeholder="Your first name"
+                  required
+                  className="w-full rounded-xl border border-gray-200/80 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#e0664d] focus:ring-1 focus:ring-[#e0664d] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-[#e0664d]"
+                />
+              </div>
+
+              <div>
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                  className="w-full rounded-xl border border-gray-200/80 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#e0664d] focus:ring-1 focus:ring-[#e0664d] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-[#e0664d]"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="mt-2 w-full rounded-xl bg-[#e0664d] py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_-18px_rgba(224,102,77,0.65)] shadow-[#e0664d]/30 ring-1 ring-[#e0664d]/30 transition-all duration-200 hover:bg-[#cb553d] hover:shadow-[0_18px_55px_-22px_rgba(203,85,61,0.9)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+              >
+                Reveal my top 3 breeds
+              </Button>
+            </form>
+
+            <p className="mt-4 text-xs text-gray-400 dark:text-gray-500">
+              No spam. Unsubscribe anytime.
+            </p>
+
+            <Button
+              type="button"
+              onClick={handleRestart}
+              className="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-border bg-transparent px-4 py-2.5 text-xs font-semibold text-gray-700 transition-all duration-200 hover:-translate-y-px hover:border-primary/60 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-primary/10 sm:w-auto"
+            >
+              Restart quiz
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -105,10 +120,9 @@ export function QuizComponent() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
       <header className="pt-8 sm:pt-12 md:pt-16 pb-6 sm:pb-8 px-4 sm:px-6 text-center">
         <div className="flex items-center justify-center gap-2 text-primary mb-4">
-          <Dog className="w-5 h-5" />
+          <Dog className="h-5 w-5" />
           <span className="text-sm font-medium tracking-wide uppercase">
             {quizData.banner}
           </span>
@@ -123,7 +137,6 @@ export function QuizComponent() {
         </p>
       </header>
 
-      {/* Progress */}
       <div className="px-4 sm:px-6 md:px-8 max-w-4xl mx-auto w-full">
         <div className="flex justify-between items-center mb-2 text-sm text-muted-foreground">
           <span>
@@ -139,7 +152,6 @@ export function QuizComponent() {
         </div>
       </div>
 
-      {/* Question Card */}
       <main className="flex-1 px-4 sm:px-6 md:px-8 py-6 sm:py-8">
         <div className="max-w-2xl mx-auto">
           <div className="bg-card rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm border border-border">
@@ -153,44 +165,46 @@ export function QuizComponent() {
                 const isHovered = hoveredOption === option;
 
                 return (
-                  <button
+                  <Button
                     type="button"
                     key={option}
                     onClick={() => handleOptionSelect(option)}
                     onMouseEnter={() => setHoveredOption(option)}
                     onMouseLeave={() => setHoveredOption(null)}
                     className={cn(
-                      "relative flex items-center justify-between px-4 sm:px-5 py-4 sm:py-5 rounded-xl border-2 text-left transition-all duration-200",
-                      "text-card-foreground font-medium text-sm sm:text-base",
+                      "relative flex items-center justify-between gap-4 px-4 sm:px-5 py-4 sm:py-5 rounded-xl border-2 text-left transition-all duration-200",
+                      "text-card-foreground font-semibold text-sm sm:text-base",
+                      "bg-[linear-gradient(180deg,rgba(224,102,77,0.07),rgba(224,102,77,0.02))] dark:bg-[linear-gradient(180deg,rgba(224,102,77,0.16),rgba(224,102,77,0.06))]",
                       isSelected
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/50 bg-transparent",
+                        ? "border-primary bg-primary/10 shadow-[0_10px_30px_-20px_rgba(224,102,77,0.9)]"
+                        : isHovered
+                          ? "border-primary/70 bg-primary/5 shadow-[0_8px_24px_-18px_rgba(224,102,77,0.75)]"
+                          : "border-border hover:border-primary/50 bg-transparent",
                     )}
                   >
                     <span>{option}</span>
                     {(isSelected || isHovered) && (
                       <ArrowRight
                         className={cn(
-                          "w-4 h-4 sm:w-5 sm:h-5 transition-all duration-200",
+                          "h-4 w-4 sm:h-5 sm:w-5 transition-all duration-200",
                           isSelected ? "text-primary" : "text-muted-foreground",
                         )}
                       />
                     )}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
 
-            {/* Back Button */}
             {currentStep > 0 && (
-              <button
+              <Button
                 type="button"
                 onClick={handleBack}
-                className="mt-6 sm:mt-8 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
+                className="mt-6 sm:mt-8 flex items-center gap-2 rounded-xl text-sm font-semibold text-muted-foreground transition-all duration-200 hover:-translate-y-px hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:hover:text-gray-50"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft className="h-4 w-4" />
                 Back
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -198,3 +212,4 @@ export function QuizComponent() {
     </div>
   );
 }
+
