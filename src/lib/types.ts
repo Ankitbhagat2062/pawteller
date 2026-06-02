@@ -114,6 +114,8 @@ export interface DogName {
   description?: string;
 }
 
+
+
 export interface Category {
   id: string;
   title: string;

@@ -18,6 +18,8 @@ import type {
   quizDataProps,
   StartingLetter,
 } from "@/lib/types";
+
+
 import type {
   BlogPost,
   CalculatorProps,
@@ -678,10 +680,12 @@ export const dogNames: DogName[] = [
   // Male - Small
   {
     name: "Max",
+
     gender: "Male",
     size: "Small",
     personalities: ["Playful", "Classic"],
   },
+
   {
     name: "Charlie",
     gender: "Male",
