@@ -2,24 +2,12 @@
 
 import { PawPrint, X } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { navItems } from "@/lib/constant";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navItems = useMemo(
-    () =>
-      [
-        { label: "Home", href: "/" },
-        { label: "Calculators", href: "/calculators" },
-        { label: "Blog", href: "/blog" },
-        { label: "Quiz", href: "/quiz" },
-        { label: "About", href: "/about" },
-        { label: "Contact", href: "/contact" },
-      ] as const,
-    [],
-  );
 
   return (
     <header className="sticky top-0 z-40 bg-white/85 backdrop-blur dark:bg-black/70">

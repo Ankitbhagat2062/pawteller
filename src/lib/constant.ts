@@ -29,6 +29,16 @@ import type {
   SectionProps,
 } from "./types";
 
+export const navItems =
+  [
+    { label: "Home", href: "/" },
+    { label: "Calculators", href: "/calculators" },
+    { label: "Blog", href: "/blog" },
+    { label: "Quiz", href: "/quiz" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ] as const;
+
 export const calculators: CalculatorProps[] = [
   {
     title: "Dog Age Calculator",
@@ -609,7 +619,7 @@ export function calculatePuppyGrowth(
   const percentageGrown = Math.round(
     (currentWeightLbs /
       (breedData.growthCurve[breedData.growthCurve.length - 1] * growthRate)) *
-      100,
+    100,
   );
 
   let warningMessage: string | undefined;
