@@ -6,6 +6,7 @@ import { quizData } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios, { AxiosError } from "axios";
 
 export function QuizComponent() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -20,6 +21,7 @@ export function QuizComponent() {
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;
@@ -41,9 +43,48 @@ export function QuizComponent() {
       if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
     };
   }, []);
-  const handleSubmitResults = (e: React.FormEvent) => {
+  const handleSubmitResults = async(e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Send firstName and email to backend or analytics
+
+    type ContactPayload = {
+      name: string;
+      email: string;
+      topic: string;
+      message: string;
+    };
+
+    type ContactSuccessResponse = {
+      success: true;
+      data: unknown;
+    };
+
+    type ContactErrorResponse = {
+      success?: false;
+      error?: string;
+    };
+
+    try {
+      const payload: ContactPayload = { name : firstName, email, topic:'feedback', message:'Show my Perfect Breed' };
+
+      const res = await axios.post<ContactSuccessResponse | ContactErrorResponse>(
+        "/api/contact",
+        payload,
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+      if (res.data && "success" in res.data && res.data.success === true) {
+        setStatus("success");
+        setFirstName("");
+        setEmail("");
+        return;
+      }
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<ContactErrorResponse>;
+      // Optional: surface server-provided message later if desired.
+      void axiosError;
+      setStatus("error");
+    }
   };
   const handleBack = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
@@ -78,7 +119,18 @@ export function QuizComponent() {
               <span>Get your full personalized result</span>
             </div>
 
-           <form onSubmit={handleSubmitResults} className="space-y-3">
+            {status === "success" && (
+              <p className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
+                Success! Check your inbox soon.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="mb-4 text-sm font-medium text-red-600 dark:text-red-400">
+                Oops! Something went wrong. Please try again.
+              </p>
+            )}
+
+            <form onSubmit={handleSubmitResults} className="space-y-3">
               <div>
                 <Input
                   type="text"
