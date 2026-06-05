@@ -3,15 +3,31 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { footerSections } from "@/lib/constant";
+import { Button } from "@/components/ui/button";
+import { useActionState } from "react";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { type FormState } from "@/lib/types";
+import { submitVerificationForm } from "@/hooks/forms";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [currentState, formAction, isPending] = useActionState<
+    FormState,
+    FormData
+  >(submitVerificationForm, {});
+  if (currentState.success) {
+    toast.success(currentState.message || "Subscribed successfully!");
+  }
 
+  if (currentState.error) {
+    toast.error(currentState.error);
+  }
   return (
     <footer className="border-t border-border bg-[#2d4a3e] dark:bg-secondary/50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
-        <div className="mb-16 rounded-2xl bg-card p-8 shadow-sm lg:p-10">
+        <div className="mb-16 rounded-2xl bg-card p-8 shadow-sm lg:p-10 ">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-md">
               <h2 className="text-balance text-xl font-semibold text-foreground sm:text-2xl">
@@ -22,27 +38,76 @@ export function Footer() {
                 content delivered to your inbox.`}
               </p>
             </div>
-            <form className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row">
+            <form action={formAction} className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row">
 
-              <label htmlFor="newsletter-email" className="sr-only">
+              <Label htmlFor="email" className="sr-only">
                 {"Email address"}
-              </label>
+              </Label>
               <input
-                id="newsletter-email"
+                id="email"
+                name="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="you@example.com"
                 required
+                disabled={isPending}
                 className="h-12 flex-1 rounded-full border border-border bg-background py-3 px-4 text-base text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:px-5"
               />
-              <button
-                type="submit"
+              <Button
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 hover:shadow-md"
+                disabled={isPending}
               >
-                {"Subscribe"}
+                {isPending ? "Subscribing" : "Subscribe"}
                 <ArrowRight />
-              </button>
+              </Button>
             </form>
           </div>
+          {(currentState.success || currentState.error) && (
+            <div
+              className="mx-auto mt-6 flex w-full max-w-md items-center justify-center rounded-lg border border-border/60 bg-background/70 px-4 py-3"
+              role="status"
+              aria-live="polite"
+            >
+              {currentState.success ? (
+                <span className="inline-flex items-center gap-2 text-sm text-green-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  <span>{currentState.message ?? ""}</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-2 text-sm text-red-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8v4" />
+                    <path d="M12 16h.01" />
+                  </svg>
+                  <span>{currentState.error ?? ""}</span>
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Links Grid */}

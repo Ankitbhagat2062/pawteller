@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import type { ResultsGridProps } from "@/lib/types";
 
 export function ResultsGrid({ names, onRefresh }: ResultsGridProps) {
@@ -7,13 +8,13 @@ export function ResultsGrid({ names, onRefresh }: ResultsGridProps) {
     <div className="w-full max-w-4xl mx-auto">
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-xl font-bold text-foreground">Generated for You</h3>
-        <button
+        <Button
           type="button"
           onClick={onRefresh}
           className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-all duration-200 dark:bg-green-600 dark:hover:bg-green-700"
         >
           🔄 Refresh
-        </button>
+        </Button>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">

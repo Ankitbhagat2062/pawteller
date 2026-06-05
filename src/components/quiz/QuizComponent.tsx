@@ -44,7 +44,6 @@ export function QuizComponent() {
   const handleSubmitResults = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Send firstName and email to backend or analytics
-    console.log({ firstName, email, answers: selectedAnswers });
   };
   const handleBack = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);

@@ -6,6 +6,14 @@ export type badgeType = {
   icon: LucideIcon;
 };
 
+
+export type FormState = {
+  success?: boolean;
+  error?: string;
+  message?: string;
+};
+
+
 export interface CalculatorProps {
   title: string;
   description: string;

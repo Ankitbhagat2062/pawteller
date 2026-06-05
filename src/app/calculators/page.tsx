@@ -97,7 +97,8 @@ export default function CalculatorsPage() {
                 <span>Pet care calculators</span>
               </div>
 
-              <h1 className="mt-7 font-[Georgia,serif] text-4xl font-black leading-[1.02] tracking-normal text-[#2a1b15] sm:text-[3.9rem]">
+              <h1 className="mt-7 font-[Georgia,serif] text-4xl font-black leading-[1.02] tracking-normal
+               text-[#2a1b15] dark:text-[#e6bdae] sm:text-[3.9rem]">
                 Find the right tool for your dog’s next
                 <span className="block italic text-[#d36c4a]">milestone.</span>
               </h1>

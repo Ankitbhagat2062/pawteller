@@ -23,6 +23,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -705,7 +706,7 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {(["Male", "Female"] as const).map((s) => (
-                    <button
+                    <Button
                       type="button"
                       key={s}
                       onClick={() => setSex(s)}
@@ -727,20 +728,20 @@ export default function Index() {
                         />
                       )}
                       {s}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
 
               {/* Submit */}
-              <button
+              <Button
                 type="button"
                 onClick={handleCalculate}
                 className="w-full py-4 rounded-xl bg-brand text-white font-extrabold text-base flex items-center justify-center gap-3 hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_10px_20px_-5px_rgba(32,201,151,0.35)]"
               >
                 Predict Adult Weight
                 <ArrowRight className="w-4 h-4" color="#fff" />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -759,12 +760,12 @@ export default function Index() {
                         Your {result.breedName} Puppy
                       </h3>
                     </div>
-                    <button
+                    <Button
                       type="button"
                       className="p-2 rounded-lg hover:bg-muted transition-colors"
                     >
                       <X className="w-5 h-5 text-[#9CA3AF]" />
-                    </button>
+                    </Button>
                   </div>
 
                   {/* Stats grid */}
@@ -1173,12 +1174,12 @@ export default function Index() {
                   placeholder="Email address"
                   className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                 />
-                <button
+                <Button
                   type="button"
                   className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                 >
                   Get Tracking Reminders
-                </button>
+                </Button>
               </div>
             </div>
           </div>
