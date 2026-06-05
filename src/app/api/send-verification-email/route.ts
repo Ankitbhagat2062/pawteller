@@ -48,10 +48,9 @@ export async function GET(request: Request) {
 			subject: "Verify your email",
 			react: VerifyEmail({ verificationLink: tokenVerifyUrl.toString() }),
 		});
-		console.log(data.error)
 		if (data.error && typeof data.error === "object" && "message" in data.error) {
 			console.error("Error sending verification email:", data.error);
-			return NextResponse.json({ error: "Failed to send verification email" }, { status: 500 });
+			return NextResponse.json({ error: "Failed to send verification email" }, { status: 422 });
 		}
 		
 		const subscriber = new SubscriberModel({

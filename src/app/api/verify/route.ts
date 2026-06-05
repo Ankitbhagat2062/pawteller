@@ -43,7 +43,7 @@ export async function GET(request: Request) {
 		});
 		if (data.error && typeof data.error === "object" && "message" in data.error) {
 			console.error("Error sending welcome email:", data.error);
-			return NextResponse.json({ error: "Failed to send welcome email" }, { status: 500 });
+			return NextResponse.json({ error: "Failed to send welcome email" }, { status: 422 });
 		}
 
 		// Single-use verification: update only if token matches and not already verified.

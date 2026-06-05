@@ -47,6 +47,7 @@ const connectDB = async (): Promise<mongoose.Mongoose['connection']> => {
   try {
     // Helps prevent long hangs / improves the error determinism.
     // ETIMEOUT on SRV lookup is often DNS/network related; shorter server selection
+    dns.setServers(["1.1.1.1","8.8.8.8"]); // Use system default DNS servers
     // makes the failure surface faster.
     const conn = await mongoose.connect(finalUri);
 
