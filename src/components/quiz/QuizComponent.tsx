@@ -2,13 +2,16 @@
 
 import { ArrowLeft, ArrowRight, Dog, Mail } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { quizData } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios, { AxiosError } from "axios";
+import { type quizDataProps } from "@/lib/types";
+import { Breed, breedDatabase } from "@/lib/breedDatabase";
+import { DogBreedEmailProps } from "../emails/DogBreed-template";
+import { redirect } from "next/navigation";
 
-export function QuizComponent() {
+export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
     Array(quizData.totalQuestions).fill(null),
@@ -37,20 +40,161 @@ export function QuizComponent() {
       });
     }, 300);
   };
+  function calculateBreedScore(
+    breed: Breed,
+    answers: string[]
+  ) {
+    let score = 0;
 
+    const [
+      home,
+      activity,
+      kids,
+      experience,
+      shedding,
+      size,
+    ] = answers;
+
+    if (breed.home.includes(home as any)) score += 25;
+
+    if (breed.energy === activity) score += 25;
+
+    if (
+      kids === "Yes, little ones" &&
+      breed.goodWithKids
+    )
+      score += 15;
+
+    if (
+      experience === "First-timer" &&
+      breed.beginnerFriendly
+    )
+      score += 15;
+
+    if (breed.shedding === shedding) score += 10;
+
+    if (breed.size === size) score += 10;
+
+    return score;
+  }
+  function getTopBreedMatches(
+    answers: string[],
+    breeds: Breed[]
+  ) {
+    return breeds
+      .map((breed) => ({
+        breed,
+        score: calculateBreedScore(
+          breed,
+          answers
+        ),
+      }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+  }
+  function generateBreedResult(
+    userName: string,
+    answers: string[],
+    breeds: Breed[]
+  ) {
+    const matches = getTopBreedMatches(
+      answers,
+      breeds
+    );
+
+    return {
+      userName,
+
+      topMatches: matches.map(
+        ({ breed, score }, index) => ({
+          rank: index + 1,
+
+          breed: breed.name,
+
+          compatibility: score,
+
+          description: breed.description,
+
+          temperament: breed.temperament,
+
+          lifespan: breed.lifespan,
+
+          reasons: generateReasons(
+            { breed, answers }),
+        })
+      ),
+    };
+  }
+  function generateReasons(
+    { breed, answers }: { breed: Breed; answers: string[]; }
+  ) {
+    const reasons = [];
+
+    if (
+      answers[0] === "Apartment" &&
+      breed.goodFor.includes("Apartments")
+    ) {
+      reasons.push(
+        "Well suited to apartment living."
+      );
+    }
+
+    if (
+      answers[2] === "Yes, little ones" &&
+      breed.goodFor.includes("Children")
+    ) {
+      reasons.push(
+        "Known for being gentle with children."
+      );
+    }
+
+    if (
+      answers[3] === "First-timer" &&
+      breed.goodFor.includes(
+        "First-time owners"
+      )
+    ) {
+      reasons.push(
+        "Recommended for first-time dog owners."
+      );
+    }
+
+    if (
+      answers[4] === "Low shed please" &&
+      breed.shedding === "Low shed please"
+    ) {
+      reasons.push(
+        "Matches your preference for minimal shedding."
+      );
+    }
+
+    return reasons;
+  }
+  const result = generateBreedResult(
+    firstName,
+    selectedAnswers as string[],
+    breedDatabase
+  );
   useEffect(() => {
     return () => {
       if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
     };
   }, []);
-  const handleSubmitResults = async(e: React.FormEvent) => {
+  const handleBack = () => {
+    if (currentStep > 0) setCurrentStep(currentStep - 1);
+  };
+
+  const handleRestart = () => {
+    setCurrentStep(0);
+    setSelectedAnswers(Array(quizData.totalQuestions).fill(null));
+    setIsComplete(false);
+  };
+  const handleSubmitResults = async (e: React.FormEvent) => {
     e.preventDefault();
 
     type ContactPayload = {
-      name: string;
       email: string;
-      topic: string;
-      message: string;
+      results: DogBreedEmailProps
     };
 
     type ContactSuccessResponse = {
@@ -64,10 +208,10 @@ export function QuizComponent() {
     };
 
     try {
-      const payload: ContactPayload = { name : firstName, email, topic:'feedback', message:'Show my Perfect Breed' };
+      const payload: ContactPayload = { email, results: result };
 
       const res = await axios.post<ContactSuccessResponse | ContactErrorResponse>(
-        "/api/contact",
+        "/api/quiz",
         payload,
         {
           headers: { "Content-Type": "application/json" },
@@ -77,7 +221,9 @@ export function QuizComponent() {
         setStatus("success");
         setFirstName("");
         setEmail("");
-        return;
+        setTimeout(() => {
+          redirect('/')
+        }, 500);
       }
     } catch (error: unknown) {
       const axiosError = error as AxiosError<ContactErrorResponse>;
@@ -85,15 +231,6 @@ export function QuizComponent() {
       void axiosError;
       setStatus("error");
     }
-  };
-  const handleBack = () => {
-    if (currentStep > 0) setCurrentStep(currentStep - 1);
-  };
-
-  const handleRestart = () => {
-    setCurrentStep(0);
-    setSelectedAnswers(Array(quizData.totalQuestions).fill(null));
-    setIsComplete(false);
   };
 
   if (isComplete) {
@@ -235,7 +372,7 @@ export function QuizComponent() {
                     onMouseLeave={() => setHoveredOption(null)}
                     className={cn(
                       "relative flex items-center justify-between gap-4 px-4 sm:px-5 py-4 sm:py-5 rounded-xl border-2 text-left transition-all duration-200",
-                      "text-card-foreground font-semibold text-sm sm:text-base",
+                      "text-card-foreground font-semibold text-[8px] sm:text-base",
                       "bg-[linear-gradient(180deg,rgba(224,102,77,0.07),rgba(224,102,77,0.02))] dark:bg-[linear-gradient(180deg,rgba(224,102,77,0.16),rgba(224,102,77,0.06))]",
                       isSelected
                         ? "border-primary bg-primary/10 shadow-[0_10px_30px_-20px_rgba(224,102,77,0.9)]"

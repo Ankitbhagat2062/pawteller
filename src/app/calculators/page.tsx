@@ -180,12 +180,12 @@ export default function CalculatorsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Link
-                href="/quiz"
-                aria-label="Take the dog breed match quiz"
+                href="/quiz?quiz=breed-match"
+                aria-label="To the quiz to findout Your Dog a Secret Genius"
                 className="inline-flex items-center gap-2 rounded-full bg-[#315846] px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-[#294b3b]"
               >
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
-                Breed quiz
+                Dog's IQ quiz
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

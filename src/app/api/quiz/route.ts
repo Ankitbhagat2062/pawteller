@@ -1,10 +1,9 @@
-import ContactThankYouEmail from "@/components/emails/contact-template";
-import ContactModel from "@/models/contact";
 import connectDB from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import SubscriberModel from "@/models/subscriber";
-import axios from "axios";
+import DogBreed from "@/components/emails/DogBreed-template";
+import QuizModel from "@/models/quiz";
+import dns from 'dns'
 
 // Initialize Resend with your API key from .env.local
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -29,58 +28,48 @@ export async function POST(request: Request) {
 
   const resend = new Resend(RESEND_API_KEY);
   try {
-    const { name, email, topic, message } = await request.json();
+    dns.setServers(["1.1.1.1","8.8.8.8"])
+    const { email, results } = await request.json();
 
     // Basic validation
-    if (!name || !email || !message || !topic) {
+    if (!email || !results) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
     await connectDB();
 
-    const existingContact = await ContactModel.findOne({ email, topic, message, name });
+    const existingContact = await QuizModel.findOne({ email, results });
 
     if (existingContact) {
       return NextResponse.json(
-        { error: "A contact with these details already exists" },
+        { error: "You have already given quiz" },
         { status: 400 },
       );
     }
 
-    console.log("Received contact form submission:", { name, email, topic, message });
+    console.log("Received contact form submission:", {  email, results });
 
-    // Send the email to YOUR own email address
-    // Resend requires a valid email format: email@example.com or Name <email@example.com>
-    const from = fromMail.includes("<") ? fromMail : `Pawteller <contact${fromMail}>`;
+    const from = fromMail.includes("<") ? fromMail : `Pawteller <noreply${fromMail}>`;
 
     const data = await resend.emails.send({
       from,
       to: email, // Where YOU want to receive the messages
-      subject: `New Contact Form Submission from ${name}`,
-      react: ContactThankYouEmail({ name }), // Use the React email template for the email body
+      subject: `Your Top 3 Breed Match`,
+      react: DogBreed(results) // Use the React email template for the email body
     });
 
     if (data.error && typeof data.error === "object" && "message" in data.error) {
       console.error("Error sending contact email:", data.error);
       return NextResponse.json({ error: "Failed to send contact email" }, { status: 422 });
     }
-    const user = await SubscriberModel.findOne({ email });
-    if (!user) {
-      console.log("Email not found in subscribers, sending welcome email to:", email);
-      const url = new URL("/api/send-welcome-email", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
-      url.searchParams.set("email", email);
-      await axios.get(url.toString(), {
-        validateStatus: () => true,
-      });
-    }
 
     // Save the contact message to the database
-    const contact = new ContactModel({ name, email, topic, message });
+    const contact = new QuizModel({ email, results });
     await contact.save();
 
     return NextResponse.json({ success: true, data });
   } catch (error: unknown) {
-    console.error("Contact route failed:", error);
+    console.error("Quiz route failed:", error);
     return NextResponse.json({ error: "Failed to process request" }, { status: 500 });
   }
 }

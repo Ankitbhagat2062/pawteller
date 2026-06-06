@@ -91,7 +91,12 @@ export interface quizDataProps {
   title: string;
   totalQuestions: number;
   estimatedTime: string;
+  url: string;
+  header: string;
+  subheader: string;
+  button: string;
   steps: stepsProps[];
+  dogs?:string[]
 }
 
 export interface CalculatorState {
