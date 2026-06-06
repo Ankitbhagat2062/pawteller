@@ -29,7 +29,7 @@ export interface DogBreedEmailProps {
   topMatches: TopMatch[];
 }
 
-const baseUrl = process.env.VERCEL_URL ? `${process.env.VERCEL_URL}` : '';
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}` : '';
 
 const rankLabel = (rank: number) => {
   if (rank === 1) return 'Top Match';
@@ -153,7 +153,7 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
 
               <Section className="mt-6">
                 <Button
-                  href={baseUrl ? `${baseUrl}/quiz` : undefined}
+                  href={`${baseUrl}/quiz`}
                   className="bg-[#e0664d] dark:bg-[#e0664d] text-white no-underline rounded-[10px] px-6 py-3 text-[14px] font-semibold"
                 >
                   Retake the quiz
@@ -167,7 +167,7 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
                 © 2025 Pawteller. All rights reserved.
               </Text>
               <Text className="text-[12px] text-gray-500 dark:text-[#c1b5b5] text-center m-0">
-                <a href="#" className="text-gray-500 dark:text-[#c1b5b5] underline">
+                <a href={`${baseUrl}/unsubscribe`}className="text-gray-500 dark:text-[#c1b5b5] underline">
                   Unsubscribe
                 </a>
               </Text>

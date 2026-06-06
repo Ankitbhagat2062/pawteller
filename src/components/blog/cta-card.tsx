@@ -22,7 +22,7 @@ export function CtaCard() {
           href="/quiz?quiz=breed-match"
           aria-label="Take a quiz to find your perfect dog's breed"
         >
-          Find your  breed match
+          Find your breed match
           <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>

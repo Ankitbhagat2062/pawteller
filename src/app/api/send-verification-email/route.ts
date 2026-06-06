@@ -6,7 +6,7 @@ import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-
+const fromMail:string = `${process.env.FROM_MAIL}`
 export async function GET(request: Request) {
 	if (!RESEND_API_KEY) {
 		return NextResponse.json(
@@ -19,7 +19,6 @@ export async function GET(request: Request) {
 	}
 
 	const resend = new Resend(RESEND_API_KEY);
-	console.log("Received request to send verification email to:", request.url);
 	const { searchParams } = new URL(request.url);
 	const email = searchParams.get("email");
 
@@ -27,32 +26,26 @@ export async function GET(request: Request) {
 		return NextResponse.json({ error: "Missing email", success: false }, { status: 400 });
 	}
 	try {
+		const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+		if (!appUrl) {
+			return NextResponse.json(
+				{ error: "Server misconfiguration: missing NEXT_PUBLIC_APP_URL" },
+				{ status: 500 },
+			);
+		}
 		await connectDB();
 
 		// If email is already registered (unique index), prevent creating a new subscriber record.
 		const existingSubscriber = await SubscriberModel.findOne({ email });
 		if (existingSubscriber) {
 			return NextResponse.json(
-				{ success: false, error: "Already registered email" },
-				{ status: 409 },
+				{ success: true },
+				{ status: 200 },
 			);
 		}
-		
+
 		const verificationToken = uuidv4();
-		const tokenVerifyUrl = new URL(
-			`${process.env.NEXT_PUBLIC_APP_URL}/api/verify?email=${email}&token=${verificationToken}`,
-		);
-		const data = await resend.emails.send({
-			from: `Welcome <noreply${process.env.FROM_MAIL}>`,
-			to: email,
-			subject: "Verify your email",
-			react: VerifyEmail({ verificationLink: tokenVerifyUrl.toString() }),
-		});
-		if (data.error && typeof data.error === "object" && "message" in data.error) {
-			console.error("Error sending verification email:", data.error);
-			return NextResponse.json({ error: "Failed to send verification email" }, { status: 422 });
-		}
-		
+
 		const subscriber = new SubscriberModel({
 			email,
 			verificationToken,
@@ -60,6 +53,24 @@ export async function GET(request: Request) {
 		});
 		await subscriber.save();
 
+		const tokenVerifyUrl = new URL(
+			`/api/verify?email=${email}&token=${verificationToken}` ,appUrl,
+		);
+		const fromAddress:string = fromMail.includes('@')
+    ? `Welcome <noreply@${fromMail.split('@')[1]}>`
+    : `Welcome <noreply${fromMail}>`;
+		// Deliver the Welcome Email and Features Overview
+		const data = await resend.emails.send({
+			from: fromAddress,
+			to: email,
+			subject: "Verify your email",
+			react: VerifyEmail({ verificationLink: tokenVerifyUrl.toString() }),
+		});
+		if (data.error && typeof data.error === "object" && "message" in data.error) {
+			console.error("Error sending verification email:", data.error);
+			await SubscriberModel.deleteOne({ email });
+			return NextResponse.json({ error: "Failed to send verification email" }, { status: 422 });
+		}
 		return NextResponse.json({ success: true });
 	} catch (error: unknown) {
 		if (error instanceof Error) {

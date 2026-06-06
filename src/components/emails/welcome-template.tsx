@@ -17,9 +17,7 @@ interface PawtellerWelcomeEmailProps {
   userFirstname: string;
 }
 
-const baseUrl = process.env.VERCEL_URL
-  ? `${process.env.VERCEL_URL}`
-  : '';
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
 export const PawtellerWelcomeEmail = ({
   userFirstname,
@@ -36,7 +34,7 @@ export const PawtellerWelcomeEmail = ({
               src={`${baseUrl}/vercel.svg`}
               width="60"
               height="60"
-              alt="Pawteller"
+              alt="Pawteller Logo"
               className="mx-auto mb-6"
             />
 

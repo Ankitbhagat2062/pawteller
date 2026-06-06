@@ -62,7 +62,6 @@ export default async function QuizPage({
   searchParams?: { quiz?: string };
 }) {
   const quizParam = (await searchParams)?.quiz;
-  console.log("Received quiz param:", quizParam);
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );

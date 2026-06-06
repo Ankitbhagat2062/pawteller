@@ -24,6 +24,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -447,6 +448,7 @@ export default function Index() {
   const [weightUnit, setWeightUnit] = useState<"kg" | "lbs">("kg");
   const [sex, setSex] = useState<"Male" | "Female">("Male");
   const [emailInput, setEmailInput] = useState("");
+  const router = useRouter()
 
   // Result state
   const [result, setResult] = useState<PredictionResult | null>(null);
@@ -760,7 +762,7 @@ export default function Index() {
                         Your {result.breedName} Puppy
                       </h3>
                     </div>
-                    <Button
+                    <Button onClick={()=>setResult(null)}
                       type="button"
                       className="p-2 rounded-lg hover:bg-muted transition-colors"
                     >
@@ -1174,7 +1176,7 @@ export default function Index() {
                   placeholder="Email address"
                   className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                 />
-                <Button
+                <Button onClick={()=>router.push('/contact')}
                   type="button"
                   className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                 >

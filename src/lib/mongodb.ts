@@ -45,11 +45,11 @@ const connectDB = async (): Promise<mongoose.Mongoose['connection']> => {
   const finalUri = alreadyHasDb ? mongoUri : `${mongoUri}/pawteller`;
 
   try {
-    // Helps prevent long hangs / improves the error determinism.
-    // ETIMEOUT on SRV lookup is often DNS/network related; shorter server selection
-    dns.setServers(["1.1.1.1","8.8.8.8"]); // Use system default DNS servers
     // makes the failure surface faster.
-    const conn = await mongoose.connect(finalUri);
+    const conn = await mongoose.connect(finalUri,{
+      serverSelectionTimeoutMS:5000,
+      connectTimeoutMS:1000
+    });
 
     cachedConnection = conn.connection;
 

@@ -274,11 +274,11 @@ export default function AboutPage() {
                     </Link>
                     <Link
                       href="/quiz?quiz=breed-match"
-                      aria-label="Quiz to find your dog's body language type"
+                      aria-label="Quiz to find your perfect breed match"
                       className="flex items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20 sm:col-span-2"
                     >
                       <span className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
-                        Body language quiz
+                        Breed match quiz
                       </span>
                       <span aria-hidden="true" className="text-lg">
                         →

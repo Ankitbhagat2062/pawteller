@@ -6,11 +6,10 @@ const subscriberSchema = new Schema(
     verificationToken: {
       type: String,
       required: true,
-      default: null,
       index: true,
     },
     isVerified: { type: Boolean, required: true, default: false },
-    contact: [{ type: mongoose.Types.ObjectId, ref: "Contact" },],
+    contacts: [{ type: mongoose.Types.ObjectId, ref: "Contact" },],
   },
   {
     timestamps: true,

@@ -49,7 +49,10 @@ export async function POST(request: Request) {
 
     console.log("Received contact form submission:", { name, email, topic, message });
 
-    // Send the email to YOUR own email address
+    // Save the contact message to the database
+    const contact = new ContactModel({ name, email, topic, message });
+    await contact.save();
+    
     // Resend requires a valid email format: email@example.com or Name <email@example.com>
     const from = fromMail.includes("<") ? fromMail : `Pawteller <contact${fromMail}>`;
 
@@ -67,17 +70,14 @@ export async function POST(request: Request) {
     const user = await SubscriberModel.findOne({ email });
     if (!user) {
       console.log("Email not found in subscribers, sending welcome email to:", email);
-      const url = new URL("/api/send-welcome-email", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
+      const url = new URL("/api/send-verification-email", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
       url.searchParams.set("email", email);
-      await axios.get(url.toString(), {
-        validateStatus: () => true,
-      });
+      try {
+        await axios.get(url.toString());
+      } catch (error) {
+        console.error("Failed to send welcome email:", error);
+      }
     }
-
-    // Save the contact message to the database
-    const contact = new ContactModel({ name, email, topic, message });
-    await contact.save();
-
     return NextResponse.json({ success: true, data });
   } catch (error: unknown) {
     console.error("Contact route failed:", error);

@@ -6,7 +6,7 @@ const contactSchema = new Schema(
     email: { type: String, required: true },
     topic: { type: String, required: true },
     message: { type: String, required: true },
-    subscriber: [{ type: mongoose.Types.ObjectId, ref: "Subscriber" },],
+    subscribers: [{ type: mongoose.Types.ObjectId, ref: "Subscriber" },],
   },
   {
     timestamps: true,

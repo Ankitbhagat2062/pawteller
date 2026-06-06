@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import DogBreed from "@/components/emails/DogBreed-template";
 import QuizModel from "@/models/quiz";
-import dns from 'dns'
+import { z } from "zod";
+
 
 // Initialize Resend with your API key from .env.local
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -27,36 +28,65 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(RESEND_API_KEY);
+
+  const TopMatchSchema = z.object({
+    rank: z.number(),
+    breed: z.string(),
+    compatibility: z.number(),
+    description: z.string().optional(),
+    temperament: z.array(z.string()).optional(),
+    lifespan: z.string().optional(),
+    reasons: z.array(z.string()).optional(),
+  });
+
+  const QuizResultsSchema = z.object({
+    userName: z.string(),
+    topMatches: z.array(TopMatchSchema),
+  });
+
+  const QuizTopMatchSchema = QuizResultsSchema;
+
   try {
-    dns.setServers(["1.1.1.1","8.8.8.8"])
     const { email, results } = await request.json();
 
-    // Basic validation
+    // Ensure email presence (keep existing behavior)
     if (!email || !results) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
+    const parsed = QuizResultsSchema.safeParse(results);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Invalid results payload" },
+        { status: 400 },
+      );
+    }
+
+    const safeResults = parsed.data;
+
+
     await connectDB();
 
-    const existingContact = await QuizModel.findOne({ email, results });
+    const existingQuiz = await QuizModel.findOne({ email });
 
-    if (existingContact) {
+    if (existingQuiz) {
       return NextResponse.json(
         { error: "You have already given quiz" },
         { status: 400 },
       );
     }
 
-    console.log("Received contact form submission:", {  email, results });
 
     const from = fromMail.includes("<") ? fromMail : `Pawteller <noreply${fromMail}>`;
+
 
     const data = await resend.emails.send({
       from,
       to: email, // Where YOU want to receive the messages
       subject: `Your Top 3 Breed Match`,
-      react: DogBreed(results) // Use the React email template for the email body
+      react: DogBreed(safeResults) // Use the React email template for the email body
     });
+
 
     if (data.error && typeof data.error === "object" && "message" in data.error) {
       console.error("Error sending contact email:", data.error);
@@ -64,7 +94,8 @@ export async function POST(request: Request) {
     }
 
     // Save the contact message to the database
-    const contact = new QuizModel({ email, results });
+    const contact = new QuizModel({ email, results: safeResults });
+
     await contact.save();
 
     return NextResponse.json({ success: true, data });

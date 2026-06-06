@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const fromMail:string = `${process.env.FROM_MAILL}`
 
 export async function GET(request: Request) {
 	if (!RESEND_API_KEY) {
@@ -34,34 +35,36 @@ export async function GET(request: Request) {
 	try {
 		await connectDB();
 
-		// Deliver the Welcome Email and Features Overview
-		const data = await resend.emails.send({
-			from: `Welcome <${process.env.FROM_MAIL}>`,
-			to: email,
-			subject: "Welcome to our Newsletter!",
-			react: PawtellerWelcomeEmail({ userFirstname: email.split("@")[0] }),
-		});
-		if (data.error && typeof data.error === "object" && "message" in data.error) {
-			console.error("Error sending welcome email:", data.error);
-			return NextResponse.json({ error: "Failed to send welcome email" }, { status: 422 });
-		}
-
+		
 		// Single-use verification: update only if token matches and not already verified.
 		const subscriber = await SubscriberModel.findOneAndUpdate(
 			{ verificationToken: token, isVerified: false },
 			{ isVerified: true, verificationToken: null },
 			{ new: true },
 		);
-
+		
 		if (!subscriber) {
 			return NextResponse.json(
 				{ error: "Invalid or expired token" },
 				{ status: 400 },
 			);
 		}
+		const fromAddress:string = fromMail.includes('@')
+    ? `Welcome <noreply@${fromMail.split('@')[1]}>`
+    : `Welcome <noreply${fromMail}>`;
+		// Deliver the Welcome Email and Features Overview
+		const data = await resend.emails.send({
+			from: fromAddress,
+			to: subscriber.email,
+			subject: "Welcome to our Newsletter!",
+			react: PawtellerWelcomeEmail({ userFirstname: email.includes("@") ? email.split("@")[0] : "there", }),
+		});
+		if (data.error && typeof data.error === "object" && "message" in data.error) {
+			console.error("Error sending welcome email:", data.error);
+			return NextResponse.json({ error: "Failed to send welcome email" }, { status: 422 });
+		}
 		const appUrl =
 			process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
-		console.log("Delivered welcome email to:", subscriber.email, "Email send data:", data);
 		return NextResponse.redirect(new URL("/blog", appUrl));
 	} catch (error: unknown) {
 		if (error instanceof Error) {

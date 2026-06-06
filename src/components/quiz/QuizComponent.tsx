@@ -9,9 +9,10 @@ import axios, { AxiosError } from "axios";
 import { type quizDataProps } from "@/lib/types";
 import { Breed, breedDatabase } from "@/lib/breedDatabase";
 import { DogBreedEmailProps } from "../emails/DogBreed-template";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
     Array(quizData.totalQuestions).fill(null),
@@ -55,7 +56,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       size,
     ] = answers;
 
-    if (breed.home.includes(home as any)) score += 25;
+    if (breed.home.includes(home as (typeof breed.home)[number])) score += 25;
 
     if (breed.energy === activity) score += 25;
 
@@ -170,11 +171,6 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
 
     return reasons;
   }
-  const result = generateBreedResult(
-    firstName,
-    selectedAnswers as string[],
-    breedDatabase
-  );
   useEffect(() => {
     return () => {
       if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
@@ -190,6 +186,13 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     setIsComplete(false);
   };
   const handleSubmitResults = async (e: React.FormEvent) => {
+    const result = isComplete
+      ? generateBreedResult(
+          firstName,
+          selectedAnswers as string[],
+          breedDatabase
+        )
+      : null;
     e.preventDefault();
 
     type ContactPayload = {
@@ -207,6 +210,11 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       error?: string;
     };
 
+    if (!result) {
+      setStatus("error");
+      return;
+    }
+
     try {
       const payload: ContactPayload = { email, results: result };
 
@@ -222,13 +230,20 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
         setFirstName("");
         setEmail("");
         setTimeout(() => {
-          redirect('/')
+          router.push('/');
         }, 500);
       }
     } catch (error: unknown) {
       const axiosError = error as AxiosError<ContactErrorResponse>;
-      // Optional: surface server-provided message later if desired.
-      void axiosError;
+
+      console.error(
+        "Quiz submit failed",
+        {
+          message: axiosError.message,
+          data: axiosError.response?.data,
+        },
+      );
+
       setStatus("error");
     }
   };
@@ -372,7 +387,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
                     onMouseLeave={() => setHoveredOption(null)}
                     className={cn(
                       "relative flex items-center justify-between gap-4 px-4 sm:px-5 py-4 sm:py-5 rounded-xl border-2 text-left transition-all duration-200",
-                      "text-card-foreground font-semibold text-[8px] sm:text-base",
+                      "text-card-foreground font-semibold text-xs sm:text-base",
                       "bg-[linear-gradient(180deg,rgba(224,102,77,0.07),rgba(224,102,77,0.02))] dark:bg-[linear-gradient(180deg,rgba(224,102,77,0.16),rgba(224,102,77,0.06))]",
                       isSelected
                         ? "border-primary bg-primary/10 shadow-[0_10px_30px_-20px_rgba(224,102,77,0.9)]"

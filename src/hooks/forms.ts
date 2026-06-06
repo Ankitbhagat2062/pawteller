@@ -51,7 +51,7 @@ export async function submitVerificationForm(
 
 		return {
 			success: true,
-			message: "Success! I'll get back to you as soon as possible.",
+			message: "Verification email sent! Please check your inbox.",
 		};
 	} catch (error) {
 		console.error("Server action error:", error);

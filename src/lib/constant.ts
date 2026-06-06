@@ -452,7 +452,7 @@ export const quizData: quizDataProps[] = [
     title: "Is your dog a secret genius?",
     totalQuestions: 6,
     estimatedTime: "2 minutes",
-    url: "/quiz??quiz=dog-iq",
+    url: "/quiz?quiz=dog-iq",
     header: "We calculated your dog's IQ!",
     subheader: "See if your pup belongs in the genius tier or the professional couch potato club.",
     button: "Reveal my dog's IQ profile",

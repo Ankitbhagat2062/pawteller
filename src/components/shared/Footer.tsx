@@ -1,10 +1,10 @@
 "use client";
-import { ArrowRight } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { footerSections } from "@/lib/constant";
 import { Button } from "@/components/ui/button";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { type FormState } from "@/lib/types";
@@ -16,13 +16,13 @@ export function Footer() {
     FormState,
     FormData
   >(submitVerificationForm, {});
-  if (currentState.success) {
-    toast.success(currentState.message || "Subscribed successfully!");
-  }
-
-  if (currentState.error) {
-    toast.error(currentState.error);
-  }
+  useEffect(() => {
+    if (currentState.success) {
+      toast.success(currentState.message || "Subscribed successfully!");
+    } else if (currentState.error) {
+      toast.error(currentState.error);
+    }
+  }, [currentState.success, currentState.error, currentState.message]);
   return (
     <footer className="border-t border-border bg-[#2d4a3e] dark:bg-secondary/50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -69,40 +69,12 @@ export function Footer() {
             >
               {currentState.success ? (
                 <span className="inline-flex items-center gap-2 text-sm text-green-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
+                  <CheckCircle2 className="size-4.5" aria-hidden="true" />
                   <span>{currentState.message ?? ""}</span>
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-2 text-sm text-red-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 8v4" />
-                    <path d="M12 16h.01" />
-                  </svg>
+                  <AlertCircle className="size-4.5" aria-hidden="true" />
                   <span>{currentState.error ?? ""}</span>
                 </span>
               )}

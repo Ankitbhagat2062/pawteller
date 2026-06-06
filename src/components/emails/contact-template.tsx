@@ -62,7 +62,7 @@ const ContactThankYouEmail = ({
 							</Text>
 							<Text className="text-[12px] text-gray-500 dark:text-[#c1b5b5] text-center m-0">
 								{/** biome-ignore lint/a11y/useValidAnchor: test */}
-								<a href="#" className="text-gray-500 dark:text-[#c1b5b5] underline">
+								<a href={`${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe`} className="text-gray-500 dark:text-[#c1b5b5] underline">
 									Unsubscribe
 								</a>
 							</Text>
