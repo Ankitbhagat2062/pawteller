@@ -1,27 +1,27 @@
-import mongoose, { type Document, type Model, Schema } from "mongoose";
+import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
 
-export interface ISubscriber extends Document {
-  email: string;
-  isVerified: boolean;
-  verificationToken: string;
-  createdAt: Date;
-}
-
-const SubscriberSchema: Schema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    trim: true,
+const subscriberSchema = new Schema(
+  {
+    email: { type: String, required: true, unique: true, index: true },
+    verificationToken: {
+      type: String,
+      default: null,
+      index: true,
+    },
+    isVerified: { type: Boolean, required: true, default: false },
+    expiresAt: { type: Date, required: true, index: true },
+    contacts: [{ type: mongoose.Types.ObjectId, ref: "Contact" },],
   },
-  isVerified: { type: Boolean, default: false },
-  verificationToken: { type: String, required: true, unique: true },
-  createdAt: { type: Date, default: Date.now },
-});
 
-const Subscriber: Model<ISubscriber> =
-  mongoose.models.Subscriber ||
-  mongoose.model<ISubscriber>("Subscriber", SubscriberSchema);
+  {
+    timestamps: true,
+  },
+);
 
-export default Subscriber;
+type Subscriber = InferSchemaType<typeof subscriberSchema>;
+
+const SubscriberModel: Model<Subscriber> =
+  mongoose.models.Subscriber || mongoose.model<Subscriber>("Subscriber", subscriberSchema);
+
+export default SubscriberModel;
+

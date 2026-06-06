@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { navItems } from "@/lib/constant";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,7 +45,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             {/* Mobile menu toggle */}
             <div className="flex md:hidden">
-              <button
+              <Button
                 type="button"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
@@ -57,7 +58,7 @@ const Navbar = () => {
                 ) : (
                   <span aria-hidden>☰</span>
                 )}
-              </button>
+              </Button>
             </div>
 
             <ThemeToggle />

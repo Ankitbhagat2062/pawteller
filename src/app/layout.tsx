@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { Footer } from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { SchemaOrg } from "@/lib/seo-schema";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({
           <div className="flex-1 flex flex-col bg-[#FDF8F1] dark:bg-black">
             {children}
           </div>
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>

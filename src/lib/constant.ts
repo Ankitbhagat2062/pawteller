@@ -36,7 +36,7 @@ export const navItems =
     { label: "Home", href: "/" },
     { label: "Calculators", href: "/calculators" },
     { label: "Blog", href: "/blog" },
-    { label: "Quiz", href: "/quiz" },
+    { label: "Quiz", href: "/quiz?quiz=breed-match" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ] as const;
@@ -445,39 +445,229 @@ export const dogLifeStages: dogLifeStageProps[] = [
     className: "lg:mt-14",
   },
 ] as const;
+export const quizData: quizDataProps[] = [
+  // 1. IS YOUR DOG A SECRET GENIUS?
+  {
+    banner: "The Canine Intelligence Test",
+    title: "Is your dog a secret genius?",
+    totalQuestions: 6,
+    estimatedTime: "2 minutes",
+    url: "/quiz?quiz=dog-iq",
+    header: "We calculated your dog's IQ!",
+    subheader: "See if your pup belongs in the genius tier or the professional couch potato club.",
+    button: "Reveal my dog's IQ profile",
+    steps: [
+      {
+        question: "How long does it take your dog to find a treat hidden under a cup?",
+        options: ["Under 5 seconds", "5 to 15 seconds", "They get distracted and walk away", "They knock the cup over instantly"],
+      },
+      {
+        question: "Does your dog recognize specific word cues outside of 'walk' or 'treat'?",
+        options: ["Yes, dozens of distinct words", "Only a few basic commands", "They mostly respond to tone of voice", "They choose selective hearing"],
+      },
+      {
+        question: "How does your dog react to a mirror?",
+        options: ["They ignore it completely ", "They bark or try to play with other dog", "They look behind the mirror to check", "They've never noticed it"],
+      },
+      {
+        question: "If an obstacle (like a baby gate) blocks their path, what do they do?",
+        options: ["Find a way around or figure out how to open/bypass it", "Whine until you clear the path for them", "Try to brute-force push right through it", "Accept their fate and nap right there"],
+      },
+      {
+        question: "Can your dog trick you into giving them extra meals or attention?",
+        options: ["Regularly—they are a master manipulator", "Occasionally, if I'm not paying attention", "No, they are too honest/clueless", "I am the one who tricks them"],
+      },
+      {
+        question: "When you pick up your keys or put on shoes, what does your dog do?",
+        options: ["Predicts exactly what it means based on the specific item", "Gets excited for any potential outing", "Doesn't care until I head for the door", "Stays asleep"],
+      },
+    ],
+  },
 
-export const quizData: quizDataProps = {
-  banner: "The Breed Match Quiz",
-  title: "Which dog breed fits your life?",
-  totalQuestions: 6,
-  estimatedTime: "2 minutes",
-  steps: [
-    {
-      question: "What's your home like?",
-      options: ["Apartment", "House with yard"],
-    },
-    {
-      question: "How active is your lifestyle?",
-      options: ["Mostly chill", "Daily walks", "Always on the move"],
-    },
-    {
-      question: "Kids at home?",
-      options: ["Yes, little ones", "No kids"],
-    },
-    {
-      question: "First-time dog owner?",
-      options: ["First-timer", "Experienced"],
-    },
-    {
-      question: "Shedding tolerance?",
-      options: ["Low shed please", "Shedding is fine"],
-    },
-    {
-      question: "Preferred size?",
-      options: ["Small", "Medium", "Large", "Any size"],
-    },
-  ],
-};
+  // 2. CAN YOU SPEAK "DOG"? DECODE YOUR PUP'S BODY LANGUAGE
+  {
+    banner: "Dog Communication Quiz",
+    title: "Can you speak 'dog'? Decode your pup's body language",
+    totalQuestions: 6,
+    estimatedTime: "2 minutes",
+    url: "/quiz?quiz=dog-language",
+    header: "Your score has been tallied!",
+    subheader: "Find out if you truly speak 'dog' or if you're misinterpreting your pup's signals.",
+    button: "Reveal my communication score",
+    steps: [
+      {
+        question: "Your dog yawns while a child is hugging them tightly. What does this mean?",
+        options: ["They are tired and sleepy", "They are feeling stressed or uncomfortable", "They are happy and content", "They are showing affection"],
+      },
+      {
+        question: "A dog is wagging its tail, but the tail is stiff, held high, and moving very fast. Is it friendly?",
+        options: ["Yes, a wagging tail always means a happy dog", "No, this indicates high arousal, alertness, or potential tension", "It means the dog is scared and submissive", "It means the dog is about to lie down"],
+      },
+      {
+        question: "What is your dog telling you when they show the whites of their eyes ('whale eye')?",
+        options: ["They are feeling guilty about something", "They are playing hide and seek", "They are anxious, threatened, or uncomfortable", "They have an eye infection"],
+      },
+      {
+        question: "Your dog rolls onto their back during a tense interaction. What are they communicating?",
+        options: ["'Please rub my belly right now!'", "'I am submissive and do not want a conflict'", "'I am ready to attack'", "'I am perfectly relaxed'"],
+      },
+      {
+        question: "When playing, your dog lowers their front legs and keeps their hips in the air. What is this?",
+        options: ["A sign of physical pain or stretching", "A play bow—signaling everything from here on out is just fun", "A defensive posture before a bite", "An invitation to go outside to potty"],
+      },
+      {
+        question: "Your dog keeps licking their own lips repeatedly, but there is no food around. Why?",
+        options: ["They are thirsty", "They are pacifying themselves due to stress or mild anxiety", "They are trying to taste something in the air", "They are mimicking human smiles"],
+      },
+    ],
+  },
+
+  // 3. THE ULTIMATE DOG NUTRITION & SAFETY QUIZ
+  {
+    banner: "Pet Safety & Health",
+    title: "The ultimate dog nutrition & safety quiz",
+    totalQuestions: 6,
+    estimatedTime: "2 minutes",
+    url: "/quiz?quiz=dog-safety",
+    header: "Safety report generated!",
+    subheader: "Discover which household hazards you successfully spotted—and the ones you missed.",
+    button: "Reveal my detailed safety key",
+    steps: [
+      {
+        question: "Which of these common baking ingredients is highly toxic to dogs?",
+        options: ["Baking soda", "Xylitol (birch sugar sweetener)", "Vanilla extract", "Brown sugar"],
+      },
+      {
+        question: "Your dog accidentally eats a single grape. What should your immediate action be?",
+        options: ["Wait and see if they show symptoms", "Contact a vet or pet poison hotline immediately", "Give them plenty of water to flush it out", "Don't worry, grapes are only bad in massive amounts"],
+      },
+      {
+        question: "Which type of bone is generally considered the most dangerous to feed a dog?",
+        options: ["Raw beef bones", "Cooked chicken bones (highly prone to splintering)", "Raw marrow bones", "Dehydrated bully sticks"],
+      },
+      {
+        question: "What makes chocolate dangerous to dogs?",
+        options: ["The high sugar content", "Theobromine (which dogs cannot metabolize efficiently)", "The dairy and milk fats", "The caffeine content alone"],
+      },
+      {
+        question: "Which backyard plant is highly toxic to dogs if chewed or ingested?",
+        options: ["Dandelions", "Marigolds", "Sago Palms", "Sunflowers"],
+      },
+      {
+        question: "Is it safe to give your dog human medications like Ibuprofen or Advil for pain?",
+        options: ["Yes, just in tiny doses", "Only if they are a large breed dog", "Absolutely not, it can cause severe organ failure", "Yes, it works identically to dog anti-inflammatories"],
+      },
+    ],
+  },
+
+  // 4. HOW WELL DO YOU KNOW YOUR DOG'S BIOLOGICAL AGE?
+  {
+    banner: "Canine Longevity & Milestones",
+    title: "How well do you know your dog's biological age?",
+    totalQuestions: 6,
+    estimatedTime: "2 minutes",
+    url: "/quiz?quiz=dog-age",
+    header: "Biological profile ready!",
+    subheader: "We calculated your dog's life stage milestones based on their size and physical markers.",
+    button: "Reveal my dog's biological age",
+    steps: [
+      {
+        question: "True or False: Every calendar year is exactly 7 human years for any dog.",
+        options: ["True, that's the standard golden rule", "False, aging depends heavily on size and breed"],
+      },
+      {
+        question: "At what age is a giant breed dog (like a Great Dane) typically considered a senior?",
+        options: ["5 to 6 years old", "8 to 9 years old", "11 to 12 years old", "They senior at the same time as small dogs"],
+      },
+      {
+        question: "At what age do most small breed dogs reach full physical skeletal maturity?",
+        options: ["Around 6 months", "Around 9 to 12 months", "Around 18 to 24 months", "3 years old"],
+      },
+      {
+        question: "Which dog size group generally enjoys the longest biological lifespan?",
+        options: ["Giant breeds (over 90 lbs)", "Large breeds (50 - 90 lbs)", "Medium breeds (20 - 50 lbs)", "Toy and Small breeds (under 20 lbs)"],
+      },
+      {
+        question: "When considering a dog's life stage, what marks the end of 'puppyhood' and start of 'adolescence'?",
+        options: ["When they switch to adult food", "The onset of sexual maturity / hormonal changes (around 6-8 months)", "Exactly on their first birthday", "When they stop growing in height"],
+      },
+      {
+        question: "Which biological marker is most commonly used by vets to estimate an unknown rescue dog's age?",
+        options: ["Coat graying around the muzzle", "The amount of tartar and wear on their teeth", "The clarity of their eyes", "Their overall energy levels"],
+      },
+    ],
+  },
+
+  // 5. THE BREED MATCH QUIZ
+  {
+    banner: "The Breed Match Quiz",
+    title: "Which dog breed fits your life?",
+    totalQuestions: 6,
+    estimatedTime: "2 minutes",
+    url: "/quiz?quiz=breed-match",
+    header: "We found your match!",
+    subheader: "Your top breed is a Poodle ... plus 2 other strong matches.",
+    button: "Reveal my top 3 breeds",
+    steps: [
+      {
+        question: "What's your home like?",
+        options: ["Apartment", "House with yard"],
+      },
+      {
+        question: "How active is your lifestyle?",
+        options: ["Mostly chill", "Daily walks", "Always on the move"],
+      },
+      {
+        question: "Kids at home?",
+        options: ["Yes, little ones", "No kids"],
+      },
+      {
+        question: "First-time dog owner?",
+        options: ["First-timer", "Experienced"],
+      },
+      {
+        question: "Shedding tolerance?",
+        options: ["Low shed please", "Shedding is fine"],
+      },
+      {
+        question: "Preferred size?",
+        options: ["Small", "Medium", "Large", "Any size"],
+      },
+    ],
+    dogs: [
+      "Poodle",
+      "Golden Retriever",
+      "Labrador Retriever",
+      "French Bulldog",
+      "Cavalier King Charles Spaniel",
+      "Miniature Schnauzer",
+      "Bichon Frise",
+      "Shih Tzu",
+      "Havanese",
+      "Boston Terrier",
+      "Whippet",
+      "Greyhound",
+      "Border Collie",
+      "Australian Shepherd",
+      "German Shepherd",
+      "Bernese Mountain Dog",
+      "Newfoundland",
+      "Great Dane",
+      "Pembroke Welsh Corgi",
+      "Chihuahua",
+      "Pug",
+      "Dachshund",
+      "Maltese",
+      "Papillon",
+      "Yorkshire Terrier",
+      "English Springer Spaniel",
+      "Vizsla",
+      "Weimaraner",
+      "Samoyed",
+      "Shetland Sheepdog",
+    ]
+  },
+];
 
 export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
   Puppy: 2.5,
@@ -1615,7 +1805,7 @@ export const footerSections: FooterSection[] = [
   {
     title: "Content",
     links: [
-      { label: "Breed Quiz", href: "/quiz" },
+      { label: "Breed Quiz", href: "/quiz?quiz=breed-match" },
       { label: "Blog", href: "/blog" },
       { label: "Care Guides", href: "/guides" },
       { label: "Pet Health", href: "/health" },

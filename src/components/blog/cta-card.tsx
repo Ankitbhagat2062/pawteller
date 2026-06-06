@@ -19,10 +19,10 @@ export function CtaCard() {
       </p>
       <Button asChild className="bg-orange-600 hover:bg-orange-700 text-white">
         <Link
-          href="/quiz"
+          href="/quiz?quiz=breed-match"
           aria-label="Take a quiz to find your perfect dog's breed"
         >
-          Take the quiz
+          Find your breed match
           <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>

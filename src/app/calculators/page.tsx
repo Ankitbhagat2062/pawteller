@@ -97,7 +97,8 @@ export default function CalculatorsPage() {
                 <span>Pet care calculators</span>
               </div>
 
-              <h1 className="mt-7 font-[Georgia,serif] text-4xl font-black leading-[1.02] tracking-normal text-[#2a1b15] sm:text-[3.9rem]">
+              <h1 className="mt-7 font-[Georgia,serif] text-4xl font-black leading-[1.02] tracking-normal
+               text-[#2a1b15] dark:text-[#e6bdae] sm:text-[3.9rem]">
                 Find the right tool for your dog’s next
                 <span className="block italic text-[#d36c4a]">milestone.</span>
               </h1>
@@ -179,12 +180,12 @@ export default function CalculatorsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Link
-                href="/quiz"
-                aria-label="Take the dog breed match quiz"
+                href="/quiz?quiz=breed-match"
+                aria-label="Take the quiz to find out if your dog is a secret genius"
                 className="inline-flex items-center gap-2 rounded-full bg-[#315846] px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-[#294b3b]"
               >
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
-                Breed quiz
+                {`Dog's IQ quiz`}
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

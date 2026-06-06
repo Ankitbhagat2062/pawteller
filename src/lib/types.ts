@@ -6,6 +6,14 @@ export type badgeType = {
   icon: LucideIcon;
 };
 
+
+export type FormState = {
+  success?: boolean;
+  error?: string;
+  message?: string;
+};
+
+
 export interface CalculatorProps {
   title: string;
   description: string;
@@ -83,7 +91,12 @@ export interface quizDataProps {
   title: string;
   totalQuestions: number;
   estimatedTime: string;
+  url: string;
+  header: string;
+  subheader: string;
+  button: string;
   steps: stepsProps[];
+  dogs?:string[]
 }
 
 export interface CalculatorState {

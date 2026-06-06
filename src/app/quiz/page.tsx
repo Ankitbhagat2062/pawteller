@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { QuizComponent } from "@/components/quiz/QuizComponent";
+import { quizData as allQuizData } from "@/lib/constant";
+import type { quizDataProps } from "@/lib/types";
+
 
 // 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE QUIZ
 export const metadata: Metadata = {
@@ -53,10 +56,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function QuizPage() {
+export default async function QuizPage({
+  searchParams,
+}: {
+  searchParams?: { quiz?: string };
+}) {
+  const quizParam = (await searchParams)?.quiz;
+  const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
+    q.url.includes(`quiz=${quizParam}`),
+  );
+
+  // Fallback: if quiz is missing/invalid, show the first quiz.
+  const quizToRender = selectedQuiz ?? allQuizData[0];
+
   return (
     <main>
-      <QuizComponent />
+      <QuizComponent quizData={quizToRender} />
     </main>
   );
 }

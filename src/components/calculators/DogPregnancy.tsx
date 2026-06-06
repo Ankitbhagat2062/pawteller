@@ -24,6 +24,7 @@ import {
 } from "@/lib/constant";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -216,7 +217,7 @@ export default function DogPregnancy() {
                 <div className="grid grid-cols-2 gap-2">
                   {(["small", "medium", "large", "giant"] as BreedSize[]).map(
                     (size) => (
-                      <button
+                      <Button
                         key={size}
                         type="button"
                         onClick={() => setBreedSize(size)}
@@ -228,7 +229,7 @@ export default function DogPregnancy() {
                         )}
                       >
                         {BREED_SIZE_LABELS[size]}
-                      </button>
+                      </Button>
                     ),
                   )}
                 </div>
@@ -240,13 +241,13 @@ export default function DogPregnancy() {
 
             {/* CTA */}
             <div className="mt-8">
-              <button
+              <Button
                 type="button"
                 onClick={handleEstimate}
                 className="w-full py-5 rounded-3xl bg-[#00C2A8] hover:bg-[#00a896] active:bg-[#009080] text-white text-xl font-bold text-center transition-colors shadow-[0_20px_25px_-5px_rgba(0,194,168,0.2),0_8px_10px_-6px_rgba(0,194,168,0.2)]"
               >
                 Estimate Due Date
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -361,13 +362,13 @@ export default function DogPregnancy() {
           </div>
 
           <div className="flex justify-center">
-            <button
+            <Button
               onClick={() => router.push("/blog")}
               type="button"
               className="px-8 py-3 rounded-full border-2 border-[#00C2A8] text-[#00C2A8] text-base font-bold bg-white dark:bg-transparent hover:bg-[#E6F7F5] dark:hover:bg-teal-900/40 transition-colors"
             >
               View Full 9-Week Guide
-            </button>
+            </Button>
           </div>
         </div>
       </section>

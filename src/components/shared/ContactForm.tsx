@@ -1,5 +1,6 @@
 "use client";
 import { type ChangeEvent, type FormEvent, useState } from "react";
+import axios, { type AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -22,23 +23,49 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("loading");
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, topic, message }),
-      });
+    type ContactPayload = {
+      name: string;
+      email: string;
+      topic: string;
+      message: string;
+    };
 
-      if (response.ok) {
+    type ContactSuccessResponse = {
+      success: true;
+      data: unknown;
+    };
+
+    type ContactErrorResponse = {
+      success?: false;
+      error?: string;
+    };
+
+    try {
+      const payload: ContactPayload = { name, email, topic, message };
+
+      const res = await axios.post<ContactSuccessResponse | ContactErrorResponse>(
+        "/api/contact",
+        payload,
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+
+      if (res.data && "success" in res.data && res.data.success === true) {
         setStatus("success");
         setName("");
         setEmail("");
         setTopic("");
         setMessage("");
-      } else {
-        setStatus("error");
+        return;
       }
-    } catch (_error) {
+
+      setStatus("error");
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<ContactErrorResponse>;
+
+      // Optional: surface server-provided message later if desired.
+      void axiosError;
       setStatus("error");
     }
   };

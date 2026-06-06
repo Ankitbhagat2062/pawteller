@@ -114,7 +114,7 @@ export const homepageCms: HomepageCms = {
         descriptionLines:
             "Predict your puppy's adult size. Decode dog years. Plan portions. Find the perfect breed. All in one beautifully simple place — backed by veterinary science.",
         primaryCta: { label: "Start with Puppy Weight", href: "/calculators/puppy-weight", ariaLabel: "Start using the puppy weight calculator" },
-        secondaryCta: { label: "Find My Breed Match", href: "/quiz", ariaLabel: "Start the dog breed quiz to find your perfect breed match" },
+        secondaryCta: { label: "Dog Nutrition Quiz", href: "/quiz?quiz=breed-match", ariaLabel: "Start the quiz to find out about your Dogs' Health and Nutrition" },
         ratingLabelPrefix: "Loved by",
         ratingCountText: "12,000+",
         ratingLabelSuffix: " dog parents",
@@ -142,7 +142,7 @@ export const homepageCms: HomepageCms = {
             eyebrow: "The story of every dog",
             title: "From tiny paws to wise old soul — we'll be your guide.",
             description:"Dogs grow up fast. One month they fit in your palm, the next they're hogging the couch. Pawteller turns the science of dog development into beautiful, easy-to-understand answers— so you can spend less time worrying and more time playing fetch.",
-             cta: { label: "Take a Quiz to Explore Dog Life Stages", href: "/quiz", ariaLabel: "Explore dog life stages to get tailored insights and care tips for every chapter of your dog's journey" },
+             cta: { label: "Dog Age Quiz", href: "/quiz?quiz=breed-match", ariaLabel: "Explore dog life stages to get tailored insights and care tips for every chapter of your dog's journey" },
         },
         right: {
             dogLifeStages,
@@ -154,7 +154,7 @@ export const homepageCms: HomepageCms = {
             title: "Which Dog Breed is Right For You?",
             description:
                 "Match your lifestyle with a breed profile that fits—size, temperament, energy, and growth expectations.",
-            cta: { label: "Start The Quiz Now", href: "/quiz" },
+            cta: { label: "Start The Quiz Now", href: "/quiz?quiz=breed-match" },
         },
         feature: {
             eyebrow: "Free quiz - 2 minutes",
@@ -162,7 +162,7 @@ export const homepageCms: HomepageCms = {
             titleEmphasis: "your life?",
             description:
                 "Answer 6 quick questions about your lifestyle and we'll match you with your top 3 breeds, personalized to your home, energy and family.",
-            cta: { label: "Take the quiz", href: "/quiz", ariaLabel: "Take a quiz to find the best dog breed for you" },
+            cta: { label: "The Compatibility Check", href: "/quiz?quiz=breed-match", ariaLabel: "Find Out whether you and your dog actually personality matches?" },
             image: {
                 src: "https://images.unsplash.com/photo-1560743641-3914f2c45636",
                 alt: "Two happy dogs sitting together in tall grass",
