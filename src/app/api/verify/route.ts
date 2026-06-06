@@ -5,7 +5,7 @@ import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const fromMail:string = `${process.env.FROM_MAILL}`
+const fromMail: string = `${process.env.FROM_MAIL}`
 
 export async function GET(request: Request) {
 	if (!RESEND_API_KEY) {
@@ -35,23 +35,25 @@ export async function GET(request: Request) {
 	try {
 		await connectDB();
 
-		
-		// Single-use verification: update only if token matches and not already verified.
+
+		// Single-use verification: update only if token matches, not already verified, and not expired.
+		const now = new Date();
 		const subscriber = await SubscriberModel.findOneAndUpdate(
-			{ verificationToken: token, isVerified: false },
+			{ verificationToken: token, isVerified: false, expiresAt: { $gt: now } },
 			{ isVerified: true, verificationToken: null },
 			{ new: true },
 		);
-		
+
+
 		if (!subscriber) {
 			return NextResponse.json(
 				{ error: "Invalid or expired token" },
 				{ status: 400 },
 			);
 		}
-		const fromAddress:string = fromMail.includes('@')
-    ? `Welcome <noreply@${fromMail.split('@')[1]}>`
-    : `Welcome <noreply${fromMail}>`;
+		const fromAddress: string = fromMail.includes('@')
+			? `Welcome <noreply@${fromMail.split('@')[1]}>`
+			: `Welcome <noreply${fromMail}>`;
 		// Deliver the Welcome Email and Features Overview
 		const data = await resend.emails.send({
 			from: fromAddress,
@@ -61,8 +63,9 @@ export async function GET(request: Request) {
 		});
 		if (data.error && typeof data.error === "object" && "message" in data.error) {
 			console.error("Error sending welcome email:", data.error);
-			return NextResponse.json({ error: "Failed to send welcome email" }, { status: 422 });
+			// Continue redirecting; verification already succeeded via findOneAndUpdate.
 		}
+
 		const appUrl =
 			process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
 		return NextResponse.redirect(new URL("/blog", appUrl));

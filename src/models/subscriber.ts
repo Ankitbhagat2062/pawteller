@@ -5,12 +5,14 @@ const subscriberSchema = new Schema(
     email: { type: String, required: true, unique: true, index: true },
     verificationToken: {
       type: String,
-      required: true,
+      default: null,
       index: true,
     },
     isVerified: { type: Boolean, required: true, default: false },
+    expiresAt: { type: Date, required: true, index: true },
     contacts: [{ type: mongoose.Types.ObjectId, ref: "Contact" },],
   },
+
   {
     timestamps: true,
   },

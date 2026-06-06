@@ -44,15 +44,36 @@ export async function POST(request: Request) {
     topMatches: z.array(TopMatchSchema),
   });
 
-  const QuizTopMatchSchema = QuizResultsSchema;
+
+  const QuizIdSchema = z
+    .string()
+    .min(1, "quizId is required")
+    .max(200, "quizId is too long");
 
   try {
-    const { email, results } = await request.json();
+    const SubmissionSchema = z.object({
+      email: z.string().trim().email().transform((value) => value.toLowerCase()),
+      quizId: z.string(),
+      results: QuizResultsSchema,
+    });
+    const submission = SubmissionSchema.safeParse(await request.json());
+    if (!submission.success) {
+      return NextResponse.json({ error: "Invalid quiz payload" }, { status: 400 });
+    }
+    const { email,quizId, results } = submission.data;
 
-    // Ensure email presence (keep existing behavior)
-    if (!email || !results) {
+    // Ensure required fields are present (keep existing behavior for email/results)
+    if (!email || !quizId || !results) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
+
+    const parsedQuizId = QuizIdSchema.safeParse(quizId);
+    if (!parsedQuizId.success) {
+      return NextResponse.json({ error: parsedQuizId.error.issues[0]?.message ?? "Invalid quizId" }, { status: 400 });
+    }
+
+    const safeQuizId = parsedQuizId.data;
+
 
     const parsed = QuizResultsSchema.safeParse(results);
     if (!parsed.success) {
@@ -67,7 +88,7 @@ export async function POST(request: Request) {
 
     await connectDB();
 
-    const existingQuiz = await QuizModel.findOne({ email });
+    const existingQuiz = await QuizModel.findOne({ email, quizId: safeQuizId });
 
     if (existingQuiz) {
       return NextResponse.json(
@@ -77,28 +98,57 @@ export async function POST(request: Request) {
     }
 
 
-    const from = fromMail.includes("<") ? fromMail : `Pawteller <noreply${fromMail}>`;
+
+    const correctedFrom = (() => {
+      const trimmed = fromMail.trim();
+
+      // If already in the form "Name <mailbox>", keep verbatim.
+      if (trimmed.includes("<")) return trimmed;
+
+      // If it's a full mailbox like "hello@example.com", format as "Pawteller <...>".
+      if (trimmed.includes("@")) return `Pawteller <${trimmed}>`;
+
+      // If it's a bare domain or starts with '@', construct "noreply@domain".
+      // Also handles cases like ".com"/"example.com" vs leading "@".
+      const domain = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
+      return `Pawteller <noreply@${domain}>`;
+    })();
 
 
-    const data = await resend.emails.send({
-      from,
-      to: email, // Where YOU want to receive the messages
-      subject: `Your Top 3 Breed Match`,
-      react: DogBreed(safeResults) // Use the React email template for the email body
+
+    // Persist first (so we can update delivery status after sending)
+    const contact = new QuizModel({
+      email,
+      results: safeResults,
+      quizId: safeQuizId,
+      status: "pending"
     });
+    await contact.save();
 
 
-    if (data.error && typeof data.error === "object" && "message" in data.error) {
-      console.error("Error sending contact email:", data.error);
+    try {
+      const data = await resend.emails.send({
+        from: correctedFrom,
+
+        to: email, // Where YOU want to receive the messages
+        subject: `Your Top 3 Breed Match`,
+        react: DogBreed(safeResults) // Use the React email template for the email body
+      });
+
+      if (data.error && typeof data.error === "object" && "message" in data.error) {
+        await QuizModel.findByIdAndUpdate(contact._id, { status: "failed" });
+        console.error("Error sending contact email:", data.error);
+        return NextResponse.json({ error: "Failed to send contact email" }, { status: 422 });
+      }
+
+      await QuizModel.findByIdAndUpdate(contact._id, { status: "sent" });
+      return NextResponse.json({ success: true, data });
+    } catch (emailError) {
+      await QuizModel.findByIdAndUpdate(contact._id, { status: "failed" });
+      console.error("Error sending contact email:", emailError);
       return NextResponse.json({ error: "Failed to send contact email" }, { status: 422 });
     }
 
-    // Save the contact message to the database
-    const contact = new QuizModel({ email, results: safeResults });
-
-    await contact.save();
-
-    return NextResponse.json({ success: true, data });
   } catch (error: unknown) {
     console.error("Quiz route failed:", error);
     return NextResponse.json({ error: "Failed to process request" }, { status: 500 });

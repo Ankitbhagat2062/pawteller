@@ -39,18 +39,22 @@ export async function GET(request: Request) {
 		const existingSubscriber = await SubscriberModel.findOne({ email });
 		if (existingSubscriber) {
 			return NextResponse.json(
-				{ success: true },
-				{ status: 200 },
+				{ success: false,error :"Already Registered User "},
+				{ status: 400 },
 			);
 		}
 
-		const verificationToken = uuidv4();
+			const verificationToken = uuidv4();
+			const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-		const subscriber = new SubscriberModel({
-			email,
-			verificationToken,
-			isVerified: false,
-		});
+			const subscriber = new SubscriberModel({
+				email,
+				verificationToken,
+				expiresAt,
+				isVerified: false,
+			});
+
+
 		await subscriber.save();
 
 		const tokenVerifyUrl = new URL(
