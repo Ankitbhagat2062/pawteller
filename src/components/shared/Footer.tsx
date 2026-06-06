@@ -24,7 +24,7 @@ export function Footer() {
     }
   }, [currentState.success, currentState.error, currentState.message]);
   return (
-    <footer className="border-t border-border bg-[#2d4a3e] dark:bg-secondary/50">
+    <footer className="border-t border-border bg-[#2d4a3e] dark:bg-[#0f2a1f]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
         <div className="mb-16 rounded-2xl bg-card p-8 shadow-sm lg:p-10 ">

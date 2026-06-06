@@ -20,7 +20,7 @@ export default function Privacy() {
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
       ></Script>
-      <div className="w-full min-h-screen dark:bg-zinc-950 font-sans text-slate-900 dark:text-slate-50 pb-16">
+      <div className="w-full min-h-screen bg-white text-slate-900 dark:bg-zinc-950 dark:text-slate-50 font-sans pb-16">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <header className="py-8 sm:py-10">
             <div className="rounded-3xl bg-white/60 p-5 ring-1 ring-slate-200/50 backdrop-blur dark:bg-white/5 dark:ring-white/10 sm:p-8">
@@ -33,7 +33,7 @@ export default function Privacy() {
                     Privacy Policy
                   </h1>
                 </div>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-slate-500 dark:text-zinc-400">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-slate-700 dark:text-zinc-200">
                   <p>Last updated: January 15, 2026</p>
                   <span
                     className="hidden h-1 w-1 rounded-full bg-slate-300 dark:bg-zinc-700 sm:inline"
@@ -99,7 +99,7 @@ export default function Privacy() {
                       <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">
                         Need help?
                       </h3>
-                      <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
+                      <p className="mt-1 text-xs text-slate-600 dark:text-zinc-200">
                         Contact us for privacy questions, data requests, or
                         support.
                       </p>
@@ -116,7 +116,7 @@ export default function Privacy() {
                   </div>
                 </div>
 
-                <p className="mt-8 text-center text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+                <p className="mt-8 text-center text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-300">
                   Not medical advice. Use with your veterinarian.
                 </p>
               </div>

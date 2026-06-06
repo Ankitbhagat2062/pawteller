@@ -42,6 +42,7 @@ export default function Home() {
           id="home"
           className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
         >
+          <h2 className="sr-only">Homepage</h2>
           {/* Hero Section */}
           <section className="relative rounded-2xl left-1/2 mt-6 w-full -translate-x-1/2 overflow-hidden bg-[#f3ded3] px-6 py-16 sm:px-8 md:px-12 lg:px-16 lg:py-20 dark:rounded-3xl dark:bg-emerald-500/10">
             <div className="relative mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-12 lg:items-center">
@@ -70,11 +71,9 @@ export default function Home() {
                   </span>
                 </h1>
 
-                <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f5049] dark:text-[#b8b3b1] md:text-xl md:leading-9">
+                <p className="mt-7 max-w-xl text-lg leading-8 text-[#3b2f28] dark:text-[#efece8] md:text-xl md:leading-9">
                   {homepageCms.hero.descriptionLines}
-
                 </p>
-
 
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
@@ -164,7 +163,14 @@ export default function Home() {
           <section
             className="py-14 rounded-2xl"
             aria-label="Featured calculators"
+            aria-labelledby="featured-calculators-title"
           >
+            <h2
+              id="featured-calculators-title"
+              className="sr-only"
+            >
+              Featured calculators
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[285px] lg:gap-5">
               {homepageCms.featuredCalculators.calculators.map((calc) => {
                 const Icon = calc.badge.icon;

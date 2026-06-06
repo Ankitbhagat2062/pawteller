@@ -27,11 +27,11 @@ export default function TermsPage() {
           id="terms"
           className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8"
         >
-          <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10 sm:p-10">
+          <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 dark:bg-zinc-950 dark:ring-white/10 sm:p-10">
             <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
               {/* Desktop Navigation Column */}
               <div className="lg:col-span-4 lg:sticky lg:top-24">
-                <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-800/80 dark:text-emerald-200/90">
+                <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-900/90 dark:text-emerald-200/95">
                   On this page
                 </p>
                 <div className="mt-3 rounded-2xl bg-zinc-50 p-4 ring-1 ring-black/5 dark:bg-zinc-900/20 dark:ring-white/10">
@@ -42,7 +42,7 @@ export default function TermsPage() {
                           <Link
                             href={`#${item.id}`}
                             aria-label={`Learn more about ${item.label}`}
-                            className="block rounded-xl px-3 py-2 text-slate-700 transition hover:bg-white/80 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-white/5 dark:hover:text-white"
+                            className="block rounded-xl px-3 py-2 text-slate-800 transition hover:bg-white/80 hover:text-slate-900 dark:text-slate-100 dark:hover:bg-white/5 dark:hover:text-white"
                           >
                             {item.label}
                           </Link>
@@ -58,7 +58,7 @@ export default function TermsPage() {
                 <header className="border-b border-zinc-100 dark:border-zinc-800/50 pb-6">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200">
+                      <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-900 dark:bg-emerald-400/10 dark:text-emerald-200">
                         pawteller Legal
                       </p>
                       <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
@@ -75,9 +75,9 @@ export default function TermsPage() {
                     </div>
                   </div>
 
-                  <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300 max-w-2xl">
-                    These Terms explain how pawteller’s calculators, guides, and
-                    website are provided, outlining user guidelines and
+                  <p className="mt-4 text-base leading-7 text-slate-700 dark:text-slate-200 max-w-2xl">
+                    These Terms explain how pawteller’s calculators, guides,
+                    and website are provided, outlining user guidelines and
                     essential medical safety data disclaimers.
                   </p>
 
@@ -92,7 +92,7 @@ export default function TermsPage() {
                           key={item.id}
                           href={`#${item.id}`}
                           aria-label={`Learn more about ${item.label}`}
-                          className="rounded-full bg-white/70 px-3 py-1.5 text-xs font-bold text-emerald-800 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-emerald-200 dark:ring-white/10"
+                          className="rounded-full bg-white/70 px-3 py-1.5 text-xs font-bold text-emerald-900 ring-1 ring-black/5 transition hover:bg-white dark:bg-white/5 dark:text-emerald-200 dark:ring-white/10"
                         >
                           {item.label.split(" ")[0]}
                         </Link>
@@ -114,10 +114,10 @@ export default function TermsPage() {
                     >
                       Acceptance of Terms
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
-                      By accessing or using pawteller, you agree to these Terms
-                      and to comply with all applicable laws and rules. If you
-                      do not agree, please do not use the website.
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
+                      By accessing or using pawteller, you agree to these
+                      Terms and to comply with all applicable laws and rules.
+                      If you do not agree, please do not use the website.
                     </p>
                   </section>
 
@@ -132,7 +132,7 @@ export default function TermsPage() {
                     >
                       Use of Calculators
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       Our calculators are tools intended to help you estimate
                       information and explore possibilities. Results depend on
                       user input and may not reflect individual circumstances.
@@ -150,7 +150,7 @@ export default function TermsPage() {
                     >
                       Educational Information Disclaimer
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       All content on pawteller, including calculators and
                       educational materials, is for general informational
                       purposes only. It is not intended to diagnose, treat,
@@ -169,7 +169,7 @@ export default function TermsPage() {
                     >
                       No Veterinary Advice
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       pawteller does not provide veterinary advice. Nothing on
                       the website creates a doctor–patient relationship between
                       you and pawteller, its creators, or any third parties.
@@ -187,7 +187,7 @@ export default function TermsPage() {
                     >
                       Website Availability
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       We may modify, suspend, or discontinue any part of
                       pawteller at any time. We do not guarantee that the
                       website will be available without interruption or error.
@@ -205,7 +205,7 @@ export default function TermsPage() {
                     >
                       Intellectual Property
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       pawteller’s content, design, trademarks, and other
                       intellectual property are protected by applicable laws.
                       You may not copy, distribute, modify, or create derivative
@@ -224,7 +224,7 @@ export default function TermsPage() {
                     >
                       User Submissions
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       If you submit content or feedback to pawteller, you grant
                       us a worldwide, non-exclusive, royalty-free license to
                       use, reproduce, and distribute that material as permitted
@@ -243,7 +243,7 @@ export default function TermsPage() {
                     >
                       Third-Party Links
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       pawteller may link to third-party websites for
                       convenience. We do not control those sites and are not
                       responsible for their content, policies, or availability.
@@ -261,7 +261,7 @@ export default function TermsPage() {
                     >
                       Limitation of Liability
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       To the fullest extent allowed by law, pawteller and its
                       affiliates are not liable for damages arising from your
                       use of the website, including errors, omissions, or
@@ -280,11 +280,8 @@ export default function TermsPage() {
                     >
                       Changes to Terms
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
-                      {`  We may update these Terms from time to time. The "Last
-                    updated" date above reflects the most recent revision.
-                    Continued use of the website means you accept the updated
-                    Terms.`}
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
+                      {` We may update these Terms from time to time. The "Last updated" date above reflects the most recent revision. Continued use of the website means you accept the updated Terms.`}
                     </p>
                   </section>
 
@@ -299,7 +296,7 @@ export default function TermsPage() {
                     >
                       Contact
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
+                    <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       For questions about these Terms, please contact us through
                       the contact page.
                     </p>
@@ -320,21 +317,21 @@ export default function TermsPage() {
                         <Link
                           href="/privacy"
                           aria-label="Read our website privacy Policy"
-                          className="inline-flex items-center justify-center rounded-full bg-emerald-500/10 px-5 py-2.5 text-sm font-bold text-emerald-800 ring-1 ring-black/5 transition hover:bg-emerald-500/15 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-white/10"
+                          className="inline-flex items-center justify-center rounded-full bg-emerald-500/10 px-5 py-2.5 text-sm font-bold text-emerald-900 ring-1 ring-black/5 transition hover:bg-emerald-500/15 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-white/10"
                         >
                           Privacy Policy
                         </Link>
                         <Link
                           href="/contact"
                           aria-label="Give us feedback"
-                          className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-800 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-100 dark:ring-white/10"
+                          className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-50 dark:ring-white/10"
                         >
                           Contact
                         </Link>
                         <Link
                           href="/about"
                           aria-label="Learn more about pawteller.com"
-                          className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-800 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-100 dark:ring-white/10"
+                          className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-50 dark:ring-white/10"
                         >
                           About
                         </Link>
@@ -350,3 +347,4 @@ export default function TermsPage() {
     </>
   );
 }
+
