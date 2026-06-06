@@ -12,6 +12,7 @@ export function BlogFeaturedImage({ src, alt }: BlogFeaturedImageProps) {
           priority
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 640px, 720px"
+          loading="eager"
         />
       </div>
     </figure>

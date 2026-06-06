@@ -125,7 +125,7 @@ export default function BlogListing() {
                         fill
                         sizes="(max-width: 768px) 100vw, 350px"
                         className="object-cover"
-                        loading="lazy"
+                        loading="eager"
                       />
                     </div>
                   </div>
