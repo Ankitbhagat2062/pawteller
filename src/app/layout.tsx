@@ -6,7 +6,7 @@ import { Footer } from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { SchemaOrg } from "@/lib/seo-schema";
 import { Toaster } from "@/components/ui/sonner";
-
+import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -68,6 +68,7 @@ export default function RootLayout({
           <Toaster />
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
