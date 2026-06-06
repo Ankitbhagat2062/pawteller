@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import axios, { AxiosError } from "axios";
 import { type quizDataProps } from "@/lib/types";
 import { Breed, breedDatabase } from "@/lib/breedDatabase";
-import { DogBreedEmailProps } from "../emails/DogBreed-template";
+import { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
 import { useRouter } from "next/navigation";
 
 export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
@@ -45,8 +45,6 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     breed: Breed,
     answers: string[]
   ) {
-    let score = 0;
-
     const [
       home,
       activity,
@@ -56,40 +54,79 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       size,
     ] = answers;
 
-    if (breed.home.includes(home as (typeof breed.home)[number])) score += 25;
+    const breakdown = {
+      apartmentLiving: 0,
+      lifestyleMatch: 0,
+      kidFriendly: 0,
+      beginnerFriendly: 0,
+      lowShedding: 0,
+      sizePreference: 0,
+    };
 
-    if (breed.energy === activity) score += 25;
+    if (
+      breed.home.includes(
+        home as (typeof breed.home)[number]
+      )
+    ) {
+      breakdown.apartmentLiving = 25;
+    }
+
+    if (breed.energy === activity) {
+      breakdown.lifestyleMatch = 25;
+    }
 
     if (
       kids === "Yes, little ones" &&
       breed.goodWithKids
-    )
-      score += 15;
+    ) {
+      breakdown.kidFriendly = 15;
+    }
 
     if (
       experience === "First-timer" &&
       breed.beginnerFriendly
-    )
-      score += 15;
+    ) {
+      breakdown.beginnerFriendly = 15;
+    }
 
-    if (breed.shedding === shedding) score += 10;
+    if (breed.shedding === shedding) {
+      breakdown.lowShedding = 10;
+    }
 
-    if (breed.size === size) score += 10;
+    if (breed.size === size) {
+      breakdown.sizePreference = 10;
+    }
 
-    return score;
+    const total =
+      breakdown.apartmentLiving +
+      breakdown.lifestyleMatch +
+      breakdown.kidFriendly +
+      breakdown.beginnerFriendly +
+      breakdown.lowShedding +
+      breakdown.sizePreference;
+
+    return {
+      total,
+      breakdown,
+    };
   }
   function getTopBreedMatches(
     answers: string[],
     breeds: Breed[]
   ) {
     return breeds
-      .map((breed) => ({
-        breed,
-        score: calculateBreedScore(
+      .map((breed) => {
+        const result = calculateBreedScore(
           breed,
           answers
-        ),
-      }))
+        );
+
+        return {
+          breed,
+          score: result.total,
+          breakdown: result.breakdown,
+        };
+      })
       .sort((a, b) => b.score - a.score)
       .slice(0, 3);
   }
@@ -107,7 +144,10 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       userName,
 
       topMatches: matches.map(
-        ({ breed, score }, index) => ({
+        (
+          { breed, score, breakdown },
+          index
+        ) => ({
           rank: index + 1,
 
           breed: breed.name,
@@ -120,8 +160,20 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
 
           lifespan: breed.lifespan,
 
-          reasons: generateReasons(
-            { breed, answers }),
+          reasons: generateReasons({
+            breed,
+            answers,
+          }),
+
+          scoreBreakdown: {
+            apartmentLiving: `${breakdown.apartmentLiving}/25`,
+            lifestyleMatch: `${breakdown.lifestyleMatch}/25`,
+            kidFriendly: `${breakdown.kidFriendly}/15`,
+            beginnerFriendly: `${breakdown.beginnerFriendly}/15`,
+            lowShedding: `${breakdown.lowShedding}/10`,
+            sizePreference: `${breakdown.sizePreference}/10`,
+            total: `${score}/100`,
+          },
         })
       ),
     };
@@ -186,14 +238,14 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     setIsComplete(false);
   };
   const handleSubmitResults = async (e: React.FormEvent) => {
+    e.preventDefault();
     const result = isComplete
       ? generateBreedResult(
-          firstName,
-          selectedAnswers as string[],
-          breedDatabase
-        )
+        firstName,
+        selectedAnswers as string[],
+        breedDatabase
+      )
       : null;
-    e.preventDefault();
 
     type ContactPayload = {
       email: string;

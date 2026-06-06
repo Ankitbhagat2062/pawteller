@@ -37,6 +37,17 @@ export async function POST(request: Request) {
     temperament: z.array(z.string()).optional(),
     lifespan: z.string().optional(),
     reasons: z.array(z.string()).optional(),
+    scoreBreakdown: z
+      .object({
+        apartmentLiving: z.string(),
+        lifestyleMatch: z.string(),
+        kidFriendly: z.string(),
+        beginnerFriendly: z.string(),
+        lowShedding: z.string(),
+        sizePreference: z.string(),
+        total: z.string(),
+      })
+      .optional(),
   });
 
   const QuizResultsSchema = z.object({
