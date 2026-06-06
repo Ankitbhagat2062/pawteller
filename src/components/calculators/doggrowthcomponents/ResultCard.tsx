@@ -47,7 +47,7 @@ export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
               alt="Puppy"
               fill
               sizes="(min-width: 768px) 96px, 80px"
-              loading="eager"
+              loading="lazy"
               className="object-cover"
             />
           </div>

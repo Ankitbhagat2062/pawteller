@@ -125,7 +125,6 @@ export default function Home() {
                     sizes="(max-width: 1024px) 100vw, 590px"
                     className="object-cover object-center"
                     priority
-                    loading="eager"
                   />
                 </div>
 
@@ -214,7 +213,7 @@ export default function Home() {
                               fill
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
                               className="object-cover"
-                              loading="eager"
+                              loading="lazy"
                             />
                           </div>
                         </div>
@@ -364,7 +363,7 @@ export default function Home() {
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 492px"
                     className="object-cover object-center"
-                    loading="eager"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -431,7 +430,7 @@ export default function Home() {
                               fill
                               sizes="(max-width: 768px) 100vw, 350px"
                               className="object-cover"
-                              loading="eager"
+                              loading="lazy"
                             />
                           </div>
                         </div>

@@ -237,16 +237,15 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     setSelectedAnswers(Array(quizData.totalQuestions).fill(null));
     setIsComplete(false);
   };
-  const result = isComplete
-    ? generateBreedResult(
-      firstName,
-      selectedAnswers as string[],
-      breedDatabase
-    )
-    : null;
-    console.log(result)
   const handleSubmitResults = async (e: React.FormEvent) => {
     e.preventDefault();
+    const result = isComplete
+      ? generateBreedResult(
+        firstName,
+        selectedAnswers as string[],
+        breedDatabase
+      )
+      : null;
 
     type ContactPayload = {
       email: string;

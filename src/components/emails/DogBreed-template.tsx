@@ -1,5 +1,5 @@
 
-import { Body, Container, Head, Heading, Html, Link, Preview, Section, Tailwind, Text } from 'react-email';
+import { Body, Column, Container, Head, Heading, Html, Link, Preview, Row, Section, Tailwind, Text } from 'react-email';
 
 type TopMatch = {
   rank: number;
@@ -61,8 +61,8 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
               </Text>
 
               <Text className="leading-7 text-slate-600">
-                Based on your quiz answers, we've analyzed dozens of dog breeds
-                and found the ones most compatible with your lifestyle.
+                {`Based on your quiz answers, we've analyzed dozens of dog breeds
+                and found the ones most compatible with your lifestyle.`}
               </Text>
             </Section>
 
@@ -163,16 +163,18 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
                   key={dog.breed}
                   className="mb-4 rounded-2xl border border-slate-200 p-5"
                 >
-                  <div className="flex justify-between">
-                    <Text className="font-bold text-slate-900">
-                      #{dog.rank} {dog.breed}
-                    </Text>
-
-                    <Text className="font-bold text-emerald-900">
-                      {dog.compatibility}%
-                    </Text>
-
-                  </div>
+                  <Row>
+                    <Column>
+                      <Text className="font-bold text-slate-900">
+                        #{dog.rank} {dog.breed}
+                      </Text>
+                    </Column>
+                    <Column align="right">
+                      <Text className="font-bold text-emerald-900">
+                        {dog.compatibility}%
+                      </Text>
+                    </Column>
+                  </Row>
 
 
                   <Text className="text-slate-600">{dog.description}</Text>

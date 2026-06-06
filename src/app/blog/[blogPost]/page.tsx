@@ -128,7 +128,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                           fill
                           sizes="(max-width: 768px) 100vw, 350px"
                           className="object-cover"
-                          loading="eager"
+                          loading="lazy"
                         />
                       </div>
                     </div>
