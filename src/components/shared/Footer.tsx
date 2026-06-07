@@ -30,10 +30,10 @@ export function Footer() {
         <div className="mb-16 rounded-2xl bg-card p-8 shadow-sm lg:p-10 ">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-md">
-              <h2 className="text-balance text-xl font-semibold text-foreground sm:text-2xl">
+              <h2 className="text-balance text-xl font-semibold text-gray-700 dark:text-gray-50 sm:text-2xl">
                 {"Stay Updated with Pet Care Tips"}
               </h2>
-              <p className="mt-2 text-pretty text-muted-foreground">
+              <p className="mt-2 text-pretty text-gray-800 dark:text-gray-200">
                 {`Get weekly insights on pet health, breed guides, and exclusive
                 content delivered to your inbox.`}
               </p>
@@ -98,11 +98,11 @@ export function Footer() {
                 width={200}
                 height={40}
               />
-              <span className="text-lg font-semibold tracking-tight text-foreground">
+              <span className="text-lg font-semibold tracking-tight text-gray-50">
                 {" Pawteller"}
               </span>
             </Link>
-            <p className="mt-4 max-w-xs text-pretty text-sm text-muted-foreground">
+            <p className="mt-4 max-w-xs text-pretty text-sm text-gray-100">
               {` Your trusted companion for pet care insights, breed information,
               and tools to help your furry friend thrive.`}
             </p>
@@ -111,7 +111,7 @@ export function Footer() {
           {/* Link Sections */}
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-200 dark:text-gray-50 ">
                 {section.title}
               </h3>
               <ul className="mt-4 flex flex-col gap-3">
@@ -120,7 +120,7 @@ export function Footer() {
                     <Link
                       href={link.href}
                       aria-label={`Learn more about ${link.label}`}
-                      className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                      className="text-sm text-gray-100 transition-colors duration-200 hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -133,21 +133,21 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-50">
             {" ©"} {currentYear} {"Pawteller. All rights reserved."}
           </p>
           <div className="flex items-center gap-6">
             <Link
               href="/accessibility"
               aria-label="Accessibility"
-              className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+              className="text-sm text-gray-50 transition-colors duration-200 hover:text-white"
             >
               {"              Accessibility"}
             </Link>
             <Link
               href="/sitemap"
               aria-label="Sitemap"
-              className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+              className="text-sm text-gray-50 transition-colors duration-200 hover:text-white"
             >
               {"Sitemap"}
             </Link>

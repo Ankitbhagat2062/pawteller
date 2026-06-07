@@ -282,7 +282,7 @@ export default function Home() {
                     <span className="text-3xl leading-none" aria-hidden="true">
                       {item.icon}
                     </span>
-                    <p className="mt-5 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-[#17120f]/55">
+                    <p className="mt-5 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-[#000000]">
                       {item.age}
                     </p>
                     <h3 className="mt-1 font-[Georgia,serif] text-xl leading-none tracking-normal text-[#17120f]">
@@ -333,7 +333,7 @@ export default function Home() {
             <div className="overflow-hidden rounded-[28px] bg-[#f3eadb] px-6 py-10 shadow-none ring-1 ring-transparent sm:rounded-[34px] sm:px-10 sm:py-12 md:px-14 lg:px-16 lg:py-15 xl:px-20 dark:bg-[#17261f] dark:ring-white/8">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(420px,1fr)] lg:items-center lg:gap-16">
                 <div className="max-w-md text-center sm:text-left">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-[#d76d47] dark:text-[#f09a75]">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-[#D93800] dark:text-[#FF7F4D]">
                     {`${homepageCms.breedQuizCtas.feature.eyebrow}`}
                   </p>
                   <h2
@@ -401,7 +401,7 @@ export default function Home() {
                   <Link
                     href={viewAllHref}
                     aria-label="View all dog care articles"
-                    className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                    className="text-sm font-bold text-emerald-800 dark:text-emerald-400 hover:underline"
                   >
                     {`${viewAllLabel}`}
                   </Link>
@@ -442,10 +442,10 @@ export default function Home() {
                         </div>
 
                         <div className="mt-4 flex items-center justify-between gap-3">
-                          <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                          <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-900 dark:text-emerald-200">
                             {article.category}
                           </span>
-                          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                          <span className="text-xs font-medium text-slate-800 dark:text-slate-200">
                             {article.totalTime} min read
                           </span>
                         </div>
@@ -459,13 +459,13 @@ export default function Home() {
                       </div>
 
                       <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
-                        <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
+                        <span className="text-xs font-medium text-slate-800 dark:text-slate-200">
                           {article?.date}
                         </span>
                         <Link
                           href={`${article.url}`}
                           aria-label={` Read article about ${article.title}`}
-                          className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                          className="text-sm font-bold text-emerald-800 dark:text-emerald-400 hover:underline"
                         >
                           {"Read Article"}
                         </Link>
