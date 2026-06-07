@@ -120,7 +120,7 @@ export function Footer() {
                     <Link
                       href={link.href}
                       aria-label={`Learn more about ${link.label}`}
-                      className="text-sm text-gray-100 transition-colors duration-200 hover:text-gray-100"
+                      className="text-sm text-gray-100 transition-colors duration-200 hover:text-white"
                     >
                       {link.label}
                     </Link>
