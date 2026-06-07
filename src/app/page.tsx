@@ -79,7 +79,8 @@ export default function Home() {
                   <Link
                     href={homepageCms.hero.primaryCta.href}
                     aria-label={`${homepageCms.hero.primaryCta.ariaLabel}`}
-                    className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#df7959] px-7 text-sm font-bold text-white shadow-[0_12px_24px_rgba(170,88,61,0.24)] transition hover:bg-[#cf6848]"
+                    className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#C1441E] px-7 text-sm 
+                    font-bold text-white shadow-[0_12px_24px_rgba(170,88,61,0.24)] transition hover:bg-[#cf6848]"
                   >
                     {homepageCms.hero.primaryCta.label}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -245,12 +246,12 @@ export default function Home() {
           >
             <div className="mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(520px,0.95fr)] lg:items-center">
               <div className="max-w-145">
-                <p className="text-[0.68rem] font-bold uppercase tracking-[0.42em] text-[#e77855]">
+                <p className="text-[0.68rem] font-bold uppercase tracking-[0.42em] text-[#F1D9A8]">
                   {`${homepageCms.dogLifes.left.eyebrow}`}
                 </p>
                 <h2
                   id="dog-life-stage-title"
-                  className="mt-5 max-w-140 font-[Georgia,serif] text-4xl leading-[0.98] tracking-normal text-[#fbf6ed] sm:text-5xl lg:text-[3.35rem]"
+                  className="mt-5 max-w-140 font-[Georgia,serif] text-4xl leading-[0.98] tracking-normal text-[#ffffff] sm:text-5xl lg:text-[3.35rem]"
                 >
                   {`${homepageCms.dogLifes.left.title}`}
                 </h2>
@@ -259,7 +260,7 @@ export default function Home() {
                 </p>
                 <Button
                   asChild
-                  className="mt-9 h-12 rounded-full bg-[#e57655] px-7 text-sm font-bold text-white shadow-none hover:bg-[#d96848]"
+                  className="mt-9 h-12 rounded-full bg-[#f3eadb] px-7 text-sm font-bold text-[#1A110B] shadow-none hover:bg-[#E5D7BF]"
                 >
                   <Link
                     href={`${homepageCms.dogLifes.left.cta.href}`}
@@ -330,10 +331,11 @@ export default function Home() {
             className="py-10 sm:py-12 lg:py-14"
             aria-labelledby="breed-quiz-feature-title"
           >
-            <div className="overflow-hidden rounded-[28px] bg-[#f3eadb] px-6 py-10 shadow-none ring-1 ring-transparent sm:rounded-[34px] sm:px-10 sm:py-12 md:px-14 lg:px-16 lg:py-15 xl:px-20 dark:bg-[#17261f] dark:ring-white/8">
+            <div className="overflow-hidden rounded-[28px] bg-[#e4c99a] px-6 py-10 shadow-none ring-1 ring-transparent sm:rounded-[34px]
+             sm:px-10 sm:py-12 md:px-14 lg:px-16 lg:py-15 xl:px-20 dark:bg-[#17261f] dark:ring-white/8">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(420px,1fr)] lg:items-center lg:gap-16">
                 <div className="max-w-md text-center sm:text-left">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-[#D93800] dark:text-[#FF7F4D]">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-slate-800 dark:text-[#FF7F4D]">
                     {`${homepageCms.breedQuizCtas.feature.eyebrow}`}
                   </p>
                   <h2
