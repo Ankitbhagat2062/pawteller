@@ -54,9 +54,9 @@ const Navbar = () => {
                 className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-black/8 bg-white dark:border-white/10 dark:bg-black"
               >
                 {isMenuOpen ? (
-                  <X className="h-5 w-5" aria-hidden />
+                  <X className="h-5 w-5 " aria-hidden />
                 ) : (
-                  <span aria-hidden>☰</span>
+                  <span aria-hidden className="text-black dark:text-white">☰</span>
                 )}
               </Button>
             </div>
@@ -69,20 +69,12 @@ const Navbar = () => {
               aria-label="Browse calculators for your dog (growth, age, nutrition)"
               className="hidden items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:inline-flex"
             >
-              Start Calculator
+              Explore Dog Calculators
               <span aria-hidden className="text-base">
                 {" →"}
               </span>
             </Link>
 
-            {/* Mobile CTA */}
-            <Link
-              href="/calculators"
-              className="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:hidden"
-              aria-label="Browse calculators for your dog"
-            >
-              Explore Dog Calculators
-            </Link>
           </div>
         </div>
 
