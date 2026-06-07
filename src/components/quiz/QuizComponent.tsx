@@ -374,7 +374,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
             <Button
               type="button"
               onClick={handleRestart}
-              className="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-border bg-transparent px-4 py-2.5 text-xs font-semibold text-gray-700 transition-all duration-200 hover:-translate-y-px hover:border-primary/60 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-primary/10 sm:w-auto"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-border bg-transparent px-4 py-2.5 text-xs font-semibold text-gray-800 transition-all duration-200 hover:-translate-y-px hover:border-primary/60 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:text-gray-100 dark:hover:bg-primary/10 sm:w-auto"
             >
               Restart quiz
             </Button>

@@ -84,7 +84,7 @@ export default function AboutPage() {
               {/* Performance Optimized List: Lucide Icons avoid CLS Layout Shifts */}
               <div className="lg:col-span-5">
                 <div className="rounded-3xl bg-emerald-500/5 p-6 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20">
-                  <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-900/80 dark:text-emerald-200/90">
+                  <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-800 dark:text-emerald-100">
                     What we optimize for
                   </p>
                   <ul className="mt-4 space-y-4 text-sm font-semibold text-slate-700 dark:text-slate-200">
@@ -319,13 +319,13 @@ export default function AboutPage() {
           <section className="mt-10 rounded-3xl bg-emerald-500/10 p-6 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/15 dark:ring-emerald-500/20 sm:p-10">
             <div className="grid gap-6 md:grid-cols-12 md:items-center">
               <div className="md:col-span-8">
-                <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-900/70 dark:text-emerald-200/80">
+                <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-900 dark:text-white">
                   Start with a calculator
                 </p>
                 <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 sm:text-3xl">
                   Quick answers you can use today
                 </h2>
-                <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
+                <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-50">
                   Choose a featured tool to get numbers and next steps—built for
                   calm, everyday decision-making.
                 </p>

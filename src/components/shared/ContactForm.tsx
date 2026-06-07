@@ -205,13 +205,17 @@ export default function ContactForm() {
             {status === "loading" ? "Sending..." : "Send Message"}
           </Button>
           {status === "success" && (
-            <p className="text-green-600">{"Message sent successfully!"}</p>
+            <p className="text-emerald-700 dark:text-emerald-300">
+              {"Message sent successfully!"}
+            </p>
           )}
           {status === "error" && (
-            <p className="text-red-600">{"Something went wrong. Try again."}</p>
+            <p className="text-red-700 dark:text-red-300">
+              {"Something went wrong. Try again."}
+            </p>
           )}
 
-          <p className="text-xs font-semibold leading-5 text-slate-500 dark:text-zinc-400">
+          <p className="text-xs font-semibold leading-5 text-slate-600 dark:text-zinc-300">
             {` By sending, you agree to be contacted about your request. pawteller
             is not a medical provider.`}
           </p>

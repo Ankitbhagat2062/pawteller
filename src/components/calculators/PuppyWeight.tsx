@@ -220,10 +220,11 @@ function calculatePrediction(
   let statusColor = "text-brand";
   if (ratio > 1.15) {
     status = "Above Average";
-    statusColor = "text-orange-500";
+    // Use darker, higher-contrast colors for better accessibility
+    statusColor = "text-orange-700 dark:text-orange-300";
   } else if (ratio < 0.85) {
     status = "Below Average";
-    statusColor = "text-blue-500";
+    statusColor = "text-blue-700 dark:text-blue-300";
   }
 
   const predictedMin = Math.max(0.5, predictedMid * 0.9);
@@ -773,7 +774,7 @@ export default function Index() {
                   {/* Stats grid */}
                   <div className="grid grid-cols-3 gap-3 mb-6">
                     <div className="bg-muted rounded-2xl p-4 text-center border border-border">
-                      <p className="text-muted-foreground text-xs font-medium mb-1">
+                      <p className="text-foreground/90 text-xs font-medium mb-1">
                         Estimated Adult Weight
                       </p>
                       <p className="text-foreground font-black">

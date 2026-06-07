@@ -72,7 +72,7 @@ const featuredPost =
 export default function BlogListing() {
   return (
     <section
-      className="bg-blog-bg px-4 py-12 mx-auto md:px-6 md:py-16 lg:px-8 lg:py-20"
+      className="bg-background text-foreground px-4 py-12 mx-auto md:px-6 md:py-16 lg:px-8 lg:py-20"
       aria-labelledby="blog-section-title"
     >
       <div className="mx-auto max-w-6xl">

@@ -108,7 +108,7 @@ export default function Contact() {
                       <p className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
                         General Questions
                       </p>
-                      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
+<p className="mt-2 text-sm leading-6 text-slate-700 dark:text-zinc-200">
                         Ask about using calculators, reading guides, or getting
                         started.
                       </p>

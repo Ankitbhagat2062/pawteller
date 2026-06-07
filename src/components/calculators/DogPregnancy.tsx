@@ -163,7 +163,7 @@ export default function DogPregnancy() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
             Dog Pregnancy Calculator
           </h1>
-          <p className="text-lg md:text-xl font-medium text-[#1A2B3C]/70 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl font-medium text-[#1A2B3C] dark:text-gray-200 leading-relaxed max-w-2xl mx-auto">
             {`Estimate your dog's due date, track pregnancy milestones
 						week-by-week, and prepare for your puppy's arrival with expert
 						guidance.`}
@@ -351,7 +351,7 @@ export default function DogPregnancy() {
                   {item.tips.map((tip) => (
                     <li key={tip} className="flex items-center gap-2">
                       <CheckIcon className="text-[#00C2A8]" />
-                      <span className="text-[#1A2B3C]/70 dark:text-gray-400 text-xs font-bold">
+                      <span className="text-[#1A2B3C] dark:text-gray-200 text-xs font-bold">
                         {tip}
                       </span>
                     </li>
