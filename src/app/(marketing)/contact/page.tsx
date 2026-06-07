@@ -58,7 +58,7 @@ export default function Contact() {
                 aria-label="Try Pawteller calculators to estimate your dog’s growth, age, and nutrition"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 text-sm font-bold text-slate-800 shadow-sm transition duration-150 hover:bg-white dark:bg-zinc-950/30 dark:border-white/10 dark:text-slate-200 dark:hover:bg-zinc-950/50"
               >
-                Try a calculator
+                Explore dog calculators
               </Link>
             </div>
           </div>

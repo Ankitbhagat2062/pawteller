@@ -81,7 +81,7 @@ const Navbar = () => {
               className="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 md:hidden"
               aria-label="Browse calculators for your dog"
             >
-              Start
+              Explore Dog Calculators
             </Link>
           </div>
         </div>
