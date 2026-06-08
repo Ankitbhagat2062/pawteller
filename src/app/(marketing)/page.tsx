@@ -299,31 +299,8 @@ export default function Home() {
           </section>
 
           {/* AdSense Ready Lead Gen Section */}
-          <section className="m-6 rounded-3xl bg-amber-400 p-6 shadow-sm ring-1 ring-black/5 text-slate-950">
-            <div className="grid gap-6 md:grid-cols-12 md:items-center">
-              <div className="md:col-span-8">
-                <p className="text-sm font-bold uppercase tracking-wider text-amber-950 opacity-80">
-                  {`${homepageCms.breedQuizCtas.leadGen.eyebrow}`}
-                </p>
-                <h2 className="mt-1 text-2xl font-extrabold tracking-tight md:text-3xl">
-                  {`${homepageCms.breedQuizCtas.leadGen.title}`}
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm font-medium leading-6 text-amber-950/80">
-                  {`${homepageCms.breedQuizCtas.leadGen.description}`}
-                </p>
-              </div>
-              <div className="md:col-span-4 md:text-right">
-                <Link
-                  href={`${homepageCms.breedQuizCtas.leadGen.cta.href}`}
-                  {...(homepageCms.breedQuizCtas.leadGen.cta.ariaLabel
-                    ? { "aria-label": homepageCms.breedQuizCtas.leadGen.cta.ariaLabel }
-                    : {})}
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-slate-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-slate-900"
-                >
-                  {homepageCms.breedQuizCtas.leadGen.cta.label}
-                </Link>
-              </div>
-            </div>
+          <section className="m-6 rounded-3xl bg-amber-100 p-6 shadow-sm ring-1 ring-black/5 text-slate-950">
+            {/* Ads Space goes here */}
           </section>
 
           {/* Breed Quiz Cta's */}

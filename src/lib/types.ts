@@ -25,16 +25,6 @@ export interface BlogPostPageProps {
   params: Promise<{ blogPost: string }>;
 }
 
-export interface homeImageProps {
-  src: string;
-  alt: string;
-}
-
-export interface featureProps {
-  title: string;
-  href: string;
-}
-
 export interface SectionProps {
   id: string;
   title: string;

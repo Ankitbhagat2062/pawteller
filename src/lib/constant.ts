@@ -19,15 +19,12 @@ import type {
   StartingLetter,
 } from "@/lib/types";
 
-
 import type {
   BlogPost,
   CalculatorProps,
   dogLifeStageProps,
   featuredCalculatorCardProps,
-  featureProps,
   GrowthInfo,
-  homeImageProps,
   SectionProps,
 } from "./types";
 
@@ -245,24 +242,6 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const badges = [
-  { icon: "🧠", label: "Vet-informed guidance" },
-  { icon: "⚡", label: "Lightweight & fast" },
-  { icon: "🔎", label: "SEO-friendly reads" },
-];
-
-export const homeImages: homeImageProps[] = [
-  { src: "/dog-1.png", alt: "Happy dog tracking visualization" },
-  { src: "/dog-2.png", alt: "Puppy standard weight progress layout" },
-  { src: "/dog-3.png", alt: "Active dog health checks outdoors" },
-];
-
-export const features: featureProps[] = [
-  { title: "Dog Age", href: "/calculators/dog-age" },
-  { title: "Puppy Growth", href: "/calculators/dog-growth" },
-  { title: "Feeding Guidelines", href: "/calculators/dog-food" },
-];
-
 export const trustPrinciples: {
   title: string;
   description: string;
@@ -445,6 +424,7 @@ export const dogLifeStages: dogLifeStageProps[] = [
     className: "lg:mt-14",
   },
 ] as const;
+
 export const quizData: quizDataProps[] = [
   // 1. IS YOUR DOG A SECRET GENIUS?
   {
@@ -683,7 +663,6 @@ export const ACTIVITY_MULTIPLIERS: Record<string, number> = {
   "Extremely active": 2.0,
 };
 
-// Puppy weight growth data by breed (in lbs)
 // Based on veterinary growth curves for typical breed development
 export const BREED_DATA: Record<string, BreedData> = {
   "Labrador Retriever": {
