@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   },
   description:
     "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
+  keywords: ['dog weight calculator', 'puppy growth chart', 'dog age quiz', 'dog food calculator', 'pet care tips'],
   metadataBase: new URL("https://pawteller.com"),
   alternates: {
     canonical: "/",
