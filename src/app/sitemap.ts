@@ -6,6 +6,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // In production, fetch these dynamically from MongoDB/CMS
   const staticRoutes = [
     "",
+    "/about",
+    "/contact",
     "/blog",
     "/quiz",
     "/calculators",

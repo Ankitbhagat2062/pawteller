@@ -19,7 +19,7 @@ const NotFound = () => {
           />
 
           {/* Top accent bar */}
-          <div className="relative h-1 w-full bg-gradient-to-r from-emerald-500 via-blue-500 to-rose-500 opacity-70" />
+          <div className="relative h-1 w-full bg-linear-to-r from-emerald-500 via-blue-500 to-rose-500 opacity-70" />
 
           <div className="relative grid gap-8 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
             <section>
@@ -90,7 +90,7 @@ const NotFound = () => {
               <div className="rounded-[24px] bg-white/60 p-5 ring-1 ring-slate-900/5 backdrop-blur dark:bg-zinc-950/30 dark:ring-white/10">
                 <div
                   aria-hidden="true"
-                  className="grid aspect-[4/3] w-full place-items-center overflow-hidden rounded-[18px] bg-[linear-gradient(135deg,rgba(16,185,129,0.18),rgba(59,130,246,0.12),rgba(244,63,94,0.10))] dark:bg-[linear-gradient(135deg,rgba(16,185,129,0.14),rgba(59,130,246,0.10),rgba(244,63,94,0.10))]"
+                  className="grid aspect-4/3 w-full place-items-center overflow-hidden rounded-[18px] bg-[linear-gradient(135deg,rgba(16,185,129,0.18),rgba(59,130,246,0.12),rgba(244,63,94,0.10))] dark:bg-[linear-gradient(135deg,rgba(16,185,129,0.14),rgba(59,130,246,0.10),rgba(244,63,94,0.10))]"
                 >
                   <div className="text-center">
                     <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/70 ring-1 ring-slate-900/5 dark:bg-zinc-950/50 dark:ring-white/10">
