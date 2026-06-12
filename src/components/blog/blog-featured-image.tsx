@@ -1,5 +1,5 @@
+import { BlogFeaturedImageProps } from "@/lib/cms/blogpage";
 import Image from "next/image";
-import type { BlogFeaturedImageProps } from "@/lib/types";
 
 export function BlogFeaturedImage({ src, alt }: BlogFeaturedImageProps) {
   return (
