@@ -75,7 +75,6 @@ export const backlinks: BacklinkItem[] = [
 
 export const faqItems: FAQItem[] = [
     {
-<<<<<<< HEAD
         question: "How accurate are Pawteller’s dog calculator results?",
         answer:
             "Our calculators provide educational, estimate-based guidance—not a diagnosis. Results can vary based on breed variation, the accuracy of your inputs, and your dog’s health history. For best outcomes, use the results as a starting point and confirm details with your veterinarian.",
@@ -104,7 +103,8 @@ export const faqItems: FAQItem[] = [
         question: "When should I contact a veterinarian instead of relying on a calculator?",
         answer:
             "Contact a veterinarian if you notice concerning symptoms (vomiting, lethargy, abnormal discharge, breathing trouble), if pregnancy dates are uncertain, or if your puppy’s growth seems far outside expected progress. Calculators can guide questions, but they can’t replace professional evaluation.",
-=======
+    },
+    {
         question: "How accurate are the calculator results?",
         answer:
             "Our calculators use veterinary-informed formulas and biological averages to provide reliable estimates. However, individual dogs vary based on breed, health, and genetics. Always consult your veterinarian for personalized guidance.",
@@ -133,7 +133,6 @@ export const faqItems: FAQItem[] = [
         question: "Are there any limits on how many times I can use the calculators?",
         answer:
             "No limits! Use the calculators as many times as you need. They're designed to help you track your dog's growth, plan feeding schedules, and monitor milestones throughout your pet's life.",
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
     },
 ];
 
