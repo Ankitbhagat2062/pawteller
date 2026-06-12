@@ -1,6 +1,17 @@
 "use client";
 
+<<<<<<< HEAD
 import { type LucideIcon } from "lucide-react";
+=======
+import { AlertTriangle, Award, Calculator, Shield } from "lucide-react";
+
+const iconMap = {
+  Award,
+  Calculator,
+  Shield,
+  AlertTriangle,
+} as const;
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
 
 export function WhySection({
   title,
@@ -8,7 +19,11 @@ export function WhySection({
   disclaimer,
 }: {
   title: string;
+<<<<<<< HEAD
   bullets: Array<{ title: string; body: string; icon: LucideIcon }>;
+=======
+  bullets: Array<{ title: string; body: string; iconName: keyof typeof iconMap }>;
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
   disclaimer: string;
 }) {
   return (
@@ -31,6 +46,7 @@ export function WhySection({
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+<<<<<<< HEAD
           {bullets.map((b) => (
             <div
               key={b.title}
@@ -43,15 +59,32 @@ export function WhySection({
                   <p className="text-sm text-foreground/70 leading-relaxed">
                     {b.body}
                   </p>
+=======
+          {bullets.map((b) => {
+            const Icon = iconMap[b.iconName];
+            return (
+              <div
+                key={b.title}
+                className="rounded-xl border border-border/60 bg-background/40 p-4 sm:p-5 shadow-sm backdrop-blur"
+              >
+                <div className="flex items-start gap-3">
+                  <Icon className="h-6 w-6 text-emerald-600 shrink-0" aria-hidden="true" />
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">{b.title}</h3>
+                    <p className="text-sm text-foreground/70 leading-relaxed">
+                      {b.body}
+                    </p>
+                  </div>
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-6 sm:mt-8 rounded-xl border border-orange-500/20 bg-orange-500/10 p-4 sm:p-5">
           <div className="flex gap-3 items-start">
-            <span className="mt-0.5">⚠️</span>
+            <AlertTriangle className="h-5 w-5 text-orange-600 shrink-0 mt-0.5" aria-hidden="true" />
             <div className="text-sm text-foreground/80 leading-relaxed">
               {disclaimer}
             </div>

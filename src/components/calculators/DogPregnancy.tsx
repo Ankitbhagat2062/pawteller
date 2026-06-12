@@ -148,6 +148,15 @@ export default function DogPregnancy() {
         {heroSection && (
           <div className="relative max-w-3xl w-full mx-auto text-center space-y-5">
             {/* Vet badge */}
+<<<<<<< HEAD
+=======
+            {(() => {
+              const title: string = heroSection.title ? heroSection.title : "Veterinary Verified Logic Dog Pregnancy Calculator";
+              const words: string[] = title.trim().split(/\s+/);
+              const firstPart: string = words.length < 3 ? words.join(" ") : words.slice(0, -3).join(" ");
+              const secondPart: string = words.length < 3 ? "" : words.slice(-3).join(" ");
+              return <>
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                 <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
                   <ShieldAlert
                     aria-hidden="true"
@@ -413,7 +422,10 @@ export default function DogPregnancy() {
                   <div className="space-y-4 text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
                     {section.paragraphs.map((para) => (
                       <p key={para.days ?? para.p}>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                         {para.p}
                         {(para.days && para.p2) && (
                           <>
@@ -461,10 +473,14 @@ export default function DogPregnancy() {
             );
           })}
         </div>
-      </section >
+      </section>
 
       {/* ── FAQ ── */}
+<<<<<<< HEAD
       <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4" >
+=======
+      <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4">
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
             Frequently Asked Questions
@@ -473,10 +489,10 @@ export default function DogPregnancy() {
             <FaqSection items={faqSection} />
           )}
         </div>
-      </section >
+      </section>
 
       {/* ── EXPLORE TOOLS ── */}
-      < section className="py-16 px-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950" >
+      <section className="py-16 px-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
         {backlinkSection && (
           <div className="max-w-6xl mx-auto">
             <p className="text-[#1A2B3C]/40 dark:text-gray-500 text-xs font-black tracking-[4px] uppercase text-center mb-8">
@@ -497,10 +513,10 @@ export default function DogPregnancy() {
             </div>
           </div>
         )}
-      </section >
+      </section>
 
       {/* ── DISCLAIMER ── */}
-      {disclaimerSection && < section className="py-10 px-4 bg-white dark:bg-gray-950" >
+      {disclaimerSection && <section className="py-10 px-4 bg-white dark:bg-gray-950">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-[#9CA3AF] dark:text-gray-500 text-xs leading-relaxed">
             {disclaimerSection.desc ? disclaimerSection.desc : `Disclaimer: This calculator provides estimates based on typical
@@ -510,7 +526,7 @@ export default function DogPregnancy() {
             confirm pregnancy status, puppy count, and overall health.`}
           </p>
         </div>
-      </section >}
-    </div >
+      </section>}
+    </div>
   );
 }

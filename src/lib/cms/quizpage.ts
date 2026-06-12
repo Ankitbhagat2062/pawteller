@@ -340,6 +340,7 @@ export interface Breed {
     whyMatch: Record<string, string>;
 }
 export interface QuizResult {
+<<<<<<< HEAD
     userName: string;
     topMatches: {
         rank: number;
@@ -359,6 +360,27 @@ export interface QuizResult {
             total: string;
         };
     }[];
+=======
+  userName: string;
+  topMatches: {
+    rank: number;
+    breed: string;
+    compatibility: number;
+    description?: string;
+    temperament?: string[];
+    lifespan?: string;
+    reasons?: string[];
+    scoreBreakdown?: {
+      apartmentLiving: string;
+      lifestyleMatch: string;
+      kidFriendly: string;
+      beginnerFriendly: string;
+      lowShedding: string;
+      sizePreference: string;
+      total: string;
+    };
+  }[];
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
 }
 
 export const breedDatabase: Breed[] = [

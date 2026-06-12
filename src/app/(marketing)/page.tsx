@@ -71,6 +71,7 @@ export default function Home() {
                       <PawPrint className="h-3.5 w-3.5" aria-hidden="true" />
                       {hero.badgeText}
                     </p>
+<<<<<<< HEAD
                     {(() => {
                       const title = hero.h1 ? hero.h1:"Smart Calculators for your best friend";
                       const ArrayOfParts = title.slice(1); // Removes the full match element
@@ -78,23 +79,12 @@ export default function Home() {
                       if (title) {
                         console.log("3rd part:", ArrayOfParts[2]);
                         return <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[3rem] font-black leading-[0.9] tracking-normal 
+=======
+                    <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[3rem] font-black leading-[0.9] tracking-normal
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                 text-[#2a1b15] dark:text-[#ad7e6b] sm:text-[5.25rem] lg:text-[5.6rem]">
-                          <span className="block">{ArrayOfParts[0]}</span>
-                          <span className="block">{ArrayOfParts[1]}</span>
-                          <span className="block">
-                            {ArrayOfParts[2]}
-                            {" "}
-                            <span className={`font-[Georgia,serif] font-black italic text-[#315846] dark:text-[#a6d4bd]`}>
-                              {ArrayOfParts[3]}
-                            </span>
-                          </span>
-                          <span className={`block font-[Georgia,serif] font-black italic text-[#315846] dark:text-[#a6d4bd]`}>
-                            {ArrayOfParts[4]}
-                            <span className="text-[#2a1b15]">.</span>
-                          </span>
-                        </h1>
-                      }
-                    })()}
+                      {hero.h1 || "Smart Calculators for your best friend."}
+                    </h1>
 
                     <p className="mt-7 max-w-xl text-lg leading-8 text-[#3b2f28] dark:text-[#efece8] md:text-xl md:leading-9">
                       {hero.descriptionLines}
@@ -334,7 +324,11 @@ export default function Home() {
           )}
 
           {/* Ads Space goes here */}
+<<<<<<< HEAD
           <section className="m-6 rounded-3xl flex items-center justify-center bg-amber-100 p-6 shadow-sm ring-1 ring-black/5 text-slate-950 min-h-62.5">
+=======
+          <section className="m-6 rounded-3xl flex items-center justify-center bg-amber-100 p-6 shadow-sm ring-1 ring-black/5 text-slate-950 min-h-[250px]">
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
             Ads Space Goes here
           </section>
 

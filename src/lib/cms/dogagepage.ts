@@ -20,8 +20,13 @@ export interface callToActionSectionProps {
     description: string;
     button: {
         label: string;
+<<<<<<< HEAD
         href:string;
         ariaLabel?:string;
+=======
+        href: string;
+        ariaLabel?: string;
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
     };
 }
 
@@ -117,6 +122,14 @@ export const dogAgePageCms: DogAgePageCmsProps = {
         description: `Regular veterinary checkups, proper nutrition, exercise, and
                 preventative care are essential for keeping your dog healthy
                 throughout their life.`,
+<<<<<<< HEAD
         button: { label: "Schedule a Vet Checkup" ,href:"/contact"},
+=======
+        button: {
+            label: "Schedule a Vet Checkup",
+            href: "/contact",
+            ariaLabel: "Schedule a veterinary checkup for your dog"
+        },
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
     }
 };

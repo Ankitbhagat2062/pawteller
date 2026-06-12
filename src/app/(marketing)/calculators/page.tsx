@@ -362,7 +362,11 @@ export default function CalculatorsPage() {
                         variant="link"
                         className="h-auto p-0 text-emerald-700 hover:text-emerald-800 dark:text-emerald-200 dark:hover:text-emerald-100"
                       >
+<<<<<<< HEAD
                         {backlinkblogSection.footer.cta && <Link href={backlinkblogSection.footer.cta.href || "/blog"} aria-label={backlinkblogSection.footer.cta.ariaLabel || "Go to blog"}>
+=======
+                        {backlinkblogSection.footer.cta && <Link href={backlinkblogSection.footer.cta.href || "/blog"} aria-label={backlinkblogSection.footer.cta.label || "Browse the blog"}>
+>>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                           {backlinkblogSection.footer.cta.label ? backlinkblogSection.footer.cta.label : `Browse the blog`}
                         </Link>}
                       </Button>
