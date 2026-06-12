@@ -1,5 +1,5 @@
 import { BreedSize, FAQItem, ImageConfig, seoProps } from "@/lib/types";
-import { ctaProps } from "./aboutpage";
+import { ctaProps } from "@/lib/cms/aboutpage";
 
 export type LayoutOrientation = "text-left" | "image-left";
 
@@ -107,9 +107,11 @@ export const FAQ_ITEMS: FAQItem[] = [
 
 const heroSection: {
     title: string;
+    h1: string;
     description: string;
 } = {
-    title: "Veterinary Verified Logic Dog Pregnancy Calculator",
+    title: "Veterinary Verified Logic",
+    h1:"Dog Pregnancy Calculator",
     description: `Estimate your dog's due date, track pregnancy milestones
 	week-by-week, and prepare for your puppy's arrival with expert
 	guidance.`,
@@ -216,6 +218,7 @@ export interface dogPregnancyCmsProps {
     seo: seoProps;
     heroSection: {
         title: string;
+        h1:string;
         description: string;
     };
     timelineSection: timelineProps;
@@ -227,9 +230,9 @@ export interface dogPregnancyCmsProps {
 export const dogPregnancyCms: dogPregnancyCmsProps = {
     seo: {
         title:
-            "Dog Pregnancy Calculator: Estimate Due Date & Gestation | pawteller",
+            "Dog Pregnancy Calculator: Estimate Due Date & Gestation | Pawteller",
         description:
-            "Use pawteller’s dog pregnancy calculator to estimate your dog’s due date, track week-by-week milestones, and know when to contact a vet. Based on veterinary gestation averages.",
+            "Use Pawteller’s dog pregnancy calculator to estimate your dog’s due date, track week-by-week milestones, and know when to contact a vet. Based on veterinary gestation averages.",
         keywords: [
             "dog pregnancy calculator",
             "dog due date calculator",

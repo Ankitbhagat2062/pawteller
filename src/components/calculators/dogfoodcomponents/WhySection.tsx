@@ -1,12 +1,14 @@
 "use client";
 
+import { type LucideIcon } from "lucide-react";
+
 export function WhySection({
   title,
   bullets,
   disclaimer,
 }: {
   title: string;
-  bullets: Array<{ title: string; body: string; icon: string }>;
+  bullets: Array<{ title: string; body: string; icon: LucideIcon }>;
   disclaimer: string;
 }) {
   return (
@@ -35,7 +37,7 @@ export function WhySection({
               className="rounded-xl border border-border/60 bg-background/40 p-4 sm:p-5 shadow-sm backdrop-blur"
             >
               <div className="flex items-start gap-3">
-                <div className="text-2xl leading-none">{b.icon}</div>
+                <div className="text-2xl leading-none">{b.icon && <b.icon className="w-6 h-6" />}</div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">{b.title}</h3>
                   <p className="text-sm text-foreground/70 leading-relaxed">

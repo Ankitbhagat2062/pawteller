@@ -14,6 +14,12 @@ import { faqItems } from "@/lib/cms/calculatorpage";
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";
 const INITIAL_STARTING_LETTER: StartingLetter = "All";
+
+// generateDogNames only supports sizes present in the current seed data (Small | Medium | Large).
+function toSupportedSize(size: DogSize | "All"): "Small" | "Medium" | "Large" | "All" {
+  return (size === "Extra Large" ? "Large" : size) as "Small" | "Medium" | "Large" | "All";
+}
+
 export function DogNameGenerator() {
   const [gender, setGender] = useState<DogGender | "All">(INITIAL_GENDER);
   const [size, setSize] = useState<DogSize | "All">(INITIAL_SIZE);
@@ -23,15 +29,18 @@ export function DogNameGenerator() {
   const [results, setResults] = useState<DogName[]>([]);
 
   const handleGenerate = () => {
-    const newNames = generateDogNames(gender, size, startingLetter, 8);
+    const safeSize = toSupportedSize(size);
+    const newNames = generateDogNames(gender, safeSize, startingLetter, 8);
     setResults(newNames);
   };
+
   // Generate initial names on mount
   useEffect(() => {
+    const safeInitialSize = toSupportedSize(INITIAL_SIZE);
     setResults(
       generateDogNames(
         INITIAL_GENDER,
-        INITIAL_SIZE,
+        safeInitialSize,
         INITIAL_STARTING_LETTER,
         8,
       ),
@@ -97,3 +106,4 @@ export function DogNameGenerator() {
     </div>
   );
 }
+

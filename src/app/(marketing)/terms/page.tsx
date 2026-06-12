@@ -77,7 +77,7 @@ export default function TermsPage() {
                   </div>
 
                   <p className="mt-4 text-base leading-7 text-slate-700 dark:text-slate-200 max-w-2xl">
-                    These Terms explain how pawteller’s calculators, guides,
+                    These Terms explain how Pawteller’s calculators, guides,
                     and website are provided, outlining user guidelines and
                     essential medical safety data disclaimers.
                   </p>
@@ -116,7 +116,7 @@ export default function TermsPage() {
                       Acceptance of Terms
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      By accessing or using pawteller, you agree to these
+                      By accessing or using Pawteller, you agree to these
                       Terms and to comply with all applicable laws and rules.
                       If you do not agree, please do not use the website.
                     </p>
@@ -152,7 +152,7 @@ export default function TermsPage() {
                       Educational Information Disclaimer
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      All content on pawteller, including calculators and
+                      All content on Pawteller, including calculators and
                       educational materials, is for general informational
                       purposes only. It is not intended to diagnose, treat,
                       cure, or prevent any condition.
@@ -173,7 +173,7 @@ export default function TermsPage() {
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       Pawteller does not provide veterinary advice. Nothing on
                       the website creates a doctor–patient relationship between
-                      you and pawteller, its creators, or any third parties.
+                      you and Pawteller, its creators, or any third parties.
                     </p>
                   </section>
 
@@ -190,7 +190,7 @@ export default function TermsPage() {
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
                       We may modify, suspend, or discontinue any part of
-                      pawteller at any time. We do not guarantee that the
+                      Pawteller at any time. We do not guarantee that the
                       website will be available without interruption or error.
                     </p>
                   </section>
@@ -207,7 +207,7 @@ export default function TermsPage() {
                       Intellectual Property
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      pawteller’s content, design, trademarks, and other
+                      Pawteller’s content, design, trademarks, and other
                       intellectual property are protected by applicable laws.
                       You may not copy, distribute, modify, or create derivative
                       works from our materials without permission.
@@ -226,7 +226,7 @@ export default function TermsPage() {
                       User Submissions
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      If you submit content or feedback to pawteller, you grant
+                      If you submit content or feedback to Pawteller, you grant
                       us a worldwide, non-exclusive, royalty-free license to
                       use, reproduce, and distribute that material as permitted
                       by applicable law.
@@ -245,7 +245,7 @@ export default function TermsPage() {
                       Third-Party Links
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      pawteller may link to third-party websites for
+                      Pawteller may link to third-party websites for
                       convenience. We do not control those sites and are not
                       responsible for their content, policies, or availability.
                     </p>
@@ -263,7 +263,7 @@ export default function TermsPage() {
                       Limitation of Liability
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      To the fullest extent allowed by law, pawteller and its
+                      To the fullest extent allowed by law, Pawteller and its
                       affiliates are not liable for damages arising from your
                       use of the website, including errors, omissions, or
                       reliance on content.
@@ -331,7 +331,7 @@ export default function TermsPage() {
                         </Link>
                         <Link
                           href="/about"
-                          aria-label="Learn more about pawteller.com"
+                          aria-label="Learn more about Pawteller.com"
                           className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 ring-1 ring-black/5 shadow-sm transition hover:bg-zinc-50 dark:bg-white/5 dark:text-slate-50 dark:ring-white/10"
                         >
                           About

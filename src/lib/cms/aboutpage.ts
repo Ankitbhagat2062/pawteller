@@ -175,9 +175,9 @@ export const AboutPageCms: AboutPageCmsProps = {
     seo: {
         title: "About Pawteller | Fast Dog Growth Calculators & Vet-Informed Guides",
         description:
-            "Learn about pawteller’s mission to help dog owners make confident decisions with fast calculators, clear guides, and vet-informed insights—built for everyday use.",
+            "Learn about Pawteller’s mission to help dog owners make confident decisions with fast calculators, clear guides, and vet-informed insights—built for everyday use.",
         keywords: [
-            "about pawteller",
+            "about Pawteller",
             "dog health insights",
             "dog growth calculator",
             "puppy weight",
@@ -192,7 +192,7 @@ export const AboutPageCms: AboutPageCmsProps = {
             name: "About Pawteller",
             url: "https://pawteller.com/about",
             description:
-                "About pawteller: fast dog growth calculators and clear, vet-informed guidance for daily dog care.",
+                "About Pawteller: fast dog growth calculators and clear, vet-informed guidance for daily dog care.",
             isPartOf: {
                 "@type": "WebSite",
                 name: "Pawteller",

@@ -1,5 +1,5 @@
 import { Dumbbell, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
-import { FAQItem, ImageConfig, seoProps } from "../types";
+import { FAQItem, ImageConfig, seoProps } from "@/lib/types";
 
 export interface FeatureItem {
     id: string;

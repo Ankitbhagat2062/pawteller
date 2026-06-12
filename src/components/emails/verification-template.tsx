@@ -97,7 +97,7 @@ export default function VerifyEmail({
                 target="_blank"
                 className="text-[#2754C5] underline text-[14px]"
               >
-                Pawteller.com
+                pawteller.com
               </Link>
               , Inc. View our{' '}
               <Link

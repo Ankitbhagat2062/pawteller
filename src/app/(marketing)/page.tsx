@@ -72,11 +72,10 @@ export default function Home() {
                       {hero.badgeText}
                     </p>
                     {(() => {
-                      const title = "Smart Calculators for your best friend";
-                      const parts = title.match(/^(\w+)\s+(\w+)\s+(for\s+your)\s+(\w+)\s+(\w+)$/);
+                      const title = hero.h1 ? hero.h1:"Smart Calculators for your best friend";
+                      const ArrayOfParts = title.slice(1); // Removes the full match element
 
-                      if (parts) {
-                        const ArrayOfParts = parts.slice(1); // Removes the full match element
+                      if (title) {
                         console.log("3rd part:", ArrayOfParts[2]);
                         return <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[3rem] font-black leading-[0.9] tracking-normal 
                 text-[#2a1b15] dark:text-[#ad7e6b] sm:text-[5.25rem] lg:text-[5.6rem]">
@@ -151,6 +150,7 @@ export default function Home() {
                         sizes="(max-width: 1024px) 100vw, 590px"
                         className="object-cover object-center"
                         priority
+                        loading="eager"
                       />
                     </div>
 
@@ -334,7 +334,7 @@ export default function Home() {
           )}
 
           {/* Ads Space goes here */}
-          <section className="m-6 rounded-3xl flex items-center justify-center bg-amber-100 p-6 shadow-sm ring-1 ring-black/5 text-slate-950 min-h-25">
+          <section className="m-6 rounded-3xl flex items-center justify-center bg-amber-100 p-6 shadow-sm ring-1 ring-black/5 text-slate-950 min-h-62.5">
             Ads Space Goes here
           </section>
 

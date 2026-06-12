@@ -6,7 +6,7 @@ import { blogPageSeo } from "@/lib/cms/blogpage";
 // 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE BLOG
 const seo = blogPageSeo
 export const metadata: Metadata = {
-  title: seo.title||"Expert Pet Care Guides, Tips & Calculators | pawteller",
+  title: seo.title||"Expert Pet Care Guides, Tips & Calculators | Pawteller",
   description: seo.description ||
     "Explore data-driven insights, veterinarian-vetted puppy growth tracking tips, dog nutrition guides, and care advice to keep your pup healthy.",
   keywords: seo.keywords || [
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
 
   // Rich visual configuration for social media platforms (Facebook, LinkedIn, Discord)
   openGraph: {
-    title: "Expert Pet Care Guides & Data Insights | pawteller",
-    description:
+    title: seo.title || "Expert Pet Care Guides & Data Insights | Pawteller",
+    description: seo.description ||
       "Explore data-driven insights, puppy growth tracking tips, and expert dog care advice.",
     url: "https://pawteller.com/blog",
     siteName: "pawteller",
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
   // High-performance rich link card previews on X (formerly Twitter)
   twitter: {
     card: "summary_large_image",
-    title: "Expert Pet Care Guides & Data Insights | pawteller",
-    description:
+    title: seo.title || "Expert Pet Care Guides & Data Insights | Pawteller",
+    description: seo.description ||
       "Explore data-driven insights, puppy growth tracking tips, and expert dog care advice.",
     images: ["https://pawteller.com/dog-2.png"],
   },

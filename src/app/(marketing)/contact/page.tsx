@@ -6,9 +6,9 @@ import ContactForm from "@/components/shared/ContactForm";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY
 export const metadata: Metadata = {
-  title: "Contact Us | pawteller",
+  title: "Contact Us | Pawteller",
   description:
-    "Have questions, feedback, or content suggestions? Get in touch with the pawteller team for reliable pet calculator support and partnership options.",
+    "Have questions, feedback, or content suggestions? Get in touch with the Pawteller team for reliable pet calculator support and partnership options.",
   alternates: {
     canonical: "https://pawteller.com/contact",
   },
@@ -30,11 +30,11 @@ export default function Contact() {
           <div className="max-w-2xl">
             <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
               <PawPrint className="h-4 w-4" aria-hidden />
-              Contact pawteller
+              Contact Pawteller
             </p>
 
             <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
-              Contact pawteller
+              Contact Pawteller
             </h1>
 
             <p className="mt-4 text-base leading-7 text-slate-600 dark:text-zinc-300 md:text-lg">
@@ -215,7 +215,7 @@ export default function Contact() {
                   Related links
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
-                  Explore more pawteller resources.
+                  Explore more Pawteller resources.
                 </p>
               </div>
 

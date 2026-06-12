@@ -1,4 +1,37 @@
-import { Category, DogGender, DogName, DogSize, PersonalityGroup, StartingLetter } from "@/lib/types";
+import { Category, DogGender, DogName, DogSize, FAQItem, PersonalityGroup, StartingLetter } from "@/lib/types";
+
+export const faqItems: FAQItem[] = [
+    {
+        question: "How many dog names should I consider?",
+        answer:
+            "We recommend generating at least 10-15 name options to choose from. This gives you plenty of variety to test and see what feels right for your new puppy or dog.",
+    },
+    {
+        question: "Can I change my dog's name if I've been using another one?",
+        answer:
+            "Yes! Dogs can learn new names at any age with consistent training and positive reinforcement. It may take a few weeks for them to adjust, but it's definitely possible.",
+    },
+    {
+        question: "What makes a good dog name?",
+        answer:
+            "Good dog names are short (1-2 syllables), easy to pronounce, don't sound like commands, and reflect your dog's personality. They should feel natural when you say them out loud.",
+    },
+    {
+        question: "Should I match the name to my dog's size?",
+        answer:
+            "While not necessary, many people prefer matching name style to dog size. Shorter, punchier names work great for small dogs, while longer, stronger names suit larger breeds. Ultimately, choose what feels right!",
+    },
+    {
+        question: "Are unique names better than popular ones?",
+        answer:
+            "It depends on your preference! Popular names are recognizable and classic, while unique names help your dog stand out. Both can work equally well as long as you love the name and your dog responds to it.",
+    },
+    {
+        question: "How do I test if a name works for my dog?",
+        answer:
+            "Try calling the name out loud in different situations. See if you feel comfortable saying it at the dog park, at the vet, and at home. Your dog will also give you feedback on whether they respond to the sound of the name.",
+    },
+];
 
 export const dogNames: DogName[] = [
     // Male - Small
@@ -629,12 +662,7 @@ export const dogNames: DogName[] = [
         size: "Medium",
         personalities: ["Smart", "Modern"],
     },
-    {
-        name: "Sage",
-        gender: "Unisex",
-        size: "Medium",
-        personalities: ["Smart", "Unique"],
-    },
+
     {
         name: "Phoenix",
         gender: "Unisex",
@@ -781,7 +809,8 @@ export const categories: Category[] = [
 
 export function generateDogNames(
     gender: DogGender | "All" = "All",
-    size: DogSize | "All" = "All",
+    // Dog seed data only includes Small | Medium | Large.
+    size: (Extract<DogSize, "Small" | "Medium" | "Large">) | "All" = "All",
     startingLetter: StartingLetter = "All",
     count: number = 8,
 ): DogName[] {
@@ -867,3 +896,20 @@ export const DOG_NAME_GUIDE_CONTENT: DogNameGuideContent = {
         }
     ]
 };
+
+export const DogNamePageCms = {
+    seo: {
+        title: "Dog Name Generator: Find the Perfect Name for Your Pup | Pawteller",
+        description: "Discover the ideal name for your dog with our interactive dog name generator. Filter by gender, size, personality, and breed style to unlock tailored name ideas.",
+        keywords: [
+            "dog name generator",
+            "puppy name generator",
+            "find a dog name",
+            "male dog names",
+            "female dog names",
+            "unique puppy names",
+            "cool dog names",
+            "dog naming tool"
+        ]
+    }
+}

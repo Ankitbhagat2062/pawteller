@@ -5,15 +5,24 @@ export const quizData: quizDataProps[] = [
     // 1. THE BREED MATCH QUIZ
     {
         seo: {
-            title: "Dog Breed Match Quiz | pawteller",
+            title: "Dog Breed Match Quiz | Pawteller",
             description: "Take our interactive dog breed match quiz to discover the best-fit breeds for your lifestyle and unlock personalized care insights.",
-            keywords: ["dog health quiz", "dog nutrition", "pet safety", "hazard awareness", "toxic foods", "xylitol", "chocolate toxicity", "ibuprofen for dogs"]
+            keywords: [
+                "dog breed quiz",
+                "breed match",
+                "best dog breed for families",
+                "dog temperament quiz",
+                "dog activity level",
+                "find the right dog",
+                "hypoallergenic dogs quiz",
+                "apartment dogs quiz"
+            ]
         },
         banner: "The Breed Match Quiz",
         title: "Which dog breed fits your life?",
         totalQuestions: 6,
         estimatedTime: "2 minutes",
-        category:"Lifestyle",
+        category: "Lifestyle",
         url: "/quiz?quiz=breed-match",
         header: "We found your match!",
         subheader: "Your top breed is a Poodle ... plus 2 other strong matches.",
@@ -80,7 +89,7 @@ export const quizData: quizDataProps[] = [
     // 2. IS YOUR DOG A SECRET GENIUS?
     {
         seo: {
-            title: "Interactive Dog Breed & Health Quiz | pawteller",
+            title: "Interactive Dog Breed & Health Quiz | Pawteller",
             description: "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
             keywords: [
                 "dog quiz",
@@ -96,7 +105,7 @@ export const quizData: quizDataProps[] = [
         totalQuestions: 6,
         estimatedTime: "2 minutes",
         url: "/quiz?quiz=dog-iq",
-        category:"Intelligence",
+        category: "Intelligence",
         header: "We calculated your dog's IQ!",
         subheader: "See if your pup belongs in the genius tier or the professional couch potato club.",
         button: "Reveal my dog's IQ profile",
@@ -149,7 +158,7 @@ export const quizData: quizDataProps[] = [
         title: "Can you speak 'dog'? Decode your pup's body language",
         totalQuestions: 6,
         estimatedTime: "2 minutes",
-        category:"Lifestyle",
+        category: "Lifestyle",
         url: "/quiz?quiz=dog-language",
         header: "Your score has been tallied!",
         subheader: "Find out if you truly speak 'dog' or if you're misinterpreting your pup's signals.",
@@ -185,7 +194,7 @@ export const quizData: quizDataProps[] = [
     // 4. THE ULTIMATE DOG NUTRITION & SAFETY QUIZ
     {
         seo: {
-            title: "Dog Nutrition & Safety Quiz | pawteller",
+            title: "Dog Nutrition & Safety Quiz | Pawteller",
             description: "Take our fast, interactive dog safety and nutrition quiz to spot hazards, learn what’s toxic, and get personalized health insights.",
             keywords: ["dog nutrition quiz", "dog safety", "hazards for dogs", "toxic foods", "xylitol", "chocolate poisoning"]
         },
@@ -193,7 +202,7 @@ export const quizData: quizDataProps[] = [
         title: "The ultimate dog nutrition & safety quiz",
         totalQuestions: 6,
         estimatedTime: "2 minutes",
-        category:"Nutrition",
+        category: "Nutrition",
         url: "/quiz?quiz=dog-safety",
         header: "Safety report generated!",
         subheader: "Discover which household hazards you successfully spotted—and the ones you missed.",
@@ -248,7 +257,7 @@ export const quizData: quizDataProps[] = [
         totalQuestions: 6,
         estimatedTime: "2 minutes",
         url: "/quiz?quiz=dog-age",
-        category:"Growth",
+        category: "Growth",
         header: "Biological profile ready!",
         subheader: "We calculated your dog's life stage milestones based on their size and physical markers.",
         button: "Reveal my dog's biological age",
@@ -282,96 +291,105 @@ export const quizData: quizDataProps[] = [
 
 ];
 const quizFaqBase: FAQItem[] = [
-  {
-    question: "How does the quiz work?",
-    answer:
-      "You answer a series of lifestyle questions. We score each breed based on your selections and then show your best-fit matches.",
-  },
-  {
-    question: "Is the quiz a guarantee?",
-    answer:
-      "No—every dog is an individual. The results are meant to help you narrow down good matches before you meet and evaluate specific breeds.",
-  },
-  {
-    question: "How accurate are the results?",
-    answer:
-      "Accuracy depends on how closely your answers reflect your real lifestyle and needs. If your situation changes, your best-fit breed may change too.",
-  },
-  {
-    question: "Do you store my information?",
-    answer:
-      "We only use your details to deliver your personalized quiz results. We do not sell your information.",
-  },
-  {
-    question: "Can I retake the quiz?",
-    answer:
-      "Yes. You can restart anytime and get results for a different set of preferences.",
-  },
+    {
+        question: "How does the quiz work?",
+        answer:
+            "You answer a series of lifestyle questions. We score each breed based on your selections and then show your best-fit matches.",
+    },
+    {
+        question: "Is the quiz a guarantee?",
+        answer:
+            "No—every dog is an individual. The results are meant to help you narrow down good matches before you meet and evaluate specific breeds.",
+    },
+    {
+        question: "How accurate are the results?",
+        answer:
+            "Accuracy depends on how closely your answers reflect your real lifestyle and needs. If your situation changes, your best-fit breed may change too.",
+    },
+    {
+        question: "Do you store my information?",
+        answer:
+            "We only use your details to deliver your personalized quiz results. We do not sell your information.",
+    },
+    {
+        question: "Can I retake the quiz?",
+        answer:
+            "Yes. You can restart anytime and get results for a different set of preferences.",
+    },
 ];
 
 export function getQuizFaqItems(_quizSlug?: string): FAQItem[] {
-  // Keep it simple: return a solid shared FAQ for now.
-  // (You can extend this later using _quizSlug if needed.)
-  return quizFaqBase;
+    // Keep it simple: return a solid shared FAQ for now.
+    // (You can extend this later using _quizSlug if needed.)
+    return quizFaqBase;
 }
 
 export interface Breed {
-  name: string;
-  size: "Small" | "Medium" | "Large";
-  home: ("Apartment" | "House with yard")[];
-  energy: "Mostly chill" | "Daily walks" | "Always on the move";
-  beginnerFriendly: boolean;
-  goodWithKids: boolean;
-  shedding: "Low shed please" | "Shedding is fine";
-  description: string;
-  temperament: string[];
-  goodFor: string[];
-  challenges: string[];
-  lifespan: string;
-  whyMatch: Record<string, string>;
+    name: string;
+    size: "Small" | "Medium" | "Large";
+    home: ("Apartment" | "House with yard")[];
+    energy: "Mostly chill" | "Daily walks" | "Always on the move";
+    beginnerFriendly: boolean;
+    goodWithKids: boolean;
+    shedding: "Low shed please" | "Shedding is fine";
+    description: string;
+    temperament: string[];
+    goodFor: string[];
+    challenges: string[];
+    lifespan: string;
+    whyMatch: Record<string, string>;
 }
 export interface QuizResult {
-  userName: string;
-  topMatches: {
-    rank: number;
-    breed: string;
-    compatibility: number;
-    description?: string;
-    temperament?: string[];
-    lifespan?: string;
-    reasons?: string[];
-  }[];
+    userName: string;
+    topMatches: {
+        rank: number;
+        breed: string;
+        compatibility: number;
+        description?: string;
+        temperament?: string[];
+        lifespan?: string;
+        reasons?: string[];
+        scoreBreakdown?: {
+            apartmentLiving: string;
+            lifestyleMatch: string;
+            kidFriendly: string;
+            beginnerFriendly: string;
+            lowShedding: string;
+            sizePreference: string;
+            total: string;
+        };
+    }[];
 }
 
 export const breedDatabase: Breed[] = [
-  { name: "Poodle", size: "Medium", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Highly intelligent and versatile companion.", temperament: ["Intelligent", "Friendly", "Trainable"], goodFor: ["Families", "Apartments"], challenges: ["Grooming needs"], lifespan: "12-15 years", whyMatch: { lowShed: "Low-shedding coat", beginner: "Easy to train" } },
-  { name: "Golden Retriever", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Friendly family dog.", temperament: ["Gentle", "Loyal", "Outgoing"], goodFor: ["Families", "Children"], challenges: ["Heavy shedding"], lifespan: "10-12 years", whyMatch: { kids: "Excellent with children" } },
-  { name: "Labrador Retriever", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Popular, affectionate, active companion.", temperament: ["Friendly", "Eager", "Social"], goodFor: ["Families", "Active owners"], challenges: ["Needs exercise"], lifespan: "10-12 years", whyMatch: { active: "Loves activities" } },
-  { name: "French Bulldog", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Easygoing apartment companion.", temperament: ["Affectionate", "Adaptable"], goodFor: ["City living"], challenges: ["Heat sensitivity"], lifespan: "10-12 years", whyMatch: { apartment: "Ideal for apartments" } },
-  { name: "Cavalier King Charles Spaniel", size: "Small", home: ["Apartment", "House with yard"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Sweet-natured lap dog.", temperament: ["Gentle", "Affectionate"], goodFor: ["Families"], challenges: ["Separation anxiety"], lifespan: "12-15 years", whyMatch: { kids: "Great family companion" } },
-  { name: "Miniature Schnauzer", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Alert and adaptable.", temperament: ["Smart", "Friendly"], goodFor: ["First-time owners"], challenges: ["Needs training"], lifespan: "12-15 years", whyMatch: { lowShed: "Low-shedding" } },
-  { name: "Bichon Frise", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Cheerful low-shedding companion.", temperament: ["Playful", "Friendly"], goodFor: ["Families"], challenges: ["Regular grooming"], lifespan: "14-15 years", whyMatch: { apartment: "Thrives in apartments" } },
-  { name: "Shih Tzu", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Affectionate companion dog.", temperament: ["Loyal", "Friendly"], goodFor: ["Small homes"], challenges: ["Coat maintenance"], lifespan: "10-16 years", whyMatch: { relaxed: "Perfect relaxed lifestyle" } },
-  { name: "Havanese", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Outgoing family companion.", temperament: ["Social", "Playful"], goodFor: ["Families"], challenges: ["Needs attention"], lifespan: "14-16 years", whyMatch: { kids: "Excellent with children" } },
-  { name: "Boston Terrier", size: "Small", home: ["Apartment"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Compact and friendly.", temperament: ["Bright", "Affectionate"], goodFor: ["City living"], challenges: ["Heat sensitivity"], lifespan: "11-13 years", whyMatch: { apartment: "Great urban dog" } },
-  { name: "Whippet", size: "Medium", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Gentle and athletic.", temperament: ["Calm", "Sweet"], goodFor: ["Moderately active owners"], challenges: ["Sensitive nature"], lifespan: "12-15 years", whyMatch: { relaxed: "Calm indoors" } },
-  { name: "Greyhound", size: "Large", home: ["Apartment", "House with yard"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Surprisingly relaxed indoors.", temperament: ["Gentle", "Quiet"], goodFor: ["Apartments"], challenges: ["Strong prey drive"], lifespan: "10-14 years", whyMatch: { apartment: "Excellent apartment giant" } },
-  { name: "Border Collie", size: "Medium", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Extremely intelligent working dog.", temperament: ["Focused", "Energetic"], goodFor: ["Experienced owners"], challenges: ["Needs constant stimulation"], lifespan: "12-15 years", whyMatch: { active: "Thrives on activity" } },
-  { name: "Australian Shepherd", size: "Medium", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Smart and energetic herder.", temperament: ["Loyal", "Active"], goodFor: ["Outdoor lifestyles"], challenges: ["High exercise needs"], lifespan: "12-15 years", whyMatch: { active: "Perfect for active people" } },
-  { name: "German Shepherd", size: "Large", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Confident working breed.", temperament: ["Loyal", "Protective"], goodFor: ["Experienced owners"], challenges: ["Needs training"], lifespan: "9-13 years", whyMatch: { experienced: "Excels with experienced owners" } },
-  { name: "Bernese Mountain Dog", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Gentle giant family dog.", temperament: ["Calm", "Affectionate"], goodFor: ["Families"], challenges: ["Short lifespan"], lifespan: "7-10 years", whyMatch: { kids: "Patient with children" } },
-  { name: "Newfoundland", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Massive, sweet-tempered dog.", temperament: ["Gentle", "Patient"], goodFor: ["Families"], challenges: ["Drooling"], lifespan: "8-10 years", whyMatch: { kids: "Known as nanny dog" } },
-  { name: "Great Dane", size: "Large", home: ["House with yard"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Elegant giant breed.", temperament: ["Friendly", "Gentle"], goodFor: ["Families"], challenges: ["Short lifespan"], lifespan: "7-10 years", whyMatch: { relaxed: "Calm despite size" } },
-  { name: "Pembroke Welsh Corgi", size: "Medium", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Smart and cheerful.", temperament: ["Outgoing", "Bright"], goodFor: ["Families"], challenges: ["Heavy shedding"], lifespan: "12-15 years", whyMatch: { beginner: "Trainable and friendly" } },
-  { name: "Chihuahua", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: false, goodWithKids: false, shedding: "Low shed please", description: "Tiny dog with huge personality.", temperament: ["Alert", "Bold"], goodFor: ["Singles"], challenges: ["Can be stubborn"], lifespan: "14-17 years", whyMatch: { apartment: "Excellent small-space dog" } },
-  { name: "Pug", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Charming and affectionate.", temperament: ["Playful", "Loving"], goodFor: ["Families"], challenges: ["Breathing issues"], lifespan: "12-15 years", whyMatch: { relaxed: "Loves lounging" } },
-  { name: "Dachshund", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Brave and curious.", temperament: ["Independent", "Loyal"], goodFor: ["Small homes"], challenges: ["Back problems"], lifespan: "12-16 years", whyMatch: { apartment: "Fits smaller homes" } },
-  { name: "Maltese", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Elegant companion dog.", temperament: ["Gentle", "Playful"], goodFor: ["Apartments"], challenges: ["Grooming"], lifespan: "12-15 years", whyMatch: { lowShed: "Minimal shedding" } },
-  { name: "Papillon", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Tiny but highly intelligent.", temperament: ["Smart", "Friendly"], goodFor: ["First-time owners"], challenges: ["Fragile size"], lifespan: "13-16 years", whyMatch: { beginner: "Easy to train" } },
-  { name: "Yorkshire Terrier", size: "Small", home: ["Apartment"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: false, shedding: "Low shed please", description: "Confident toy breed.", temperament: ["Bold", "Affectionate"], goodFor: ["City living"], challenges: ["Grooming"], lifespan: "11-15 years", whyMatch: { lowShed: "Low-shedding coat" } },
-  { name: "English Springer Spaniel", size: "Medium", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Energetic sporting dog.", temperament: ["Friendly", "Active"], goodFor: ["Active families"], challenges: ["Needs exercise"], lifespan: "12-14 years", whyMatch: { active: "Loves outdoor life" } },
-  { name: "Vizsla", size: "Large", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Athletic and affectionate.", temperament: ["Energetic", "Loyal"], goodFor: ["Runners"], challenges: ["Separation anxiety"], lifespan: "12-14 years", whyMatch: { active: "Excellent for active owners" } },
-  { name: "Weimaraner", size: "Large", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "High-energy hunting breed.", temperament: ["Smart", "Energetic"], goodFor: ["Experienced owners"], challenges: ["Needs stimulation"], lifespan: "10-13 years", whyMatch: { experienced: "Best with experienced handlers" } },
-  { name: "Samoyed", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Fluffy and friendly.", temperament: ["Social", "Gentle"], goodFor: ["Families"], challenges: ["Heavy shedding"], lifespan: "12-14 years", whyMatch: { kids: "Wonderful family dog" } },
-  { name: "Shetland Sheepdog", size: "Medium", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Intelligent and devoted.", temperament: ["Smart", "Loyal"], goodFor: ["Families"], challenges: ["Barking tendency"], lifespan: "12-14 years", whyMatch: { beginner: "Responsive to training" } }
+    { name: "Poodle", size: "Medium", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Highly intelligent and versatile companion.", temperament: ["Intelligent", "Friendly", "Trainable"], goodFor: ["Families", "Apartments"], challenges: ["Grooming needs"], lifespan: "12-15 years", whyMatch: { lowShed: "Low-shedding coat", beginner: "Easy to train" } },
+    { name: "Golden Retriever", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Friendly family dog.", temperament: ["Gentle", "Loyal", "Outgoing"], goodFor: ["Families", "Children"], challenges: ["Heavy shedding"], lifespan: "10-12 years", whyMatch: { kids: "Excellent with children" } },
+    { name: "Labrador Retriever", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Popular, affectionate, active companion.", temperament: ["Friendly", "Eager", "Social"], goodFor: ["Families", "Active owners"], challenges: ["Needs exercise"], lifespan: "10-12 years", whyMatch: { active: "Loves activities" } },
+    { name: "French Bulldog", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Easygoing apartment companion.", temperament: ["Affectionate", "Adaptable"], goodFor: ["City living"], challenges: ["Heat sensitivity"], lifespan: "10-12 years", whyMatch: { apartment: "Ideal for apartments" } },
+    { name: "Cavalier King Charles Spaniel", size: "Small", home: ["Apartment", "House with yard"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Sweet-natured lap dog.", temperament: ["Gentle", "Affectionate"], goodFor: ["Families"], challenges: ["Separation anxiety"], lifespan: "12-15 years", whyMatch: { kids: "Great family companion" } },
+    { name: "Miniature Schnauzer", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Alert and adaptable.", temperament: ["Smart", "Friendly"], goodFor: ["First-time owners"], challenges: ["Needs training"], lifespan: "12-15 years", whyMatch: { lowShed: "Low-shedding" } },
+    { name: "Bichon Frise", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Cheerful low-shedding companion.", temperament: ["Playful", "Friendly"], goodFor: ["Families"], challenges: ["Regular grooming"], lifespan: "14-15 years", whyMatch: { apartment: "Thrives in apartments" } },
+    { name: "Shih Tzu", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Affectionate companion dog.", temperament: ["Loyal", "Friendly"], goodFor: ["Small homes"], challenges: ["Coat maintenance"], lifespan: "10-16 years", whyMatch: { relaxed: "Perfect relaxed lifestyle" } },
+    { name: "Havanese", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Outgoing family companion.", temperament: ["Social", "Playful"], goodFor: ["Families"], challenges: ["Needs attention"], lifespan: "14-16 years", whyMatch: { kids: "Excellent with children" } },
+    { name: "Boston Terrier", size: "Small", home: ["Apartment"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Compact and friendly.", temperament: ["Bright", "Affectionate"], goodFor: ["City living"], challenges: ["Heat sensitivity"], lifespan: "11-13 years", whyMatch: { apartment: "Great urban dog" } },
+    { name: "Whippet", size: "Medium", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Gentle and athletic.", temperament: ["Calm", "Sweet"], goodFor: ["Moderately active owners"], challenges: ["Sensitive nature"], lifespan: "12-15 years", whyMatch: { relaxed: "Calm indoors" } },
+    { name: "Greyhound", size: "Large", home: ["Apartment", "House with yard"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Surprisingly relaxed indoors.", temperament: ["Gentle", "Quiet"], goodFor: ["Apartments"], challenges: ["Strong prey drive"], lifespan: "10-14 years", whyMatch: { apartment: "Excellent apartment giant" } },
+    { name: "Border Collie", size: "Medium", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Extremely intelligent working dog.", temperament: ["Focused", "Energetic"], goodFor: ["Experienced owners"], challenges: ["Needs constant stimulation"], lifespan: "12-15 years", whyMatch: { active: "Thrives on activity" } },
+    { name: "Australian Shepherd", size: "Medium", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Smart and energetic herder.", temperament: ["Loyal", "Active"], goodFor: ["Outdoor lifestyles"], challenges: ["High exercise needs"], lifespan: "12-15 years", whyMatch: { active: "Perfect for active people" } },
+    { name: "German Shepherd", size: "Large", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Confident working breed.", temperament: ["Loyal", "Protective"], goodFor: ["Experienced owners"], challenges: ["Needs training"], lifespan: "9-13 years", whyMatch: { experienced: "Excels with experienced owners" } },
+    { name: "Bernese Mountain Dog", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Gentle giant family dog.", temperament: ["Calm", "Affectionate"], goodFor: ["Families"], challenges: ["Short lifespan"], lifespan: "7-10 years", whyMatch: { kids: "Patient with children" } },
+    { name: "Newfoundland", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Massive, sweet-tempered dog.", temperament: ["Gentle", "Patient"], goodFor: ["Families"], challenges: ["Drooling"], lifespan: "8-10 years", whyMatch: { kids: "Known as nanny dog" } },
+    { name: "Great Dane", size: "Large", home: ["House with yard"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Elegant giant breed.", temperament: ["Friendly", "Gentle"], goodFor: ["Families"], challenges: ["Short lifespan"], lifespan: "7-10 years", whyMatch: { relaxed: "Calm despite size" } },
+    { name: "Pembroke Welsh Corgi", size: "Medium", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Smart and cheerful.", temperament: ["Outgoing", "Bright"], goodFor: ["Families"], challenges: ["Heavy shedding"], lifespan: "12-15 years", whyMatch: { beginner: "Trainable and friendly" } },
+    { name: "Chihuahua", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: false, goodWithKids: false, shedding: "Low shed please", description: "Tiny dog with huge personality.", temperament: ["Alert", "Bold"], goodFor: ["Singles"], challenges: ["Can be stubborn"], lifespan: "14-17 years", whyMatch: { apartment: "Excellent small-space dog" } },
+    { name: "Pug", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Charming and affectionate.", temperament: ["Playful", "Loving"], goodFor: ["Families"], challenges: ["Breathing issues"], lifespan: "12-15 years", whyMatch: { relaxed: "Loves lounging" } },
+    { name: "Dachshund", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Brave and curious.", temperament: ["Independent", "Loyal"], goodFor: ["Small homes"], challenges: ["Back problems"], lifespan: "12-16 years", whyMatch: { apartment: "Fits smaller homes" } },
+    { name: "Maltese", size: "Small", home: ["Apartment"], energy: "Mostly chill", beginnerFriendly: true, goodWithKids: true, shedding: "Low shed please", description: "Elegant companion dog.", temperament: ["Gentle", "Playful"], goodFor: ["Apartments"], challenges: ["Grooming"], lifespan: "12-15 years", whyMatch: { lowShed: "Minimal shedding" } },
+    { name: "Papillon", size: "Small", home: ["Apartment", "House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Tiny but highly intelligent.", temperament: ["Smart", "Friendly"], goodFor: ["First-time owners"], challenges: ["Fragile size"], lifespan: "13-16 years", whyMatch: { beginner: "Easy to train" } },
+    { name: "Yorkshire Terrier", size: "Small", home: ["Apartment"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: false, shedding: "Low shed please", description: "Confident toy breed.", temperament: ["Bold", "Affectionate"], goodFor: ["City living"], challenges: ["Grooming"], lifespan: "11-15 years", whyMatch: { lowShed: "Low-shedding coat" } },
+    { name: "English Springer Spaniel", size: "Medium", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Energetic sporting dog.", temperament: ["Friendly", "Active"], goodFor: ["Active families"], challenges: ["Needs exercise"], lifespan: "12-14 years", whyMatch: { active: "Loves outdoor life" } },
+    { name: "Vizsla", size: "Large", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "Athletic and affectionate.", temperament: ["Energetic", "Loyal"], goodFor: ["Runners"], challenges: ["Separation anxiety"], lifespan: "12-14 years", whyMatch: { active: "Excellent for active owners" } },
+    { name: "Weimaraner", size: "Large", home: ["House with yard"], energy: "Always on the move", beginnerFriendly: false, goodWithKids: true, shedding: "Shedding is fine", description: "High-energy hunting breed.", temperament: ["Smart", "Energetic"], goodFor: ["Experienced owners"], challenges: ["Needs stimulation"], lifespan: "10-13 years", whyMatch: { experienced: "Best with experienced handlers" } },
+    { name: "Samoyed", size: "Large", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Fluffy and friendly.", temperament: ["Social", "Gentle"], goodFor: ["Families"], challenges: ["Heavy shedding"], lifespan: "12-14 years", whyMatch: { kids: "Wonderful family dog" } },
+    { name: "Shetland Sheepdog", size: "Medium", home: ["House with yard"], energy: "Daily walks", beginnerFriendly: true, goodWithKids: true, shedding: "Shedding is fine", description: "Intelligent and devoted.", temperament: ["Smart", "Loyal"], goodFor: ["Families"], challenges: ["Barking tendency"], lifespan: "12-14 years", whyMatch: { beginner: "Responsive to training" } }
 ];

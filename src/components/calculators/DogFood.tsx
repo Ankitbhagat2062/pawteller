@@ -21,6 +21,7 @@ import { blogPosts } from "@/lib/cms/blogpage";
 import BlogCard from "@/components/shared/BlogCard";
 import { backlinks } from "@/lib/cms/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 
 const calculateCalories = (state: CalculatorState): Results => {
   const { weight, lifeStage, activityLevel } = state;
@@ -84,15 +85,50 @@ export default function DogFood() {
             </div>
 
             {(() => {
-              const title: string = header.title ? header.title : "How much should your dog really eat?";
+              const title: string = header.title
+                ? header.title
+                : "How much should your dog really eat?";
               const words: string[] = title.trim().split(/\s+/);
-              const firstPart: string = words.slice(0, -2).join(" ");
-              const secondPart: string = words[words.length - 2];
-              const thirdPart: string = words[words.length - 1];
-              return <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
-                {firstPart}{" "}
-                <span className="italic text-foreground/70">{secondPart}</span> {thirdPart}
-              </h1>
+
+              return (
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
+                  {(() => {
+                    if (words.length === 0) {
+                      return "How much should your dog really eat?";
+                    }
+
+                    if (words.length === 1) {
+                      return words[0];
+                    }
+
+                    if (words.length === 2) {
+                      // Preserve the existing styling structure: highlight the last “tail” word.
+                      return (
+                        <>
+                          {words[0]}{" "}
+                          <span className="italic text-foreground/70">
+                            {words[1]}
+                          </span>
+                        </>
+                      );
+                    }
+
+                    const firstPart: string = words.slice(0, -2).join(" ");
+                    const secondPart: string = words[words.length - 2];
+                    const thirdPart: string = words[words.length - 1];
+
+                    return (
+                      <>
+                        {firstPart}{" "}
+                        <span className="italic text-foreground/70">
+                          {secondPart}
+                        </span>{" "}
+                        {thirdPart}
+                      </>
+                    );
+                  })()}
+                </h1>
+              );
             })()}
 
             <p className="text-lg text-foreground/70 max-w-2xl">
@@ -246,7 +282,7 @@ export default function DogFood() {
               Other calculators you may need
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Continue exploring pawteller’s tools to support your dog’s nutrition
+              Continue exploring Pawteller’s tools to support your dog’s nutrition
               and growth.
             </p>
           </div>
@@ -258,15 +294,8 @@ export default function DogFood() {
                 (card) => card.cta.href !== "/calculators/dog-food",
               );
 
-               const stableIndexSeed = `${state.weight}-${4}`;
-                let hash = 0;
-                for (let i = 0; i < stableIndexSeed.length; i++) {
-                  hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
-                }
-
-                const start = eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
-                const cards = [eligibleCards[start], eligibleCards[(start + 1) % eligibleCards.length]].filter(Boolean);
-
+              const stableIndexSeed = `${state.weight}-${4}`;
+                const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
 
               return cards.map((card) => (
                 <BacklinkCalculatorCard key={card.title} {...card} />

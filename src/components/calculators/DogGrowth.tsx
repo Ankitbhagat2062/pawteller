@@ -144,7 +144,7 @@ export default function DogGrowth() {
             Other calculators you may need
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Continue exploring pawteller’s tools to support your dog’s nutrition
+            Continue exploring Pawteller’s tools to support your dog’s nutrition
             and growth.
           </p>
         </div>
@@ -156,7 +156,9 @@ export default function DogGrowth() {
               (card) => card.cta.href !== "/calculators/dog-food",
             );
 
-            const stableIndexSeed = `${growthInfo}-${4}`;
+            const stableIndexSeed = growthInfo
+              ? `${growthInfo.predictedWeight}-${growthInfo.monthsToMaturity}-${growthInfo.percentageGrown}`
+              : "fallback-4";
             let hash = 0;
             for (let i = 0; i < stableIndexSeed.length; i++) {
               hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;

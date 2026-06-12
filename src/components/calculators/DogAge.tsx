@@ -3,6 +3,7 @@
 import { Info } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,7 +19,9 @@ import { blogPosts } from "@/lib/cms/blogpage";
 import BlogCard from "../shared/BlogCard";
 import { backlinks } from "@/lib/cms/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import { FaqSection } from "@/components/shared/FaqSection";
+import { useRouter } from "next/navigation";
 
 const DogAgeCalculator = () => {
   const [dogAge, setDogAge] = useState<number>(10);
@@ -30,7 +33,7 @@ const DogAgeCalculator = () => {
   const [ageDescription, setAgeDescription] = useState<string>(
     "Your dog is entering their senior years. Regular vet checkups and a comfortable environment are important.",
   );
-  //
+  const router = useRouter();
   // Dog aging formula based on veterinary research
   const calculateHumanAge = (
     age: number,
@@ -146,16 +149,50 @@ const DogAgeCalculator = () => {
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-balance text-foreground mb-4">
                   {(() => {
-                    const title = heroSection.title ? heroSection.title : "How old is your dog in human years";
+                    const title = heroSection.title
+                      ? heroSection.title
+                      : "How old is your dog in human years";
                     const words: string[] = title.trim().split(/\s+/);
-                    const lastTwoWords: string = words.slice(-2).join(" ");
-                    const firstPart: string = words.slice(0, -2).join(" ");
+
                     return (
                       <>
-                        {heroSection.title ? firstPart : `How old is your dog in`}{" "}
-                        <span className="italic text-primary">{lastTwoWords}</span>?
+                        {(() => {
+                          if (words.length === 0) {
+                            return "How old is your dog in human years";
+                          }
+
+                          if (words.length === 1) {
+                            // No tail-word highlighting possible.
+                            return words[0];
+                          }
+
+                          if (words.length === 2) {
+                            // Highlight the full 2-word tail.
+                            return (
+                              <>
+                                <span className="italic text-primary">
+                                  {words.join(" ")}
+                                </span>
+                                ?
+                              </>
+                            );
+                          }
+
+                          const lastTwoWords: string = words.slice(-2).join(" ");
+                          const firstPart: string = words.slice(0, -2).join(" ");
+
+                          return (
+                            <>
+                              {heroSection.title ? firstPart : `How old is your dog in`}{" "}
+                              <span className="italic text-primary">
+                                {lastTwoWords}
+                              </span>
+                              ?
+                            </>
+                          );
+                        })()}
                       </>
-                    )
+                    );
 
                   })()}
                 </h2>
@@ -167,7 +204,10 @@ const DogAgeCalculator = () => {
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center text-sm text-muted-foreground">
                   {heroSection.buttons && heroSection.buttons.map((btn) => (
-                    <span key={btn.title} className="px-3 py-1 rounded-full bg-accent/10 text-gray-200">
+                    <span
+                      key={btn.title}
+                      className="px-3 py-1 rounded-full bg-accent/10 text-foreground"
+                    >
                       {btn.title ? btn.title : `Science-backed`}
                     </span>
                   ))}
@@ -308,7 +348,7 @@ const DogAgeCalculator = () => {
                 Other calculators you may need
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Continue exploring pawteller’s tools to support your dog’s nutrition
+                Continue exploring Pawteller’s tools to support your dog’s nutrition
                 and growth.
               </p>
             </div>
@@ -321,13 +361,7 @@ const DogAgeCalculator = () => {
                 );
 
                 const stableIndexSeed = `${dogAge}-${dogSize}`;
-                let hash = 0;
-                for (let i = 0; i < stableIndexSeed.length; i++) {
-                  hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
-                }
-
-                const start = eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
-                const cards = [eligibleCards[start], eligibleCards[(start + 1) % eligibleCards.length]].filter(Boolean);
+                const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
 
                 return cards.map((card) => (
                   <BacklinkCalculatorCard key={card.title} {...card} />
@@ -340,10 +374,6 @@ const DogAgeCalculator = () => {
 
           {/* FAQ Section */}
           <section className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
-              Frequently Asked Questions
-            </h2>
-
             <div className="space-y-4">
               {faqSection && <FaqSection items={faqSection} />}
             </div>
@@ -361,7 +391,7 @@ const DogAgeCalculator = () => {
                   preventative care are essential for keeping your dog healthy
                   throughout their life.`}
                 </p>
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
+                <Button onClick={()=>router.push(`${callToActionSection.button.href}`)} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
                   {callToActionSection.button.label ? callToActionSection.button.label : `Schedule a Vet Checkup`}
                 </Button>
               </Card>

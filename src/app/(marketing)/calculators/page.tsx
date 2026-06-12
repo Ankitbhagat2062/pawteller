@@ -10,12 +10,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SchemaOrg } from "@/lib/seo-schema";
@@ -23,9 +18,9 @@ import { calculatorPageCms } from "@/lib/cms/calculatorpage";
 import { FaqSection } from "@/components/shared/FaqSection";
 const seo = calculatorPageCms.seo
 export const metadata: Metadata = {
-  title: seo.title || "Dog Growth & Health Calculators | pawteller",
+  title: seo.title || "Dog Growth & Health Calculators | Pawteller",
   description: seo.description ||
-    "Use pawteller’s vet-informed dog calculators to estimate growth, convert dog age to human years, plan nutrition, and track key life stages. Fast, mobile-friendly, SEO-first.",
+    "Use Pawteller’s vet-informed dog calculators to estimate growth, convert dog age to human years, plan nutrition, and track key life stages. Fast, mobile-friendly, SEO-first.",
   keywords: seo.keywords || [
     "dog growth calculator",
     "dog age calculator",
@@ -43,8 +38,8 @@ export const metadata: Metadata = {
     canonical: "https://pawteller.com/calculators",
   },
   openGraph: {
-    title: "Dog Growth & Health Calculators | pawteller",
-    description:
+    title:seo.title || "Dog Growth & Health Calculators | Pawteller",
+    description: seo.description ||
       "Explore science-informed calculators for dog age, puppy growth, feeding, and pregnancy milestones.",
     type: "website",
     locale: "en_US",
@@ -60,8 +55,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dog Growth & Health Calculators | pawteller",
-    description:
+    title:seo.title || "Dog Growth & Health Calculators | Pawteller",
+    description: seo.description ||
       "Fast dog growth and nutrition calculators for smarter pet care decisions.",
     images: ["https://pawteller.com/dog-2.png"],
   },
@@ -130,10 +125,7 @@ export default function CalculatorsPage() {
                 <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[#6b5d56] dark:text-zinc-300">
                   {heroSection.buttons && heroSection.buttons.map((btn) => (
                     <p key={btn.label} className="inline-flex items-center gap-2">
-                      {btn.icon && <btn.icon className={`h-4 w-4 ${btn.className}`} />} <BadgeCheck
-                        className="h-4 w-4 text-emerald-600 dark:text-emerald-300"
-                        aria-hidden="true"
-                      />
+                      {btn.icon && <btn.icon className={`h-4 w-4 ${btn.className}`} />} 
                       {btn.label}
                     </p>
                   ))}
@@ -281,8 +273,8 @@ export default function CalculatorsPage() {
                           aria-label={cta.ariaLabel}
                           className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[#294e3f] shadow-sm transition hover:bg-[#f3eadb]"
                         >
-                          {cta.href == '/blog' && <BookOpen className="h-4 w-4" aria-hidden="true" />}
-                          {cta.href == '/contact' && <ChevronRight className="h-4 w-4" aria-hidden="true" />}
+                          {cta.href === '/blog' && <BookOpen className="h-4 w-4" aria-hidden="true" />}
+                          {cta.href === '/contact' && <ChevronRight className="h-4 w-4" aria-hidden="true" />}
                           {cta.label}
                         </Link>
                       ))}
@@ -370,7 +362,7 @@ export default function CalculatorsPage() {
                         variant="link"
                         className="h-auto p-0 text-emerald-700 hover:text-emerald-800 dark:text-emerald-200 dark:hover:text-emerald-100"
                       >
-                        {backlinkblogSection.footer.cta && <Link href={backlinkblogSection.footer.cta.label || "/blog"} aria-label={backlinkblogSection.footer.cta.label || "Go to blog"}>
+                        {backlinkblogSection.footer.cta && <Link href={backlinkblogSection.footer.cta.href || "/blog"} aria-label={backlinkblogSection.footer.cta.ariaLabel || "Go to blog"}>
                           {backlinkblogSection.footer.cta.label ? backlinkblogSection.footer.cta.label : `Browse the blog`}
                         </Link>}
                       </Button>

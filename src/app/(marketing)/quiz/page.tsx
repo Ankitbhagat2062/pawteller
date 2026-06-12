@@ -9,7 +9,7 @@ const fallbackSeo = allQuizData[0]?.seo;
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams?: { quiz?: string };
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const quizParam = (await searchParams)?.quiz;
 
@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   return {
     title:
-      seo?.title || "Interactive Dog Breed & Health Quiz | pawteller",
+      seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
     description:
       seo?.description ||
       "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
@@ -33,7 +33,7 @@ export async function generateMetadata({
 
     openGraph: {
       title:
-        seo?.title || "Interactive Dog Breed & Health Quiz | pawteller",
+        seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
       description:
         seo?.description ||
         "Test your pet care knowledge and unlock customized health insights for your dog.",
@@ -54,7 +54,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title:
-        seo?.title || "Interactive Dog Breed & Health Quiz | pawteller",
+        seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
       description:
         seo?.description ||
         "Test your pet care knowledge and unlock customized health insights for your dog.",
@@ -77,14 +77,13 @@ export async function generateMetadata({
 export default async function QuizPage({
   searchParams,
 }: {
-  searchParams?: { quiz?: string };
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const quizParam = (await searchParams)?.quiz;
 
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
-
   // Fallback: if quiz is missing/invalid, show the first quiz.
   const quizToRender = selectedQuiz ?? allQuizData[0];
 

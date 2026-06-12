@@ -1,4 +1,5 @@
 import { FAQItem, seoProps } from "@/lib/types";
+import {FlaskConical, IceCreamBowl, Scale, type LucideIcon } from "lucide-react";
 
 
 export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
@@ -26,7 +27,7 @@ export interface dogFoodPageCmsProps {
     {
       title: string;
       body: string;
-      icon: string;
+      icon: LucideIcon;
     }[];
     disclaimer: string;
   },
@@ -48,17 +49,17 @@ export const dogFoodPageCms: dogFoodPageCmsProps = {
       {
         title: "Starts with a science-based baseline",
         body: "We use Resting Energy Requirement (RER): 70 × (kg)^0.75 — a standard veterinary approach to estimate energy needs from body size.",
-        icon: "🧪",
+        icon: FlaskConical,
       },
       {
         title: "Adjusts for life stage & activity",
         body: "We apply multipliers for puppy/adult/senior and for activity level (sedentary → extremely active) to better match real-world feeding needs.",
-        icon: "⚖️",
+        icon: Scale,
       },
       {
         title: "Turns calories into cups (with transparency)",
         body: "We convert kcal to “cups per day” using a commonly used estimate (~350 kcal per cup). Your kibble label may differ, so always verify the packaging for final accuracy.",
-        icon: "🥣",
+        icon: IceCreamBowl,
       },
     ],
     disclaimer:

@@ -1,8 +1,10 @@
 "use client";
 import {
+  AlertCircle,
   AlertTriangle,
   ArrowRight,
   BadgeCheck,
+  CheckCircle2,
   ChevronRight,
   HeartPulse,
   Mars,
@@ -13,12 +15,14 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { FaqSection } from "@/components/shared/FaqSection";
 import { FeatureItem, GROWTH_INSIGHTS_CONTENT, GrowthRow, growthSupportRecommendation, HERO_CONTENT, infographicSection, PredictionStep, puppyWeightPageCms } from "@/lib/cms/puppyweight";
+import { submitVerificationForm } from "@/hooks/forms";
+import { FormState } from "@/lib/types";
+import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -442,8 +446,7 @@ export default function Index() {
   const [weightValue, setWeightValue] = useState("8");
   const [weightUnit, setWeightUnit] = useState<"kg" | "lbs">("kg");
   const [sex, setSex] = useState<"Male" | "Female">("Male");
-  const [emailInput, setEmailInput] = useState("");
-  const router = useRouter()
+  const [email, setEmail] = useState("");
 
   // Result state
   const [result, setResult] = useState<PredictionResult | null>(null);
@@ -499,6 +502,17 @@ export default function Index() {
     newsletterPlaceholder,
     newsletterBtnText,
   } = GROWTH_INSIGHTS_CONTENT;
+  const [currentState, formAction, isPending] = useActionState<
+    FormState,
+    FormData
+  >(submitVerificationForm, {});
+  useEffect(() => {
+    if (currentState.success) {
+      toast.success(currentState.message || "Subscribed successfully!");
+    } else if (currentState.error) {
+      toast.error(currentState.error);
+    }
+  }, [currentState.success, currentState.error, currentState.message]);
   return (
     <div className="min-h-screen bg-background text-foreground font-inter">
       {/* ── Hero ── */}
@@ -1060,26 +1074,47 @@ export default function Index() {
                 <p className="text-gray-400 text-sm mb-5 leading-relaxed">
                   {newsletterDesc}
                 </p>
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="emailInput" className="sr-only">
+                {(currentState.success || currentState.error) && (
+                  <div
+                    className="mx-auto mt-6 flex w-full max-w-md items-center justify-center rounded-lg border border-border/60 bg-background/70 px-4 py-3"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {currentState.success ? (
+                      <span className="inline-flex items-center gap-2 text-sm text-green-600">
+                        <CheckCircle2 className="size-4.5" aria-hidden="true" />
+                        <span>{currentState.message ?? ""}</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-2 text-sm text-red-600">
+                        <AlertCircle className="size-4.5" aria-hidden="true" />
+                        <span>{currentState.error ?? ""}</span>
+                      </span>
+                    )}
+                  </div>
+                )}
+                <form action={formAction} className="flex flex-col gap-3">
+                  <Label htmlFor="email" className="sr-only">
                     {newsletterPlaceholder}
-                  </label>
+                  </Label>
                   <input
-                    id="emailInput"
+                    id="email"
+                    name="email"
                     type="email"
-                    value={emailInput}
-                    onChange={(e) => setEmailInput(e.target.value)}
+                    value={email}
+                    required
+                    disabled={isPending}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder={newsletterPlaceholder}
                     className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                   />
                   <Button
-                    onClick={() => router.push('/contact')}
-                    type="button"
+                    type="button" disabled={isPending}
                     className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                   >
-                    {newsletterBtnText}
+                    {isPending ? 'Subscribing to Newsletter' : newsletterBtnText}
                   </Button>
-                </div>
+                </form>
               </div>
             </div>
 
@@ -1090,9 +1125,6 @@ export default function Index() {
       {/* ── FAQ ── */}
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">
         <div className="max-w-200 mx-auto px-5 md:px-10">
-          <h2 className="text-2xl lg:text-3xl font-bold text-foreground text-center mb-10">
-            Frequently Asked Questions
-          </h2>
           {puppyWeightPageCms.faqSection && <FaqSection items={puppyWeightPageCms.faqSection} />}
         </div>
       </section>

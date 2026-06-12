@@ -22,10 +22,11 @@ export function QuizFaqSection({ quizSlug }: { quizSlug?: string }) {
         </div>
 
         <Accordion type="single" collapsible className="w-full">
-          {faqItems.map((item, index) => (
-            <AccordionItem
-              key={`${item.question}-${index}`}
-              value={`quiz-faq-${index}`}
+          {faqItems.map((item) => {
+            const itemId = item.id ?? item.question;
+            return <AccordionItem
+              key={itemId}
+              value={itemId}
               className="border-b border-border last:border-b-0"
             >
               <AccordionTrigger className="px-2 sm:px-4">
@@ -38,7 +39,7 @@ export function QuizFaqSection({ quizSlug }: { quizSlug?: string }) {
                 <p className="px-2 sm:px-4 pb-2 text-foreground/70 leading-relaxed">{item.answer}</p>
               </AccordionContent>
             </AccordionItem>
-          ))}
+          })}
         </Accordion>
       </div>
     </section>

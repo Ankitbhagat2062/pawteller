@@ -1,7 +1,7 @@
-import { BlogFeaturedImageProps } from "@/lib/cms/blogpage";
+import { ImageConfig } from "@/lib/types";
 import Image from "next/image";
 
-export function BlogFeaturedImage({ src, alt }: BlogFeaturedImageProps) {
+export function BlogFeaturedImage({ src, alt }: ImageConfig) {
   return (
     <figure className="my-6 md:my-8 -mx-4 sm:mx-0">
       <div className="relative aspect-16/10 sm:aspect-video overflow-hidden sm:rounded-xl">

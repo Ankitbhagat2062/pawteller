@@ -228,9 +228,9 @@ export const faqSection: FAQItem[] = [
 ];
 export const dogGrowthPageCms: dogGrowthPageCmsProps = {
     seo: {
-        title: "Dog Growth Calculator: Predict Adult Weight by Breed | pawteller",
+        title: "Dog Growth Calculator: Predict Adult Weight by Breed | Pawteller",
         description:
-            "Use pawteller’s dog growth calculator to predict your puppy’s adult weight. Enter breed, age, and current weight to see a clear growth forecast and milestone guidance.",
+            "Use Pawteller’s dog growth calculator to predict your puppy’s adult weight. Enter breed, age, and current weight to see a clear growth forecast and milestone guidance.",
         keywords: [
             "dog growth calculator",
             "puppy weight calculator",

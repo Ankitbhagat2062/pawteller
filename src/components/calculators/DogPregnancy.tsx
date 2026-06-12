@@ -148,12 +148,6 @@ export default function DogPregnancy() {
         {heroSection && (
           <div className="relative max-w-3xl w-full mx-auto text-center space-y-5">
             {/* Vet badge */}
-            {(() => {
-              const title: string = heroSection.title ? heroSection.title : "Veterinary Verified Logic Dog Pregnancy Calculator";
-              const words: string[] = title.trim().split(/\s+/);
-              const firstPart: string = words.slice(0, -3).join(" ");
-              const secondPart: string = words[words.length - 3];
-              return <>
                 <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
                   <ShieldAlert
                     aria-hidden="true"
@@ -162,14 +156,12 @@ export default function DogPregnancy() {
                     className="shrink-0"
                   />
                   <span className="text-[#00C2A8] text-xs font-bold tracking-widest uppercase">
-                    {firstPart}
+                    {heroSection.title}
                   </span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
-                  {secondPart}
+                  {heroSection.h1}
                 </h1>
-              </>
-            })()}
             <p className="text-lg md:text-xl font-medium text-[#1A2B3C] dark:text-gray-200 leading-relaxed max-w-2xl mx-auto">
               {heroSection.description ? heroSection.description : `Estimate your dog's due date, track pregnancy milestones
 						week-by-week, and prepare for your puppy's arrival with expert
@@ -419,8 +411,9 @@ export default function DogPregnancy() {
 
                   {/* Dynamic Paragraphs */}
                   <div className="space-y-4 text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
-                    {section.paragraphs.map((para, idx) => (
-                      <p key={idx}>
+                    {section.paragraphs.map((para) => (
+                      <p key={para.days ?? para.p}>
+
                         {para.p}
                         {(para.days && para.p2) && (
                           <>
@@ -471,7 +464,7 @@ export default function DogPregnancy() {
       </section >
 
       {/* ── FAQ ── */}
-      < section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4" >
+      <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4" >
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
             Frequently Asked Questions

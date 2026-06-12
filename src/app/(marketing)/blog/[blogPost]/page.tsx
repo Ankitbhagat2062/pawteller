@@ -20,7 +20,7 @@ export function getAllBlogSlugs(): string[] {
 
 export async function generateStaticParams() {
   const slugs = getAllBlogSlugs();
-  return slugs.map((slug) => ({ slug }));
+  return slugs.map((blogPost) => ({ blogPost }));
 }
 
 export async function generateMetadata({

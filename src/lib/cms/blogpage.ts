@@ -4,11 +4,6 @@ export interface BlogContentProps {
   content: contentProps[];
 }
 
-export interface BlogFeaturedImageProps {
-  src: string;
-  alt: string;
-}
-
 export interface BlogHeaderProps {
   category: string;
   readTime: string;
@@ -195,7 +190,7 @@ export const blogPosts: BlogPost[] = [
 ];
 
 export const blogPageSeo: seoProps = {
-  title: "Expert Pet Care Guides, Tips & Calculators | pawteller",
+  title: "Expert Pet Care Guides, Tips & Calculators | Pawteller",
   description:
     "Explore data-driven insights, veterinarian-vetted puppy growth tracking tips, dog nutrition guides, and care advice to keep your pup healthy.",
   keywords: [

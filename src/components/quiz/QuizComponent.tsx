@@ -13,7 +13,7 @@ import { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
 import { useRouter } from "next/navigation";
 import { Breed, breedDatabase } from "@/lib/cms/quizpage";
 import { blogPosts } from "@/lib/cms/blogpage";
-import BlogCard from "../shared/BlogCard";
+import BlogCard from "@/components/shared/BlogCard";
 
 export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const router = useRouter();
@@ -253,6 +253,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
 
     type ContactPayload = {
       email: string;
+      quizId: string;
       results: DogBreedEmailProps
     };
 
@@ -272,7 +273,11 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     }
 
     try {
-      const payload: ContactPayload = { email, results: result };
+      const quizId =
+        new URLSearchParams(quizData.url.split("?")[1] ?? "").get("quiz") ??
+        quizData.url;
+
+      const payload: ContactPayload = { email, quizId, results: result };
 
       const res = await axios.post<ContactSuccessResponse | ContactErrorResponse>(
         "/api/quiz",

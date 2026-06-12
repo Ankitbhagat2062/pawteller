@@ -1,5 +1,4 @@
 import { FAQItem, seoProps } from "@/lib/types";
-import { ctaProps } from "./aboutpage";
 
 export interface heroSectionProps {
     title: string;
@@ -21,6 +20,8 @@ export interface callToActionSectionProps {
     description: string;
     button: {
         label: string;
+        href:string;
+        ariaLabel?:string;
     };
 }
 
@@ -34,9 +35,9 @@ export interface DogAgePageCmsProps {
 
 export const dogAgePageCms: DogAgePageCmsProps = {
     seo: {
-        title: "Dog Age Calculator (Convert Dog Years to Human Years) | pawteller",
+        title: "Dog Age Calculator (Convert Dog Years to Human Years) | Pawteller",
         description:
-            "Use pawteller’s dog age calculator to convert your dog’s age into human years. Choose small, medium, large, or giant size for a more accurate life-stage estimate.",
+            "Use Pawteller’s dog age calculator to convert your dog’s age into human years. Choose small, medium, large, or giant size for a more accurate life-stage estimate.",
         keywords: [
             "dog age calculator",
             "convert dog years to human years",
@@ -95,7 +96,7 @@ export const dogAgePageCms: DogAgePageCmsProps = {
     },
     faqSection: [
         {
-            question: "Is the &quot;multiply by 7&quot; rule accurate?",
+            question: "Is the 'multiply by 7' rule accurate?",
             answer: "No, this outdated rule oversimplifies dog aging. Dogs age much faster in their first two years, then the rate slows down. Additionally, breed size significantly affects how quickly dogs age.",
         },
         {
@@ -116,6 +117,6 @@ export const dogAgePageCms: DogAgePageCmsProps = {
         description: `Regular veterinary checkups, proper nutrition, exercise, and
                 preventative care are essential for keeping your dog healthy
                 throughout their life.`,
-        button: { label: "Schedule a Vet Checkup" },
+        button: { label: "Schedule a Vet Checkup" ,href:"/contact"},
     }
 };

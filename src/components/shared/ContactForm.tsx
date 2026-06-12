@@ -216,7 +216,7 @@ export default function ContactForm() {
           )}
 
           <p className="text-xs font-semibold leading-5 text-slate-600 dark:text-zinc-300">
-            {` By sending, you agree to be contacted about your request. pawteller
+            {` By sending, you agree to be contacted about your request. Pawteller
             is not a medical provider.`}
           </p>
         </div>

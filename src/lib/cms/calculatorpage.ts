@@ -1,7 +1,7 @@
 import { Baby, BadgeCheck, CalendarDays, DollarSign, Dumbbell, LineChart, PawPrint, Scale, Sparkles, Utensils } from "lucide-react";
 import type { FAQItem, seoProps } from "@/lib/types";
 import type { LucideIcon } from 'lucide-react'
-import { ctaProps } from "./aboutpage";
+import { ctaProps } from "@/lib/cms/aboutpage";
 
 export interface BacklinkItem {
     title: string;
@@ -75,36 +75,37 @@ export const backlinks: BacklinkItem[] = [
 
 export const faqItems: FAQItem[] = [
     {
-        question: "How many dog names should I consider?",
+        question: "How accurate are Pawteller’s dog calculator results?",
         answer:
-            "We recommend generating at least 10-15 name options to choose from. This gives you plenty of variety to test and see what feels right for your new puppy or dog.",
+            "Our calculators provide educational, estimate-based guidance—not a diagnosis. Results can vary based on breed variation, the accuracy of your inputs, and your dog’s health history. For best outcomes, use the results as a starting point and confirm details with your veterinarian.",
     },
     {
-        question: "Can I change my dog's name if I've been using another one?",
+        question: "What information do I need to get the best results?",
         answer:
-            "Yes! Dogs can learn new names at any age with consistent training and positive reinforcement. It may take a few weeks for them to adjust, but it's definitely possible.",
+            "Use the most accurate data you have: your dog’s current age (or gestation week), weight (including the units), and life stage where relevant. If you’re unsure, choose the closest option and review the calculator’s explanation so you understand how the estimate is generated.",
     },
     {
-        question: "What makes a good dog name?",
+        question: "Why do some calculators show a range instead of one number?",
         answer:
-            "Good dog names are short (1-2 syllables), easy to pronounce, don't sound like commands, and reflect your dog's personality. They should feel natural when you say them out loud.",
+            "Dogs don’t grow or develop at exactly the same pace, and real-world outcomes depend on genetics, nutrition, activity, and health. A range helps reflect normal variation and gives you a more realistic planning window.",
     },
     {
-        question: "Should I match the name to my dog's size?",
+        question: "Can I use these calculators for mixed breeds or non-standard sizes?",
         answer:
-            "While not necessary, many people prefer matching name style to dog size. Shorter, punchier names work great for small dogs, while longer, stronger names suit larger breeds. Ultimately, choose what feels right!",
+            "Yes—most tools work for mixed breeds, especially when you base results on your dog’s current weight and realistic growth expectations. If the calculator uses breed size groups, select the closest size category and treat the outcome as an estimate until a vet can confirm.",
     },
     {
-        question: "Are unique names better than popular ones?",
+        question: "Are the feeding and calorie suggestions meant to replace my vet’s plan?",
         answer:
-            "It depends on your preference! Popular names are recognizable and classic, while unique names help your dog stand out. Both can work equally well as long as you love the name and your dog responds to it.",
+            "No. Feeding guidance is educational and meant to help you plan and ask better questions. If your dog is underweight, overweight, has medical conditions, or is on a prescription diet, follow your veterinarian’s recommendations.",
     },
     {
-        question: "How do I test if a name works for my dog?",
+        question: "When should I contact a veterinarian instead of relying on a calculator?",
         answer:
-            "Try calling the name out loud in different situations. See if you feel comfortable saying it at the dog park, at the vet, and at home. Your dog will also give you feedback on whether they respond to the sound of the name.",
+            "Contact a veterinarian if you notice concerning symptoms (vomiting, lethargy, abnormal discharge, breathing trouble), if pregnancy dates are uncertain, or if your puppy’s growth seems far outside expected progress. Calculators can guide questions, but they can’t replace professional evaluation.",
     },
 ];
+
 
 export type badgeType = {
     bg: string;
@@ -230,8 +231,8 @@ export interface calculatorPageCmsProps {
 }
 export const calculatorPageCms: calculatorPageCmsProps = {
     seo: {
-        title: "Dog Growth & Health Calculators | pawteller",
-        description: "Use pawteller’s vet-informed dog calculators to estimate growth, convert dog age to human years, plan nutrition, and track key life stages. Fast, mobile-friendly, SEO-first.",
+        title: "Dog Growth & Health Calculators | Pawteller",
+        description: "Use Pawteller’s vet-informed dog calculators to estimate growth, convert dog age to human years, plan nutrition, and track key life stages. Fast, mobile-friendly, SEO-first.",
         keywords: [
             "dog growth calculator",
             "dog age calculator",
@@ -257,7 +258,7 @@ export const calculatorPageCms: calculatorPageCmsProps = {
             { label: "Vet-informed explanations", icon: BadgeCheck, className: "text-emerald-600 dark:text-emerald-300" },
             { label: "Clean UX + SEO-ready pages", icon: Sparkles, className: "text-rose-600 dark:text-rose-300" }
         ],
-        image: { src: "https://images.unsplash.com/photo-1591160690555-5debfba289f0", alt: "Happy golden retriever puppy for pawteller calculators" }
+        image: { src: "https://images.unsplash.com/photo-1591160690555-5debfba289f0", alt: "Happy golden retriever puppy for Pawteller calculators" }
     },
     calculatorSection: {
         p: "Tools",

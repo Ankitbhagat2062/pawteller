@@ -13,9 +13,9 @@ import { AboutPageBottomCtaBandProps, AboutPageCms, ctaProps, rightProps } from 
 // 1. PERFECT SEO SETUP WITH TARGETED SEO PLACEMENT
 const seo = AboutPageCms.seo
 export const metadata: Metadata = {
-  title: seo.title || "About pawteller | Reliable & Fast Dog Insights",
+  title: seo.title || "About Pawteller | Reliable & Fast Dog Insights",
   description: seo.description ||
-    "Learn more about pawteller's mission. We provide ultra-fast calculators, custom quiz funnels, and bite-sized practical guides for everyday dog owners.",
+    "Learn more about Pawteller's mission. We provide ultra-fast calculators, custom quiz funnels, and bite-sized practical guides for everyday dog owners.",
   keywords: seo.keywords || [],
   alternates: {
     canonical: "https://pawteller.com/about", // Replace with your production domain
