@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Terms & Conditions | Pawteller",
   description:
     "Read the Terms and Conditions for using Pawteller's tools, guides, and calculator resources. Learn about our usage policies and informational disclaimer.",
+  keywords:[],
   alternates: {
     canonical: "https://pawteller.com/terms", // Adjust with your actual production domain
   },
@@ -59,7 +60,7 @@ export default function TermsPage() {
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-900 dark:bg-emerald-400/10 dark:text-emerald-200">
-                        pawteller Legal
+                        Pawteller Legal
                       </p>
                       <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
                         Terms &amp; Conditions
@@ -170,7 +171,7 @@ export default function TermsPage() {
                       No Veterinary Advice
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      pawteller does not provide veterinary advice. Nothing on
+                      Pawteller does not provide veterinary advice. Nothing on
                       the website creates a doctor–patient relationship between
                       you and pawteller, its creators, or any third parties.
                     </p>

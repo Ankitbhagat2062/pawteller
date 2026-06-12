@@ -7,6 +7,7 @@ import Navbar from "@/components/shared/Navbar";
 import { SchemaOrg } from "@/lib/seo-schema";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next"
+import { homepageCms } from "@/lib/cms/homepage";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -19,16 +20,16 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
 };
-
+const metaContent = homepageCms.seo
 export const metadata: Metadata = {
-  title: "Pawteller | Premium Growth & Pet Health Insights",
+  title: metaContent.title|| "Pawteller | Premium Growth & Pet Health Insights",
   // Google site verification
   other: {
     "google-site-verification": "ZyaMR3UjskuwYs7Po4SO9sz0NlVrUcelBO4ED4F1-KA",
   },
-  description:
+  description: metaContent.description ||
     "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
-  keywords: ['dog weight calculator', 'puppy growth chart', 'dog age quiz', 'dog food calculator', 'pet care tips'],
+  keywords: metaContent.keywords || ['dog weight calculator', 'puppy growth chart', 'dog age quiz', 'dog food calculator', 'pet care tips'],
   metadataBase: new URL("https://pawteller.com"),
   alternates: {
     canonical: "/",

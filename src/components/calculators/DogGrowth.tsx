@@ -6,8 +6,12 @@ import { FooterSection } from "@/components/calculators/doggrowthcomponents/DogG
 import { MaturitySection } from "@/components/calculators/doggrowthcomponents/MaturitySection";
 import { PuppyForm } from "@/components/calculators/doggrowthcomponents/PuppyForm";
 import { ResultCard } from "@/components/calculators/doggrowthcomponents/ResultCard";
-import { calculatePuppyGrowth } from "@/lib/constant";
+import { calculatePuppyGrowth } from "@/lib/cms/dogGrowthpage";
 import type { GrowthInfo } from "@/lib/types";
+import { dogGrowthPageCms } from "@/lib/cms/dogGrowthpage";
+import { backlinks } from "@/lib/cms/calculatorpage";
+import { FaqSection } from "@/components/shared/FaqSection";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
@@ -56,27 +60,38 @@ export default function DogGrowth() {
       setInitialized(true);
     }
   }, [initialized]); // Only tracks the initialized boolean flag
+  const headerSection = dogGrowthPageCms.header
+  const seoContent = dogGrowthPageCms.seoContent
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
       {/* Header */}
       <div className="border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-sm font-semibold tracking-wide text-orange-600 dark:text-orange-400">
-              <span>🐕</span>
-              <span>PUPPY WEIGHT CALCULATOR</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-foreground">
-              How big will your{" "}
-              <em className="not-italic font-normal">puppy</em> get?
-            </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              {` Predict your puppy's adult weight in seconds. We use breed-specific growth
+          {headerSection && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm font-semibold tracking-wide text-orange-600 dark:text-orange-400">
+                <span>🐕</span>
+                <span>PUPPY WEIGHT CALCULATOR</span>
+              </div>
+              {(() => {
+                const title: string = headerSection.title ? headerSection.title : "How big will your puppy get?";
+                const words: string[] = title.trim().split(/\s+/);
+                const firstPart: string = words.slice(0, -2).join(" ");
+                const secondPart: string = words[words.length - 2];
+                const thirdPart: string = words[words.length - 1];
+                return <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-foreground">
+                  {firstPart}{" "}
+                  <em className="not-italic font-normal">{secondPart}</em> {thirdPart}
+                </h1>
+              })()}
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+                {headerSection.description ? headerSection.description : ` Predict your puppy's adult weight in seconds. We use breed-specific growth
               curves built from veterinary data to give you the most accurate forecast —
               plus a beautiful chart to watch their journey.`}
-            </p>
-          </div>
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -122,47 +137,81 @@ export default function DogGrowth() {
         <FooterSection />
       </div>
 
+      {/* Backlinks || Other Calculators and services */}
+      <div className="mt-16">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+            Other calculators you may need
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Continue exploring pawteller’s tools to support your dog’s nutrition
+            and growth.
+          </p>
+        </div>
+
+        <div className="grid m-10 grid-cols-1 md:grid-cols-2 gap-4">
+          {(() => {
+            // Map only 2 random calculators (exclude Dog Age itself)
+            const eligibleCards = backlinks.filter(
+              (card) => card.cta.href !== "/calculators/dog-food",
+            );
+
+            const stableIndexSeed = `${growthInfo}-${4}`;
+            let hash = 0;
+            for (let i = 0; i < stableIndexSeed.length; i++) {
+              hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+            }
+
+            const start = eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+            const cards = [eligibleCards[start], eligibleCards[(start + 1) % eligibleCards.length]].filter(Boolean);
+
+
+            return cards.map((card) => (
+              <BacklinkCalculatorCard key={card.title} {...card} />
+            ));
+          })()}
+
+        </div>
+      </div>
+
+
       {/* Additional SEO Content */}
-      <div className="border-t border-border bg-muted/50">
+      <div className="border-t my-10 border-border bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-serif font-bold text-foreground mb-4">
-                How Our Calculator Works
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {`Our puppy weight calculator uses breed-specific growth curves developed from
+          {seoContent && (
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-serif font-bold text-foreground mb-4">
+                  {seoContent.title ? seoContent.title : `How Our Calculator Works`}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {seoContent.description ? seoContent.description : `Our puppy weight calculator uses breed-specific growth curves developed from
                 veterinary research. By inputting your puppy's current age, weight, and breed,
                 we can accurately predict their adult size. The calculation takes into account
                 the unique growth patterns of different dog sizes, from tiny Chihuahuas to
                 large German Shepherds.`}
-              </p>
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-serif font-bold text-foreground mb-4">
+                  {seoContent.tips.title ? seoContent.tips.title : `Tips for Puppy Growth`}
+                </h3>
+                <ul className="text-muted-foreground space-y-2 leading-relaxed">
+                  {seoContent.tips.shortTips && seoContent.tips.shortTips.map((tip) => (
+                    <li key={tip.title}>
+                      •{" "}
+                      {tip.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-serif font-bold text-foreground mb-4">
-                Tips for Puppy Growth
-              </h3>
-              <ul className="text-muted-foreground space-y-2 leading-relaxed">
-                <li>
-                  •{" "}
-                  {`Monitor your puppy's weight regularly for accurate predictions`}
-                </li>
-                <li>
-                  • Large breed puppies need special nutrition for healthy
-                  development
-                </li>
-                <li>
-                  • Growth rates vary — consult your veterinarian for
-                  breed-specific advice
-                </li>
-                <li>
-                  • Most puppies reach their adult weight between 9-24 months
-                </li>
-              </ul>
-            </div>
-          </div>
+          )}
         </div>
       </div>
+
+      {/* FAQ */}
+      <FaqSection items={dogGrowthPageCms.faqSection} />
     </div>
   );
 }

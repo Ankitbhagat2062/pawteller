@@ -4,11 +4,9 @@ import {
   ArrowRight,
   BadgeCheck,
   ChevronRight,
-  Dumbbell,
   HeartPulse,
   Mars,
   PawPrint,
-  ShieldCheck,
   Sparkles,
   Venus,
   X,
@@ -17,14 +15,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { FeatureItem, GROWTH_INSIGHTS_CONTENT, GrowthRow, growthSupportRecommendation, HERO_CONTENT, infographicSection, PredictionStep, puppyWeightPageCms } from "@/lib/cms/puppyweight";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -486,97 +480,93 @@ export default function Index() {
       ? parseFloat(weightValue || "0") / 2.205
       : parseFloat(weightValue || "0");
 
-  const faqItems = [
-    {
-      q: "How accurate is the weight prediction?",
-      a: "Our predictions are accurate within ±15% for most breeds when using data from puppies 8+ weeks old. Accuracy improves with age. Mixed-breed predictions use the average of the closest matching breeds.",
-    },
-    {
-      q: "Does gender affect a puppy's adult weight?",
-      a: "Yes — males typically weigh 10–20% more than females in most breeds. Our algorithm factors in sex when available, and our ranges reflect the typical variation between male and female dogs.",
-    },
-    {
-      q: "Why is my puppy growing faster than the chart?",
-      a: "Every individual puppy is different. Rapid growth isn't always good — it can put stress on developing bones and joints. If your puppy is significantly above the curve, consult your vet about caloric intake and potential nutritional adjustments.",
-    },
-    {
-      q: "At what age do giant breeds stop growing?",
-      a: "Giant breeds like Great Danes and Saint Bernards may not reach their full adult size until 18–24 months. Even after skeletal growth stops, they continue to 'fill out' and gain muscle mass for several more months.",
-    },
-    {
-      q: "Should I be worried if my puppy is small for their breed?",
-      a: "Not necessarily. Some puppies are naturally smaller due to genetics. However, if your puppy is consistently below 80% of the expected weight for their age, it's worth a vet visit to rule out parasites, nutritional deficiencies, or underlying health issues.",
-    },
-  ];
-
+  const iconMap = {
+    PawPrint: <PawPrint className="w-4 h-4 text-white/80" fill="currentColor" />,
+    BadgeCheck: <BadgeCheck className="w-4.5 h-4 text-white/80" />,
+  };
+  const { badge, titleLine1, titleLine2, description, features, heroImage } = HERO_CONTENT;
+  const {
+    howItWorksTitle,
+    steps,
+    stopGrowingTitle,
+    stopGrowingDesc,
+    alertNote,
+    tableTitle,
+    tableHeadings,
+    growthRows,
+    newsletterTitle,
+    newsletterDesc,
+    newsletterPlaceholder,
+    newsletterBtnText,
+  } = GROWTH_INSIGHTS_CONTENT;
   return (
     <div className="min-h-screen bg-background text-foreground font-inter">
       {/* ── Hero ── */}
-      <section className="pt-18">
-        <div
-          className="relative overflow-hidden"
-          style={{
-            background:
-              "radial-gradient(130% 54% at 50% 50%, #34D399 0%, #10b981 100%)",
-          }}
-        >
-          <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-20">
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-              <div className="flex flex-col gap-6">
-                <div>
-                  <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-3">
-                    🐾 Puppy Weight Calculator
-                  </p>
-                  <h1 className="text-4xl sm:text-5xl lg:text-[68px] font-extrabold text-white leading-[1.05] tracking-tight">
-                    Puppy Weight
-                    <br />
-                    Calculator
-                  </h1>
-                </div>
-                <p className="text-white/90 text-lg lg:text-xl font-medium leading-relaxed max-w-105">
-                  {`Estimate your puppy's adult weight and track their growth journey with 
-                  our veterinarian-approved calculator.`}
-                </p>
-                <div className="flex flex-wrap gap-5">
-                  <div className="flex items-center gap-2">
-                    <PawPrint
-                      className="w-4 h-4 text-white/80"
-                      fill="currentColor"
-                    />
-                    <span className="text-white/80 text-sm font-medium">
-                      98% Breed Accuracy
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <BadgeCheck className="w-4.5 h-4 text-white/80" />
-                    <span className="text-white/80 text-sm font-medium">
-                      Vet-Approved Algorithm
-                    </span>
-                  </div>
-                </div>
-              </div>
+      {HERO_CONTENT && (
+        <section className="pt-18">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              background:
+                "radial-gradient(130% 54% at 50% 50%, #34D399 0%, #10b981 100%)",
+            }}
+          >
+            <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-20">
+              <div className="grid lg:grid-cols-2 gap-10 items-center">
 
-              {/* Hero image */}
-              <div className="flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-105 aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="https://api.builder.io/api/v1/image/assets/TEMP/125f32ab886c10beda3bee8eb9822323b654095b?width=1000"
-                    alt="Happy Golden Retriever puppy"
-                    fill
-                    priority
-                    className="object-cover w-auto h-auto"
-                  />
+                {/* Left Content Column */}
+                <div className="flex flex-col gap-6">
+                  <div>
+                    <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-3">
+                      {badge}
+                    </p>
+                    <h1 className="text-4xl sm:text-5xl lg:text-[68px] font-extrabold text-white leading-[1.05] tracking-tight">
+                      {titleLine1}
+                      <br />
+                      {titleLine2}
+                    </h1>
+                  </div>
+                  <p className="text-white/90 text-lg lg:text-xl font-medium leading-relaxed max-w-105">
+                    {description}
+                  </p>
+
+                  {/* Mapping features row */}
+                  <div className="flex flex-wrap gap-5">
+                    {features.map((feature: FeatureItem) => (
+                      <div key={feature.id} className="flex items-center gap-2">
+                        {iconMap[feature.iconName]}
+                        <span className="text-white/80 text-sm font-medium">
+                          {feature.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Right Hero Image Column */}
+                <div className="flex justify-center lg:justify-end">
+                  <div className="relative w-full max-w-105 aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                    <Image
+                      src={heroImage.src}
+                      alt={heroImage.alt}
+                      fill
+                      priority
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+
               </div>
             </div>
+
+            {/* Wave divider */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-8 bg-background"
+              style={{ clipPath: "ellipse(55% 100% at 50% 100%)" }}
+            />
           </div>
-          {/* Wave divider */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-8 bg-background"
-            style={{ clipPath: "ellipse(55% 100% at 50% 100%)" }}
-          />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Ad Banner ── */}
       <div className="bg-muted/50 border-y border-border py-3 flex items-center justify-center">
@@ -713,11 +703,10 @@ export default function Index() {
                       type="button"
                       key={s}
                       onClick={() => setSex(s)}
-                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${
-                        sex === s
-                          ? "border-brand bg-brand-light text-brand"
-                          : "border-border bg-card text-muted-foreground hover:border-brand/50"
-                      }`}
+                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${sex === s
+                        ? "border-brand bg-brand-light text-brand"
+                        : "border-border bg-card text-muted-foreground hover:border-brand/50"
+                        }`}
                     >
                       {s === "Male" ? (
                         <Mars
@@ -763,7 +752,7 @@ export default function Index() {
                         Your {result.breedName} Puppy
                       </h3>
                     </div>
-                    <Button onClick={()=>setResult(null)}
+                    <Button onClick={() => setResult(null)}
                       type="button"
                       className="p-2 rounded-lg hover:bg-muted transition-colors"
                     >
@@ -904,290 +893,199 @@ export default function Index() {
 
       {/* ── When Will Puppies Stop Growing Infographic ── */}
       <section className="bg-muted/40 border-y border-border py-10">
-        <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24">
-          <h3 className="text-lg font-bold text-foreground mb-6 text-center">
-            When will your puppy stop growing?
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[
-              {
-                label: "Toy",
-                time: "9 mo",
-                color:
-                  "bg-purple-100 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800",
-                textColor: "text-purple-700 dark:text-purple-300",
-              },
-              {
-                label: "Small",
-                time: "12 mo",
-                color:
-                  "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800",
-                textColor: "text-blue-700 dark:text-blue-300",
-              },
-              {
-                label: "Medium",
-                time: "15 mo",
-                color: "bg-brand-light border-brand/20",
-                textColor: "text-brand-dark dark:text-brand",
-              },
-              {
-                label: "Large/Giant",
-                time: "18–24 mo",
-                color:
-                  "bg-orange-100 dark:bg-orange-900/30 border-orange-200 dark:border-orange-800",
-                textColor: "text-orange-700 dark:text-orange-300",
-              },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className={`rounded-2xl border p-5 text-center ${item.color}`}
-              >
-                <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
-                  {item.label}
-                </p>
-                <p className={`text-2xl font-black ${item.textColor}`}>
-                  {item.time}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Growth Support Recommendations ── */}
-      <section className="bg-muted/30 py-16 lg:py-24">
-        <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-              Growth Support Recommendations
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              {`Expert-backed advice tailored to your puppy's current developmental stage.`}
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Sparkles className="w-6 h-6" color="#EA580C" />,
-                iconBg: "bg-orange-100 dark:bg-orange-900/30",
-                title: "Optimal Feeding",
-                desc: 'Puppies need specifically formulated "large breed" food to ensure calcium-to-phosphorus ratios are balanced for slower growth.',
-                link: "View Feeding Chart",
-                linkColor: "text-brand",
-              },
-              {
-                icon: <ShieldCheck className="w-6 h-6" color="#2563EB" />,
-                iconBg: "bg-blue-100 dark:bg-blue-900/30",
-                title: "Vet Check-ups",
-                desc: "Your next vital vaccination window is between 14–16 weeks. Monitor for signs of 'panosteitis' (growing pains) in larger breeds.",
-                link: "Schedule Reminder",
-                linkColor: "text-brand",
-              },
-              {
-                icon: <Dumbbell className="w-6 h-6" color="#16A34A" />,
-                iconBg: "bg-brand-light",
-                title: "Exercise Limit",
-                desc: "Follow the 5-minute rule: 5 minutes of formal exercise per month of age, twice a day. Avoid high-impact jumping until 12 months.",
-                link: "Training Tips",
-                linkColor: "text-brand",
-              },
-            ].map((card) => (
-              <div
-                key={card.title}
-                className="bg-card border border-border rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow"
-              >
+        {infographicSection && (
+          <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24">
+            <h3 className="text-lg font-bold text-foreground mb-6 text-center">
+              {infographicSection.title ? infographicSection.title : `When will your puppy stop growing?`}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {infographicSection.reasons && infographicSection.reasons.map((item) => (
                 <div
-                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${card.iconBg}`}
+                  key={item.label}
+                  className={`rounded-2xl border p-5 text-center ${item.color}`}
                 >
-                  {card.icon}
-                </div>
-                <h3 className="text-lg font-bold text-foreground mb-3">
-                  {card.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                  {card.desc}
-                </p>
-                <a
-                  href="#calculator"
-                  className={`flex items-center gap-2 text-sm font-bold ${card.linkColor} hover:opacity-75 transition-opacity`}
-                >
-                  {card.link}
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── How It Works + Breed Table ── */}
-      <section className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* How it works */}
-          <div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
-              How Puppy Weight Prediction Works
-            </h2>
-            <div className="bg-muted/50 rounded-2xl p-7 flex flex-col gap-6 border border-border">
-              {[
-                {
-                  n: "1",
-                  strong: "Breed Standard Baseline:",
-                  rest: " Our algorithm uses average adult weights for 300+ AKC breeds.",
-                },
-                {
-                  n: "2",
-                  strong: "Growth Curve Analysis:",
-                  rest: " We map your puppy's current weight against specific growth trajectories.",
-                },
-                {
-                  n: "3",
-                  strong: "Adjustment Factors:",
-                  rest: " We adjust for sex, birth weight (if known), and current BCS (Body Condition Score).",
-                },
-              ].map((step) => (
-                <div key={step.n} className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white font-bold text-sm shrink-0">
-                    {step.n}
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed pt-1">
-                    <span className="font-bold text-foreground">
-                      {step.strong}
-                    </span>
-                    {step.rest}
+                  <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
+                    {item.label}
+                  </p>
+                  <p className={`text-2xl font-black ${item.textColor}`}>
+                    {item.time}
                   </p>
                 </div>
               ))}
             </div>
-
-            {/* Puppy growth stops section */}
-            <div className="mt-8">
-              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-                When Do Puppies Stop Growing?
-              </h2>
-              <p className="text-muted-foreground text-base leading-relaxed mb-5">
-                The age at which a dog stops growing is directly related to its
-                final adult size. Smaller breeds reach their full skeletal size
-                much earlier than giant breeds.
-              </p>
-              <div className="flex items-start gap-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-5">
-                <AlertTriangle className="w-5 h-5 text-[#CA8A04] shrink-0 mt-0.5" />
-                <p className="text-amber-800 dark:text-amber-200 text-sm font-medium italic leading-relaxed">
-                  Note: Puppies reach their full height before they reach their
-                  full weight. The growth plates in their joints usually close
-                  between 12–18 months.
-                </p>
-              </div>
-            </div>
           </div>
-
-          {/* Breed size table */}
-          <div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
-              Puppy Growth by Breed Size
-            </h2>
-            <div className="border border-border rounded-2xl overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-muted border-b border-border">
-                    <th className="text-left px-5 py-4 font-bold text-foreground">
-                      Size Category
-                    </th>
-                    <th className="text-left px-5 py-4 font-bold text-foreground">
-                      Adult Weight
-                    </th>
-                    <th className="text-left px-5 py-4 font-bold text-foreground hidden sm:table-cell">
-                      Height Range
-                    </th>
-                    <th className="text-left px-5 py-4 font-bold text-foreground">
-                      Growth Stops
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    {
-                      cat: "Small/Toy",
-                      weight: "2–10 kg",
-                      height: "15–38 cm",
-                      stops: "9–12 Months",
-                    },
-                    {
-                      cat: "Medium",
-                      weight: "11–25 kg",
-                      height: "31–58 cm",
-                      stops: "12–15 Months",
-                    },
-                    {
-                      cat: "Large",
-                      weight: "26–45 kg",
-                      height: "51–70 cm",
-                      stops: "15–18 Months",
-                    },
-                    {
-                      cat: "Giant",
-                      weight: "46+ kg",
-                      height: "71+ cm",
-                      stops: "18–24 Months",
-                    },
-                  ].map((row, i) => (
-                    <tr
-                      key={row.cat}
-                      className={`border-b border-border last:border-0 ${
-                        i % 2 === 0 ? "bg-card" : "bg-muted/30"
-                      }`}
-                    >
-                      <td className="px-5 py-4 text-muted-foreground">
-                        {row.cat}
-                      </td>
-                      <td className="px-5 py-4 font-bold text-foreground">
-                        {row.weight}
-                      </td>
-                      <td className="px-5 py-4 text-muted-foreground hidden sm:table-cell">
-                        {row.height}
-                      </td>
-                      <td className="px-5 py-4 text-muted-foreground">
-                        {row.stops}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Email signup */}
-            <div className="mt-8 bg-gray-900 dark:bg-gray-800 rounded-2xl p-7">
-              <h3 className="text-white text-lg font-bold mb-2">
-                Track Growth Weekly
-              </h3>
-              <p className="text-gray-400 text-sm mb-5 leading-relaxed">
-                Join 15,000+ pet parents receiving monthly health milestones and
-                growth tracking reminders.
-              </p>
-              <div className="flex flex-col gap-3">
-                <label htmlFor="emailInput" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="emailInput"
-                  type="email"
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  placeholder="Email address"
-                  className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
-                />
-                <Button onClick={()=>router.push('/contact')}
-                  type="button"
-                  className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
-                >
-                  Get Tracking Reminders
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </section>
+
+      {/* ── Growth Support Recommendations ── */}
+      <section className="bg-muted/30 py-16 lg:py-24">
+        {growthSupportRecommendation && (
+          <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                {growthSupportRecommendation.title ? growthSupportRecommendation.title : `Growth Support Recommendations`}
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                {growthSupportRecommendation.desc ? growthSupportRecommendation.desc : `Expert-backed advice tailored to your puppy's current developmental stage.`}
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {growthSupportRecommendation.recommendations && growthSupportRecommendation.recommendations.map((card) => (
+                <div
+                  key={card.title}
+                  className="bg-card border border-border rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div
+                    className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${card.iconBg}`}
+                  >
+                    {card.icon && <card.icon className="w-6 h-6" color={card.Color} />}
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground mb-3">
+                    {card.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                    {card.desc}
+                  </p>
+                  <Link
+                    href="#calculator"
+                    className={`flex items-center gap-2 text-sm font-bold ${card.linkColor} hover:opacity-75 transition-opacity`}
+                  >
+                    {card.link}
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* ── How It Works + Breed Table ── */}
+      {GROWTH_INSIGHTS_CONTENT && (
+        <section className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-16">
+
+            {/* Left Column: How it works & Development Info */}
+            <div>
+              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
+                {howItWorksTitle}
+              </h2>
+              <div className="bg-muted/50 rounded-2xl p-7 flex flex-col gap-6 border border-border">
+                {steps.map((step: PredictionStep) => (
+                  <div key={step.n} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white font-bold text-sm shrink-0">
+                      {step.n}
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed pt-1">
+                      <span className="font-bold text-foreground">
+                        {step.strong}
+                      </span>
+                      {step.rest}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Puppy growth stops sub-section */}
+              <div className="mt-8">
+                <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
+                  {stopGrowingTitle}
+                </h2>
+                <p className="text-muted-foreground text-base leading-relaxed mb-5">
+                  {stopGrowingDesc}
+                </p>
+                <div className="flex items-start gap-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-5">
+                  <AlertTriangle className="w-5 h-5 text-[#CA8A04] shrink-0 mt-0.5" />
+                  <p className="text-amber-800 dark:text-amber-200 text-sm font-medium italic leading-relaxed">
+                    {alertNote}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Breed size reference table & Signup conversion box */}
+            <div>
+              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
+                {tableTitle}
+              </h2>
+              <div className="border border-border rounded-2xl overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-muted border-b border-border">
+                      <th className="text-left px-5 py-4 font-bold text-foreground">
+                        {tableHeadings.cat}
+                      </th>
+                      <th className="text-left px-5 py-4 font-bold text-foreground">
+                        {tableHeadings.weight}
+                      </th>
+                      <th className="text-left px-5 py-4 font-bold text-foreground hidden sm:table-cell">
+                        {tableHeadings.height}
+                      </th>
+                      <th className="text-left px-5 py-4 font-bold text-foreground">
+                        {tableHeadings.stops}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {growthRows.map((row: GrowthRow, i: number) => (
+                      <tr
+                        key={row.cat}
+                        className={`border-b border-border last:border-0 ${i % 2 === 0 ? "bg-card" : "bg-muted/30"
+                          }`}
+                      >
+                        <td className="px-5 py-4 text-muted-foreground">
+                          {row.cat}
+                        </td>
+                        <td className="px-5 py-4 font-bold text-foreground">
+                          {row.weight}
+                        </td>
+                        <td className="px-5 py-4 text-muted-foreground hidden sm:table-cell">
+                          {row.height}
+                        </td>
+                        <td className="px-5 py-4 text-muted-foreground">
+                          {row.stops}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Email signup box */}
+              <div className="mt-8 bg-gray-900 dark:bg-gray-800 rounded-2xl p-7">
+                <h3 className="text-white text-lg font-bold mb-2">
+                  {newsletterTitle}
+                </h3>
+                <p className="text-gray-400 text-sm mb-5 leading-relaxed">
+                  {newsletterDesc}
+                </p>
+                <div className="flex flex-col gap-3">
+                  <label htmlFor="emailInput" className="sr-only">
+                    {newsletterPlaceholder}
+                  </label>
+                  <input
+                    id="emailInput"
+                    type="email"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    placeholder={newsletterPlaceholder}
+                    className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
+                  />
+                  <Button
+                    onClick={() => router.push('/contact')}
+                    type="button"
+                    className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
+                  >
+                    {newsletterBtnText}
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      )}
 
       {/* ── FAQ ── */}
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">
@@ -1195,22 +1093,7 @@ export default function Index() {
           <h2 className="text-2xl lg:text-3xl font-bold text-foreground text-center mb-10">
             Frequently Asked Questions
           </h2>
-          <Accordion type="single" collapsible className="flex flex-col gap-3">
-            {faqItems.map((item, i) => (
-              <AccordionItem
-                key={item.a}
-                value={`item-${i}`}
-                className="bg-card border border-border rounded-xl px-6 overflow-hidden"
-              >
-                <AccordionTrigger className="flex items-center justify-between py-5 text-left text-sm font-bold text-foreground hover:no-underline">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-5">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {puppyWeightPageCms.faqSection && <FaqSection items={puppyWeightPageCms.faqSection} />}
         </div>
       </section>
 
@@ -1220,32 +1103,7 @@ export default function Index() {
           Other Useful Tools
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              emoji: "📈",
-              emojiColor: "text-brand",
-              iconBg: "bg-brand-light",
-              title: "Dog Growth Calculator",
-              desc: "Compare your dog's growth to healthy breed standards month-by-month.",
-              linkColor: "text-brand",
-            },
-            {
-              emoji: "🍖",
-              emojiColor: "text-amber-600",
-              iconBg: "bg-amber-100 dark:bg-amber-900/30",
-              title: "Dog Food Calculator",
-              desc: "Calculate the exact calories and portions your dog needs daily.",
-              linkColor: "text-amber-600",
-            },
-            {
-              emoji: "🗓️",
-              emojiColor: "text-gray-500",
-              iconBg: "bg-gray-100 dark:bg-gray-800",
-              title: "Dog Age Calculator",
-              desc: "Convert your dog's age to human years accurately based on size.",
-              linkColor: "text-foreground",
-            },
-          ].map((tool) => (
+          {puppyWeightPageCms.backlinks && puppyWeightPageCms.backlinks.map((tool) => (
             <div
               key={tool.title}
               className="bg-card border border-border rounded-2xl p-7 hover:shadow-md transition-shadow"
@@ -1264,7 +1122,7 @@ export default function Index() {
                 {tool.desc}
               </p>
               <Link
-                href="/placeholder"
+                href={tool.href}
                 className={`text-sm font-bold ${tool.linkColor} hover:opacity-75 transition-opacity`}
               >
                 Explore Tool →

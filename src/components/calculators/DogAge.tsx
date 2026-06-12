@@ -13,6 +13,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { dogAgePageCms } from "@/lib/cms/dogagepage";
+import { blogPosts } from "@/lib/cms/blogpage";
+import BlogCard from "../shared/BlogCard";
+import { backlinks } from "@/lib/cms/calculatorpage";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 const DogAgeCalculator = () => {
   const [dogAge, setDogAge] = useState<number>(10);
@@ -125,38 +131,50 @@ const DogAgeCalculator = () => {
     large: "Large breeds (50-90 lbs) age faster than smaller dogs",
     giant: "Giant breeds (over 90 lbs) age the fastest",
   };
-
+  const heroSection = dogAgePageCms.heroSection
+  const informationSection = dogAgePageCms.informationSection
+  const faqSection = dogAgePageCms.faqSection
+  const callToActionSection = dogAgePageCms.callToActionSection
   return (
     <TooltipProvider>
       <div className="min-h-screen ">
         {/* Main Content */}
         <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
           {/* Hero Section */}
-          <section className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-balance text-foreground mb-4">
-                How old is your dog in{" "}
-                <span className="italic text-primary">human years</span>?
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-                Forget the old &quot;multiply by 7&quot; rule! Real dog aging is
-                non-linear and depends on breed size. Our calculator uses the
-                latest veterinary research to give you an accurate human-year
-                equivalent.
-              </p>
-              <div className="flex flex-wrap gap-2 justify-center text-sm text-muted-foreground">
-                <span className="px-3 py-1 rounded-full bg-accent/10 text-accent">
-                  Science-backed
-                </span>
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary">
-                  Veterinary approved
-                </span>
-                <span className="px-3 py-1 rounded-full bg-secondary/50 text-white">
-                  Size-accurate
-                </span>
+          {heroSection && (
+            <section className="mb-12">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-balance text-foreground mb-4">
+                  {(() => {
+                    const title = heroSection.title ? heroSection.title : "How old is your dog in human years";
+                    const words: string[] = title.trim().split(/\s+/);
+                    const lastTwoWords: string = words.slice(-2).join(" ");
+                    const firstPart: string = words.slice(0, -2).join(" ");
+                    return (
+                      <>
+                        {heroSection.title ? firstPart : `How old is your dog in`}{" "}
+                        <span className="italic text-primary">{lastTwoWords}</span>?
+                      </>
+                    )
+
+                  })()}
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
+                  {heroSection.description ? heroSection.description : `Forget the old &quot;multiply by 7&quot; rule! Real dog aging is
+                  non-linear and depends on breed size. Our calculator uses the
+                  latest veterinary research to give you an accurate human-year
+                  equivalent.`}
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center text-sm text-muted-foreground">
+                  {heroSection.buttons && heroSection.buttons.map((btn) => (
+                    <span key={btn.title} className="px-3 py-1 rounded-full bg-accent/10 text-gray-200">
+                      {btn.title ? btn.title : `Science-backed`}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           {/* Calculator Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -249,65 +267,76 @@ const DogAgeCalculator = () => {
           </div>
 
           {/* Information Section */}
-          <section className="mt-16 space-y-8">
-            <div className="text-center mb-10">
+          {informationSection && (
+            <section className="mt-16 space-y-8">
+              <div className="text-center mb-10">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  {informationSection.title ? informationSection.title : `Why Size Matters`}
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  {informationSection.description ? informationSection.description : `Different dog breeds age at different rates due to genetics and
+                  physiology`}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {informationSection.cards && informationSection.cards.map((item) => (
+                  <Card
+                    key={item.size}
+                    className={`p-4 bg-linear-to-br ${item.color} border`}
+                  >
+                    <h4 className="font-semibold text-foreground mb-2">
+                      {item.size}
+                    </h4>
+                    <p className="text-xs text-muted-foreground mb-3">
+                      {item.example}
+                    </p>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      {item.advantage}
+                    </p>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )}
+
+
+          {/* Backlinks || Other Calculators and services */}
+          <section className="mt-16">
+            <div className="text-center mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                Why Size Matters
+                Other calculators you may need
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Different dog breeds age at different rates due to genetics and
-                physiology
+                Continue exploring pawteller’s tools to support your dog’s nutrition
+                and growth.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  size: "Small",
-                  example: "Chihuahua, Yorkshire Terrier",
-                  advantage: "Live longer lives, aging slower in later years",
-                  color:
-                    "from-blue-500/20 to-blue-600/20 border-blue-200/50 dark:border-blue-800/50",
-                },
-                {
-                  size: "Medium",
-                  example: "Beagle, Cocker Spaniel",
-                  advantage: "Balanced aging pattern, standard lifespan",
-                  color:
-                    "from-green-500/20 to-green-600/20 border-green-200/50 dark:border-green-800/50",
-                },
-                {
-                  size: "Large",
-                  example: "Golden Retriever, German Shepherd",
-                  advantage: "Mature faster, shorter overall lifespan",
-                  color:
-                    "from-orange-500/20 to-orange-600/20 border-orange-200/50 dark:border-orange-800/50",
-                },
-                {
-                  size: "Giant",
-                  example: "Great Dane, Saint Bernard",
-                  advantage: "Age fastest, require extra care",
-                  color:
-                    "from-red-500/20 to-red-600/20 border-red-200/50 dark:border-red-800/50",
-                },
-              ].map((item) => (
-                <Card
-                  key={item.size}
-                  className={`p-4 bg-linear-to-br ${item.color} border`}
-                >
-                  <h4 className="font-semibold text-foreground mb-2">
-                    {item.size}
-                  </h4>
-                  <p className="text-xs text-muted-foreground mb-3">
-                    {item.example}
-                  </p>
-                  <p className="text-sm text-foreground leading-relaxed">
-                    {item.advantage}
-                  </p>
-                </Card>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {(() => {
+                // Pick 2 calculators deterministically to avoid SSR hydration mismatch (no Math.random during render)
+                const eligibleCards = backlinks.filter(
+                  (card) => card.cta.href !== "/calculators/dog-age",
+                );
+
+                const stableIndexSeed = `${dogAge}-${dogSize}`;
+                let hash = 0;
+                for (let i = 0; i < stableIndexSeed.length; i++) {
+                  hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+                }
+
+                const start = eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+                const cards = [eligibleCards[start], eligibleCards[(start + 1) % eligibleCards.length]].filter(Boolean);
+
+                return cards.map((card) => (
+                  <BacklinkCalculatorCard key={card.title} {...card} />
+                ));
+              })()}
+
             </div>
           </section>
+
 
           {/* FAQ Section */}
           <section className="mt-16 max-w-3xl mx-auto">
@@ -316,55 +345,40 @@ const DogAgeCalculator = () => {
             </h2>
 
             <div className="space-y-4">
-              {[
-                {
-                  q: "Is the &quot;multiply by 7&quot; rule accurate?",
-                  a: "No, this outdated rule oversimplifies dog aging. Dogs age much faster in their first two years, then the rate slows down. Additionally, breed size significantly affects how quickly dogs age.",
-                },
-                {
-                  q: "Why do large dogs age faster than small dogs?",
-                  a: "Larger dogs have faster metabolisms and shorter lifespans. They reach physical maturity quickly and experience more rapid cellular aging, which is why a 10-year-old Great Dane is much older in human terms than a 10-year-old Chihuahua.",
-                },
-                {
-                  q: "When is my dog considered a senior?",
-                  a: "A dog is typically considered a senior between 45-65 human years old (approximately 7-10 dog years depending on size). This is when preventative veterinary care becomes especially important.",
-                },
-                {
-                  q: "How often should I take my senior dog to the vet?",
-                  a: "Senior dogs should visit the veterinarian at least twice a year for wellness exams. More frequent visits may be needed if your dog has health conditions.",
-                },
-              ].map((item) => (
-                <Card
-                  key={item.q}
-                  className="p-4 md:p-6 border-border/60 hover:border-border transition-colors"
-                >
-                  <h3 className="font-semibold text-foreground mb-2">
-                    {item.q}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.a}
-                  </p>
-                </Card>
-              ))}
+              {faqSection && <FaqSection items={faqSection} />}
             </div>
           </section>
 
           {/* Call to Action */}
-          <section className="mt-16 text-center">
-            <Card className="p-8 md:p-12 bg-linear-to-r from-primary/10 to-secondary/10 border-primary/30">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Keep Your Dog Healthy
-              </h2>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Regular veterinary checkups, proper nutrition, exercise, and
-                preventative care are essential for keeping your dog healthy
-                throughout their life.
-              </p>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
-                Schedule a Vet Checkup
-              </Button>
-            </Card>
-          </section>
+          {callToActionSection && (
+            <section className="mt-16 text-center">
+              <Card className="p-8 md:p-12 bg-linear-to-r from-primary/10 to-secondary/10 border-primary/30">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  {callToActionSection.title ? callToActionSection.title : `Keep Your Dog Healthy`}
+                </h2>
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  {callToActionSection.description ? callToActionSection.description : `Regular veterinary checkups, proper nutrition, exercise, and
+                  preventative care are essential for keeping your dog healthy
+                  throughout their life.`}
+                </p>
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
+                  {callToActionSection.button.label ? callToActionSection.button.label : `Schedule a Vet Checkup`}
+                </Button>
+              </Card>
+            </section>
+          )}
+
+          {/* Blog Section */}
+          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {(() => {
+              const healthPosts = blogPosts.filter((post) => post.category === "Growth");
+              if (healthPosts.length === 0) return null;
+
+              return healthPosts.map((article) => (
+                <BlogCard key={article.url} {...article} />
+              ));
+            })()}
+          </div>
         </main>
       </div>
     </TooltipProvider>

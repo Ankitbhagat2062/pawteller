@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { BestNamesSection } from "@/components/calculators/dogNameComponents/BestNameSection";
 import { CategoriesSection } from "@/components/calculators/dogNameComponents/CategoriesSection";
-import { FAQSection } from "@/components/calculators/dogNameComponents/FAQSection";
 import { FilterSection } from "@/components/calculators/dogNameComponents/FilterSection";
-import { HowToChooseSection } from "@/components/calculators/dogNameComponents/HowToChooseSection";
+import HowToChooseSection from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
-import { generateDogNames } from "@/lib/constant";
+import { generateDogNames } from "@/lib/cms/dognamepage";
 import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { faqItems } from "@/lib/cms/calculatorpage";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";
@@ -91,7 +92,7 @@ export function DogNameGenerator() {
         <HowToChooseSection />
 
         {/* FAQ Section */}
-        <FAQSection />
+        <FaqSection items={faqItems} />
       </div>
     </div>
   );

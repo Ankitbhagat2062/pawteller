@@ -7,8 +7,8 @@ import { BlogContent } from "@/components/blog/blog-content";
 import { BlogFeaturedImage } from "@/components/blog/blog-featured-image";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { CtaCard } from "@/components/blog/cta-card";
-import { blogPosts } from "@/lib/constant";
-import type { BlogPost, BlogPostPageProps } from "@/lib/types";
+import type { BlogPost, BlogPostPageProps } from "@/lib/cms/blogpage";
+import { blogPosts } from "@/lib/cms/blogpage";
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.url === `/blog/${slug}`);

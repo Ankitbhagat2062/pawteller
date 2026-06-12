@@ -1,13 +1,31 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import BlogListingPage from "@/components/blog/BlogListing";
+import { blogPageSeo } from "@/lib/cms/blogpage";
 
 // 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE BLOG
+const seo = blogPageSeo
 export const metadata: Metadata = {
-  title: "Expert Pet Care Guides, Tips & Calculators | pawteller",
-  description:
+  title: seo.title||"Expert Pet Care Guides, Tips & Calculators | pawteller",
+  description: seo.description ||
     "Explore data-driven insights, veterinarian-vetted puppy growth tracking tips, dog nutrition guides, and care advice to keep your pup healthy.",
-
+  keywords: seo.keywords || [
+    "pet care guides",
+    "dog care tips",
+    "puppy growth tracker",
+    "puppy growth calculator",
+    "dog nutrition",
+    "vet-vetted dog advice",
+    "dog health tips",
+    "puppy weight calculator",
+    "dog years calculator",
+    "dog age calculator",
+    "breed-specific care",
+    "new puppy checklist",
+    "dog wellness",
+    "science-based pet care",
+    "pawteller blog",
+  ],
   // Prevents duplicate URL content indexing penalties
   alternates: {
     canonical: "https://pawteller.com/blog",

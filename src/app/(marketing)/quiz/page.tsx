@@ -1,60 +1,78 @@
 import type { Metadata } from "next";
 import { QuizComponent } from "@/components/quiz/QuizComponent";
-import { quizData as allQuizData } from "@/lib/constant";
+import { quizData as allQuizData } from "@/lib/cms/quizpage";
 import type { quizDataProps } from "@/lib/types";
 
+// Used as a fallback when `quiz` query param is missing/invalid.
+const fallbackSeo = allQuizData[0]?.seo;
 
-// 🚀 100/100 LIGHTHOUSE SEO METADATA FOR THE QUIZ
-export const metadata: Metadata = {
-  title: "Interactive Dog Breed & Health Quiz | pawteller",
-  description:
-    "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: { quiz?: string };
+}): Promise<Metadata> {
+  const quizParam = (await searchParams)?.quiz;
 
-  // Prevents duplicate URL content indexing penalties
-  alternates: {
-    canonical: "https://pawteller.com/quiz",
-  },
+  const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
+    q.url.includes(`quiz=${quizParam}`),
+  );
 
-  // Rich visual configuration for social media platforms (Facebook, LinkedIn, Discord)
-  openGraph: {
-    title: "Interactive Dog Breed & Health Quiz | pawteller",
+  const seo = selectedQuiz?.seo ?? fallbackSeo;
+
+  return {
+    title:
+      seo?.title || "Interactive Dog Breed & Health Quiz | pawteller",
     description:
-      "Test your pet care knowledge and unlock customized health insights for your dog.",
-    url: "https://pawteller.com/quiz",
-    siteName: "pawteller",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "https://pawteller.com/og-quiz.png", // Create a clean 1200x630 image and put it in your public folder
-        width: 1200,
-        height: 630,
-        alt: "pawteller Interactive Pet Quiz",
-      },
-    ],
-  },
+      seo?.description ||
+      "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
+    keywords: seo?.keywords || [],
 
-  // High-performance rich link card previews on X (formerly Twitter)
-  twitter: {
-    card: "summary_large_image",
-    title: "Interactive Dog Breed & Health Quiz | pawteller",
-    description:
-      "Test your pet care knowledge and unlock customized health insights for your dog.",
-    images: ["https://pawteller.com/og-quiz.png"],
-  },
+    alternates: {
+      canonical: "https://pawteller.com/quiz",
+    },
 
-  // Explicit crawler instruction directives
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    openGraph: {
+      title:
+        seo?.title || "Interactive Dog Breed & Health Quiz | pawteller",
+      description:
+        seo?.description ||
+        "Test your pet care knowledge and unlock customized health insights for your dog.",
+      url: "https://pawteller.com/quiz",
+      siteName: "pawteller",
+      locale: "en_US",
+      type: "website",
+      images: [
+        {
+          url: "https://pawteller.com/og-quiz.png",
+          width: 1200,
+          height: 630,
+          alt: "pawteller Interactive Pet Quiz",
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title:
+        seo?.title || "Interactive Dog Breed & Health Quiz | pawteller",
+      description:
+        seo?.description ||
+        "Test your pet care knowledge and unlock customized health insights for your dog.",
+      images: ["https://pawteller.com/og-quiz.png"],
+    },
+
+    robots: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-};
+  };
+}
 
 export default async function QuizPage({
   searchParams,
@@ -62,6 +80,7 @@ export default async function QuizPage({
   searchParams?: { quiz?: string };
 }) {
   const quizParam = (await searchParams)?.quiz;
+
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
@@ -75,3 +94,4 @@ export default async function QuizPage({
     </main>
   );
 }
+

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getNamesByPersonality, personalityGroups } from "@/lib/constant";
+import { getNamesByPersonality, personalityGroups } from "@/lib/cms/dognamepage";
 import type { DogName } from "@/lib/types";
 
 export function BestNamesSection() {

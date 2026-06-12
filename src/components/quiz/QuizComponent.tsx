@@ -1,15 +1,19 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, Dog, Mail } from "lucide-react";
+import { QuizFaqSection } from "@/components/quiz/QuizFaqSection";
+
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios, { AxiosError } from "axios";
 import { type quizDataProps } from "@/lib/types";
-import { Breed, breedDatabase } from "@/lib/breedDatabase";
 import { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
 import { useRouter } from "next/navigation";
+import { Breed, breedDatabase } from "@/lib/cms/quizpage";
+import { blogPosts } from "@/lib/cms/blogpage";
+import BlogCard from "../shared/BlogCard";
 
 export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const router = useRouter();
@@ -380,6 +384,16 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
             </Button>
           </div>
         </div>
+        <QuizFaqSection quizSlug={quizData.url} />
+        <div className="mt-8 grid items-center justify-center grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {(() => {
+            const quizblogPosts = blogPosts.filter((post) => post.category === quizData.category);
+            if (quizblogPosts.length === 0) return null;
+            return quizblogPosts.map((article) => (
+              <BlogCard key={article.url} {...article} />
+            ));
+          })()}
+        </div>
       </div>
     );
   }
@@ -419,6 +433,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       </div>
 
       <main className="flex-1 px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+        {/* Quiz */}
         <div className="max-w-2xl mx-auto">
           <div className="bg-card rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm border border-border">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-card-foreground mb-6 sm:mb-8">
