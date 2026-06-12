@@ -2,6 +2,7 @@
 
 import { Info } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -361,8 +362,13 @@ const DogAgeCalculator = () => {
                   preventative care are essential for keeping your dog healthy
                   throughout their life.`}
                 </p>
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
-                  {callToActionSection.button.label ? callToActionSection.button.label : `Schedule a Vet Checkup`}
+                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
+                  <Link
+                    href={callToActionSection.button.href || "/contact"}
+                    aria-label={callToActionSection.button.ariaLabel || callToActionSection.button.label || "Schedule a Vet Checkup"}
+                  >
+                    {callToActionSection.button.label ? callToActionSection.button.label : `Schedule a Vet Checkup`}
+                  </Link>
                 </Button>
               </Card>
             </section>

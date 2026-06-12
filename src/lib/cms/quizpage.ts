@@ -340,6 +340,15 @@ export interface QuizResult {
     temperament?: string[];
     lifespan?: string;
     reasons?: string[];
+    scoreBreakdown?: {
+      apartmentLiving: string;
+      lifestyleMatch: string;
+      kidFriendly: string;
+      beginnerFriendly: string;
+      lowShedding: string;
+      sizePreference: string;
+      total: string;
+    };
   }[];
 }
 

@@ -75,34 +75,34 @@ export const backlinks: BacklinkItem[] = [
 
 export const faqItems: FAQItem[] = [
     {
-        question: "How many dog names should I consider?",
+        question: "How accurate are the calculator results?",
         answer:
-            "We recommend generating at least 10-15 name options to choose from. This gives you plenty of variety to test and see what feels right for your new puppy or dog.",
+            "Our calculators use veterinary-informed formulas and biological averages to provide reliable estimates. However, individual dogs vary based on breed, health, and genetics. Always consult your veterinarian for personalized guidance.",
     },
     {
-        question: "Can I change my dog's name if I've been using another one?",
+        question: "Do I need to create an account to use the calculators?",
         answer:
-            "Yes! Dogs can learn new names at any age with consistent training and positive reinforcement. It may take a few weeks for them to adjust, but it's definitely possible.",
+            "No account is required. All calculators are completely free and accessible without signing up. Simply enter your dog's information and get instant results.",
     },
     {
-        question: "What makes a good dog name?",
+        question: "What information do I need to use these calculators?",
         answer:
-            "Good dog names are short (1-2 syllables), easy to pronounce, don't sound like commands, and reflect your dog's personality. They should feel natural when you say them out loud.",
+            "Each calculator has different requirements. Generally, you'll need basic information like your dog's age, weight, breed size, or specific dates depending on the calculator you're using. All required fields are clearly labeled.",
     },
     {
-        question: "Should I match the name to my dog's size?",
+        question: "Can I use these calculators for puppies and adult dogs?",
         answer:
-            "While not necessary, many people prefer matching name style to dog size. Shorter, punchier names work great for small dogs, while longer, stronger names suit larger breeds. Ultimately, choose what feels right!",
+            "Yes! We have specialized calculators for different life stages. The Puppy Weight Calculator is designed for growing puppies, while the Dog Age Calculator works for all ages. Each tool is optimized for its specific purpose.",
     },
     {
-        question: "Are unique names better than popular ones?",
+        question: "How should I interpret the calculator results?",
         answer:
-            "It depends on your preference! Popular names are recognizable and classic, while unique names help your dog stand out. Both can work equally well as long as you love the name and your dog responds to it.",
+            "Results are educational estimates to help you understand your dog's development and care needs. Use them as a starting point for conversations with your vet, not as a replacement for professional veterinary advice.",
     },
     {
-        question: "How do I test if a name works for my dog?",
+        question: "Are there any limits on how many times I can use the calculators?",
         answer:
-            "Try calling the name out loud in different situations. See if you feel comfortable saying it at the dog park, at the vet, and at home. Your dog will also give you feedback on whether they respond to the sound of the name.",
+            "No limits! Use the calculators as many times as you need. They're designed to help you track your dog's growth, plan feeding schedules, and monitor milestones throughout your pet's life.",
     },
 ];
 

@@ -1073,7 +1073,29 @@ export default function Index() {
                     className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                   />
                   <Button
-                    onClick={() => router.push('/contact')}
+                    onClick={async () => {
+                      if (!emailInput || !emailInput.includes('@')) {
+                        alert('Please enter a valid email address');
+                        return;
+                      }
+                      try {
+                        const response = await fetch('/api/newsletter', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ email: emailInput }),
+                        });
+                        if (response.ok) {
+                          alert('Thank you for subscribing!');
+                          setEmailInput('');
+                        } else {
+                          const data = await response.json();
+                          alert(data.message || 'Subscription failed. Please try again.');
+                        }
+                      } catch (error) {
+                        console.error('Newsletter subscription error:', error);
+                        alert('An error occurred. Please try again later.');
+                      }
+                    }}
                     type="button"
                     className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                   >

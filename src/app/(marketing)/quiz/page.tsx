@@ -9,7 +9,7 @@ const fallbackSeo = allQuizData[0]?.seo;
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams?: { quiz?: string };
+  searchParams: Promise<{ quiz?: string }>;
 }): Promise<Metadata> {
   const quizParam = (await searchParams)?.quiz;
 
@@ -77,7 +77,7 @@ export async function generateMetadata({
 export default async function QuizPage({
   searchParams,
 }: {
-  searchParams?: { quiz?: string };
+  searchParams: Promise<{ quiz?: string }>;
 }) {
   const quizParam = (await searchParams)?.quiz;
 

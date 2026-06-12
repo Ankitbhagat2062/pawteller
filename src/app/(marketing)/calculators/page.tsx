@@ -281,8 +281,8 @@ export default function CalculatorsPage() {
                           aria-label={cta.ariaLabel}
                           className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[#294e3f] shadow-sm transition hover:bg-[#f3eadb]"
                         >
-                          {cta.href == '/blog' && <BookOpen className="h-4 w-4" aria-hidden="true" />}
-                          {cta.href == '/contact' && <ChevronRight className="h-4 w-4" aria-hidden="true" />}
+                          {cta.href === '/blog' && <BookOpen className="h-4 w-4" aria-hidden="true" />}
+                          {cta.href === '/contact' && <ChevronRight className="h-4 w-4" aria-hidden="true" />}
                           {cta.label}
                         </Link>
                       ))}
@@ -370,7 +370,7 @@ export default function CalculatorsPage() {
                         variant="link"
                         className="h-auto p-0 text-emerald-700 hover:text-emerald-800 dark:text-emerald-200 dark:hover:text-emerald-100"
                       >
-                        {backlinkblogSection.footer.cta && <Link href={backlinkblogSection.footer.cta.label || "/blog"} aria-label={backlinkblogSection.footer.cta.label || "Go to blog"}>
+                        {backlinkblogSection.footer.cta && <Link href={backlinkblogSection.footer.cta.href || "/blog"} aria-label={backlinkblogSection.footer.cta.label || "Browse the blog"}>
                           {backlinkblogSection.footer.cta.label ? backlinkblogSection.footer.cta.label : `Browse the blog`}
                         </Link>}
                       </Button>
