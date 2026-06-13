@@ -5,9 +5,29 @@ import { SECTIONS } from "@/lib/constant";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
 export const metadata: Metadata = {
-  title: "Privacy Policy | pawteller",
+  title: "Privacy Policy | Pawteller",
   description:
     "Learn how Pawteller collects, secures, and handles your data safely. Read our straightforward privacy commitments and data practices.",
+  keywords: [
+    "Pawteller",
+    "privacy policy",
+    "data privacy",
+    "personal information",
+    "how we use data",
+    "data collection",
+    "device data",
+    "usage analytics",
+    "cookies",
+    "cookie policy",
+    "interest-based advertising",
+    "third-party services",
+    "data rights",
+    "access request",
+    "delete my data",
+    "privacy request",
+    "contact support",
+    "pet health information",
+  ],
   alternates: {
     canonical: "https://pawteller.com/privacy",
   },
@@ -39,7 +59,7 @@ export default function Privacy() {
                     className="hidden h-1 w-1 rounded-full bg-slate-300 dark:bg-zinc-700 sm:inline"
                     aria-hidden="true"
                   />
-                  <p>Platform: pawteller Asset Security</p>
+                  <p>Platform: Pawteller Asset Security</p>
                 </div>
               </div>
             </div>

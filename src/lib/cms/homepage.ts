@@ -1,25 +1,110 @@
 import {
-    calculators,
-    dogLifeStages,
-    featuredCalculatorCards,
     blogPosts,
-} from "@/lib/constant";
+} from "@/lib/cms/blogpage";
+import { CalculatorProps, calculators } from "./calculatorpage";
+import { seoProps } from "@/lib/types";
 
-export type HomepageSeoCms = {
+export interface featuredCalculatorCardProps {
     title: string;
+    displayTitle: string;
     description: string;
-    keywords: string[];
-};
+    bg: string;
+    darkBg: string;
+    className: string;
+    imageSrc?: string;
+    imageAlt?: string;
+    badge?: string;
+}
+
+export const featuredCalculatorCards: featuredCalculatorCardProps[] = [
+    {
+        title: "Dog Age Calculator",
+        displayTitle: "Dog Age",
+        description: "Dog years -> human years",
+        bg: "bg-[#f5c5a3]",
+        darkBg: "dark:bg-[#3c261d]",
+        className: "",
+    },
+    {
+        title: "Puppy Weight Calculator",
+        displayTitle: "Puppy Weight",
+        description: "Predict adult size",
+        bg: "bg-[#c6d9c6]",
+        darkBg: "dark:bg-[#21372b]",
+        className: "lg:row-span-2",
+        imageSrc: "https://images.unsplash.com/photo-1591160690555-5debfba289f0",
+        imageAlt: "Golden retriever puppy lying down",
+        badge: "Most Loved",
+    },
+    {
+        title: "Dog Food Calculator",
+        displayTitle: "Food Portion",
+        description: "Daily calories & cups",
+        bg: "bg-[#f1d9a8]",
+        darkBg: "dark:bg-[#3a301d]",
+        className: "",
+    },
+    {
+        title: "Dog Pregnancy Calculator",
+        displayTitle: "Pregnancy",
+        description: "Due date & timeline",
+        bg: "bg-[#f2ada4]",
+        darkBg: "dark:bg-[#3d2424]",
+        className: "",
+    },
+    {
+        title: "Dog Name Generator",
+        displayTitle: "Name Generator",
+        description: "Perfect name in seconds",
+        bg: "bg-[#d6cbe8]",
+        darkBg: "dark:bg-[#2d2940]",
+        className: "",
+    },
+    {
+        title: "Dog Growth Calculator",
+        displayTitle: "Growth Curve",
+        description: "Track week by week",
+        bg: "bg-[#bcdceb]",
+        darkBg: "dark:bg-[#203642]",
+        className: "",
+    },
+] as const;
+
+export interface dogLifeStageProps {
+    icon: string;
+    age: string;
+    stage: string;
+    weight: string;
+    className: string;
+}
+export const dogLifeStages: dogLifeStageProps[] = [
+    {
+        icon: "🐶",
+        age: "8 WKS",
+        stage: "Puppy",
+        weight: "~8 lbs",
+        className: "lg:mt-0",
+    },
+    {
+        icon: "🐕",
+        age: "6 MO",
+        stage: "Adolescent",
+        weight: "~45 lbs",
+        className: "lg:mt-8",
+    },
+    {
+        icon: "🐕",
+        age: "2 YR",
+        stage: "Adult",
+        weight: "~70 lbs",
+        className: "lg:mt-14",
+    },
+] as const;
 
 export type HomepageHeroCms = {
+    id: string;
     badgeText: string;
-    h1Lines: [
-        { text: string; italic?: boolean; highlight?: boolean },
-        { text: string; italic?: boolean; highlight?: boolean },
-        { text: string; italic?: boolean; highlight?: boolean },
-        { text: string; italic?: boolean; highlight?: boolean },
-        { text: string; italic?: boolean; highlight?: boolean },
-    ];
+    h1: string;
     descriptionLines: string;
     primaryCta: { label: string; href: string; ariaLabel: string };
     secondaryCta: { label: string; href: string, ariaLabel: string };
@@ -37,13 +122,13 @@ export type HomepageFeaturedCalculatorCmsItem = {
 };
 
 export type HomepageCms = {
-    seo: HomepageSeoCms & {
+    seo: seoProps & {
         jsonLd?: Record<string, unknown>;
     };
     hero: HomepageHeroCms;
     featuredCalculators: {
-        calculators: typeof calculators;
-        cards: typeof featuredCalculatorCards;
+        calculators: CalculatorProps[];
+        cards: featuredCalculatorCardProps[];
     };
     dogLifes: {
         left: {
@@ -57,12 +142,6 @@ export type HomepageCms = {
         };
     };
     breedQuizCtas: {
-        leadGen: {
-            eyebrow: string;
-            title: string;
-            description: string;
-            cta: { label: string; href: string; ariaLabel?: string };
-        };
         feature: {
             eyebrow: string;
             title: string;
@@ -103,14 +182,9 @@ export const homepageCms: HomepageCms = {
         },
     },
     hero: {
+        id: "section-hero-1",
         badgeText: "For dog parents who care deeply",
-        h1Lines: [
-            { text: "Smart" },
-            { text: "calculators" },
-            { text: "for your", highlight: false },
-            { text: "best", italic: true, highlight: true },
-            { text: "friend", italic: true, highlight: true },
-        ],
+        h1: "Smart Calculators for your best friend",
         descriptionLines:
             "Predict your puppy's adult size. Decode dog years. Plan portions. Find the perfect breed. All in one beautifully simple place — backed by veterinary science.",
         primaryCta: { label: "Start with Puppy Weight", href: "/calculators/puppy-weight", ariaLabel: "Start using the puppy weight calculator" },
@@ -134,28 +208,21 @@ export const homepageCms: HomepageCms = {
         },
     },
     featuredCalculators: {
-        calculators,
+        calculators : calculators,
         cards: featuredCalculatorCards,
     },
-    dogLifes:{
+    dogLifes: {
         left: {
             eyebrow: "The story of every dog",
             title: "From tiny paws to wise old soul — we'll be your guide.",
-            description:"Dogs grow up fast. One month they fit in your palm, the next they're hogging the couch. Pawteller turns the science of dog development into beautiful, easy-to-understand answers— so you can spend less time worrying and more time playing fetch.",
-             cta: { label: "Dog Age Quiz", href: "/quiz?quiz=breed-match", ariaLabel: "Explore dog life stages to get tailored insights and care tips for every chapter of your dog's journey" },
+            description: "Dogs grow up fast. One month they fit in your palm, the next they're hogging the couch. Pawteller turns the science of dog development into beautiful, easy-to-understand answers— so you can spend less time worrying and more time playing fetch.",
+            cta: { label: "Dog Age Quiz", href: "/quiz?quiz=breed-match", ariaLabel: "Explore dog life stages to get tailored insights and care tips for every chapter of your dog's journey" },
         },
         right: {
             dogLifeStages,
         }
     },
     breedQuizCtas: {
-        leadGen: {
-            eyebrow: "Dog Breed Quiz",
-            title: "Which Dog Breed is Right For You?",
-            description:
-                "Match your lifestyle with a breed profile that fits—size, temperament, energy, and growth expectations.",
-            cta: { label: "Start The Quiz Now", href: "/quiz?quiz=breed-match" },
-        },
         feature: {
             eyebrow: "Free quiz - 2 minutes",
             title: "Which dog breed fits",

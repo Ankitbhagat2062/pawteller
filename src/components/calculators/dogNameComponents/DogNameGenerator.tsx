@@ -3,16 +3,22 @@
 import { useEffect, useState } from "react";
 import { BestNamesSection } from "@/components/calculators/dogNameComponents/BestNameSection";
 import { CategoriesSection } from "@/components/calculators/dogNameComponents/CategoriesSection";
-import { FAQSection } from "@/components/calculators/dogNameComponents/FAQSection";
 import { FilterSection } from "@/components/calculators/dogNameComponents/FilterSection";
-import { HowToChooseSection } from "@/components/calculators/dogNameComponents/HowToChooseSection";
+import HowToChooseSection from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
-import { generateDogNames } from "@/lib/constant";
+import { faqItems ,generateDogNames } from "@/lib/cms/dognamepage";
 import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";
 const INITIAL_STARTING_LETTER: StartingLetter = "All";
+
+// generateDogNames only supports sizes present in the current seed data (Small | Medium | Large).
+function toSupportedSize(size: DogSize | "All"): "Small" | "Medium" | "Large" | "All" {
+  return (size === "Extra Large" ? "Large" : size) as "Small" | "Medium" | "Large" | "All";
+}
+
 export function DogNameGenerator() {
   const [gender, setGender] = useState<DogGender | "All">(INITIAL_GENDER);
   const [size, setSize] = useState<DogSize | "All">(INITIAL_SIZE);
@@ -22,15 +28,18 @@ export function DogNameGenerator() {
   const [results, setResults] = useState<DogName[]>([]);
 
   const handleGenerate = () => {
-    const newNames = generateDogNames(gender, size, startingLetter, 8);
+    const safeSize = toSupportedSize(size);
+    const newNames = generateDogNames(gender, safeSize, startingLetter, 8);
     setResults(newNames);
   };
+
   // Generate initial names on mount
   useEffect(() => {
+    const safeInitialSize = toSupportedSize(INITIAL_SIZE);
     setResults(
       generateDogNames(
         INITIAL_GENDER,
-        INITIAL_SIZE,
+        safeInitialSize,
         INITIAL_STARTING_LETTER,
         8,
       ),
@@ -91,8 +100,9 @@ export function DogNameGenerator() {
         <HowToChooseSection />
 
         {/* FAQ Section */}
-        <FAQSection />
+        <FaqSection items={faqItems} />
       </div>
     </div>
   );
 }
+

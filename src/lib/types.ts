@@ -1,11 +1,3 @@
-import type { LucideIcon } from "lucide-react";
-
-export type badgeType = {
-  bg: string;
-  fg: string;
-  icon: LucideIcon;
-};
-
 
 export type FormState = {
   success?: boolean;
@@ -13,16 +5,14 @@ export type FormState = {
   message?: string;
 };
 
-
-export interface CalculatorProps {
+export interface seoProps {
   title: string;
   description: string;
-  link: string;
-  badge: badgeType;
+  keywords: string[];
 }
-
-export interface BlogPostPageProps {
-  params: Promise<{ blogPost: string }>;
+export interface ImageConfig {
+  src: string;
+  alt: string;
 }
 
 export interface SectionProps {
@@ -31,41 +21,11 @@ export interface SectionProps {
   content: string;
 }
 
-export interface dogLifeStageProps {
-  icon: string;
-  age: string;
-  stage: string;
-  weight: string;
-  className: string;
-}
-
 export interface SectionHeaderProps {
   eyebrow?: string;
   title: string;
 }
 
-export interface featuredCalculatorCardProps {
-  title: string;
-  displayTitle: string;
-  description: string;
-  bg: string;
-  darkBg: string;
-  className: string;
-  imageSrc?: string;
-  imageAlt?: string;
-  badge?: string;
-}
-export interface BlogPost {
-  imageSrc: string;
-  title: string;
-  description: string;
-  url: string;
-  totalTime: string;
-  content: contentProps[];
-  category: string;
-  date?: string;
-  bgColor?: string;
-}
 export interface contentProps {
   title: string;
   description: string;
@@ -77,7 +37,13 @@ interface stepsProps {
   options: string[];
 }
 export interface quizDataProps {
+  seo: {
+    title: string;
+    description: string;
+    keywords: string[];
+  }
   banner: string;
+  category?: string;
   title: string;
   totalQuestions: number;
   estimatedTime: string;
@@ -86,7 +52,7 @@ export interface quizDataProps {
   subheader: string;
   button: string;
   steps: stepsProps[];
-  dogs?:string[]
+  dogs?: string[]
 }
 
 export interface CalculatorState {
@@ -116,8 +82,6 @@ export interface DogName {
   personalities: string[];
   description?: string;
 }
-
-
 
 export interface Category {
   id: string;
@@ -149,20 +113,6 @@ export interface PersonalityGroup {
   icon: string;
 }
 
-export interface BlogContentProps {
-  content: contentProps[];
-}
-
-export interface BlogFeaturedImageProps {
-  src: string;
-  alt: string;
-}
-
-export interface BlogHeaderProps {
-  category: string;
-  readTime: string;
-}
-
 export interface PuppyFormProps {
   onSubmit: (breed: string, ageMonths: number, weightLbs: number) => void;
   disabled?: boolean;
@@ -174,6 +124,7 @@ export interface ResultCardProps {
 }
 
 export interface FAQItem {
+  id?: string;
   question: string;
   answer: string;
 }

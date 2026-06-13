@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { MATURITY_STAGES } from "@/lib/constant";
+import { MATURITY_STAGES } from "@/lib/cms/dogGrowthpage";
 
 export function MaturitySection() {
   return (

@@ -3,7 +3,7 @@
 import { PawPrint, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "@/components/shared/ThemeToggle";
 import { navItems } from "@/lib/constant";
 import { Button } from "@/components/ui/button";
 

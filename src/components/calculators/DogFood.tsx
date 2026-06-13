@@ -2,7 +2,6 @@
 
 import { Calculator } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,8 +12,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ACTIVITY_MULTIPLIERS, LIFE_STAGE_MULTIPLIERS } from "@/lib/constant";
+import { ACTIVITY_MULTIPLIERS, LIFE_STAGE_MULTIPLIERS } from "@/lib/cms/dogfoodpage";
 import type { CalculatorState, Results } from "@/lib/types";
+import { dogFoodPageCms } from "@/lib/cms/dogfoodpage";
+import { WhySection } from "./dogfoodcomponents/WhySection";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { blogPosts } from "@/lib/cms/blogpage";
+import BlogCard from "@/components/shared/BlogCard";
+import { backlinks } from "@/lib/cms/calculatorpage";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 
 const calculateCalories = (state: CalculatorState): Results => {
   const { weight, lifeStage, activityLevel } = state;
@@ -63,29 +70,73 @@ export default function DogFood() {
   const handleActivityChange = (value: string) => {
     setState((prev) => ({ ...prev, activityLevel: value }));
   };
-
+  const header = dogFoodPageCms.header
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8 sm:mb-12">
-          <div className="flex items-center gap-2 mb-4">
-            <Calculator className="w-5 h-5 text-orange-600 dark:text-orange-500" />
-            <span className="text-sm font-semibold tracking-widest text-orange-600 dark:text-orange-500 uppercase">
-              Dog Food Calculator
-            </span>
+        {header && (
+          <div className="mb-8 sm:mb-12">
+            <div className="flex items-center gap-2 mb-4">
+              <Calculator className="w-5 h-5 text-orange-600 dark:text-orange-500" />
+              <span className="text-sm font-semibold tracking-widest text-orange-600 dark:text-orange-500 uppercase">
+                Dog Food Calculator
+              </span>
+            </div>
+
+            {(() => {
+              const title: string = header.title
+                ? header.title
+                : "How much should your dog really eat?";
+              const words: string[] = title.trim().split(/\s+/);
+
+              return (
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
+                  {(() => {
+                    if (words.length === 0) {
+                      return "How much should your dog really eat?";
+                    }
+
+                    if (words.length === 1) {
+                      return words[0];
+                    }
+
+                    if (words.length === 2) {
+                      // Preserve the existing styling structure: highlight the last “tail” word.
+                      return (
+                        <>
+                          {words[0]}{" "}
+                          <span className="italic text-foreground/70">
+                            {words[1]}
+                          </span>
+                        </>
+                      );
+                    }
+
+                    const firstPart: string = words.slice(0, -2).join(" ");
+                    const secondPart: string = words[words.length - 2];
+                    const thirdPart: string = words[words.length - 1];
+
+                    return (
+                      <>
+                        {firstPart}{" "}
+                        <span className="italic text-foreground/70">
+                          {secondPart}
+                        </span>{" "}
+                        {thirdPart}
+                      </>
+                    );
+                  })()}
+                </h1>
+              );
+            })()}
+
+            <p className="text-lg text-foreground/70 max-w-2xl">
+              {header.description ? header.description : `Calorie needs vary by weight, age and activity. Get an
+              evidence-based daily portion in seconds.`}
+            </p>
           </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
-            How much should your dog{" "}
-            <span className="italic text-foreground/70">really</span> eat?
-          </h1>
-
-          <p className="text-lg text-foreground/70 max-w-2xl">
-            Calorie needs vary by weight, age and activity. Get an
-            evidence-based daily portion in seconds.
-          </p>
-        </div>
+        )}
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12">
@@ -224,20 +275,57 @@ export default function DogFood() {
           </p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <Button
-            variant="default"
-            className="bg-orange-600 hover:bg-orange-700 dark:bg-orange-600 dark:hover:bg-orange-700 text-white px-6 py-2 rounded-full font-semibold"
-          >
-            Predict adult weight
-          </Button>
-          <Button
-            variant="outline"
-            className="border-border bg-background text-foreground hover:bg-muted px-6 py-2 rounded-full font-semibold"
-          >
-            Dog age
-          </Button>
+        {/* Backlinks || Other Calculators and services */}
+        <div className="mt-16">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Other calculators you may need
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Continue exploring Pawteller’s tools to support your dog’s nutrition
+              and growth.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {(() => {
+              // Map only 2 random calculators (exclude Dog Age itself)
+              const eligibleCards = backlinks.filter(
+                (card) => card.cta.href !== "/calculators/dog-food",
+              );
+
+              const stableIndexSeed = `${state.weight}-${4}`;
+                const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
+
+              return cards.map((card) => (
+                <BacklinkCalculatorCard key={card.title} {...card} />
+              ));
+            })()}
+
+          </div>
+        </div>
+
+        {/* Why you should use this calculator */}
+        <WhySection
+          title={dogFoodPageCms.whySection.title}
+          bullets={dogFoodPageCms.whySection.bullets}
+          disclaimer={dogFoodPageCms.whySection.disclaimer}
+        />
+
+        {/* FAQ */}
+        <FaqSection items={dogFoodPageCms.faqSection} />
+
+        {/* Blog */}
+        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {(() => {
+            const nutritionPosts = blogPosts.filter((post) => post.category === "Nutrition");
+            if (nutritionPosts.length === 0) return null;
+
+            // 2. Map over the array of matching blog posts
+            return nutritionPosts.map((article) => (
+              <BlogCard key={article.url} {...article} />
+            ));
+          })()}
         </div>
       </div>
     </main>

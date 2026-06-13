@@ -11,20 +11,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
   BREED_SIZE_LABELS,
-  FAQ_ITEMS,
+  dogPregnancyCms,
   GESTATION_DAYS,
-  TIMELINE_WEEKS,
-} from "@/lib/constant";
+  SECTIONS_DATA,
+} from "@/lib/cms/dogpregnancypage";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -123,7 +118,11 @@ export default function DogPregnancy() {
   const displayDate = matingDate
     ? formatLong(new Date(`${matingDate}T00:00:00`))
     : "Select a date";
-
+  const disclaimerSection = dogPregnancyCms.disclaimerSection
+  const heroSection = dogPregnancyCms.heroSection
+  const timelineSection = dogPregnancyCms.timelineSection
+  const faqSection = dogPregnancyCms.faqSection
+  const backlinkSection = dogPregnancyCms.backlinkSection
   return (
     <div className="w-full min-h-screen bg-white dark:bg-gray-950">
       {/* ── HERO ── */}
@@ -146,29 +145,30 @@ export default function DogPregnancy() {
             className="shrink-0"
           />
         </div>
-
-        <div className="relative max-w-3xl w-full mx-auto text-center space-y-5">
-          {/* Vet badge */}
-          <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
-            <ShieldAlert
-              aria-hidden="true"
-              size={14}
-              color="#00C2A8"
-              className="shrink-0"
-            />
-            <span className="text-[#00C2A8] text-xs font-bold tracking-widest uppercase">
-              Veterinary Verified Logic
-            </span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
-            Dog Pregnancy Calculator
-          </h1>
-          <p className="text-lg md:text-xl font-medium text-[#1A2B3C] dark:text-gray-200 leading-relaxed max-w-2xl mx-auto">
-            {`Estimate your dog's due date, track pregnancy milestones
+        {heroSection && (
+          <div className="relative max-w-3xl w-full mx-auto text-center space-y-5">
+            {/* Vet badge */}
+            <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
+              <ShieldAlert
+                aria-hidden="true"
+                size={14}
+                color="#00C2A8"
+                className="shrink-0"
+              />
+              <span className="text-[#00C2A8] text-xs font-bold tracking-widest uppercase">
+                {heroSection.title}
+              </span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
+              {heroSection.h1}
+            </h1>
+            <p className="text-lg md:text-xl font-medium text-[#1A2B3C] dark:text-gray-200 leading-relaxed max-w-2xl mx-auto">
+              {heroSection.description ? heroSection.description : `Estimate your dog's due date, track pregnancy milestones
 						week-by-week, and prepare for your puppy's arrival with expert
 						guidance.`}
-          </p>
-        </div>
+            </p>
+          </div >
+        )}
       </section>
 
       {/* ── CALCULATOR FORM ── */}
@@ -319,161 +319,146 @@ export default function DogPregnancy() {
 
       {/* ── TIMELINE ── */}
       <section className="bg-[#F9FAFB] dark:bg-gray-900 py-24 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white tracking-tight">
-              Dog Pregnancy Timeline
-            </h2>
-            <p className="text-[#6B7280] dark:text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-              Track the amazing development of your puppies from fertilization
-              to birth with our week-by-week guide.
-            </p>
-          </div>
+        {timelineSection && (
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12 space-y-4">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white tracking-tight">
+                {timelineSection.title ? timelineSection.title : `Dog Pregnancy Timeline`}
+              </h2>
+              <p className="text-[#6B7280] dark:text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
+                {timelineSection.description ? timelineSection.description : `Track the amazing development of your puppies from fertilization
+                to birth with our week-by-week guide.`}
+              </p>
+            </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-            {TIMELINE_WEEKS.map((item) => (
-              <div
-                key={item.week}
-                className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-7 flex flex-col gap-3"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0">
-                  <span className="text-[#00C2A8] text-xl font-black">
-                    {item.week}
-                  </span>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+              {timelineSection.timeline && timelineSection.timeline.map((item) => (
+                <div
+                  key={item.week}
+                  className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-7 flex flex-col gap-3"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0">
+                    <span className="text-[#00C2A8] text-xl font-black">
+                      {item.week}
+                    </span>
+                  </div>
+                  <h3 className="text-[#1A2B3C] dark:text-white text-xl font-extrabold mt-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#6B7280] dark:text-gray-400 text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                  <ul className="space-y-2 mt-1">
+                    {item.tips.map((tip) => (
+                      <li key={tip} className="flex items-center gap-2">
+                        <CheckIcon className="text-[#00C2A8]" />
+                        <span className="text-[#1A2B3C] dark:text-gray-200 text-xs font-bold">
+                          {tip}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="text-[#1A2B3C] dark:text-white text-xl font-extrabold mt-1">
-                  {item.title}
-                </h3>
-                <p className="text-[#6B7280] dark:text-gray-400 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-                <ul className="space-y-2 mt-1">
-                  {item.tips.map((tip) => (
-                    <li key={tip} className="flex items-center gap-2">
-                      <CheckIcon className="text-[#00C2A8]" />
-                      <span className="text-[#1A2B3C] dark:text-gray-200 text-xs font-bold">
-                        {tip}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="flex justify-center">
-            <Button
-              onClick={() => router.push("/blog")}
-              type="button"
-              className="px-8 py-3 rounded-full border-2 border-[#00C2A8] text-[#00C2A8] text-base font-bold bg-white dark:bg-transparent hover:bg-[#E6F7F5] dark:hover:bg-teal-900/40 transition-colors"
-            >
-              View Full 9-Week Guide
-            </Button>
+            <div className="flex justify-center">
+              {timelineSection.button && (
+                <Button
+                  onClick={() => router.push(`${timelineSection.button.href}`)}
+                  type="button"
+                  className="px-8 py-3 rounded-full border-2 border-[#00C2A8] text-[#00C2A8] text-base font-bold bg-white dark:bg-transparent hover:bg-[#E6F7F5] dark:hover:bg-teal-900/40 transition-colors"
+                >
+                  {timelineSection.button.label}
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* ── HOW LONG / VET SECTIONS ── */}
       <section className="py-24 px-4 bg-white dark:bg-gray-950">
         <div className="max-w-6xl mx-auto space-y-24">
-          {/* Row 1: text left, image right */}
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="space-y-6">
-              <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white leading-tight">
-                How Long Are Dogs Pregnant?
-              </h2>
-              <div className="space-y-4 text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
-                <p>
-                  The average gestation period for dogs is{" "}
-                  <strong className="font-bold">63 days</strong> (about 9
-                  weeks), though it can vary from 58 to 68 days.
-                </p>
-                <p>
-                  {`Variance often depends on the dog's breed and size. Smaller
-									breeds often have slightly shorter pregnancies, while larger
-									dogs may carry for the full term or slightly longer.`}
-                </p>
-              </div>
-              <div className="rounded-3xl border border-[#00C2A8]/20 bg-[#E6F7F5] dark:bg-teal-950 p-6 space-y-2">
-                <p className="text-[#00C2A8] text-lg font-bold">Pro Tip:</p>
-                <p className="text-[#1A2B3C]/80 dark:text-gray-300 text-sm leading-relaxed">
-                  Calculating from the date of ovulation is more accurate than
-                  mating date, as sperm can live inside the female for several
-                  days.
-                </p>
-              </div>
-            </div>
-            <div className="rounded-3xl overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] aspect-4/3">
-              <Image
-                src="https://api.builder.io/api/v1/image/assets/TEMP/0b5edf462e891ce094fd72356a06ea7e60ad8477?width=1072"
-                alt="Pregnant golden retriever resting comfortably on a soft rug"
-                width={536}
-                height={400}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+          {SECTIONS_DATA.map((section) => {
+            const isImageLeft = section.layout === "image-left";
 
-          {/* Row 2: image left, text right */}
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="rounded-3xl overflow-hidden shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] aspect-4/3 order-2 md:order-1">
-              <Image
-                src="https://api.builder.io/api/v1/image/assets/TEMP/0f83f1a70d226ad853b44bf47e3d08159d468a55?width=1072"
-                alt="Veterinarian examining a dog"
-                width={536}
-                height={400}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="space-y-6 order-1 md:order-2">
-              <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white leading-tight">
-                When To Contact A Vet
-              </h2>
-              <p className="text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
-                While dog pregnancy is a natural process, there are signs that
-                require immediate professional attention to ensure the safety of
-                both mother and puppies.
-              </p>
-              <div className="space-y-3 pt-2">
-                {/* Alert: Abnormal Discharge */}
-                <div className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800">
-                  <div>
-                    <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
-                      Abnormal Discharge
-                    </h4>
-                    <p className="text-[#6B7280] dark:text-gray-400 text-sm">
-                      Bloody or foul-smelling discharge before the due date.
-                    </p>
-                  </div>
+            return (
+              <div
+                key={section.id}
+                className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center"
+              >
+                {/* Image Container */}
+                <div
+                  className={`rounded-3xl overflow-hidden aspect-4/3 
+                  ${isImageLeft ? 'order-2 md:order-1' : 'order-2'} 
+                  ${isImageLeft ? 'shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]' : 'shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]'}`}
+                >
+                  <Image
+                    src={section.image.src}
+                    alt={section.image.alt}
+                    width={536}
+                    height={400}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
 
-                {/* Alert: Overdue Pregnancy */}
-                <div className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800">
-                  <div>
-                    <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
-                      Overdue Pregnancy
-                    </h4>
-                    <p className="text-[#6B7280] dark:text-gray-400 text-sm">
-                      If the pregnancy lasts more than {PREGNANCY_OVERDUE_DAYS}{" "}
-                      days from mating.
-                    </p>
+                {/* Text Content Container */}
+                <div className={`space-y-6 ${isImageLeft ? 'order-1 md:order-2' : 'order-1'}`}>
+                  <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white leading-tight">
+                    {section.title}
+                  </h2>
+
+                  {/* Dynamic Paragraphs */}
+                  <div className="space-y-4 text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
+                    {section.paragraphs.map((para) => (
+                      <p key={para.days ?? para.p}>
+                        {para.p}
+                        {(para.days && para.p2) && (
+                          <>
+                            <strong className="font-bold">{para.days}</strong>
+                            {para.p2}
+                          </>
+                        )}
+                      </p>
+                    ))}
                   </div>
+
+                  {/* Optional Tip Card */}
+                  {section.tipCard && (
+                    <div className="rounded-3xl border border-[#00C2A8]/20 bg-[#E6F7F5] dark:bg-teal-950 p-6 space-y-2">
+                      <p className="text-[#00C2A8] text-lg font-bold">{section.tipCard.label}</p>
+                      <p className="text-[#1A2B3C]/80 dark:text-gray-300 text-sm leading-relaxed">
+                        {section.tipCard.text}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Optional Alerts List */}
+                  {section.alerts && section.alerts.length > 0 && (
+                    <div className="space-y-3 pt-2">
+                      {section.alerts.map((alert) => (
+                        <div
+                          key={alert.id}
+                          className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800"
+                        >
+                          <div>
+                            <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
+                              {alert.title}
+                            </h4>
+                            <p className="text-[#6B7280] dark:text-gray-400 text-sm">
+                              {alert.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* Alert: Prolonged Labor */}
-                <div className="flex gap-4 items-start p-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-[#F9FAFB] dark:bg-gray-800">
-                  <div>
-                    <h4 className="text-[#1A2B3C] dark:text-white font-bold text-base">
-                      Prolonged Labor
-                    </h4>
-                    <p className="text-[#6B7280] dark:text-gray-400 text-sm">
-                      Extreme straining for more than 45 mins without a puppy.
-                    </p>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
@@ -483,77 +468,48 @@ export default function DogPregnancy() {
           <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
             Frequently Asked Questions
           </h2>
-          <Accordion type="single" collapsible className="space-y-4">
-            {FAQ_ITEMS.map((item) => (
-              <AccordionItem
-                key={item.id}
-                value={item.id}
-                className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border-none px-6"
-              >
-                <AccordionTrigger className="text-[#1A2B3C] dark:text-white text-base sm:text-lg font-bold py-6 hover:no-underline">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-[#4B5563] dark:text-gray-400 text-base leading-relaxed pb-6">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {faqSection && (
+            <FaqSection items={faqSection} />
+          )}
         </div>
       </section>
 
       {/* ── EXPLORE TOOLS ── */}
       <section className="py-16 px-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-[#1A2B3C]/40 dark:text-gray-500 text-xs font-black tracking-[4px] uppercase text-center mb-8">
-            Explore Other Dog Tools
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
-            <Link
-              href="/calculators/dog-growth"
-              className="flex items-center gap-3 group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0"></div>
-              <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#00C2A8] transition-colors">
-                Dog Growth Calculator
-              </span>
-            </Link>
-
-            <Link
-              href="/calculators/puppy-weight"
-              className="flex items-center gap-3 group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-[#EFF6FF] dark:bg-blue-900/30 flex items-center justify-center shrink-0"></div>
-              <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#3B82F6] transition-colors">
-                Puppy Weight Predictor
-              </span>
-            </Link>
-
-            <Link
-              href="/calculators/dog-name"
-              className="flex items-center gap-3 group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-[#FF85A2]/10 dark:bg-pink-900/30 flex items-center justify-center shrink-0"></div>
-              <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#FF85A2] transition-colors">
-                Dog Name Generator
-              </span>
-            </Link>
+        {backlinkSection && (
+          <div className="max-w-6xl mx-auto">
+            <p className="text-[#1A2B3C]/40 dark:text-gray-500 text-xs font-black tracking-[4px] uppercase text-center mb-8">
+              {backlinkSection.title ? backlinkSection.title : `Explore Other Dog Tools`}
+            </p>
+            <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+              {backlinkSection.cta && backlinkSection.cta.map((cta) => (
+                <Link key={cta.label} aria-label={cta.ariaLabel}
+                  href={cta.href}
+                  className="flex items-center gap-3 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0"></div>
+                  <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#00C2A8] transition-colors">
+                    {cta.label}
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* ── DISCLAIMER ── */}
-      <section className="py-10 px-4 bg-white dark:bg-gray-950">
+      {disclaimerSection && <section className="py-10 px-4 bg-white dark:bg-gray-950">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-[#9CA3AF] dark:text-gray-500 text-xs leading-relaxed">
-            Disclaimer: This calculator provides estimates based on typical
+            {disclaimerSection.desc ? disclaimerSection.desc : `Disclaimer: This calculator provides estimates based on typical
             biological averages. Dog pregnancy can be complex and varies by
             individual health and breed factors. We strongly recommend a
             professional veterinary consultation, ultrasound, or X-ray to
-            confirm pregnancy status, puppy count, and overall health.
+            confirm pregnancy status, puppy count, and overall health.`}
           </p>
         </div>
-      </section>
+      </section>}
     </div>
   );
 }
