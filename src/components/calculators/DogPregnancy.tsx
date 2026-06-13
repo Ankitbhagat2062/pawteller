@@ -148,35 +148,26 @@ export default function DogPregnancy() {
         {heroSection && (
           <div className="relative max-w-3xl w-full mx-auto text-center space-y-5">
             {/* Vet badge */}
-<<<<<<< HEAD
-=======
-            {(() => {
-              const title: string = heroSection.title ? heroSection.title : "Veterinary Verified Logic Dog Pregnancy Calculator";
-              const words: string[] = title.trim().split(/\s+/);
-              const firstPart: string = words.length < 3 ? words.join(" ") : words.slice(0, -3).join(" ");
-              const secondPart: string = words.length < 3 ? "" : words.slice(-3).join(" ");
-              return <>
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
-                <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
-                  <ShieldAlert
-                    aria-hidden="true"
-                    size={14}
-                    color="#00C2A8"
-                    className="shrink-0"
-                  />
-                  <span className="text-[#00C2A8] text-xs font-bold tracking-widest uppercase">
-                    {heroSection.title}
-                  </span>
-                </div>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
-                  {heroSection.h1}
-                </h1>
+            <div className="inline-flex items-center gap-2 bg-white/50 dark:bg-teal-900/60 backdrop-blur-sm rounded-full px-4 py-1.5">
+              <ShieldAlert
+                aria-hidden="true"
+                size={14}
+                color="#00C2A8"
+                className="shrink-0"
+              />
+              <span className="text-[#00C2A8] text-xs font-bold tracking-widest uppercase">
+                {heroSection.title}
+              </span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1A2B3C] dark:text-white leading-tight tracking-tight">
+              {heroSection.h1}
+            </h1>
             <p className="text-lg md:text-xl font-medium text-[#1A2B3C] dark:text-gray-200 leading-relaxed max-w-2xl mx-auto">
               {heroSection.description ? heroSection.description : `Estimate your dog's due date, track pregnancy milestones
 						week-by-week, and prepare for your puppy's arrival with expert
 						guidance.`}
             </p>
-          </div>
+          </div >
         )}
       </section>
 
@@ -422,10 +413,6 @@ export default function DogPregnancy() {
                   <div className="space-y-4 text-[#1A2B3C]/80 dark:text-gray-300 text-lg leading-relaxed">
                     {section.paragraphs.map((para) => (
                       <p key={para.days ?? para.p}>
-<<<<<<< HEAD
-
-=======
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                         {para.p}
                         {(para.days && para.p2) && (
                           <>
@@ -476,11 +463,7 @@ export default function DogPregnancy() {
       </section>
 
       {/* ── FAQ ── */}
-<<<<<<< HEAD
-      <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4" >
-=======
       <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4">
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
             Frequently Asked Questions

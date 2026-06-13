@@ -1,5 +1,5 @@
 import { FAQItem, seoProps } from "@/lib/types";
-import {FlaskConical, IceCreamBowl, Scale, type LucideIcon } from "lucide-react";
+import { AlertTriangle, Award, Shield, type LucideIcon } from "lucide-react";
 
 
 export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
@@ -15,22 +15,23 @@ export const ACTIVITY_MULTIPLIERS: Record<string, number> = {
   "Very active": 1.8,
   "Extremely active": 2.0,
 };
+export interface whySectionProps {
+  title: string;
+  bullets:
+  {
+    title: string;
+    body: string;
+    icon: LucideIcon;
+  }[];
+  disclaimer: string;
+}
 export interface dogFoodPageCmsProps {
   seo: seoProps;
   header: {
     title: string;
     description: string;
   }
-  whySection: {
-    title: string;
-    bullets:
-    {
-      title: string;
-      body: string;
-      icon: LucideIcon;
-    }[];
-    disclaimer: string;
-  },
+  whySection: whySectionProps;
   faqSection: FAQItem[];
 }
 export const dogFoodPageCms: dogFoodPageCmsProps = {
@@ -39,9 +40,9 @@ export const dogFoodPageCms: dogFoodPageCmsProps = {
     description: "Use our dog food calculator to estimate daily calories and cups per day based on weight, life stage (puppy, adult, senior, pregnant) and activity level. Includes transparent ~350 kcal/cup conversion.",
     keywords: ["dog food calculator", "dog calorie calculator", "cups per day", "how much to feed a dog", "puppy feeding guide", "senior dog nutrition", "weight based feeding", "RER formula", "veterinary nutrition"],
   },
-  header:{
-    title:"How much should your dog really eat?",
-    description:"Calorie needs vary by weight, age and activity. Get an evidence-based daily portion in seconds."
+  header: {
+    title: "How much should your dog really eat?",
+    description: "Calorie needs vary by weight, age and activity. Get an evidence-based daily portion in seconds."
   },
   whySection: {
     title: "Why this calculator works",
@@ -49,17 +50,17 @@ export const dogFoodPageCms: dogFoodPageCmsProps = {
       {
         title: "Starts with a science-based baseline",
         body: "We use Resting Energy Requirement (RER): 70 × (kg)^0.75 — a standard veterinary approach to estimate energy needs from body size.",
-        icon: FlaskConical,
+        icon: Award,
       },
       {
         title: "Adjusts for life stage & activity",
         body: "We apply multipliers for puppy/adult/senior and for activity level (sedentary → extremely active) to better match real-world feeding needs.",
-        icon: Scale,
+        icon: Shield,
       },
       {
         title: "Turns calories into cups (with transparency)",
         body: "We convert kcal to “cups per day” using a commonly used estimate (~350 kcal per cup). Your kibble label may differ, so always verify the packaging for final accuracy.",
-        icon: IceCreamBowl,
+        icon: AlertTriangle,
       },
     ],
     disclaimer:

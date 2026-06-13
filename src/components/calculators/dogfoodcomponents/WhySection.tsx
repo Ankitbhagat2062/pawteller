@@ -1,31 +1,13 @@
 "use client";
 
-<<<<<<< HEAD
-import { type LucideIcon } from "lucide-react";
-=======
-import { AlertTriangle, Award, Calculator, Shield } from "lucide-react";
-
-const iconMap = {
-  Award,
-  Calculator,
-  Shield,
-  AlertTriangle,
-} as const;
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
+import { whySectionProps } from "@/lib/cms/dogfoodpage";
+import { AlertTriangle } from "lucide-react";
 
 export function WhySection({
   title,
   bullets,
   disclaimer,
-}: {
-  title: string;
-<<<<<<< HEAD
-  bullets: Array<{ title: string; body: string; icon: LucideIcon }>;
-=======
-  bullets: Array<{ title: string; body: string; iconName: keyof typeof iconMap }>;
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
-  disclaimer: string;
-}) {
+}: whySectionProps) {
   return (
     <section className="my-10 relative overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8 md:p-10">
       <div
@@ -46,36 +28,20 @@ export function WhySection({
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-<<<<<<< HEAD
-          {bullets.map((b) => (
-            <div
-              key={b.title}
-              className="rounded-xl border border-border/60 bg-background/40 p-4 sm:p-5 shadow-sm backdrop-blur"
-            >
-              <div className="flex items-start gap-3">
-                <div className="text-2xl leading-none">{b.icon && <b.icon className="w-6 h-6" />}</div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">{b.title}</h3>
-                  <p className="text-sm text-foreground/70 leading-relaxed">
-                    {b.body}
-                  </p>
-=======
           {bullets.map((b) => {
-            const Icon = iconMap[b.iconName];
             return (
               <div
                 key={b.title}
                 className="rounded-xl border border-border/60 bg-background/40 p-4 sm:p-5 shadow-sm backdrop-blur"
               >
                 <div className="flex items-start gap-3">
-                  <Icon className="h-6 w-6 text-emerald-600 shrink-0" aria-hidden="true" />
+                  {b.icon &&<b.icon className="h-6 w-6 text-emerald-600 shrink-0" aria-hidden="true" />}
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">{b.title}</h3>
                     <p className="text-sm text-foreground/70 leading-relaxed">
                       {b.body}
                     </p>
                   </div>
->>>>>>> 9030b8d0fe31f7b32bf824e443571d559d0eb8cf
                 </div>
               </div>
             );

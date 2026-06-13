@@ -72,8 +72,8 @@ export default function Home() {
                       {hero.badgeText}
                     </p>
                     {(() => {
-                      const title = hero.h1 ? hero.h1:"Smart Calculators for your best friend";
-                      const ArrayOfParts:string[] = title.trim().split(/\s+/); // Removes the full match element
+                      const title = hero.h1 ? hero.h1 : "Smart Calculators for your best friend";
+                      const ArrayOfParts: string[] = title.trim().split(/\s+/); // Removes the full match element
 
                       if (title) {
                         console.log("3rd part:", ArrayOfParts[2]);
@@ -88,11 +88,11 @@ export default function Home() {
                               {ArrayOfParts[3]}
                             </span>
                           </span>
-                          <span className={`block font-[Georgia,serif] font-black italic text-[#315846] dark:text-[#a6d4bd]`}>
-                            {ArrayOfParts[4]}
+                          <span className={`block font-[Georgia,serif] text-[0.9em] font-black italic text-[#315846] dark:text-[#a6d4bd]`}>
+                            {ArrayOfParts[4]} {ArrayOfParts[5]}
                             <span className="text-[#2a1b15]">.</span>
                           </span>
-                    </h1>
+                        </h1>
                       }
                     })()}
 
