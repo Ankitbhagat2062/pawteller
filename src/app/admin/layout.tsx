@@ -4,7 +4,6 @@ import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next";
-import Navbar from "@/components/shared/Navbar";
 
 
 const inter = Inter({
@@ -53,14 +52,9 @@ export default function AdminLayout({
     >
       <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className=" min-h-screen w-full">
-            <Navbar />
             <main className="flex-1 flex items-center justify-center">
-              <div className="mx-auto w-full max-w-screen-2xl p-4 sm:p-6">
                 {children}
-              </div>
             </main>
-          </div>
           <Toaster />
         </ThemeProvider>
         <Analytics />
