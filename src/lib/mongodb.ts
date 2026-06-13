@@ -27,13 +27,13 @@ function getDatabaseName(mongoUri: string): string | null {
   return parts.length >= 2 ? parts[1] : null;
 }
 
-const connectDB = async (): Promise<mongoose.Mongoose['connection']> => {
-  dns.setServers(["1.1.1.1","8.8.8.8"]); // Use system default DNS servers
+const connectDB = async (mongodburi?:string): Promise<mongoose.Mongoose['connection']> => {
+  dns.setServers(["1.1.1.1","8.8.8.8","0.0.0.0"]); // Use system default DNS servers
   if (cachedConnection || mongoose.connection.readyState === 1) {
     return cachedConnection ?? mongoose.connection;
   }
   
-  const mongoUriRaw = process.env.MONGODB_URI || process.env.MONGO_URI;
+  const mongoUriRaw = process.env.MONGODB_URI || mongodburi;
   if (!mongoUriRaw) {
     throw new Error('Missing MongoDB connection string. Set MONGODB_URI or MONGO_URI.');
   }
