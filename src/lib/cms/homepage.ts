@@ -1,7 +1,7 @@
 import {
     blogPosts,
 } from "@/lib/cms/blogpage";
-import { calculators } from "./calculatorpage";
+import { CalculatorProps, calculators } from "./calculatorpage";
 import { seoProps } from "@/lib/types";
 
 export interface featuredCalculatorCardProps {
@@ -127,8 +127,8 @@ export type HomepageCms = {
     };
     hero: HomepageHeroCms;
     featuredCalculators: {
-        calculators: typeof calculators;
-        cards: typeof featuredCalculatorCards;
+        calculators: CalculatorProps[];
+        cards: featuredCalculatorCardProps[];
     };
     dogLifes: {
         left: {
@@ -208,7 +208,7 @@ export const homepageCms: HomepageCms = {
         },
     },
     featuredCalculators: {
-        calculators,
+        calculators : calculators,
         cards: featuredCalculatorCards,
     },
     dogLifes: {

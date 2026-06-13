@@ -13,6 +13,7 @@ import { homepageCms, HomepageHeroCms } from "@/lib/cms/homepage";
 import type { SectionHeaderProps } from "@/lib/types";
 import Script from "next/script";
 import BlogCard from "@/components/shared/BlogCard";
+import { CalculatorProps } from "@/lib/cms/calculatorpage";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
   return (
@@ -33,7 +34,7 @@ const heroSection = homepageCms.hero ?
     homepageCms.hero :
     [homepageCms.hero]) :
   [];
-const featureSection = homepageCms.featuredCalculators ? homepageCms.featuredCalculators : homepageCms.featuredCalculators
+const featureSection= homepageCms.featuredCalculators
 const featuredCalculatorCards = homepageCms.featuredCalculators.cards
 const dogLifeStages = homepageCms.dogLifes.right.dogLifeStages
 const dogLifesLeft = homepageCms.dogLifes.left ? (Array.isArray(homepageCms.dogLifes.left) ?
@@ -61,7 +62,7 @@ export default function Home() {
           <h2 className="sr-only">Homepage</h2>
 
           {/* Hero Section */}
-          {homepageCms.hero && (
+          {heroSection && (
             heroSection.map((hero: HomepageHeroCms) => (
               <section key={hero.id} className="relative rounded-2xl left-1/2 mt-6 w-full -translate-x-1/2 overflow-hidden bg-[#f3ded3] px-6 py-16 sm:px-8 md:px-12 lg:px-16 lg:py-20 dark:rounded-3xl dark:bg-emerald-500/10">
                 <div className="relative mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-12 lg:items-center">
@@ -76,20 +77,19 @@ export default function Home() {
                       const ArrayOfParts: string[] = title.trim().split(/\s+/); // Removes the full match element
 
                       if (title) {
-                        console.log("3rd part:", ArrayOfParts[2]);
                         return <h1 className="mt-8 max-w-2xl font-[Georgia,serif] text-[3rem] font-black leading-[0.9] tracking-normal 
                 text-[#2a1b15] dark:text-[#ad7e6b] sm:text-[5.25rem] lg:text-[5.6rem]">
-                          <span className="block">{ArrayOfParts[0]}</span>
-                          <span className="block">{ArrayOfParts[1]}</span>
+                          <span className="block">{ArrayOfParts[0] ?? ''}</span>
+                          <span className="block">{ArrayOfParts[1] ?? ''}</span>
                           <span className="block">
-                            {ArrayOfParts[2]}
+                            {ArrayOfParts[2] ?? ''}
                             {" "}
                             <span className={`font-[Georgia,serif] font-black italic text-[#315846] dark:text-[#a6d4bd]`}>
-                              {ArrayOfParts[3]}
+                              {ArrayOfParts[3] ?? ''}
                             </span>
                           </span>
                           <span className={`block font-[Georgia,serif] text-[0.9em] font-black italic text-[#315846] dark:text-[#a6d4bd]`}>
-                            {ArrayOfParts[4]} {ArrayOfParts[5]}
+                            {ArrayOfParts[4] ?? ''} {ArrayOfParts[5] ?? ''}
                             <span className="text-[#2a1b15]">.</span>
                           </span>
                         </h1>
@@ -132,7 +132,7 @@ export default function Home() {
                         ))}
                       </div>
                       <p>
-                        {`${homepageCms.hero.ratingLabelPrefix}`}{" "}
+                        {`${hero.ratingLabelPrefix}`}{" "}
                         <span className="font-extrabold text-[#2a1b15] dark:text-[#a6d4bd]">
                           {hero.ratingCountText}
                         </span>{" "}
@@ -189,7 +189,7 @@ export default function Home() {
           )}
 
           {/* Featured Calculators */}
-          {homepageCms.featuredCalculators && (
+          {featureSection && (
             <section
               className="py-14 rounded-2xl"
               aria-label="Featured calculators"
@@ -202,7 +202,7 @@ export default function Home() {
                 Featured calculators
               </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[285px] lg:gap-5">
-                {featureSection.calculators.map((calc) => {
+                {featureSection?.calculators && featureSection.calculators.map((calc: CalculatorProps) => {
                   const Icon = calc.badge.icon;
                   const card = featuredCalculatorCards.find(
                     (item) => item.title === calc.title,
@@ -377,7 +377,7 @@ export default function Home() {
                       >
                         <Link
                           href={`${quiz.cta.href}`}
-                          aria-label={`${homepageCms.breedQuizCtas.feature.cta.ariaLabel}`}
+                          aria-label={`${quiz.cta.ariaLabel}`}
                         >
                           {`${quiz.cta.label}`}
                           <Sparkles className="h-4 w-4" aria-hidden="true" />
@@ -441,6 +441,7 @@ export default function Home() {
                 }
                 <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {(() => {
+                    if (blogPosts.length === 0) return null;
                     const dayOfYear = Math.floor(
                       Date.now() / (1000 * 60 * 60 * 24),
                     );

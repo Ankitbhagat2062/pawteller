@@ -105,19 +105,9 @@ export const faqItems: FAQItem[] = [
             "Contact a veterinarian if you notice concerning symptoms (vomiting, lethargy, abnormal discharge, breathing trouble), if pregnancy dates are uncertain, or if your puppy’s growth seems far outside expected progress. Calculators can guide questions, but they can’t replace professional evaluation.",
     },
     {
-        question: "How accurate are the calculator results?",
-        answer:
-            "Our calculators use veterinary-informed formulas and biological averages to provide reliable estimates. However, individual dogs vary based on breed, health, and genetics. Always consult your veterinarian for personalized guidance.",
-    },
-    {
         question: "Do I need to create an account to use the calculators?",
         answer:
             "No account is required. All calculators are completely free and accessible without signing up. Simply enter your dog's information and get instant results.",
-    },
-    {
-        question: "What information do I need to use these calculators?",
-        answer:
-            "Each calculator has different requirements. Generally, you'll need basic information like your dog's age, weight, breed size, or specific dates depending on the calculator you're using. All required fields are clearly labeled.",
     },
     {
         question: "Can I use these calculators for puppies and adult dogs?",

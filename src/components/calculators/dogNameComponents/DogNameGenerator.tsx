@@ -6,10 +6,9 @@ import { CategoriesSection } from "@/components/calculators/dogNameComponents/Ca
 import { FilterSection } from "@/components/calculators/dogNameComponents/FilterSection";
 import HowToChooseSection from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
-import { generateDogNames } from "@/lib/cms/dognamepage";
+import { faqItems ,generateDogNames } from "@/lib/cms/dognamepage";
 import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
 import { FaqSection } from "@/components/shared/FaqSection";
-import { faqItems } from "@/lib/cms/calculatorpage";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";

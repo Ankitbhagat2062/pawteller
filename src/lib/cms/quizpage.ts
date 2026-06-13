@@ -358,7 +358,7 @@ export interface QuizResult {
             sizePreference: string;
             total: string;
         };
-    }
+    }[]
 }
 
 export const breedDatabase: Breed[] = [
