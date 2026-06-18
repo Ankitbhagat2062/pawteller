@@ -199,6 +199,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     setCurrentStep(0);
     setSelectedAnswers(Array(quizData.totalQuestions).fill(null));
     setIsComplete(false);
+    setTopBreedName("");
   };
   const handleSubmitResults = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -209,10 +210,9 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
           breedDatabase,
         )
       : null;
-    setTopBreedName(result?.topMatches[0].breed ?? "");
-
-    type ContactPayload = {
-      email: string;
+      
+      type ContactPayload = {
+        email: string;
       quizId: string;
       results: DogBreedEmailProps;
     };
@@ -221,27 +221,27 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       success: true;
       data: unknown;
     };
-
+    
     type ContactErrorResponse = {
       success?: false;
       error?: string;
     };
-
+    
     if (!result) {
       setStatus("error");
       return;
     }
-
+    
     try {
       const quizId =
-        new URLSearchParams(quizData.url.split("?")[1] ?? "").get("quiz") ??
-        quizData.url;
-
+      new URLSearchParams(quizData.url.split("?")[1] ?? "").get("quiz") ??
+      quizData.url;
+      
       const payload: ContactPayload = { email, quizId, results: result };
       if (status === "loading") return;
       setStatus("loading");
       const res = await axios.post<
-        ContactSuccessResponse | ContactErrorResponse
+      ContactSuccessResponse | ContactErrorResponse
       >("/api/quiz", payload, {
         headers: { "Content-Type": "application/json" },
       });
@@ -249,6 +249,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
         setStatus("success");
         setFirstName("");
         setEmail("");
+        setTopBreedName(result?.topMatches[0].breed ?? "");
         setTimeout(() => {
           router.push("/");
         }, 500);
@@ -280,7 +281,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
           </h2>
           <p className="mt-2 text-sm font-medium text-gray-600 dark:text-gray-300 sm:text-base">
             Your top breed is a{" "}
-            <span className="font-bold text-[`#e0664d`]">{topBreedName}</span>{" "}
+           <span className="font-bold text-[`#e0664d`]">{topBreedName}</span>{" "}
             ... plus 2 other strong matches.
           </p>
 

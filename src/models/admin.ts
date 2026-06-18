@@ -76,47 +76,28 @@ const adminSchema = new Schema(
 
     // Stored per admin (provided at registration)
     // Encrypted at rest via schema middleware.
-    resendApiKey: { type: String, required: true },
-    mongodbUri: { type: String, required: true },
+    resendApiKey: {
+      type: String,
+      required: true,
+      set: encryptString,
+      get: decryptString,
+    },
+    mongodbUri: {
+      type: String,
+      required: true,
+      set: encryptString,
+      get: decryptString,
+    },
 
     passwordResetToken: { type: String, default: null, index: true },
     passwordResetExpiresAt: { type: Date, default: null, index: true },
   },
   {
     timestamps: true,
+    toJSON: { getters: true },
+    toObject: { getters: true },
   },
 );
-
-adminSchema.pre("save", function (this: any, next: any) {
-  try {
-    const doc = this as typeof this & {
-      resendApiKey?: string;
-      mongodbUri?: string;
-    };
-
-    if (typeof doc.resendApiKey === "string") {
-      doc.resendApiKey = encryptString(doc.resendApiKey);
-    }
-    if (typeof doc.mongodbUri === "string") {
-      doc.mongodbUri = encryptString(doc.mongodbUri);
-    }
-
-    // Mongoose typings: keep this middleware synchronous.
-    next();
-  } catch (err) {
-    next(err as any);
-  }
-});
-
-// Decrypt after fetching so application code continues to read plaintext.
-adminSchema.post("init", (doc: any) => {
-  if (typeof doc?.resendApiKey === "string") {
-    doc.resendApiKey = decryptString(doc.resendApiKey);
-  }
-  if (typeof doc?.mongodbUri === "string") {
-    doc.mongodbUri = decryptString(doc.mongodbUri);
-  }
-});
 
 type Admin = InferSchemaType<typeof adminSchema>;
 

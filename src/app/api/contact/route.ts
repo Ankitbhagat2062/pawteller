@@ -96,9 +96,15 @@ export async function POST(request: Request) {
         "/api/send-verification-email",
         process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
       );
-      url.searchParams.set("email", email);
       try {
-        await axios.get(url.toString(), { timeout: 5000 });
+        await axios.post(
+          url.toString(),
+          { email },
+          {
+            timeout: 5000,
+            headers: { "Content-Type": "application/json" },
+          },
+        );
       } catch (error) {
         console.error("Failed to send welcome email:", error);
       }

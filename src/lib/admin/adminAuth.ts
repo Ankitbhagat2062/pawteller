@@ -9,22 +9,23 @@ type AdminTokenPayload = {
   exp?: number;
 };
 
-export function createAdminToken(payload: AdminTokenPayload) {
+export async function createAdminToken(payload: AdminTokenPayload) {
   const secret = process.env.ADMIN_JWT_SECRET;
   if (!secret) throw new Error("Missing ADMIN_JWT_SECRET env var");
 
   const iat = Math.floor(Date.now() / 1000);
   const exp = payload.exp ?? iat + 60 * 60 * 24; // default 24h
 
-  return `${TOKEN_PREFIX}${new SignJWT({ role: payload.role ?? "admin" })
+  const jwt = await new SignJWT({ role: payload.role ?? "admin" })
     .setProtectedHeader({ alg: "HS256", typ: "JWT" })
     .setSubject(payload.adminEmail)
     .setIssuedAt(iat)
     .setExpirationTime(exp)
-    .sign(crypto.createSecretKey(Buffer.from(secret)))}`;
+    .sign(crypto.createSecretKey(Buffer.from(secret)));
+  return `${TOKEN_PREFIX}${jwt}`;
 }
 
-export function verifyAdminToken(token: string) {
+export async function verifyAdminToken(token: string) {
   if (!token.startsWith(TOKEN_PREFIX)) {
     return { ok: false as const, reason: "INVALID" };
   }
@@ -35,15 +36,15 @@ export function verifyAdminToken(token: string) {
   const raw = token.slice(TOKEN_PREFIX.length);
 
   try {
-    const { payload } = jwtVerify(
+    const { payload } = await jwtVerify(
       raw,
       crypto.createSecretKey(Buffer.from(secret)),
       {
         algorithms: ["HS256"],
       },
-    ) as unknown as { payload: { sub?: unknown; role?: unknown } };
+    ) 
 
-    if (typeof payload?.sub !== "string") {
+    if (typeof payload.sub !== "string") {
       return { ok: false as const, reason: "INVALID_PAYLOAD" };
     }
 

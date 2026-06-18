@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle, Save, Sparkles } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -105,16 +105,14 @@ export default function SEO() {
     },
   });
 
-  const token = useMemo(() => {
-    if (typeof window === "undefined") return null;
-    const t =
-      localStorage.getItem("adminAuth.token") ??
-      localStorage.getItem("adminAuth.token");
-    return t;
-  }, []);
+  const token =
+    typeof window !== "undefined"
+      ? (localStorage.getItem("adminAuth.token") ?? null)
+      : null;
 
   useEffect(() => {
     // If token isn't stored by existing auth UI, try fallback key.
+
     // (Keeps backward compatibility with different token storage strategies.)
     if (typeof window === "undefined") return;
     const existing =
@@ -129,6 +127,9 @@ export default function SEO() {
           localStorage.getItem(match) || "",
         );
       }
+    }
+    if (!localStorage.getItem("adminAuth.token") && existing) {
+      localStorage.setItem("adminAuth.token", existing);
     }
   }, []);
 
