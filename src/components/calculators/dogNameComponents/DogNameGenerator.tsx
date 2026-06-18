@@ -6,17 +6,23 @@ import { CategoriesSection } from "@/components/calculators/dogNameComponents/Ca
 import { FilterSection } from "@/components/calculators/dogNameComponents/FilterSection";
 import HowToChooseSection from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
-import { faqItems ,generateDogNames } from "@/lib/cms/dognamepage";
-import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
 import { FaqSection } from "@/components/shared/FaqSection";
+import { faqItems, generateDogNames } from "@/lib/cms/dognamepage";
+import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";
 const INITIAL_STARTING_LETTER: StartingLetter = "All";
 
 // generateDogNames only supports sizes present in the current seed data (Small | Medium | Large).
-function toSupportedSize(size: DogSize | "All"): "Small" | "Medium" | "Large" | "All" {
-  return (size === "Extra Large" ? "Large" : size) as "Small" | "Medium" | "Large" | "All";
+function toSupportedSize(
+  size: DogSize | "All",
+): "Small" | "Medium" | "Large" | "All" {
+  return (size === "Extra Large" ? "Large" : size) as
+    | "Small"
+    | "Medium"
+    | "Large"
+    | "All";
 }
 
 export function DogNameGenerator() {
@@ -105,4 +111,3 @@ export function DogNameGenerator() {
     </div>
   );
 }
-

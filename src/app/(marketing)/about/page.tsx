@@ -1,20 +1,20 @@
-import {
-  FileText,
-  Flame,
-  Heart,
-  PawPrint,
-  Search,
-} from "lucide-react";
+import { FileText, Flame, Heart, PawPrint, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import { AboutPageBottomCtaBandProps, AboutPageCms, ctaProps, rightProps } from "@/lib/cms/aboutpage";
+import {
+  type AboutPageBottomCtaBandProps,
+  AboutPageCms,
+  type ctaProps,
+  type rightProps,
+} from "@/lib/cms/aboutpage";
 
 // 1. PERFECT SEO SETUP WITH TARGETED SEO PLACEMENT
-const seo = AboutPageCms.seo
+const seo = AboutPageCms.seo;
 export const metadata: Metadata = {
   title: seo.title || "About Pawteller | Reliable & Fast Dog Insights",
-  description: seo.description ||
+  description:
+    seo.description ||
     "Learn more about Pawteller's mission. We provide ultra-fast calculators, custom quiz funnels, and bite-sized practical guides for everyday dog owners.",
   keywords: seo.keywords || [],
   alternates: {
@@ -24,12 +24,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const jsonLdSchema = AboutPageCms.seo.jsonLd ?? {};
-  const heroSection = AboutPageCms.heroSection
-  const missionSection = AboutPageCms.missionSection
-  const trustPrincipleSection = AboutPageCms.trustPrincipleSection
-  const actionblockSection = AboutPageCms.actionblockSection
-  const medicalWarningSection = AboutPageCms.medicalWarningSection
-  const bottomCtaBandSection = AboutPageCms.bottomCtaBand
+  const heroSection = AboutPageCms.heroSection;
+  const missionSection = AboutPageCms.missionSection;
+  const trustPrincipleSection = AboutPageCms.trustPrincipleSection;
+  const actionblockSection = AboutPageCms.actionblockSection;
+  const medicalWarningSection = AboutPageCms.medicalWarningSection;
+  const bottomCtaBandSection = AboutPageCms.bottomCtaBand;
   return (
     <>
       <Script
@@ -57,11 +57,11 @@ export default function AboutPage() {
             <section className="rounded-3xl bg-white px-6 py-12 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10 sm:px-10">
               <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
                 {(() => {
-                  const right = heroSection.right ?
-                    (Array.isArray(heroSection.right) ?
-                      heroSection.right :
-                      [heroSection.right]) :
-                    [];
+                  const right = heroSection.right
+                    ? Array.isArray(heroSection.right)
+                      ? heroSection.right
+                      : [heroSection.right]
+                    : [];
                   return right.map(({ title, description, buttons }) => (
                     <div key={title} className="lg:col-span-7">
                       <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
@@ -78,10 +78,13 @@ export default function AboutPage() {
                       </p>
 
                       <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                        {buttons && buttons.map((btn: ctaProps) => (
-                          <Link key={btn.href.replace('/', '')}
+                        {buttons?.map((btn: ctaProps) => (
+                          <Link
+                            key={btn.href.replace("/", "")}
                             href={btn.href || "/calculators/dog-age"}
-                            aria-label={btn.ariaLabel || "Calculate your dog’s age"}
+                            aria-label={
+                              btn.ariaLabel || "Calculate your dog’s age"
+                            }
                             className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
                           >
                             {btn.label} <span aria-hidden="true">→</span>
@@ -89,69 +92,73 @@ export default function AboutPage() {
                         ))}
                       </div>
                     </div>
-
-                  ))
+                  ));
                 })()}
 
                 {/* Performance Optimized List: Lucide Icons avoid CLS Layout Shifts */}
                 <div className="lg:col-span-5">
                   {(() => {
-                    const left = heroSection.left ?
-                      (Array.isArray(heroSection.left) ?
-                        heroSection.left :
-                        [heroSection.left]) :
-                      [];
-                    return left.map((left: {
-                      title: string;
-                      speed: string;
-                      Clarity: string;
-                      footertext: string;
-                      owner: string;
-                    }) => (
-                      <div key={left.title} className="rounded-3xl bg-emerald-500/5 p-6 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20">
-                        <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-800 dark:text-emerald-100">
-                          {left.title}
-                        </p>
-                        <ul className="mt-4 space-y-4 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                          <li className="flex items-start gap-3">
-                            <span
-                              className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
-                              aria-hidden
-                            >
-                              <Flame className="h-3.5 w-3.5" />
-                            </span>
-                            <span>{left.speed}</span>
-                          </li>
-                          <li className="flex items-start gap-3">
-                            <span
-                              className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
-                              aria-hidden
-                            >
-                              <FileText className="h-3.5 w-3.5" />
-                            </span>
-                            <span>{left.Clarity}</span>
-                          </li>
-                          <li className="flex items-start gap-3">
-                            <span
-                              className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
-                              aria-hidden
-                            >
-                              <Search className="h-3.5 w-3.5" />
-                            </span>
-                            <span>{left.footertext}</span>
-                          </li>
-                          <li className="flex items-start gap-3">
-                            <span
-                              className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
-                              aria-hidden
-                            >
-                              <Heart className="h-3.5 w-3.5" />
-                            </span>
-                            <span>{left.owner}</span>
-                          </li>
-                        </ul>
-                      </div>
-                    ))
+                    const left = heroSection.left
+                      ? Array.isArray(heroSection.left)
+                        ? heroSection.left
+                        : [heroSection.left]
+                      : [];
+                    return left.map(
+                      (left: {
+                        title: string;
+                        speed: string;
+                        Clarity: string;
+                        footertext: string;
+                        owner: string;
+                      }) => (
+                        <div
+                          key={left.title}
+                          className="rounded-3xl bg-emerald-500/5 p-6 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
+                        >
+                          <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-800 dark:text-emerald-100">
+                            {left.title}
+                          </p>
+                          <ul className="mt-4 space-y-4 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                            <li className="flex items-start gap-3">
+                              <span
+                                className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
+                                aria-hidden
+                              >
+                                <Flame className="h-3.5 w-3.5" />
+                              </span>
+                              <span>{left.speed}</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <span
+                                className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
+                                aria-hidden
+                              >
+                                <FileText className="h-3.5 w-3.5" />
+                              </span>
+                              <span>{left.Clarity}</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <span
+                                className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
+                                aria-hidden
+                              >
+                                <Search className="h-3.5 w-3.5" />
+                              </span>
+                              <span>{left.footertext}</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <span
+                                className="mt-0.5 flex h-5 w-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
+                                aria-hidden
+                              >
+                                <Heart className="h-3.5 w-3.5" />
+                              </span>
+                              <span>{left.owner}</span>
+                            </li>
+                          </ul>
+                        </div>
+                      ),
+                    );
                   })()}
                 </div>
               </div>
@@ -164,11 +171,11 @@ export default function AboutPage() {
               <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10 sm:p-10">
                 <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
                   {(() => {
-                    const left = missionSection.left ?
-                      (Array.isArray(missionSection.left) ?
-                        missionSection.left :
-                        [missionSection.left]) :
-                      [];
+                    const left = missionSection.left
+                      ? Array.isArray(missionSection.left)
+                        ? missionSection.left
+                        : [missionSection.left]
+                      : [];
 
                     return left.map(({ title, description }: rightProps) => (
                       <div key={title} className="lg:col-span-6">
@@ -179,22 +186,25 @@ export default function AboutPage() {
                           {description}
                         </p>
                       </div>
-                    ))
+                    ));
                   })()}
 
                   <div className="lg:col-span-6">
                     <div className="grid gap-4 sm:grid-cols-2">
-                      {missionSection.right && missionSection.right.map((mission: rightProps) => (
-                        <div key={mission.title} className="rounded-2xl bg-emerald-500/5 p-5 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20">
+                      {missionSection.right?.map((mission: rightProps) => (
+                        <div
+                          key={mission.title}
+                          className="rounded-2xl bg-emerald-500/5 p-5 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
+                        >
                           <div className="flex items-center justify-between gap-2 text-sm font-extrabold ">
-                            <p>
-                              {mission.title}
-                            </p>
+                            <p>{mission.title}</p>
                             <span
                               aria-hidden="true"
                               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-lg dark:bg-emerald-400/10"
                             >
-                              {mission.icon && <mission.icon className="h-5 w-5" />}
+                              {mission.icon && (
+                                <mission.icon className="h-5 w-5" />
+                              )}
                             </span>
                           </div>
                           <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
@@ -214,11 +224,11 @@ export default function AboutPage() {
             <section className="mt-10" aria-label="Trust principles">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 {(() => {
-                  const header = trustPrincipleSection ?
-                    (Array.isArray(trustPrincipleSection) ?
-                      trustPrincipleSection :
-                      [trustPrincipleSection]) :
-                    [];
+                  const header = trustPrincipleSection
+                    ? Array.isArray(trustPrincipleSection)
+                      ? trustPrincipleSection
+                      : [trustPrincipleSection]
+                    : [];
                   return header.map(({ banner, title }) => (
                     <div key={banner}>
                       <p className="text-sm font-semibold tracking-tight text-emerald-800 dark:text-emerald-300">
@@ -228,12 +238,12 @@ export default function AboutPage() {
                         {title}
                       </h2>
                     </div>
-                  ))
+                  ));
                 })()}
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {trustPrincipleSection.content && trustPrincipleSection.content.map((card) => (
+                {trustPrincipleSection.content?.map((card) => (
                   <div
                     key={card.title}
                     className="flex flex-col justify-between rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10"
@@ -276,8 +286,9 @@ export default function AboutPage() {
 
                   <div className="lg:col-span-5">
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {actionblockSection.cta && actionblockSection.cta.map((cta: ctaProps) => (
-                        <Link key={cta.label}
+                      {actionblockSection.cta?.map((cta: ctaProps) => (
+                        <Link
+                          key={cta.label}
                           href={cta.href}
                           aria-label={cta.ariaLabel}
                           className="flex items-center justify-between rounded-2xl bg-emerald-500/5 px-4 py-4 shadow-sm ring-1 ring-emerald-900/10 transition hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
@@ -302,11 +313,11 @@ export default function AboutPage() {
             <section className="mt-10" aria-label="Responsible information">
               <div className="rounded-3xl bg-amber-50 p-6 shadow-sm ring-1 ring-black/5 dark:bg-amber-500/10 dark:ring-white/10 sm:p-10">
                 {(() => {
-                  const medical = medicalWarningSection ?
-                    (Array.isArray(medicalWarningSection) ?
-                      medicalWarningSection :
-                      [medicalWarningSection])
-                    : []
+                  const medical = medicalWarningSection
+                    ? Array.isArray(medicalWarningSection)
+                      ? medicalWarningSection
+                      : [medicalWarningSection]
+                    : [];
 
                   return medical.map((card: rightProps) => (
                     <div key={card.title} className="flex items-start gap-4">
@@ -325,8 +336,7 @@ export default function AboutPage() {
                         </p>
                       </div>
                     </div>
-
-                  ))
+                  ));
                 })()}
               </div>
             </section>
@@ -336,14 +346,17 @@ export default function AboutPage() {
           {bottomCtaBandSection && (
             <section className="mt-10 rounded-3xl bg-emerald-500/10 p-6 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/15 dark:ring-emerald-500/20 sm:p-10">
               {(() => {
-                const bottom = bottomCtaBandSection ?
-                  (Array.isArray(bottomCtaBandSection) ?
-                    bottomCtaBandSection :
-                    [bottomCtaBandSection])
+                const bottom = bottomCtaBandSection
+                  ? Array.isArray(bottomCtaBandSection)
+                    ? bottomCtaBandSection
+                    : [bottomCtaBandSection]
                   : [];
 
                 return bottom.map((bottom: AboutPageBottomCtaBandProps) => (
-                  <div key={bottom.banner} className="grid gap-6 md:grid-cols-12 md:items-center">
+                  <div
+                    key={bottom.banner}
+                    className="grid gap-6 md:grid-cols-12 md:items-center"
+                  >
                     <div className="md:col-span-8">
                       <p className="text-xs font-extrabold uppercase tracking-wider text-emerald-900 dark:text-white">
                         {bottom.banner}
@@ -365,7 +378,7 @@ export default function AboutPage() {
                       </Link>
                     </div>
                   </div>
-                ))
+                ));
               })()}
             </section>
           )}

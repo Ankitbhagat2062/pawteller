@@ -1,18 +1,13 @@
+import type { FooterSection, SectionProps } from "@/lib/types";
 
-import type {
-  FooterSection,
-  SectionProps,
-} from "@/lib/types";
-
-export const navItems =
-  [
-    { label: "Home", href: "/" },
-    { label: "Calculators", href: "/calculators" },
-    { label: "Blog", href: "/blog" },
-    { label: "Quiz", href: "/quiz?quiz=breed-match" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-  ] as const;
+export const navItems = [
+  { label: "Home", href: "/" },
+  { label: "Calculators", href: "/calculators" },
+  { label: "Blog", href: "/blog" },
+  { label: "Quiz", href: "/quiz?quiz=breed-match" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+] as const;
 
 export const footerSections: FooterSection[] = [
   {
@@ -117,4 +112,3 @@ export const SECTIONS: SectionProps[] = [
       "Questions about this Privacy Policy, privacy requests, or data concerns can be sent to: support@pawteller.com. We will respond as soon as reasonably possible.",
   },
 ] as const;
-

@@ -1,13 +1,9 @@
 "use client";
 
-import { whySectionProps } from "@/lib/cms/dogfoodpage";
 import { AlertTriangle } from "lucide-react";
+import type { whySectionProps } from "@/lib/cms/dogfoodpage";
 
-export function WhySection({
-  title,
-  bullets,
-  disclaimer,
-}: whySectionProps) {
+export function WhySection({ title, bullets, disclaimer }: whySectionProps) {
   return (
     <section className="my-10 relative overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8 md:p-10">
       <div
@@ -23,8 +19,9 @@ export function WhySection({
           {title}
         </h2>
         <p className="text-sm sm:text-base text-foreground/70 max-w-3xl leading-relaxed mb-6">
-          Built for clarity and backed by standard energy-needs logic.
-          Use it to start a smart conversation with your vet, not as a final medical instruction.
+          Built for clarity and backed by standard energy-needs logic. Use it to
+          start a smart conversation with your vet, not as a final medical
+          instruction.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -35,9 +32,16 @@ export function WhySection({
                 className="rounded-xl border border-border/60 bg-background/40 p-4 sm:p-5 shadow-sm backdrop-blur"
               >
                 <div className="flex items-start gap-3">
-                  {b.icon &&<b.icon className="h-6 w-6 text-emerald-600 shrink-0" aria-hidden="true" />}
+                  {b.icon && (
+                    <b.icon
+                      className="h-6 w-6 text-emerald-600 shrink-0"
+                      aria-hidden="true"
+                    />
+                  )}
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2">{b.title}</h3>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      {b.title}
+                    </h3>
                     <p className="text-sm text-foreground/70 leading-relaxed">
                       {b.body}
                     </p>
@@ -50,7 +54,10 @@ export function WhySection({
 
         <div className="mt-6 sm:mt-8 rounded-xl border border-orange-500/20 bg-orange-500/10 p-4 sm:p-5">
           <div className="flex gap-3 items-start">
-            <AlertTriangle className="h-5 w-5 text-orange-600 shrink-0 mt-0.5" aria-hidden="true" />
+            <AlertTriangle
+              className="h-5 w-5 text-orange-600 shrink-0 mt-0.5"
+              aria-hidden="true"
+            />
             <div className="text-sm text-foreground/80 leading-relaxed">
               {disclaimer}
             </div>
@@ -60,4 +67,3 @@ export function WhySection({
     </section>
   );
 }
-

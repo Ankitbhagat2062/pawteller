@@ -1,4 +1,3 @@
-
 export type FormState = {
   success?: boolean;
   error?: string;
@@ -41,7 +40,7 @@ export interface quizDataProps {
     title: string;
     description: string;
     keywords: string[];
-  }
+  };
   banner: string;
   category?: string;
   title: string;
@@ -52,7 +51,7 @@ export interface quizDataProps {
   subheader: string;
   button: string;
   steps: stepsProps[];
-  dogs?: string[]
+  dogs?: string[];
 }
 
 export interface CalculatorState {

@@ -10,6 +10,8 @@ import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { Button } from "@/components/ui/button";
 import {
   BREED_SIZE_LABELS,
   dogPregnancyCms,
@@ -18,8 +20,6 @@ import {
 } from "@/lib/cms/dogpregnancypage";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { FaqSection } from "@/components/shared/FaqSection";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -118,11 +118,11 @@ export default function DogPregnancy() {
   const displayDate = matingDate
     ? formatLong(new Date(`${matingDate}T00:00:00`))
     : "Select a date";
-  const disclaimerSection = dogPregnancyCms.disclaimerSection
-  const heroSection = dogPregnancyCms.heroSection
-  const timelineSection = dogPregnancyCms.timelineSection
-  const faqSection = dogPregnancyCms.faqSection
-  const backlinkSection = dogPregnancyCms.backlinkSection
+  const disclaimerSection = dogPregnancyCms.disclaimerSection;
+  const heroSection = dogPregnancyCms.heroSection;
+  const timelineSection = dogPregnancyCms.timelineSection;
+  const faqSection = dogPregnancyCms.faqSection;
+  const backlinkSection = dogPregnancyCms.backlinkSection;
   return (
     <div className="w-full min-h-screen bg-white dark:bg-gray-950">
       {/* ── HERO ── */}
@@ -163,11 +163,13 @@ export default function DogPregnancy() {
               {heroSection.h1}
             </h1>
             <p className="text-lg md:text-xl font-medium text-[#1A2B3C] dark:text-gray-200 leading-relaxed max-w-2xl mx-auto">
-              {heroSection.description ? heroSection.description : `Estimate your dog's due date, track pregnancy milestones
+              {heroSection.description
+                ? heroSection.description
+                : `Estimate your dog's due date, track pregnancy milestones
 						week-by-week, and prepare for your puppy's arrival with expert
 						guidance.`}
             </p>
-          </div >
+          </div>
         )}
       </section>
 
@@ -323,16 +325,20 @@ export default function DogPregnancy() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12 space-y-4">
               <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white tracking-tight">
-                {timelineSection.title ? timelineSection.title : `Dog Pregnancy Timeline`}
+                {timelineSection.title
+                  ? timelineSection.title
+                  : `Dog Pregnancy Timeline`}
               </h2>
               <p className="text-[#6B7280] dark:text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-                {timelineSection.description ? timelineSection.description : `Track the amazing development of your puppies from fertilization
+                {timelineSection.description
+                  ? timelineSection.description
+                  : `Track the amazing development of your puppies from fertilization
                 to birth with our week-by-week guide.`}
               </p>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-              {timelineSection.timeline && timelineSection.timeline.map((item) => (
+              {timelineSection.timeline?.map((item) => (
                 <div
                   key={item.week}
                   className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-7 flex flex-col gap-3"
@@ -391,8 +397,8 @@ export default function DogPregnancy() {
                 {/* Image Container */}
                 <div
                   className={`rounded-3xl overflow-hidden aspect-4/3 
-                  ${isImageLeft ? 'order-2 md:order-1' : 'order-2'} 
-                  ${isImageLeft ? 'shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]' : 'shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]'}`}
+                  ${isImageLeft ? "order-2 md:order-1" : "order-2"} 
+                  ${isImageLeft ? "shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]" : "shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"}`}
                 >
                   <Image
                     src={section.image.src}
@@ -404,7 +410,9 @@ export default function DogPregnancy() {
                 </div>
 
                 {/* Text Content Container */}
-                <div className={`space-y-6 ${isImageLeft ? 'order-1 md:order-2' : 'order-1'}`}>
+                <div
+                  className={`space-y-6 ${isImageLeft ? "order-1 md:order-2" : "order-1"}`}
+                >
                   <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white leading-tight">
                     {section.title}
                   </h2>
@@ -414,7 +422,7 @@ export default function DogPregnancy() {
                     {section.paragraphs.map((para) => (
                       <p key={para.days ?? para.p}>
                         {para.p}
-                        {(para.days && para.p2) && (
+                        {para.days && para.p2 && (
                           <>
                             <strong className="font-bold">{para.days}</strong>
                             {para.p2}
@@ -427,7 +435,9 @@ export default function DogPregnancy() {
                   {/* Optional Tip Card */}
                   {section.tipCard && (
                     <div className="rounded-3xl border border-[#00C2A8]/20 bg-[#E6F7F5] dark:bg-teal-950 p-6 space-y-2">
-                      <p className="text-[#00C2A8] text-lg font-bold">{section.tipCard.label}</p>
+                      <p className="text-[#00C2A8] text-lg font-bold">
+                        {section.tipCard.label}
+                      </p>
                       <p className="text-[#1A2B3C]/80 dark:text-gray-300 text-sm leading-relaxed">
                         {section.tipCard.text}
                       </p>
@@ -455,7 +465,6 @@ export default function DogPregnancy() {
                     </div>
                   )}
                 </div>
-
               </div>
             );
           })}
@@ -468,9 +477,7 @@ export default function DogPregnancy() {
           <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
             Frequently Asked Questions
           </h2>
-          {faqSection && (
-            <FaqSection items={faqSection} />
-          )}
+          {faqSection && <FaqSection items={faqSection} />}
         </div>
       </section>
 
@@ -479,11 +486,15 @@ export default function DogPregnancy() {
         {backlinkSection && (
           <div className="max-w-6xl mx-auto">
             <p className="text-[#1A2B3C]/40 dark:text-gray-500 text-xs font-black tracking-[4px] uppercase text-center mb-8">
-              {backlinkSection.title ? backlinkSection.title : `Explore Other Dog Tools`}
+              {backlinkSection.title
+                ? backlinkSection.title
+                : `Explore Other Dog Tools`}
             </p>
             <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
-              {backlinkSection.cta && backlinkSection.cta.map((cta) => (
-                <Link key={cta.label} aria-label={cta.ariaLabel}
+              {backlinkSection.cta?.map((cta) => (
+                <Link
+                  key={cta.label}
+                  aria-label={cta.ariaLabel}
                   href={cta.href}
                   className="flex items-center gap-3 group"
                 >
@@ -499,17 +510,21 @@ export default function DogPregnancy() {
       </section>
 
       {/* ── DISCLAIMER ── */}
-      {disclaimerSection && <section className="py-10 px-4 bg-white dark:bg-gray-950">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[#9CA3AF] dark:text-gray-500 text-xs leading-relaxed">
-            {disclaimerSection.desc ? disclaimerSection.desc : `Disclaimer: This calculator provides estimates based on typical
+      {disclaimerSection && (
+        <section className="py-10 px-4 bg-white dark:bg-gray-950">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-[#9CA3AF] dark:text-gray-500 text-xs leading-relaxed">
+              {disclaimerSection.desc
+                ? disclaimerSection.desc
+                : `Disclaimer: This calculator provides estimates based on typical
             biological averages. Dog pregnancy can be complex and varies by
             individual health and breed factors. We strongly recommend a
             professional veterinary consultation, ultrasound, or X-ray to
             confirm pregnancy status, puppy count, and overall health.`}
-          </p>
-        </div>
-      </section>}
+            </p>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

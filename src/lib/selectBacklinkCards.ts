@@ -9,10 +9,7 @@ export type SelectableCardLike = {
  * - If eligibleCards.length === 1 => [eligibleCards[0]]
  * - Otherwise => pick `start` and `(start + 1) % length` (ensuring distinct)
  */
-export function selectBacklinkCards<T>(
-  eligibleCards: T[],
-  seed: string,
-): T[] {
+export function selectBacklinkCards<T>(eligibleCards: T[], seed: string): T[] {
   if (eligibleCards.length === 0) return [];
   if (eligibleCards.length === 1) return [eligibleCards[0]];
 
@@ -34,4 +31,3 @@ export function selectBacklinkCards<T>(
 
   return [eligibleCards[start], eligibleCards[nextIndex]];
 }
-

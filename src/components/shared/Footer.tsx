@@ -2,13 +2,13 @@
 import { AlertCircle, ArrowRight, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { footerSections } from "@/lib/constant";
-import { Button } from "@/components/ui/button";
 import { useActionState, useEffect } from "react";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { type FormState } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { submitVerificationForm } from "@/hooks/forms";
+import { footerSections } from "@/lib/constant";
+import type { FormState } from "@/lib/types";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -38,8 +38,10 @@ export function Footer() {
                 content delivered to your inbox.`}
               </p>
             </div>
-            <form action={formAction} className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row">
-
+            <form
+              action={formAction}
+              className="flex w-full max-w-md flex-col gap-3 bg-transparent sm:flex-row"
+            >
               <Label htmlFor="email" className="sr-only">
                 {"Email address"}
               </Label>
@@ -64,7 +66,6 @@ export function Footer() {
           {(currentState.success || currentState.error) && (
             <div
               className="mx-auto mt-6 flex w-full max-w-md items-center justify-center rounded-lg border border-border/60 bg-background/70 px-4 py-3"
-              role="status"
               aria-live="polite"
             >
               {currentState.success ? (

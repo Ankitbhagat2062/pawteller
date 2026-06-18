@@ -2,6 +2,9 @@
 
 import { Calculator } from "lucide-react";
 import { useEffect, useState } from "react";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import BlogCard from "@/components/shared/BlogCard";
+import { FaqSection } from "@/components/shared/FaqSection";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,16 +15,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ACTIVITY_MULTIPLIERS, LIFE_STAGE_MULTIPLIERS } from "@/lib/cms/dogfoodpage";
-import type { CalculatorState, Results } from "@/lib/types";
-import { dogFoodPageCms } from "@/lib/cms/dogfoodpage";
-import { WhySection } from "./dogfoodcomponents/WhySection";
-import { FaqSection } from "@/components/shared/FaqSection";
 import { blogPosts } from "@/lib/cms/blogpage";
-import BlogCard from "@/components/shared/BlogCard";
 import { backlinks } from "@/lib/cms/calculatorpage";
-import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import {
+  ACTIVITY_MULTIPLIERS,
+  dogFoodPageCms,
+  LIFE_STAGE_MULTIPLIERS,
+} from "@/lib/cms/dogfoodpage";
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
+import type { CalculatorState, Results } from "@/lib/types";
+import { WhySection } from "./dogfoodcomponents/WhySection";
 
 const calculateCalories = (state: CalculatorState): Results => {
   const { weight, lifeStage, activityLevel } = state;
@@ -70,7 +73,7 @@ export default function DogFood() {
   const handleActivityChange = (value: string) => {
     setState((prev) => ({ ...prev, activityLevel: value }));
   };
-  const header = dogFoodPageCms.header
+  const header = dogFoodPageCms.header;
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -132,7 +135,9 @@ export default function DogFood() {
             })()}
 
             <p className="text-lg text-foreground/70 max-w-2xl">
-              {header.description ? header.description : `Calorie needs vary by weight, age and activity. Get an
+              {header.description
+                ? header.description
+                : `Calorie needs vary by weight, age and activity. Get an
               evidence-based daily portion in seconds.`}
             </p>
           </div>
@@ -282,8 +287,8 @@ export default function DogFood() {
               Other calculators you may need
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Continue exploring Pawteller’s tools to support your dog’s nutrition
-              and growth.
+              Continue exploring Pawteller’s tools to support your dog’s
+              nutrition and growth.
             </p>
           </div>
 
@@ -295,13 +300,12 @@ export default function DogFood() {
               );
 
               const stableIndexSeed = `${state.weight}-${4}`;
-                const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
+              const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
 
               return cards.map((card) => (
                 <BacklinkCalculatorCard key={card.title} {...card} />
               ));
             })()}
-
           </div>
         </div>
 
@@ -318,7 +322,9 @@ export default function DogFood() {
         {/* Blog */}
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {(() => {
-            const nutritionPosts = blogPosts.filter((post) => post.category === "Nutrition");
+            const nutritionPosts = blogPosts.filter(
+              (post) => post.category === "Nutrition",
+            );
             if (nutritionPosts.length === 0) return null;
 
             // 2. Map over the array of matching blog posts

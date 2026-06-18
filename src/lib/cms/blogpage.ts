@@ -1,4 +1,4 @@
-import { contentProps, seoProps } from "@/lib/types";
+import type { contentProps, seoProps } from "@/lib/types";
 
 export interface BlogContentProps {
   content: contentProps[];
@@ -210,4 +210,4 @@ export const blogPageSeo: seoProps = {
     "science-based pet care",
     "pawteller blog",
   ],
-}
+};

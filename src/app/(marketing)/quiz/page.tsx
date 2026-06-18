@@ -20,8 +20,7 @@ export async function generateMetadata({
   const seo = selectedQuiz?.seo ?? fallbackSeo;
 
   return {
-    title:
-      seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
+    title: seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
     description:
       seo?.description ||
       "Take our fast, interactive pet quiz to test your dog care knowledge, discover ideal breeds, and unlock customized health insights.",
@@ -32,8 +31,7 @@ export async function generateMetadata({
     },
 
     openGraph: {
-      title:
-        seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
+      title: seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
       description:
         seo?.description ||
         "Test your pet care knowledge and unlock customized health insights for your dog.",
@@ -53,8 +51,7 @@ export async function generateMetadata({
 
     twitter: {
       card: "summary_large_image",
-      title:
-        seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
+      title: seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
       description:
         seo?.description ||
         "Test your pet care knowledge and unlock customized health insights for your dog.",
@@ -93,4 +90,3 @@ export default async function QuizPage({
     </main>
   );
 }
-

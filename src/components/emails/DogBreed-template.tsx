@@ -1,5 +1,17 @@
-
-import { Body, Column, Container, Head, Heading, Html, Link, Preview, Row, Section, Tailwind, Text } from 'react-email';
+import {
+  Body,
+  Column,
+  Container,
+  Head,
+  Heading,
+  Html,
+  Link,
+  Preview,
+  Row,
+  Section,
+  Tailwind,
+  Text,
+} from "react-email";
 
 type TopMatch = {
   rank: number;
@@ -20,13 +32,14 @@ type TopMatch = {
   };
 };
 
-
 export interface DogBreedEmailProps {
   userName: string;
   topMatches: TopMatch[];
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}` : '';
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+  ? `${process.env.NEXT_PUBLIC_APP_URL}`
+  : "";
 
 const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
   const winner = topMatches[0];
@@ -43,7 +56,10 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
             <Section className="bg-linear-to-r from-orange-500 to-red-500 px-6 sm:px-10 py-10 sm:py-12 text-center">
               <Text className="m-0 text-5xl sm:text-6xl">🐶</Text>
 
-              <Heading as="h1" className="m-0 mt-4 text-3xl sm:text-4xl font-bold text-white">
+              <Heading
+                as="h1"
+                className="m-0 mt-4 text-3xl sm:text-4xl font-bold text-white"
+              >
                 Your Personalized Dog Breed Report
               </Heading>
 
@@ -52,7 +68,6 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
                 grooming preferences, and ideal dog size.
               </Text>
             </Section>
-
 
             {/* Intro */}
             <Section className="px-10 py-8">
@@ -69,17 +84,18 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
             <Section className="mx-8 rounded-2xl border border-green-200 bg-green-50 p-5">
               <Text className="m-0 text-center text-green-900">
                 ✓ Personalized from 6 lifestyle factors
-                <br />
-                ✓ Compared against multiple compatible breeds
+                <br />✓ Compared against multiple compatible breeds
                 <br />✓ Ranked using a weighted compatibility system
               </Text>
             </Section>
 
             <Section className="px-6 sm:px-8 py-10">
-              <Heading as="h2" className="mb-6 text-2xl sm:text-3xl text-center">
+              <Heading
+                as="h2"
+                className="mb-6 text-2xl sm:text-3xl text-center"
+              >
                 Your Top Breed Matches
               </Heading>
-
 
               {topMatches.map((dog) => (
                 <Section
@@ -157,7 +173,6 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
                 Your Top 3 Matches
               </Heading>
 
-
               {topMatches.map((dog) => (
                 <Section
                   key={dog.breed}
@@ -175,7 +190,6 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
                       </Text>
                     </Column>
                   </Row>
-
 
                   <Text className="text-slate-600">{dog.description}</Text>
                 </Section>
@@ -277,7 +291,6 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
               </Link>
             </Section>
 
-
             {/* Footer */}
             <Section className="border-t border-slate-200 px-10 py-8 text-center">
               <Text className="text-sm text-slate-500">
@@ -291,6 +304,4 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
   );
 };
 
-
 export default DogBreed;
-

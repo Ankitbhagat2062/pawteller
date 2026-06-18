@@ -1,10 +1,11 @@
 "use client";
 
 import { Info } from "lucide-react";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
-
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,14 +16,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { dogAgePageCms } from "@/lib/cms/dogagepage";
 import { blogPosts } from "@/lib/cms/blogpage";
-import BlogCard from "../shared/BlogCard";
 import { backlinks } from "@/lib/cms/calculatorpage";
-import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { dogAgePageCms } from "@/lib/cms/dogagepage";
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
-import { FaqSection } from "@/components/shared/FaqSection";
-import { useRouter } from "next/navigation";
+import BlogCard from "../shared/BlogCard";
 
 const DogAgeCalculator = () => {
   const [dogAge, setDogAge] = useState<number>(10);
@@ -34,7 +32,6 @@ const DogAgeCalculator = () => {
   const [ageDescription, setAgeDescription] = useState<string>(
     "Your dog is entering their senior years. Regular vet checkups and a comfortable environment are important.",
   );
-  const router = useRouter();
   // Dog aging formula based on veterinary research
   const calculateHumanAge = (
     age: number,
@@ -135,10 +132,10 @@ const DogAgeCalculator = () => {
     large: "Large breeds (50-90 lbs) age faster than smaller dogs",
     giant: "Giant breeds (over 90 lbs) age the fastest",
   };
-  const heroSection = dogAgePageCms.heroSection
-  const informationSection = dogAgePageCms.informationSection
-  const faqSection = dogAgePageCms.faqSection
-  const callToActionSection = dogAgePageCms.callToActionSection
+  const heroSection = dogAgePageCms.heroSection;
+  const informationSection = dogAgePageCms.informationSection;
+  const faqSection = dogAgePageCms.faqSection;
+  const callToActionSection = dogAgePageCms.callToActionSection;
   return (
     <TooltipProvider>
       <div className="min-h-screen ">
@@ -179,12 +176,18 @@ const DogAgeCalculator = () => {
                             );
                           }
 
-                          const lastTwoWords: string = words.slice(-2).join(" ");
-                          const firstPart: string = words.slice(0, -2).join(" ");
+                          const lastTwoWords: string = words
+                            .slice(-2)
+                            .join(" ");
+                          const firstPart: string = words
+                            .slice(0, -2)
+                            .join(" ");
 
                           return (
                             <>
-                              {heroSection.title ? firstPart : `How old is your dog in`}{" "}
+                              {heroSection.title
+                                ? firstPart
+                                : `How old is your dog in`}{" "}
                               <span className="italic text-primary">
                                 {lastTwoWords}
                               </span>
@@ -194,17 +197,18 @@ const DogAgeCalculator = () => {
                         })()}
                       </>
                     );
-
                   })()}
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-                  {heroSection.description ? heroSection.description : `Forget the old &quot;multiply by 7&quot; rule! Real dog aging is
+                  {heroSection.description
+                    ? heroSection.description
+                    : `Forget the old &quot;multiply by 7&quot; rule! Real dog aging is
                   non-linear and depends on breed size. Our calculator uses the
                   latest veterinary research to give you an accurate human-year
                   equivalent.`}
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center text-sm text-muted-foreground">
-                  {heroSection.buttons && heroSection.buttons.map((btn) => (
+                  {heroSection.buttons?.map((btn) => (
                     <span
                       key={btn.title}
                       className="px-3 py-1 rounded-full bg-accent/10 text-foreground"
@@ -312,16 +316,20 @@ const DogAgeCalculator = () => {
             <section className="mt-16 space-y-8">
               <div className="text-center mb-10">
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                  {informationSection.title ? informationSection.title : `Why Size Matters`}
+                  {informationSection.title
+                    ? informationSection.title
+                    : `Why Size Matters`}
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  {informationSection.description ? informationSection.description : `Different dog breeds age at different rates due to genetics and
+                  {informationSection.description
+                    ? informationSection.description
+                    : `Different dog breeds age at different rates due to genetics and
                   physiology`}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {informationSection.cards && informationSection.cards.map((item) => (
+                {informationSection.cards?.map((item) => (
                   <Card
                     key={item.size}
                     className={`p-4 bg-linear-to-br ${item.color} border`}
@@ -341,7 +349,6 @@ const DogAgeCalculator = () => {
             </section>
           )}
 
-
           {/* Backlinks || Other Calculators and services */}
           <section className="mt-16">
             <div className="text-center mb-8">
@@ -349,8 +356,8 @@ const DogAgeCalculator = () => {
                 Other calculators you may need
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Continue exploring Pawteller’s tools to support your dog’s nutrition
-                and growth.
+                Continue exploring Pawteller’s tools to support your dog’s
+                nutrition and growth.
               </p>
             </div>
 
@@ -362,16 +369,17 @@ const DogAgeCalculator = () => {
                 );
 
                 const stableIndexSeed = `${dogAge}-${dogSize}`;
-                const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
+                const cards = selectBacklinkCards(
+                  eligibleCards,
+                  stableIndexSeed,
+                );
 
                 return cards.map((card) => (
                   <BacklinkCalculatorCard key={card.title} {...card} />
                 ));
               })()}
-
             </div>
           </section>
-
 
           {/* FAQ Section */}
           <section className="mt-16 max-w-3xl mx-auto">
@@ -385,19 +393,32 @@ const DogAgeCalculator = () => {
             <section className="mt-16 text-center">
               <Card className="p-8 md:p-12 bg-linear-to-r from-primary/10 to-secondary/10 border-primary/30">
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  {callToActionSection.title ? callToActionSection.title : `Keep Your Dog Healthy`}
+                  {callToActionSection.title
+                    ? callToActionSection.title
+                    : `Keep Your Dog Healthy`}
                 </h2>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  {callToActionSection.description ? callToActionSection.description : `Regular veterinary checkups, proper nutrition, exercise, and
+                  {callToActionSection.description
+                    ? callToActionSection.description
+                    : `Regular veterinary checkups, proper nutrition, exercise, and
                   preventative care are essential for keeping your dog healthy
                   throughout their life.`}
                 </p>
-                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2">
+                <Button
+                  asChild
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2"
+                >
                   <Link
                     href={callToActionSection.button.href || "/contact"}
-                    aria-label={callToActionSection.button.ariaLabel || callToActionSection.button.label || "Schedule a Vet Checkup"}
+                    aria-label={
+                      callToActionSection.button.ariaLabel ||
+                      callToActionSection.button.label ||
+                      "Schedule a Vet Checkup"
+                    }
                   >
-                    {callToActionSection.button.label ? callToActionSection.button.label : `Schedule a Vet Checkup`}
+                    {callToActionSection.button.label
+                      ? callToActionSection.button.label
+                      : `Schedule a Vet Checkup`}
                   </Link>
                 </Button>
               </Card>
@@ -407,7 +428,9 @@ const DogAgeCalculator = () => {
           {/* Blog Section */}
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {(() => {
-              const healthPosts = blogPosts.filter((post) => post.category === "Growth");
+              const healthPosts = blogPosts.filter(
+                (post) => post.category === "Growth",
+              );
               if (healthPosts.length === 0) return null;
 
               return healthPosts.map((article) => (

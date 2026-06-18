@@ -11,13 +11,13 @@ import {
   Section,
   Tailwind,
   Text,
-} from 'react-email';
+} from "react-email";
 
 interface PawtellerWelcomeEmailProps {
   userFirstname: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 export const PawtellerWelcomeEmail = ({
   userFirstname,
@@ -85,8 +85,7 @@ export const PawtellerWelcomeEmail = ({
 );
 
 PawtellerWelcomeEmail.PreviewProps = {
-  userFirstname: 'Alan',
+  userFirstname: "Alan",
 } as PawtellerWelcomeEmailProps;
 
 export default PawtellerWelcomeEmail;
-

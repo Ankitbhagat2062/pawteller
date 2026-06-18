@@ -16,13 +16,22 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { FaqSection } from "@/components/shared/FaqSection";
-import { FeatureItem, GROWTH_INSIGHTS_CONTENT, GrowthRow, growthSupportRecommendation, HERO_CONTENT, infographicSection, PredictionStep, puppyWeightPageCms } from "@/lib/cms/puppyweight";
-import { submitVerificationForm } from "@/hooks/forms";
-import { FormState } from "@/lib/types";
 import { toast } from "sonner";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { submitVerificationForm } from "@/hooks/forms";
+import {
+  type FeatureItem,
+  GROWTH_INSIGHTS_CONTENT,
+  type GrowthRow,
+  growthSupportRecommendation,
+  HERO_CONTENT,
+  infographicSection,
+  type PredictionStep,
+  puppyWeightPageCms,
+} from "@/lib/cms/puppyweight";
+import type { FormState } from "@/lib/types";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -484,10 +493,13 @@ export default function Index() {
       : parseFloat(weightValue || "0");
 
   const iconMap = {
-    PawPrint: <PawPrint className="w-4 h-4 text-white/80" fill="currentColor" />,
+    PawPrint: (
+      <PawPrint className="w-4 h-4 text-white/80" fill="currentColor" />
+    ),
     BadgeCheck: <BadgeCheck className="w-4.5 h-4 text-white/80" />,
   };
-  const { badge, titleLine1, titleLine2, description, features, heroImage } = HERO_CONTENT;
+  const { badge, titleLine1, titleLine2, description, features, heroImage } =
+    HERO_CONTENT;
   const {
     howItWorksTitle,
     steps,
@@ -527,7 +539,6 @@ export default function Index() {
           >
             <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-20">
               <div className="grid lg:grid-cols-2 gap-10 items-center">
-
                 {/* Left Content Column */}
                 <div className="flex flex-col gap-6">
                   <div>
@@ -569,7 +580,6 @@ export default function Index() {
                     />
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -717,10 +727,11 @@ export default function Index() {
                       type="button"
                       key={s}
                       onClick={() => setSex(s)}
-                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${sex === s
-                        ? "border-brand bg-brand-light text-brand"
-                        : "border-border bg-card text-muted-foreground hover:border-brand/50"
-                        }`}
+                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${
+                        sex === s
+                          ? "border-brand bg-brand-light text-brand"
+                          : "border-border bg-card text-muted-foreground hover:border-brand/50"
+                      }`}
                     >
                       {s === "Male" ? (
                         <Mars
@@ -766,7 +777,8 @@ export default function Index() {
                         Your {result.breedName} Puppy
                       </h3>
                     </div>
-                    <Button onClick={() => setResult(null)}
+                    <Button
+                      onClick={() => setResult(null)}
                       type="button"
                       className="p-2 rounded-lg hover:bg-muted transition-colors"
                     >
@@ -910,10 +922,12 @@ export default function Index() {
         {infographicSection && (
           <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24">
             <h3 className="text-lg font-bold text-foreground mb-6 text-center">
-              {infographicSection.title ? infographicSection.title : `When will your puppy stop growing?`}
+              {infographicSection.title
+                ? infographicSection.title
+                : `When will your puppy stop growing?`}
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {infographicSection.reasons && infographicSection.reasons.map((item) => (
+              {infographicSection.reasons?.map((item) => (
                 <div
                   key={item.label}
                   className={`rounded-2xl border p-5 text-center ${item.color}`}
@@ -937,15 +951,19 @@ export default function Index() {
           <div className="max-w-360 mx-auto px-5 md:px-10 lg:px-24">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                {growthSupportRecommendation.title ? growthSupportRecommendation.title : `Growth Support Recommendations`}
+                {growthSupportRecommendation.title
+                  ? growthSupportRecommendation.title
+                  : `Growth Support Recommendations`}
               </h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                {growthSupportRecommendation.desc ? growthSupportRecommendation.desc : `Expert-backed advice tailored to your puppy's current developmental stage.`}
+                {growthSupportRecommendation.desc
+                  ? growthSupportRecommendation.desc
+                  : `Expert-backed advice tailored to your puppy's current developmental stage.`}
               </p>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {growthSupportRecommendation.recommendations && growthSupportRecommendation.recommendations.map((card) => (
+              {growthSupportRecommendation.recommendations?.map((card) => (
                 <div
                   key={card.title}
                   className="bg-card border border-border rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow"
@@ -953,7 +971,9 @@ export default function Index() {
                   <div
                     className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${card.iconBg}`}
                   >
-                    {card.icon && <card.icon className="w-6 h-6" color={card.Color} />}
+                    {card.icon && (
+                      <card.icon className="w-6 h-6" color={card.Color} />
+                    )}
                   </div>
                   <h3 className="text-lg font-bold text-foreground mb-3">
                     {card.title}
@@ -979,7 +999,6 @@ export default function Index() {
       {GROWTH_INSIGHTS_CONTENT && (
         <section className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-24">
           <div className="grid lg:grid-cols-2 gap-16">
-
             {/* Left Column: How it works & Development Info */}
             <div>
               <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
@@ -1045,8 +1064,9 @@ export default function Index() {
                     {growthRows.map((row: GrowthRow, i: number) => (
                       <tr
                         key={row.cat}
-                        className={`border-b border-border last:border-0 ${i % 2 === 0 ? "bg-card" : "bg-muted/30"
-                          }`}
+                        className={`border-b border-border last:border-0 ${
+                          i % 2 === 0 ? "bg-card" : "bg-muted/30"
+                        }`}
                       >
                         <td className="px-5 py-4 text-muted-foreground">
                           {row.cat}
@@ -1077,7 +1097,6 @@ export default function Index() {
                 {(currentState.success || currentState.error) && (
                   <div
                     className="mx-auto mt-6 flex w-full max-w-md items-center justify-center rounded-lg border border-border/60 bg-background/70 px-4 py-3"
-                    role="status"
                     aria-live="polite"
                   >
                     {currentState.success ? (
@@ -1109,15 +1128,17 @@ export default function Index() {
                     className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                   />
                   <Button
-                    type="button" disabled={isPending}
+                    type="button"
+                    disabled={isPending}
                     className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                   >
-                    {isPending ? 'Subscribing to Newsletter' : newsletterBtnText}
+                    {isPending
+                      ? "Subscribing to Newsletter"
+                      : newsletterBtnText}
                   </Button>
                 </form>
               </div>
             </div>
-
           </div>
         </section>
       )}
@@ -1125,7 +1146,9 @@ export default function Index() {
       {/* ── FAQ ── */}
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">
         <div className="max-w-200 mx-auto px-5 md:px-10">
-          {puppyWeightPageCms.faqSection && <FaqSection items={puppyWeightPageCms.faqSection} />}
+          {puppyWeightPageCms.faqSection && (
+            <FaqSection items={puppyWeightPageCms.faqSection} />
+          )}
         </div>
       </section>
 
@@ -1135,7 +1158,7 @@ export default function Index() {
           Other Useful Tools
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {puppyWeightPageCms.backlinks && puppyWeightPageCms.backlinks.map((tool) => (
+          {puppyWeightPageCms.backlinks?.map((tool) => (
             <div
               key={tool.title}
               className="bg-card border border-border rounded-2xl p-7 hover:shadow-md transition-shadow"

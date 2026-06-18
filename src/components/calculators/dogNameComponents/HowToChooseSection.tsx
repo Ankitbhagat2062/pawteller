@@ -1,4 +1,7 @@
-import { DOG_NAME_GUIDE_CONTENT, DogNameGuideTip } from '@/lib/cms/dognamepage';
+import {
+  DOG_NAME_GUIDE_CONTENT,
+  type DogNameGuideTip,
+} from "@/lib/cms/dognamepage";
 
 export default function HowToChooseSection() {
   const { sectionTitle, tips } = DOG_NAME_GUIDE_CONTENT;
@@ -16,9 +19,7 @@ export default function HowToChooseSection() {
               <h3 className="text-lg font-semibold text-foreground mb-2">
                 {tip.title}
               </h3>
-              <p className="text-foreground/70">
-                {tip.description}
-              </p>
+              <p className="text-foreground/70">{tip.description}</p>
             </div>
           ))}
         </div>

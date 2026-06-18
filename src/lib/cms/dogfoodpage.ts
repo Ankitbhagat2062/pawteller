@@ -1,6 +1,5 @@
-import { FAQItem, seoProps } from "@/lib/types";
-import { AlertTriangle, Award, Shield, type LucideIcon } from "lucide-react";
-
+import { AlertTriangle, Award, type LucideIcon, Shield } from "lucide-react";
+import type { FAQItem, seoProps } from "@/lib/types";
 
 export const LIFE_STAGE_MULTIPLIERS: Record<string, number> = {
   Puppy: 2.5,
@@ -17,8 +16,7 @@ export const ACTIVITY_MULTIPLIERS: Record<string, number> = {
 };
 export interface whySectionProps {
   title: string;
-  bullets:
-  {
+  bullets: {
     title: string;
     body: string;
     icon: LucideIcon;
@@ -30,19 +28,31 @@ export interface dogFoodPageCmsProps {
   header: {
     title: string;
     description: string;
-  }
+  };
   whySection: whySectionProps;
   faqSection: FAQItem[];
 }
 export const dogFoodPageCms: dogFoodPageCmsProps = {
   seo: {
     title: "Dog Food Calculator: How Many Cups & Calories Per Day",
-    description: "Use our dog food calculator to estimate daily calories and cups per day based on weight, life stage (puppy, adult, senior, pregnant) and activity level. Includes transparent ~350 kcal/cup conversion.",
-    keywords: ["dog food calculator", "dog calorie calculator", "cups per day", "how much to feed a dog", "puppy feeding guide", "senior dog nutrition", "weight based feeding", "RER formula", "veterinary nutrition"],
+    description:
+      "Use our dog food calculator to estimate daily calories and cups per day based on weight, life stage (puppy, adult, senior, pregnant) and activity level. Includes transparent ~350 kcal/cup conversion.",
+    keywords: [
+      "dog food calculator",
+      "dog calorie calculator",
+      "cups per day",
+      "how much to feed a dog",
+      "puppy feeding guide",
+      "senior dog nutrition",
+      "weight based feeding",
+      "RER formula",
+      "veterinary nutrition",
+    ],
   },
   header: {
     title: "How much should your dog really eat?",
-    description: "Calorie needs vary by weight, age and activity. Get an evidence-based daily portion in seconds."
+    description:
+      "Calorie needs vary by weight, age and activity. Get an evidence-based daily portion in seconds.",
   },
   whySection: {
     title: "Why this calculator works",
@@ -69,7 +79,8 @@ export const dogFoodPageCms: dogFoodPageCmsProps = {
   faqSection: [
     {
       id: "dfaq-1",
-      question: "Is the calorie number based on scientific veterinary formulas?",
+      question:
+        "Is the calorie number based on scientific veterinary formulas?",
       answer:
         "Yes. The calculator uses RER (70 × (kg)^0.75) as the baseline, then applies multipliers for life stage and activity level—an approach consistent with how veterinary nutrition assessments estimate energy needs.",
     },
@@ -93,4 +104,3 @@ export const dogFoodPageCms: dogFoodPageCmsProps = {
     },
   ],
 };
-
