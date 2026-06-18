@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     if (!bearerToken) {
       return NextResponse.json({ message: "Missing token" }, { status: 401 });
     }
-    const verified = verifyAdminToken(bearerToken);
+    const verified = await verifyAdminToken(bearerToken);
     if (!verified.ok) {
       return NextResponse.json({ message: verified.reason }, { status: 401 });
     }

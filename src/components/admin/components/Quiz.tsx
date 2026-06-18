@@ -105,19 +105,16 @@ export default function Quiz() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const token = useMemo(() => {
-    if (typeof window === "undefined") return null;
-    return localStorage.getItem("adminAuth.token") ?? null;
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    setToken(localStorage.getItem("adminAuth.token"));
   }, []);
+  const match = quizOptionList.find((x) => x.quizId === quizId);
+  const q = match
+    ? (quizData.find((it) => it.url.includes(match.quizId)) ?? quizData[0])
+    : quizData[0];
 
-  const defaultQuiz = useMemo(() => {
-    const match = quizOptionList.find((x) => x.quizId === quizId);
-    const q = match
-      ? (quizData.find((it) => it.url.includes(match.quizId)) ?? quizData[0])
-      : quizData[0];
-
-    return buildDefaultFromQuiz(q, quizId);
-  }, [quizId]);
+  const defaultQuiz = buildDefaultFromQuiz(q, quizId);
 
   const form = useForm<QuizCmsFormValues>({
     defaultValues: defaultQuiz,
@@ -198,7 +195,7 @@ export default function Quiz() {
   useEffect(() => {
     if (!quizId) return;
     void loadQuiz(quizId);
-  }, [quizId, loadQuiz]);
+  }, [quizId]);
 
   const stepsWatch = watch("steps");
 
@@ -266,7 +263,7 @@ export default function Quiz() {
           <CardTitle>Quiz CMS</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="lg:col-span-1">
               <Label className="text-sm">Quiz</Label>
               <Select value={quizId} onValueChange={(v) => setQuizId(v)}>
@@ -282,225 +279,214 @@ export default function Quiz() {
                 </SelectContent>
               </Select>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
-                <Button
-                  type="submit"
-                  disabled={saving || loading || !formState.isDirty}
-                  className="w-full"
-                >
-                  {saving ? "Saving…" : "Save quiz"}
-                </Button>
-
-                {error ? (
-                  <Alert variant="destructive" className="mt-4">
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                ) : null}
-
-                {loading ? (
-                  <p className="mt-3 text-sm text-muted-foreground">Loading…</p>
-                ) : null}
-              </form>
-
               <p className="mt-4 text-xs text-muted-foreground">
                 This editor updates quiz content stored in MongoDB.
               </p>
             </div>
 
             <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="space-y-6">
-                  <Accordion type="single" collapsible defaultValue="seo">
-                    <AccordionItem value="seo">
-                      <AccordionTrigger>SEO</AccordionTrigger>
-                      <AccordionContent>
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                          <div>
-                            <Label>SEO title</Label>
-                            <Input
-                              {...register("seo.title")}
-                              className="mt-2"
-                            />
-                          </div>
-                          <div>
-                            <Label>Estimated time</Label>
-                            <Input
-                              {...register("estimatedTime")}
-                              className="mt-2"
-                            />
-                          </div>
-                          <div className="md:col-span-2">
-                            <Label>SEO description</Label>
-                            <Input
-                              {...register("seo.description")}
-                              className="mt-2"
-                            />
-                          </div>
-                          <div className="md:col-span-2">
-                            <Label>SEO keywords (comma-separated)</Label>
-                            <Input
-                              {...register("seo.keywordsCsv")}
-                              className="mt-2"
-                            />
-                          </div>
+              <div className="space-y-6">
+                <Accordion type="single" collapsible defaultValue="seo">
+                  <AccordionItem value="seo">
+                    <AccordionTrigger>SEO</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                          <Label>SEO title</Label>
+                          <Input
+                            {...register("seo.title")}
+                            className="mt-2"
+                          />
                         </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-
-                  <Accordion type="single" collapsible defaultValue="content">
-                    <AccordionItem value="content">
-                      <AccordionTrigger>Quiz Content</AccordionTrigger>
-                      <AccordionContent>
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                          <div>
-                            <Label>Banner</Label>
-                            <Input {...register("banner")} className="mt-2" />
-                          </div>
-                          <div>
-                            <Label>Category</Label>
-                            <Input
-                              {...register("category")}
-                              className="mt-2"
-                              placeholder="(optional)"
-                            />
-                          </div>
-                          <div className="md:col-span-2">
-                            <Label>Title</Label>
-                            <Input {...register("title")} className="mt-2" />
-                          </div>
-                          <div>
-                            <Label>Total questions</Label>
-                            <Input
-                              type="number"
-                              {...register("totalQuestions", {
-                                valueAsNumber: true,
-                              })}
-                              className="mt-2"
-                            />
-                          </div>
-                          <div>
-                            <Label>URL</Label>
-                            <Input {...register("url")} className="mt-2" />
-                          </div>
-                          <div className="md:col-span-2">
-                            <Label>Header</Label>
-                            <Input {...register("header")} className="mt-2" />
-                          </div>
-                          <div className="md:col-span-2">
-                            <Label>Subheader</Label>
-                            <Input
-                              {...register("subheader")}
-                              className="mt-2"
-                            />
-                          </div>
-                          <div className="md:col-span-2">
-                            <Label>Button text</Label>
-                            <Input {...register("button")} className="mt-2" />
-                          </div>
-
-                          <div className="md:col-span-2">
-                            <Label>Dogs list (comma-separated)</Label>
-                            <Input {...register("dogsCsv")} className="mt-2" />
-                          </div>
+                        <div>
+                          <Label>Estimated time</Label>
+                          <Input
+                            {...register("estimatedTime")}
+                            className="mt-2"
+                          />
                         </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                        <div className="md:col-span-2">
+                          <Label>SEO description</Label>
+                          <Input
+                            {...register("seo.description")}
+                            className="mt-2"
+                          />
+                        </div>
+                        <div className="md:col-span-2">
+                          <Label>SEO keywords (comma-separated)</Label>
+                          <Input
+                            {...register("seo.keywordsCsv")}
+                            className="mt-2"
+                          />
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
 
-                  <Accordion type="single" collapsible defaultValue="steps">
-                    <AccordionItem value="steps">
-                      <AccordionTrigger>Steps (Questions)</AccordionTrigger>
-                      <AccordionContent>
-                        <div className="space-y-4">
-                          {stepsWatch.map((step, stepIndex) => (
-                            <div
-                              key={stepIndex}
-                              className="rounded-xl border border-border bg-card p-4 space-y-4"
-                            >
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <Label>Question {stepIndex + 1}</Label>
-                                  <Input
-                                    {...register(
-                                      `steps.${stepIndex}.question` as const,
-                                    )}
-                                    className="mt-2"
-                                  />
-                                </div>
-                                <div>
-                                  <Label>Options count</Label>
-                                  <Input
-                                    value={step.options.length}
-                                    readOnly
-                                    className="mt-2"
-                                  />
-                                </div>
+                <Accordion type="single" collapsible defaultValue="content">
+                  <AccordionItem value="content">
+                    <AccordionTrigger>Quiz Content</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                          <Label>Banner</Label>
+                          <Input {...register("banner")} className="mt-2" />
+                        </div>
+                        <div>
+                          <Label>Category</Label>
+                          <Input
+                            {...register("category")}
+                            className="mt-2"
+                            placeholder="(optional)"
+                          />
+                        </div>
+                        <div className="md:col-span-2">
+                          <Label>Title</Label>
+                          <Input {...register("title")} className="mt-2" />
+                        </div>
+                        <div>
+                          <Label>Total questions</Label>
+                          <Input
+                            type="number"
+                            {...register("totalQuestions", {
+                              valueAsNumber: true,
+                            })}
+                            className="mt-2"
+                          />
+                        </div>
+                        <div>
+                          <Label>URL</Label>
+                          <Input {...register("url")} className="mt-2" />
+                        </div>
+                        <div className="md:col-span-2">
+                          <Label>Header</Label>
+                          <Input {...register("header")} className="mt-2" />
+                        </div>
+                        <div className="md:col-span-2">
+                          <Label>Subheader</Label>
+                          <Input
+                            {...register("subheader")}
+                            className="mt-2"
+                          />
+                        </div>
+                        <div className="md:col-span-2">
+                          <Label>Button text</Label>
+                          <Input {...register("button")} className="mt-2" />
+                        </div>
+
+                        <div className="md:col-span-2">
+                          <Label>Dogs list (comma-separated)</Label>
+                          <Input {...register("dogsCsv")} className="mt-2" />
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+
+                <Accordion type="single" collapsible defaultValue="steps">
+                  <AccordionItem value="steps">
+                    <AccordionTrigger>Steps (Questions)</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4">
+                        {stepsWatch.map((step, stepIndex) => (
+                          <div
+                            key={stepIndex}
+                            className="rounded-xl border border-border bg-card p-4 space-y-4"
+                          >
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <Label>Question {stepIndex + 1}</Label>
+                                <Input
+                                  {...register(
+                                    `steps.${stepIndex}.question` as const,
+                                  )}
+                                  className="mt-2"
+                                />
                               </div>
-
-                              <div className="space-y-2">
-                                <Label>Options</Label>
-                                {step.options.map((_, optIndex) => (
-                                  <div
-                                    key={optIndex}
-                                    className="flex items-center gap-2"
-                                  >
-                                    <Input
-                                      {...register(
-                                        `steps.${stepIndex}.options.${optIndex}` as const,
-                                      )}
-                                      className="flex-1"
-                                    />
-                                    {step.options.length > 1 ? (
-                                      <Trash2
-                                        className="h-4 w-4 text-destructive cursor-pointer"
-                                        onClick={() => {
-                                          toast.error(
-                                            "Option removal is not available in this UI.",
-                                          );
-                                        }}
-                                      />
-                                    ) : null}
-                                  </div>
-                                ))}
-                                <p className="text-xs text-muted-foreground">
-                                  Option removal is limited. Add/rename by
-                                  editing fields.
-                                </p>
+                              <div>
+                                <Label>Options count</Label>
+                                <Input
+                                  value={step.options.length}
+                                  readOnly
+                                  className="mt-2"
+                                />
                               </div>
                             </div>
-                          ))}
 
-                          <p className="text-sm text-muted-foreground">
-                            Steps are loaded from MongoDB. This UI currently
-                            supports editing content; adding/removing steps is
-                            intentionally omitted for stability.
-                          </p>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                            <div className="space-y-2">
+                              <Label>Options</Label>
+                              {step.options.map((_, optIndex) => (
+                                <div
+                                  key={optIndex}
+                                  className="flex items-center gap-2"
+                                >
+                                  <Input
+                                    {...register(
+                                      `steps.${stepIndex}.options.${optIndex}` as const,
+                                    )}
+                                    className="flex-1"
+                                  />
+                                  {step.options.length > 1 ? (
+                                    <Trash2
+                                      className="h-4 w-4 text-destructive cursor-pointer"
+                                      onClick={() => {
+                                        toast.error(
+                                          "Option removal is not available in this UI.",
+                                        );
+                                      }}
+                                    />
+                                  ) : null}
+                                </div>
+                              ))}
+                              <p className="text-xs text-muted-foreground">
+                                Option removal is limited. Add/rename by
+                                editing fields.
+                              </p>
+                            </div>
+                          </div>
+                        ))}
 
-                  <input type="hidden" {...register("quizId")} />
+                        <p className="text-sm text-muted-foreground">
+                          Steps are loaded from MongoDB. This UI currently
+                          supports editing content; adding/removing steps is
+                          intentionally omitted for stability.
+                        </p>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
 
-                  <div className="flex items-center justify-between gap-3 pt-2">
-                    <p className="text-xs text-muted-foreground">
-                      {formState.isDirty
-                        ? "Unsaved changes"
-                        : "All changes saved"}
-                    </p>
-                    <Button
-                      type="submit"
-                      disabled={saving || loading || !formState.isDirty}
-                    >
-                      {saving ? "Saving…" : "Save changes"}
-                    </Button>
-                  </div>
-                </div>
-              </form>
+                <input type="hidden" {...register("quizId")} />
+
+              </div>
             </div>
-          </div>
+            <div className="flex items-center justify-between gap-3 pt-2">
+              <p className="text-xs text-muted-foreground">
+                {formState.isDirty
+                  ? "Unsaved changes"
+                  : "All changes saved"}
+              </p>
+              <Button
+                type="submit"
+                disabled={saving || loading || !formState.isDirty}
+              >
+                {saving ? "Saving…" : "Save changes"}
+              </Button>
+
+
+              {error ? (
+                <Alert variant="destructive" className="mt-4">
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              ) : null}
+
+              {loading ? (
+                <p className="mt-3 text-sm text-muted-foreground">Loading…</p>
+              ) : null}
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>

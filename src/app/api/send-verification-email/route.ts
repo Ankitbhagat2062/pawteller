@@ -6,7 +6,7 @@ import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const fromMail: string = `${process.env.FROM_MAIL}`;
+const fromMail= process.env.FROM_MAIL?.trim();
 export async function POST(request: Request) {
   if (!RESEND_API_KEY || !fromMail) {
     return NextResponse.json(
@@ -19,8 +19,10 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(RESEND_API_KEY);
-  const { searchParams } = new URL(request.url);
-  const email = searchParams.get("email");
+  const body = (await request.json().catch(() => null)) as
+    | { email?: string }
+    | null;
+  const email = body?.email?.trim();
 
   if (!email) {
     return NextResponse.json(

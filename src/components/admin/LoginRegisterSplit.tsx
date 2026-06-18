@@ -214,7 +214,7 @@ export function LoginRegisterSplit() {
       }
 
       setValidationBubble(data.message ?? "Login successful.");
-      if (data.message === "Login successful.") router.push("/admin/dashboard");
+      router.push("/admin/dashboard");
     } finally {
       setLoading(false);
     }

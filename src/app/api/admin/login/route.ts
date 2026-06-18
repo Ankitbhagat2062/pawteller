@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const token = createAdminToken({ adminEmail });
+    const token = await createAdminToken({ adminEmail });
     return NextResponse.json({ ok: true, message: "Login successful.", token });
   } catch (e: unknown) {
     return NextResponse.json(
