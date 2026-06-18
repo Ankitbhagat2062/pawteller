@@ -68,7 +68,13 @@ export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
               </linearGradient>
 
               {/* Stroke glow */}
-              <filter id="weightGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <filter
+                id="weightGlow"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="140%"
+              >
                 <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
@@ -119,10 +125,19 @@ export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
               fill="url(#colorWeight)"
               isAnimationActive={true}
               filter="url(#weightGlow)"
-              dot={{ r: 2.2, fill: "white", stroke: "rgba(255,255,255,0.6)", strokeWidth: 1 }}
-              activeDot={{ r: 4, fill: "#10b981", stroke: "white", strokeWidth: 2 }}
+              dot={{
+                r: 2.2,
+                fill: "white",
+                stroke: "rgba(255,255,255,0.6)",
+                strokeWidth: 1,
+              }}
+              activeDot={{
+                r: 4,
+                fill: "#10b981",
+                stroke: "white",
+                strokeWidth: 2,
+              }}
             />
-
           </AreaChart>
         </ResponsiveContainer>
       </div>

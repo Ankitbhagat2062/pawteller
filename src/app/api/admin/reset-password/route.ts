@@ -1,8 +1,8 @@
+import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import connectDB from "@/lib/mongodb";
 import AdminModel from "@/models/admin";
-import { z } from "zod";
-import bcrypt from "bcryptjs";
 
 const ResetSchema = z.object({
   token: z.string().min(1),
@@ -14,7 +14,10 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = ResetSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json({ ok: false, message: "Invalid input" }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, message: "Invalid input" },
+        { status: 400 },
+      );
     }
 
     const { token, newPassword } = parsed.data;
@@ -29,7 +32,10 @@ export async function POST(request: Request) {
     });
 
     if (!admin) {
-      return NextResponse.json({ ok: false, message: "Invalid or expired token." }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, message: "Invalid or expired token." },
+        { status: 400 },
+      );
     }
 
     admin.passwordResetToken = null;
@@ -38,9 +44,14 @@ export async function POST(request: Request) {
 
     await admin.save();
 
-    return NextResponse.json({ ok: true, message: "Password updated successfully." });
+    return NextResponse.json({
+      ok: true,
+      message: "Password updated successfully.",
+    });
   } catch (e: unknown) {
-    return NextResponse.json({ ok: false, message: e instanceof Error ? e.message : "Reset failed" }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, message: e instanceof Error ? e.message : "Reset failed" },
+      { status: 500 },
+    );
   }
 }
-

@@ -1,8 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { type BlogPost, blogPosts } from "@/lib/cms/blogpage";
 import BlogCard from "@/components/shared/BlogCard";
+import { type BlogPost, blogPosts } from "@/lib/cms/blogpage";
 
 function FeaturedBlogCard({ post }: { post: BlogPost }) {
   return (
@@ -110,7 +110,7 @@ export default function BlogListing() {
         {blogPosts
           .filter((article) => article.url !== featuredPost?.url)
           .map((article) => (
-             <BlogCard key={article.url} {...article} />
+            <BlogCard key={article.url} {...article} />
           ))}
       </div>
     </section>

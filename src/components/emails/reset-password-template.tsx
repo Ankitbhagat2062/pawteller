@@ -1,11 +1,22 @@
-import * as React from "react";
-import { Html, Head, Preview, Body, Container, Section, Text, Button } from "react-email";
+import type * as React from "react";
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Html,
+  Preview,
+  Section,
+  Text,
+} from "react-email";
 
 type ResetPasswordEmailProps = {
   resetLink: string;
 };
 
-export default function ResetPasswordEmail({ resetLink }: ResetPasswordEmailProps) {
+export default function ResetPasswordEmail({
+  resetLink,
+}: ResetPasswordEmailProps) {
   return (
     <Html>
       <Head />
@@ -14,7 +25,9 @@ export default function ResetPasswordEmail({ resetLink }: ResetPasswordEmailProp
         <Container style={container}>
           <Section style={section}>
             <Text style={title}>Reset your password</Text>
-            <Text style={text}>Click the button below to choose a new password.</Text>
+            <Text style={text}>
+              Click the button below to choose a new password.
+            </Text>
           </Section>
 
           <Section style={section}>
@@ -37,7 +50,7 @@ export default function ResetPasswordEmail({ resetLink }: ResetPasswordEmailProp
 const main: React.CSSProperties = {
   backgroundColor: "#ffffff",
   fontFamily:
-    '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+    "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
 };
 
 const container: React.CSSProperties = {
@@ -71,4 +84,3 @@ const button: React.CSSProperties = {
   textDecoration: "none",
   fontSize: "14px",
 };
-

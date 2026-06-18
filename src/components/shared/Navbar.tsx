@@ -4,8 +4,8 @@ import { PawPrint, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "@/components/shared/ThemeToggle";
-import { navItems } from "@/lib/constant";
 import { Button } from "@/components/ui/button";
+import { navItems } from "@/lib/constant";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +29,10 @@ const Navbar = () => {
           </div>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
+          <nav
+            className="hidden items-center gap-6 md:flex"
+            aria-label="Primary"
+          >
             {navItems.map(({ label, href }) => (
               <Link
                 key={label}
@@ -56,7 +59,9 @@ const Navbar = () => {
                 {isMenuOpen ? (
                   <X className="h-5 w-5 " aria-hidden />
                 ) : (
-                  <span aria-hidden className="text-black dark:text-white">☰</span>
+                  <span aria-hidden className="text-black dark:text-white">
+                    ☰
+                  </span>
                 )}
               </Button>
             </div>
@@ -74,7 +79,6 @@ const Navbar = () => {
                 {" →"}
               </span>
             </Link>
-
           </div>
         </div>
 
@@ -86,7 +90,10 @@ const Navbar = () => {
             (isMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0")
           }
         >
-          <nav aria-label="Mobile primary" className="mt-4 flex flex-col gap-2 pb-2">
+          <nav
+            aria-label="Mobile primary"
+            className="mt-4 flex flex-col gap-2 pb-2"
+          >
             {navItems.map(({ label, href }) => (
               <Link
                 key={label}
@@ -106,4 +113,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

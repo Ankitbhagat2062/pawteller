@@ -1,19 +1,18 @@
 "use client";
 
+import axios, { type AxiosError } from "axios";
 import { ArrowLeft, ArrowRight, Dog, Mail } from "lucide-react";
-import { QuizFaqSection } from "@/components/quiz/QuizFaqSection";
-
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import type { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
+import { QuizFaqSection } from "@/components/quiz/QuizFaqSection";
+import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios, { AxiosError } from "axios";
-import { type quizDataProps } from "@/lib/types";
-import { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
-import { useRouter } from "next/navigation";
-import { Breed, breedDatabase } from "@/lib/cms/quizpage";
 import { blogPosts } from "@/lib/cms/blogpage";
-import BlogCard from "@/components/shared/BlogCard";
+import { type Breed, breedDatabase } from "@/lib/cms/quizpage";
+import type { quizDataProps } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const router = useRouter();
@@ -29,7 +28,9 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;
@@ -45,18 +46,8 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       });
     }, 300);
   };
-  function calculateBreedScore(
-    breed: Breed,
-    answers: string[]
-  ) {
-    const [
-      home,
-      activity,
-      kids,
-      experience,
-      shedding,
-      size,
-    ] = answers;
+  function calculateBreedScore(breed: Breed, answers: string[]) {
+    const [home, activity, kids, experience, shedding, size] = answers;
 
     const breakdown = {
       apartmentLiving: 0,
@@ -67,11 +58,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       sizePreference: 0,
     };
 
-    if (
-      breed.home.includes(
-        home as (typeof breed.home)[number]
-      )
-    ) {
+    if (breed.home.includes(home as (typeof breed.home)[number])) {
       breakdown.apartmentLiving = 25;
     }
 
@@ -79,17 +66,11 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       breakdown.lifestyleMatch = 25;
     }
 
-    if (
-      kids === "Yes, little ones" &&
-      breed.goodWithKids
-    ) {
+    if (kids === "Yes, little ones" && breed.goodWithKids) {
       breakdown.kidFriendly = 15;
     }
 
-    if (
-      experience === "First-timer" &&
-      breed.beginnerFriendly
-    ) {
+    if (experience === "First-timer" && breed.beginnerFriendly) {
       breakdown.beginnerFriendly = 15;
     }
 
@@ -114,16 +95,10 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       breakdown,
     };
   }
-  function getTopBreedMatches(
-    answers: string[],
-    breeds: Breed[]
-  ) {
+  function getTopBreedMatches(answers: string[], breeds: Breed[]) {
     return breeds
       .map((breed) => {
-        const result = calculateBreedScore(
-          breed,
-          answers
-        );
+        const result = calculateBreedScore(breed, answers);
 
         return {
           breed,
@@ -137,92 +112,75 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   function generateBreedResult(
     userName: string,
     answers: string[],
-    breeds: Breed[]
+    breeds: Breed[],
   ) {
-    const matches = getTopBreedMatches(
-      answers,
-      breeds
-    );
+    const matches = getTopBreedMatches(answers, breeds);
 
     return {
       userName,
 
-      topMatches: matches.map(
-        (
-          { breed, score, breakdown },
-          index
-        ) => ({
-          rank: index + 1,
+      topMatches: matches.map(({ breed, score, breakdown }, index) => ({
+        rank: index + 1,
 
-          breed: breed.name,
+        breed: breed.name,
 
-          compatibility: score,
+        compatibility: score,
 
-          description: breed.description,
+        description: breed.description,
 
-          temperament: breed.temperament,
+        temperament: breed.temperament,
 
-          lifespan: breed.lifespan,
+        lifespan: breed.lifespan,
 
-          reasons: generateReasons({
-            breed,
-            answers,
-          }),
+        reasons: generateReasons({
+          breed,
+          answers,
+        }),
 
-          scoreBreakdown: {
-            apartmentLiving: `${breakdown.apartmentLiving}/25`,
-            lifestyleMatch: `${breakdown.lifestyleMatch}/25`,
-            kidFriendly: `${breakdown.kidFriendly}/15`,
-            beginnerFriendly: `${breakdown.beginnerFriendly}/15`,
-            lowShedding: `${breakdown.lowShedding}/10`,
-            sizePreference: `${breakdown.sizePreference}/10`,
-            total: `${score}/100`,
-          },
-        })
-      ),
+        scoreBreakdown: {
+          apartmentLiving: `${breakdown.apartmentLiving}/25`,
+          lifestyleMatch: `${breakdown.lifestyleMatch}/25`,
+          kidFriendly: `${breakdown.kidFriendly}/15`,
+          beginnerFriendly: `${breakdown.beginnerFriendly}/15`,
+          lowShedding: `${breakdown.lowShedding}/10`,
+          sizePreference: `${breakdown.sizePreference}/10`,
+          total: `${score}/100`,
+        },
+      })),
     };
   }
-  function generateReasons(
-    { breed, answers }: { breed: Breed; answers: string[]; }
-  ) {
+  function generateReasons({
+    breed,
+    answers,
+  }: {
+    breed: Breed;
+    answers: string[];
+  }) {
     const reasons = [];
 
-    if (
-      answers[0] === "Apartment" &&
-      breed.goodFor.includes("Apartments")
-    ) {
-      reasons.push(
-        "Well suited to apartment living."
-      );
+    if (answers[0] === "Apartment" && breed.goodFor.includes("Apartments")) {
+      reasons.push("Well suited to apartment living.");
     }
 
     if (
       answers[2] === "Yes, little ones" &&
       breed.goodFor.includes("Children")
     ) {
-      reasons.push(
-        "Known for being gentle with children."
-      );
+      reasons.push("Known for being gentle with children.");
     }
 
     if (
       answers[3] === "First-timer" &&
-      breed.goodFor.includes(
-        "First-time owners"
-      )
+      breed.goodFor.includes("First-time owners")
     ) {
-      reasons.push(
-        "Recommended for first-time dog owners."
-      );
+      reasons.push("Recommended for first-time dog owners.");
     }
 
     if (
       answers[4] === "Low shed please" &&
       breed.shedding === "Low shed please"
     ) {
-      reasons.push(
-        "Matches your preference for minimal shedding."
-      );
+      reasons.push("Matches your preference for minimal shedding.");
     }
 
     return reasons;
@@ -245,16 +203,16 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     e.preventDefault();
     const result = isComplete
       ? generateBreedResult(
-        firstName,
-        selectedAnswers as string[],
-        breedDatabase
-      )
+          firstName,
+          selectedAnswers as string[],
+          breedDatabase,
+        )
       : null;
 
     type ContactPayload = {
       email: string;
       quizId: string;
-      results: DogBreedEmailProps
+      results: DogBreedEmailProps;
     };
 
     type ContactSuccessResponse = {
@@ -279,31 +237,26 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
 
       const payload: ContactPayload = { email, quizId, results: result };
 
-      const res = await axios.post<ContactSuccessResponse | ContactErrorResponse>(
-        "/api/quiz",
-        payload,
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      );
+      const res = await axios.post<
+        ContactSuccessResponse | ContactErrorResponse
+      >("/api/quiz", payload, {
+        headers: { "Content-Type": "application/json" },
+      });
       if (res.data && "success" in res.data && res.data.success === true) {
         setStatus("success");
         setFirstName("");
         setEmail("");
         setTimeout(() => {
-          router.push('/');
+          router.push("/");
         }, 500);
       }
     } catch (error: unknown) {
       const axiosError = error as AxiosError<ContactErrorResponse>;
 
-      console.error(
-        "Quiz submit failed",
-        {
-          message: axiosError.message,
-          data: axiosError.response?.data,
-        },
-      );
+      console.error("Quiz submit failed", {
+        message: axiosError.message,
+        data: axiosError.response?.data,
+      });
 
       setStatus("error");
     }
@@ -322,8 +275,8 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
           </h2>
           <p className="mt-2 text-sm font-medium text-gray-600 dark:text-gray-300 sm:text-base">
             Your top breed is a{" "}
-            <span className="font-bold text-[#e0664d]">Poodle</span> ... plus 2 other strong
-            matches.
+            <span className="font-bold text-[#e0664d]">Poodle</span> ... plus 2
+            other strong matches.
           </p>
 
           <div className="mt-6 rounded-2xl border border-orange-100/50 bg-[#fdf7f2] p-5 shadow-sm dark:border-gray-800 dark:bg-gray-800 sm:p-8">
@@ -392,7 +345,9 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
         <QuizFaqSection quizSlug={quizData.url} />
         <div className="mt-8 grid items-center justify-center grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {(() => {
-            const quizblogPosts = blogPosts.filter((post) => post.category === quizData.category);
+            const quizblogPosts = blogPosts.filter(
+              (post) => post.category === quizData.category,
+            );
             if (quizblogPosts.length === 0) return null;
             return quizblogPosts.map((article) => (
               <BlogCard key={article.url} {...article} />
@@ -498,4 +453,3 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     </div>
   );
 }
-

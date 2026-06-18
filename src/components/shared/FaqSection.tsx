@@ -6,13 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FAQItem } from "@/lib/types";
+import type { FAQItem } from "@/lib/types";
 
-export function FaqSection({
-  items,
-}: {
-  items: FAQItem[];
-}) {
+export function FaqSection({ items }: { items: FAQItem[] }) {
   return (
     <section className="rounded-2xl border border-border bg-card overflow-hidden">
       <div className="p-6 sm:p-8">
@@ -45,4 +41,3 @@ export function FaqSection({
     </section>
   );
 }
-

@@ -1,4 +1,3 @@
-
 import {
   Body,
   Container,
@@ -12,7 +11,7 @@ import {
   Section,
   Tailwind,
   Text,
-} from 'react-email';
+} from "react-email";
 
 interface VerifyEmailProps {
   verificationLink?: string;
@@ -21,14 +20,11 @@ interface VerifyEmailProps {
 const VERIFICATION_CODE_TTL_MINUTES = 10;
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-
   ? `${process.env.NEXT_PUBLIC_APP_URL}`
-  : '';
+  : "";
 
-export default function VerifyEmail({
-  verificationLink,
-}: VerifyEmailProps) {
-  const currentYear = new Date().getFullYear()
+export default function VerifyEmail({ verificationLink }: VerifyEmailProps) {
+  const currentYear = new Date().getFullYear();
   return (
     <Html>
       <Head />
@@ -50,14 +46,16 @@ export default function VerifyEmail({
                   Verify your email address
                 </Heading>
                 <Text className="text-[#333] dark:text-[#c1b5b5] text-[14px] leading-6 mt-6 mb-3.5 mx-0">
-                  Thanks for subscribing to Pawteller! We want to make sure it's really you.
-                  Please click the verification link below. If you didn't request this, you can ignore this message.
+                  Thanks for subscribing to Pawteller! We want to make sure it's
+                  really you. Please click the verification link below. If you
+                  didn't request this, you can ignore this message.
                 </Text>
                 <Section className="flex items-center justify-center">
                   <Text className="text-[#333] dark:text-[#c1b5b5] m-0 font-bold text-center text-[14px]">
-                    This link expires in {VERIFICATION_CODE_TTL_MINUTES} minutes and can be used only once. If you did not request this, please ignore this email.
+                    This link expires in {VERIFICATION_CODE_TTL_MINUTES} minutes
+                    and can be used only once. If you did not request this,
+                    please ignore this email.
                   </Text>
-
 
                   <Text className="text-[#333] dark:text-[#c1b5b5] text-[36px] my-2.5 mx-0 font-bold text-center">
                     Click the button below to verify your email address
@@ -73,25 +71,24 @@ export default function VerifyEmail({
                   </Section>
 
                   <Text className="text-[#333] dark:text-[#c1b5b5] text-[14px] m-0 text-center">
-                    (Valid for {VERIFICATION_CODE_TTL_MINUTES} minutes. Use only once.)
+                    (Valid for {VERIFICATION_CODE_TTL_MINUTES} minutes. Use only
+                    once.)
                   </Text>
                 </Section>
-
               </Section>
               <Hr />
               <Section className="py-6.25 px-8.75">
                 <Text className="text-[#333] dark:text-[#c1b5b5] text-[14px] m-0">
-                  Pawteller will never email you and ask you to
-                  disclose or verify your password, credit card, or banking
-                  account number.
+                  Pawteller will never email you and ask you to disclose or
+                  verify your password, credit card, or banking account number.
                 </Text>
               </Section>
             </Section>
             <Text className="text-[#333] dark:text-[#c1b5b5] text-[12px] my-6 mx-0 px-5 py-0">
-              This message was produced and distributed by Pawteller Web Services,
-              Inc., 410 Terry Ave. North, Seattle, WA 98109. © {currentYear}, Pawteller Web
-              Services, Inc.. All rights reserved. Pawteller is a registered trademark
-              of{' '}
+              This message was produced and distributed by Pawteller Web
+              Services, Inc., 410 Terry Ave. North, Seattle, WA 98109. ©{" "}
+              {currentYear}, Pawteller Web Services, Inc.. All rights reserved.
+              Pawteller is a registered trademark of{" "}
               <Link
                 href="https://www.pawteller.com"
                 target="_blank"
@@ -99,7 +96,7 @@ export default function VerifyEmail({
               >
                 pawteller.com
               </Link>
-              , Inc. View our{' '}
+              , Inc. View our{" "}
               <Link
                 href="https://www.pawteller.com/privacy"
                 target="_blank"
@@ -117,5 +114,5 @@ export default function VerifyEmail({
 }
 
 VerifyEmail.PreviewProps = {
-  verificationLink: '596853',
+  verificationLink: "596853",
 } satisfies VerifyEmailProps;

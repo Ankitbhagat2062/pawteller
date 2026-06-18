@@ -1,5 +1,5 @@
-import { ImageConfig } from "@/lib/types";
 import Image from "next/image";
+import type { ImageConfig } from "@/lib/types";
 
 export function BlogFeaturedImage({ src, alt }: ImageConfig) {
   return (

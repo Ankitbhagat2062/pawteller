@@ -1,6 +1,6 @@
 "use client";
-import { type ChangeEvent, type FormEvent, useState } from "react";
 import axios, { type AxiosError } from "axios";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -43,13 +43,11 @@ export default function ContactForm() {
     try {
       const payload: ContactPayload = { name, email, topic, message };
 
-      const res = await axios.post<ContactSuccessResponse | ContactErrorResponse>(
-        "/api/contact",
-        payload,
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      );
+      const res = await axios.post<
+        ContactSuccessResponse | ContactErrorResponse
+      >("/api/contact", payload, {
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (res.data && "success" in res.data && res.data.success === true) {
         setStatus("success");
@@ -70,7 +68,6 @@ export default function ContactForm() {
     }
   };
   return (
-
     <div className="max-w-md mx-auto p-6 bg-white dark:bg-black rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
 
@@ -134,10 +131,7 @@ export default function ContactForm() {
               {"Topic"}
             </label>
 
-            <Select
-              value={topic}
-              onValueChange={(value) => setTopic(value)}
-            >
+            <Select value={topic} onValueChange={(value) => setTopic(value)}>
               <SelectTrigger
                 id="topic"
                 className="mt-2 w-full h-11 rounded-2xl border border-slate-200 bg-white/70 px-4 text-sm text-slate-900 shadow-sm outline-none transition hover:-translate-y-0.5 hover:shadow-md focus-visible:border-emerald-500 focus-visible:ring-4 focus-visible:ring-emerald-500/25 dark:border-white/10 dark:bg-white/5 dark:text-slate-50"

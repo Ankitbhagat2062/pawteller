@@ -1,4 +1,4 @@
-import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
+import mongoose, { type InferSchemaType, type Model, Schema } from "mongoose";
 
 const quizResultSchema = new Schema(
   {
@@ -23,8 +23,8 @@ const quizSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['pending', 'sent', 'failed'],
-      default: 'pending',
+      enum: ["pending", "sent", "failed"],
+      default: "pending",
       required: true,
     },
   },
@@ -38,9 +38,7 @@ quizSchema.index({ email: 1, quizId: 1 }, { unique: true });
 
 type Quiz = InferSchemaType<typeof quizSchema>;
 
-
 const QuizModel: Model<Quiz> =
   mongoose.models.Quiz || mongoose.model<Quiz>("Quiz", quizSchema);
 
 export default QuizModel;
-

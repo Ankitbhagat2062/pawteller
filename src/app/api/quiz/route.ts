@@ -1,10 +1,9 @@
-import connectDB from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import DogBreed from "@/components/emails/DogBreed-template";
-import QuizModel from "@/models/quiz";
 import { z } from "zod";
-
+import DogBreed from "@/components/emails/DogBreed-template";
+import connectDB from "@/lib/mongodb";
+import QuizModel from "@/models/quiz";
 
 // Initialize Resend with your API key from .env.local
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -13,7 +12,8 @@ export async function POST(request: Request) {
   if (!RESEND_API_KEY) {
     return NextResponse.json(
       {
-        error: "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
+        error:
+          "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
       },
       { status: 500 },
     );
@@ -55,7 +55,6 @@ export async function POST(request: Request) {
     topMatches: z.array(TopMatchSchema),
   });
 
-
   const QuizIdSchema = z
     .string()
     .min(1, "quizId is required")
@@ -63,28 +62,40 @@ export async function POST(request: Request) {
 
   try {
     const SubmissionSchema = z.object({
-      email: z.string().trim().email().transform((value) => value.toLowerCase()),
+      email: z
+        .string()
+        .trim()
+        .email()
+        .transform((value) => value.toLowerCase()),
       quizId: z.string(),
       results: QuizResultsSchema,
     });
     const submission = SubmissionSchema.safeParse(await request.json());
     if (!submission.success) {
-      return NextResponse.json({ error: "Invalid quiz payload" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid quiz payload" },
+        { status: 400 },
+      );
     }
-    const { email,quizId, results } = submission.data;
+    const { email, quizId, results } = submission.data;
 
     // Ensure required fields are present (keep existing behavior for email/results)
     if (!email || !quizId || !results) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
     }
 
     const parsedQuizId = QuizIdSchema.safeParse(quizId);
     if (!parsedQuizId.success) {
-      return NextResponse.json({ error: parsedQuizId.error.issues[0]?.message ?? "Invalid quizId" }, { status: 400 });
+      return NextResponse.json(
+        { error: parsedQuizId.error.issues[0]?.message ?? "Invalid quizId" },
+        { status: 400 },
+      );
     }
 
     const safeQuizId = parsedQuizId.data;
-
 
     const parsed = QuizResultsSchema.safeParse(results);
     if (!parsed.success) {
@@ -96,7 +107,6 @@ export async function POST(request: Request) {
 
     const safeResults = parsed.data;
 
-
     await connectDB();
 
     const existingQuiz = await QuizModel.findOne({ email, quizId: safeQuizId });
@@ -107,8 +117,6 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
-
-
 
     const correctedFrom = (() => {
       const trimmed = fromMail.trim();
@@ -125,17 +133,14 @@ export async function POST(request: Request) {
       return `Pawteller <noreply@${domain}>`;
     })();
 
-
-
     // Persist first (so we can update delivery status after sending)
     const contact = new QuizModel({
       email,
       results: safeResults,
       quizId: safeQuizId,
-      status: "pending"
+      status: "pending",
     });
     await contact.save();
-
 
     try {
       const data = await resend.emails.send({
@@ -143,13 +148,20 @@ export async function POST(request: Request) {
 
         to: email, // Where YOU want to receive the messages
         subject: `Your Top 3 Breed Match`,
-        react: DogBreed(safeResults) // Use the React email template for the email body
+        react: DogBreed(safeResults), // Use the React email template for the email body
       });
 
-      if (data.error && typeof data.error === "object" && "message" in data.error) {
+      if (
+        data.error &&
+        typeof data.error === "object" &&
+        "message" in data.error
+      ) {
         await QuizModel.findByIdAndUpdate(contact._id, { status: "failed" });
         console.error("Error sending contact email:", data.error);
-        return NextResponse.json({ error: "Failed to send contact email" }, { status: 422 });
+        return NextResponse.json(
+          { error: "Failed to send contact email" },
+          { status: 422 },
+        );
       }
 
       await QuizModel.findByIdAndUpdate(contact._id, { status: "sent" });
@@ -157,12 +169,16 @@ export async function POST(request: Request) {
     } catch (emailError) {
       await QuizModel.findByIdAndUpdate(contact._id, { status: "failed" });
       console.error("Error sending contact email:", emailError);
-      return NextResponse.json({ error: "Failed to send contact email" }, { status: 422 });
+      return NextResponse.json(
+        { error: "Failed to send contact email" },
+        { status: 422 },
+      );
     }
-
   } catch (error: unknown) {
     console.error("Quiz route failed:", error);
-    return NextResponse.json({ error: "Failed to process request" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to process request" },
+      { status: 500 },
+    );
   }
 }
-

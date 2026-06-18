@@ -1,4 +1,4 @@
-import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
+import mongoose, { type InferSchemaType, type Model, Schema } from "mongoose";
 
 const contactSchema = new Schema(
   {
@@ -6,7 +6,7 @@ const contactSchema = new Schema(
     email: { type: String, required: true },
     topic: { type: String, required: true },
     message: { type: String, required: true },
-    subscribers: [{ type: mongoose.Types.ObjectId, ref: "Subscriber" },],
+    subscribers: [{ type: mongoose.Types.ObjectId, ref: "Subscriber" }],
   },
   {
     timestamps: true,
@@ -19,4 +19,3 @@ const ContactModel: Model<Contact> =
   mongoose.models.Contact || mongoose.model<Contact>("Contact", contactSchema);
 
 export default ContactModel;
-

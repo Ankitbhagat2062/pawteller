@@ -2,9 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
-import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next";
-
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -52,9 +51,9 @@ export default function AdminLayout({
     >
       <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <main className="flex-1 flex items-center justify-center">
-                {children}
-            </main>
+          <main className="flex-1 flex items-center justify-center">
+            {children}
+          </main>
           <Toaster />
         </ThemeProvider>
         <Analytics />
@@ -62,4 +61,3 @@ export default function AdminLayout({
     </html>
   );
 }
-

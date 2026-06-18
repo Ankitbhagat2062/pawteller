@@ -2,7 +2,12 @@
 
 import { HelpCircle, MailQuestion, Sparkles } from "lucide-react";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { getQuizFaqItems } from "@/lib/cms/quizpage";
 
 export function QuizFaqSection({ quizSlug }: { quizSlug?: string }) {
@@ -24,25 +29,30 @@ export function QuizFaqSection({ quizSlug }: { quizSlug?: string }) {
         <Accordion type="single" collapsible className="w-full">
           {faqItems.map((item) => {
             const itemId = item.id ?? item.question;
-            return <AccordionItem
-              key={itemId}
-              value={itemId}
-              className="border-b border-border last:border-b-0"
-            >
-              <AccordionTrigger className="px-2 sm:px-4">
-                <div className="flex items-start gap-3">
-                  <MailQuestion className="mt-0.5 h-4 w-4 text-primary" />
-                  <span className="text-left font-medium">{item.question}</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <p className="px-2 sm:px-4 pb-2 text-foreground/70 leading-relaxed">{item.answer}</p>
-              </AccordionContent>
-            </AccordionItem>
+            return (
+              <AccordionItem
+                key={itemId}
+                value={itemId}
+                className="border-b border-border last:border-b-0"
+              >
+                <AccordionTrigger className="px-2 sm:px-4">
+                  <div className="flex items-start gap-3">
+                    <MailQuestion className="mt-0.5 h-4 w-4 text-primary" />
+                    <span className="text-left font-medium">
+                      {item.question}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="px-2 sm:px-4 pb-2 text-foreground/70 leading-relaxed">
+                    {item.answer}
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            );
           })}
         </Accordion>
       </div>
     </section>
   );
 }
-

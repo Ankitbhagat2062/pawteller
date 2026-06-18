@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "correctlint": "biome check --write"
+    "correct": "biome check --write"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -29,6 +29,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-email": "^6.5.0",
+    "react-hook-form": "^7.79.0",
     "recharts": "^3.8.1",
     "resend": "^6.12.3",
     "shadcn": "^4.7.0",

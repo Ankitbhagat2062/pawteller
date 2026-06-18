@@ -1,10 +1,10 @@
-import ContactThankYouEmail from "@/components/emails/contact-template";
-import ContactModel from "@/models/contact";
-import connectDB from "@/lib/mongodb";
+import axios from "axios";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import ContactThankYouEmail from "@/components/emails/contact-template";
+import connectDB from "@/lib/mongodb";
+import ContactModel from "@/models/contact";
 import SubscriberModel from "@/models/subscriber";
-import axios from "axios";
 
 // Initialize Resend with your API key from .env.local
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -13,7 +13,8 @@ export async function POST(request: Request) {
   if (!RESEND_API_KEY) {
     return NextResponse.json(
       {
-        error: "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
+        error:
+          "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
       },
       { status: 500 },
     );
@@ -33,12 +34,20 @@ export async function POST(request: Request) {
 
     // Basic validation
     if (!name || !email || !message || !topic) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
     }
 
     await connectDB();
 
-    const existingContact = await ContactModel.findOne({ email, topic, message, name });
+    const existingContact = await ContactModel.findOne({
+      email,
+      topic,
+      message,
+      name,
+    });
 
     if (existingContact) {
       return NextResponse.json(
@@ -47,14 +56,21 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log("Received contact form submission:", { name, email, topic, message });
+    console.log("Received contact form submission:", {
+      name,
+      email,
+      topic,
+      message,
+    });
 
     // Save the contact message to the database
     const contact = new ContactModel({ name, email, topic, message });
     await contact.save();
-    
+
     // Resend requires a valid email format: email@example.com or Name <email@example.com>
-    const from = fromMail.includes("<") ? fromMail : `Pawteller <contact${fromMail}>`;
+    const from = fromMail.includes("<")
+      ? fromMail
+      : `Pawteller <contact${fromMail}>`;
 
     const data = await resend.emails.send({
       from,
@@ -63,14 +79,27 @@ export async function POST(request: Request) {
       react: ContactThankYouEmail({ name }), // Use the React email template for the email body
     });
 
-    if (data.error && typeof data.error === "object" && "message" in data.error) {
+    if (
+      data.error &&
+      typeof data.error === "object" &&
+      "message" in data.error
+    ) {
       console.error("Error sending contact email:", data.error);
-      return NextResponse.json({ error: "Failed to send contact email" }, { status: 422 });
+      return NextResponse.json(
+        { error: "Failed to send contact email" },
+        { status: 422 },
+      );
     }
     const user = await SubscriberModel.findOne({ email });
     if (!user) {
-      console.log("Email not found in subscribers, sending welcome email to:", email);
-      const url = new URL("/api/send-verification-email", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
+      console.log(
+        "Email not found in subscribers, sending welcome email to:",
+        email,
+      );
+      const url = new URL(
+        "/api/send-verification-email",
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+      );
       url.searchParams.set("email", email);
       try {
         await axios.get(url.toString());
@@ -81,7 +110,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, data });
   } catch (error: unknown) {
     console.error("Contact route failed:", error);
-    return NextResponse.json({ error: "Failed to process request" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to process request" },
+      { status: 500 },
+    );
   }
 }
-

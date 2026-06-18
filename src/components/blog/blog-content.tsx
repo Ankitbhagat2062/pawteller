@@ -1,5 +1,5 @@
-import { BlogContentProps } from "@/lib/cms/blogpage";
 import Link from "next/link";
+import type { BlogContentProps } from "@/lib/cms/blogpage";
 
 export function BlogContent({ content }: BlogContentProps) {
   return (

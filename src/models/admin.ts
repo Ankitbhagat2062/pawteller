@@ -1,4 +1,4 @@
-import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
+import mongoose, { type InferSchemaType, type Model, Schema } from "mongoose";
 
 const adminSchema = new Schema(
   {
@@ -23,4 +23,3 @@ const AdminModel: Model<Admin> =
   mongoose.models.Admin || mongoose.model<Admin>("Admin", adminSchema);
 
 export default AdminModel;
-

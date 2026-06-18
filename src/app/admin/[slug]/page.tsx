@@ -6,17 +6,19 @@ import Blog from "@/components/admin/components/Blog";
 import Calculators from "@/components/admin/components/Calculators";
 import Dashboard from "@/components/admin/components/Dashboard";
 import FAQ from "@/components/admin/components/FAQ";
-import SEO from "@/components/admin/components/SEO";
-import Navbar from "@/components/admin/components/shared/Navbar";
 import Quiz from "@/components/admin/components/Quiz";
+import SEO from "@/components/admin/components/SEO";
+import AsideWrapper from "@/components/admin/components/shared/AsideWrapper";
+import Navbar from "@/components/admin/components/shared/Navbar";
+
 const SLUG_TO_COMPONENT = {
-  "dashboard": Dashboard,
+  dashboard: Dashboard,
   "blog-settings": Blog,
-  "seo": SEO,
-  "faq": FAQ,
-  "about": About,
-  "calculators": Calculators,
-  "quiz": Quiz,
+  seo: SEO,
+  faq: FAQ,
+  about: About,
+  calculators: Calculators,
+  quiz: Quiz,
 } as const;
 
 export const metadata: Metadata = {
@@ -85,9 +87,7 @@ type PageProps = {
 };
 export default async function CalculatorPage({ params }: PageProps) {
   const { slug } = await params;
-  const normalizedSlug = slug?.toLowerCase() as
-    | ComponentSlug
-    | undefined;
+  const normalizedSlug = slug?.toLowerCase() as ComponentSlug | undefined;
 
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
@@ -102,7 +102,10 @@ export default async function CalculatorPage({ params }: PageProps) {
         {Component ? (
           <section className="">
             <Navbar />
-            <Component />
+            <div className="flex-1 flex items-center justify-center">
+              <AsideWrapper />
+              <Component />
+            </div>
           </section>
         ) : (
           notFound()

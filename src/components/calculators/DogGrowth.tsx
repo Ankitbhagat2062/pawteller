@@ -6,12 +6,14 @@ import { FooterSection } from "@/components/calculators/doggrowthcomponents/DogG
 import { MaturitySection } from "@/components/calculators/doggrowthcomponents/MaturitySection";
 import { PuppyForm } from "@/components/calculators/doggrowthcomponents/PuppyForm";
 import { ResultCard } from "@/components/calculators/doggrowthcomponents/ResultCard";
-import { calculatePuppyGrowth } from "@/lib/cms/dogGrowthpage";
-import type { GrowthInfo } from "@/lib/types";
-import { dogGrowthPageCms } from "@/lib/cms/dogGrowthpage";
-import { backlinks } from "@/lib/cms/calculatorpage";
-import { FaqSection } from "@/components/shared/FaqSection";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { backlinks } from "@/lib/cms/calculatorpage";
+import {
+  calculatePuppyGrowth,
+  dogGrowthPageCms,
+} from "@/lib/cms/dogGrowthpage";
+import type { GrowthInfo } from "@/lib/types";
 
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
@@ -60,8 +62,8 @@ export default function DogGrowth() {
       setInitialized(true);
     }
   }, [initialized]); // Only tracks the initialized boolean flag
-  const headerSection = dogGrowthPageCms.header
-  const seoContent = dogGrowthPageCms.seoContent
+  const headerSection = dogGrowthPageCms.header;
+  const seoContent = dogGrowthPageCms.seoContent;
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -75,18 +77,25 @@ export default function DogGrowth() {
                 <span>PUPPY WEIGHT CALCULATOR</span>
               </div>
               {(() => {
-                const title: string = headerSection.title ? headerSection.title : "How big will your puppy get?";
+                const title: string = headerSection.title
+                  ? headerSection.title
+                  : "How big will your puppy get?";
                 const words: string[] = title.trim().split(/\s+/);
                 const firstPart: string = words.slice(0, -2).join(" ");
                 const secondPart: string = words[words.length - 2];
                 const thirdPart: string = words[words.length - 1];
-                return <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-foreground">
-                  {firstPart}{" "}
-                  <em className="not-italic font-normal">{secondPart}</em> {thirdPart}
-                </h1>
+                return (
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-foreground">
+                    {firstPart}{" "}
+                    <em className="not-italic font-normal">{secondPart}</em>{" "}
+                    {thirdPart}
+                  </h1>
+                );
               })()}
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                {headerSection.description ? headerSection.description : ` Predict your puppy's adult weight in seconds. We use breed-specific growth
+                {headerSection.description
+                  ? headerSection.description
+                  : ` Predict your puppy's adult weight in seconds. We use breed-specific growth
               curves built from veterinary data to give you the most accurate forecast —
               plus a beautiful chart to watch their journey.`}
               </p>
@@ -164,18 +173,19 @@ export default function DogGrowth() {
               hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
             }
 
-            const start = eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
-            const cards = [eligibleCards[start], eligibleCards[(start + 1) % eligibleCards.length]].filter(Boolean);
-
+            const start =
+              eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+            const cards = [
+              eligibleCards[start],
+              eligibleCards[(start + 1) % eligibleCards.length],
+            ].filter(Boolean);
 
             return cards.map((card) => (
               <BacklinkCalculatorCard key={card.title} {...card} />
             ));
           })()}
-
         </div>
       </div>
-
 
       {/* Additional SEO Content */}
       <div className="border-t my-10 border-border bg-muted/50">
@@ -184,10 +194,14 @@ export default function DogGrowth() {
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xl font-serif font-bold text-foreground mb-4">
-                  {seoContent.title ? seoContent.title : `How Our Calculator Works`}
+                  {seoContent.title
+                    ? seoContent.title
+                    : `How Our Calculator Works`}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {seoContent.description ? seoContent.description : `Our puppy weight calculator uses breed-specific growth curves developed from
+                  {seoContent.description
+                    ? seoContent.description
+                    : `Our puppy weight calculator uses breed-specific growth curves developed from
                 veterinary research. By inputting your puppy's current age, weight, and breed,
                 we can accurately predict their adult size. The calculation takes into account
                 the unique growth patterns of different dog sizes, from tiny Chihuahuas to
@@ -196,14 +210,13 @@ export default function DogGrowth() {
               </div>
               <div>
                 <h3 className="text-xl font-serif font-bold text-foreground mb-4">
-                  {seoContent.tips.title ? seoContent.tips.title : `Tips for Puppy Growth`}
+                  {seoContent.tips.title
+                    ? seoContent.tips.title
+                    : `Tips for Puppy Growth`}
                 </h3>
                 <ul className="text-muted-foreground space-y-2 leading-relaxed">
-                  {seoContent.tips.shortTips && seoContent.tips.shortTips.map((tip) => (
-                    <li key={tip.title}>
-                      •{" "}
-                      {tip.title}
-                    </li>
+                  {seoContent.tips.shortTips?.map((tip) => (
+                    <li key={tip.title}>• {tip.title}</li>
                   ))}
                 </ul>
               </div>

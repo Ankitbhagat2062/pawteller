@@ -3,10 +3,15 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
-
 import { Button } from "@/components/ui/button";
-import { topNavLinks, sideNavLinks } from "@/lib/admin/constants";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { sideNavLinks, topNavLinks } from "@/lib/admin/constants";
 import { cn } from "@/lib/utils";
 
 export default function MobileMenu() {
@@ -18,10 +23,13 @@ export default function MobileMenu() {
       {links.map((link) => (
         <SheetClose key={link.href} asChild>
           <Link
-            href={link.href} aria-describedby={link.name}
+            href={link.href}
+            aria-describedby={link.name}
             className={cn(
               "text-lg font-medium px-2 py-1 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors",
-              pathname === link.href ? "bg-accent text-accent-foreground" : "text-muted-foreground"
+              pathname === link.href
+                ? "bg-accent text-accent-foreground"
+                : "text-muted-foreground",
             )}
           >
             {link.name}
@@ -39,7 +47,10 @@ export default function MobileMenu() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col w-full max-w-xs gap-0 p-0 sm:max-w-sm">
+      <SheetContent
+        side="left"
+        className="flex flex-col w-full max-w-xs gap-0 p-0 sm:max-w-sm"
+      >
         <SheetTitle className="sr-only">Menu</SheetTitle>
         <div className="flex items-center justify-between p-4 border-b">
           <span className="font-bold text-xl">Menu</span>
@@ -50,10 +61,6 @@ export default function MobileMenu() {
           </SheetClose>
         </div>
 
-
-
-
-        
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
           {/* Top Nav Group */}
           <div className="space-y-2">

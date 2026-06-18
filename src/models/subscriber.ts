@@ -1,4 +1,4 @@
-import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
+import mongoose, { type InferSchemaType, type Model, Schema } from "mongoose";
 
 const subscriberSchema = new Schema(
   {
@@ -10,7 +10,7 @@ const subscriberSchema = new Schema(
     },
     isVerified: { type: Boolean, required: true, default: false },
     expiresAt: { type: Date, required: true, index: true },
-    contacts: [{ type: mongoose.Types.ObjectId, ref: "Contact" },],
+    contacts: [{ type: mongoose.Types.ObjectId, ref: "Contact" }],
   },
 
   {
@@ -21,7 +21,7 @@ const subscriberSchema = new Schema(
 type Subscriber = InferSchemaType<typeof subscriberSchema>;
 
 const SubscriberModel: Model<Subscriber> =
-  mongoose.models.Subscriber || mongoose.model<Subscriber>("Subscriber", subscriberSchema);
+  mongoose.models.Subscriber ||
+  mongoose.model<Subscriber>("Subscriber", subscriberSchema);
 
 export default SubscriberModel;
-

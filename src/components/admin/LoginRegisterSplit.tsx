@@ -1,22 +1,34 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 import * as React from "react";
 import { z } from "zod";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { redirect } from "next/navigation";
 
 const passwordComplexity = z
   .string()
   .min(10, { message: "Password must be at least 10 characters." })
-  .regex(/[A-Z]/, { message: "Password must include at least one uppercase letter." })
-  .regex(/[a-z]/, { message: "Password must include at least one lowercase letter." })
+  .regex(/[A-Z]/, {
+    message: "Password must include at least one uppercase letter.",
+  })
+  .regex(/[a-z]/, {
+    message: "Password must include at least one lowercase letter.",
+  })
   .regex(/[0-9]/, { message: "Password must include at least one number." })
-  .regex(/[^A-Za-z0-9]/, { message: "Password must include at least one symbol." });
+  .regex(/[^A-Za-z0-9]/, {
+    message: "Password must include at least one symbol.",
+  });
 
 export const AdminRegistrationSchema = z.object({
   adminEmail: z.string().email({ message: "Enter a valid email address." }),
@@ -28,7 +40,6 @@ export const AdminRegistrationSchema = z.object({
 type AdminRegistrationInput = z.infer<typeof AdminRegistrationSchema>;
 
 type Mode = "login" | "register" | "forgot" | "reset";
-
 
 const LoginSchema = z.object({
   adminEmail: z.string().email(),
@@ -63,23 +74,32 @@ function getSafeAuthMessage(message: unknown, fallback: string) {
 }
 
 export function LoginRegisterSplit() {
-  const resetToken = typeof window !== "undefined" ? new URL(window.location.href).searchParams.get("resetToken") : null;
-
+  const resetToken =
+    typeof window !== "undefined"
+      ? new URL(window.location.href).searchParams.get("resetToken")
+      : null;
 
   const [mode, setMode] = React.useState<Mode>("login");
   const [loading, setLoading] = React.useState(false);
-  const [validationBubble, setValidationBubble] = React.useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = React.useState<Record<string, string>>({});
+  const [validationBubble, setValidationBubble] = React.useState<string | null>(
+    null,
+  );
+  const [fieldErrors, setFieldErrors] = React.useState<Record<string, string>>(
+    {},
+  );
 
-  const [registerValues, setRegisterValues] = React.useState<AdminRegistrationInput>({
+  const [registerValues, setRegisterValues] =
+    React.useState<AdminRegistrationInput>({
+      adminEmail: "",
+      password: "",
+      resendApiKey: "",
+      mongodbUri: "",
+    });
+
+  const [loginValues, setLoginValues] = React.useState({
     adminEmail: "",
     password: "",
-    resendApiKey: "",
-    mongodbUri: "",
   });
-
-
-  const [loginValues, setLoginValues] = React.useState({ adminEmail: "", password: "" });
   const [forgotValues, setForgotValues] = React.useState({ adminEmail: "" });
   const [resetValues, setResetValues] = React.useState({ newPassword: "" });
 
@@ -118,7 +138,9 @@ export function LoginRegisterSplit() {
       const data = (await res.json()) as { ok?: boolean; message?: string };
 
       if (!res.ok || data.ok === false) {
-        setValidationBubble(getSafeAuthMessage(data.message, "Registration failed."));
+        setValidationBubble(
+          getSafeAuthMessage(data.message, "Registration failed."),
+        );
         return;
       }
 
@@ -128,7 +150,9 @@ export function LoginRegisterSplit() {
         localStorage.setItem("adminAuthToken", token);
       }
 
-      setValidationBubble(data.message ?? "Registration successful. You may now log in.");
+      setValidationBubble(
+        data.message ?? "Registration successful. You may now log in.",
+      );
       setMode("login");
     } finally {
       setLoading(false);
@@ -155,17 +179,26 @@ export function LoginRegisterSplit() {
         body: JSON.stringify(parsed.data),
       });
 
-      const data = (await res.json()) as { ok?: boolean; code?: string; message?: string };
+      const data = (await res.json()) as {
+        ok?: boolean;
+        code?: string;
+        message?: string;
+      };
 
       if (!res.ok || data.ok === false) {
         if (data.code === "NOT_REGISTERED") {
-          setValidationBubble("Account not registered. Switching to registration.");
+          setValidationBubble(
+            "Account not registered. Switching to registration.",
+          );
           // Persist existence state for later UI logic
           localStorage.setItem("adminExists", "false");
           localStorage.removeItem("adminAuthToken");
 
           // Prefill email to reduce friction
-          setRegisterValues((prev) => ({ ...prev, adminEmail: parsed.data.adminEmail }));
+          setRegisterValues((prev) => ({
+            ...prev,
+            adminEmail: parsed.data.adminEmail,
+          }));
           setMode("register");
           return;
         }
@@ -209,11 +242,15 @@ export function LoginRegisterSplit() {
 
       const data = (await res.json()) as { ok?: boolean; message?: string };
       if (!res.ok || data.ok === false) {
-        setValidationBubble(getSafeAuthMessage(data.message, "Failed to send reset link."));
+        setValidationBubble(
+          getSafeAuthMessage(data.message, "Failed to send reset link."),
+        );
         return;
       }
 
-      setValidationBubble(data.message ?? "If an account exists, a reset link has been sent.");
+      setValidationBubble(
+        data.message ?? "If an account exists, a reset link has been sent.",
+      );
     } finally {
       setLoading(false);
     }
@@ -232,9 +269,14 @@ export function LoginRegisterSplit() {
       return;
     }
 
-    const parsed = ResetSchema.safeParse({ token, newPassword: resetValues.newPassword });
+    const parsed = ResetSchema.safeParse({
+      token,
+      newPassword: resetValues.newPassword,
+    });
     if (!parsed.success) {
-      setValidationBubble(parsed.error.issues[0]?.message ?? "Invalid password.");
+      setValidationBubble(
+        parsed.error.issues[0]?.message ?? "Invalid password.",
+      );
       setLoading(false);
       return;
     }
@@ -267,7 +309,9 @@ export function LoginRegisterSplit() {
       {(mode === "login" || mode === "forgot") && (
         <Card className="border-zinc-200 bg-white/60 shadow-sm min-w-2xl dark:border-zinc-800 dark:bg-zinc-900/30">
           <CardHeader>
-            <CardTitle>{mode === "login" ? "Login" : "Forgot password"}</CardTitle>
+            <CardTitle>
+              {mode === "login" ? "Login" : "Forgot password"}
+            </CardTitle>
             <CardDescription>Access the Pawteller CMS admin.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -290,7 +334,12 @@ export function LoginRegisterSplit() {
                       type="email"
                       autoComplete="email"
                       value={loginValues.adminEmail}
-                      onChange={(e) => setLoginValues((prev) => ({ ...prev, adminEmail: e.target.value }))}
+                      onChange={(e) =>
+                        setLoginValues((prev) => ({
+                          ...prev,
+                          adminEmail: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                   <div className="space-y-2">
@@ -302,7 +351,12 @@ export function LoginRegisterSplit() {
                       type="password"
                       autoComplete="current-password"
                       value={loginValues.password}
-                      onChange={(e) => setLoginValues((prev) => ({ ...prev, password: e.target.value }))}
+                      onChange={(e) =>
+                        setLoginValues((prev) => ({
+                          ...prev,
+                          password: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
@@ -316,10 +370,20 @@ export function LoginRegisterSplit() {
                   </Button>
 
                   <div className="flex flex-col items-center justify-between">
-                    <Button type="button" variant="link" className="p-0 h-auto" onClick={() => setMode("forgot")}>
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="p-0 h-auto"
+                      onClick={() => setMode("forgot")}
+                    >
                       Forgot password? Reset Now
                     </Button>
-                    <Button type="button" variant="link" className="p-0 h-auto" onClick={() => setMode("register")}>
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="p-0 h-auto"
+                      onClick={() => setMode("register")}
+                    >
                       Acccount not registered yet ! Create account
                     </Button>
                   </div>
@@ -335,7 +399,9 @@ export function LoginRegisterSplit() {
                       type="email"
                       autoComplete="email"
                       value={forgotValues.adminEmail}
-                      onChange={(e) => setForgotValues({ adminEmail: e.target.value })}
+                      onChange={(e) =>
+                        setForgotValues({ adminEmail: e.target.value })
+                      }
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
@@ -347,7 +413,11 @@ export function LoginRegisterSplit() {
                       "Send reset link"
                     )}
                   </Button>
-                  <Button type="button" className="w-full" variant="secondary" onClick={() => setMode("login")}
+                  <Button
+                    type="button"
+                    className="w-full"
+                    variant="secondary"
+                    onClick={() => setMode("login")}
                   >
                     Back to login
                   </Button>
@@ -362,7 +432,10 @@ export function LoginRegisterSplit() {
         <Card className="border-zinc-200 bg-white/60 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/30">
           <CardHeader>
             <CardTitle>Register</CardTitle>
-            <CardDescription>Provide your Resend API key and MongoDB URI, then create an admin account.</CardDescription>
+            <CardDescription>
+              Provide your Resend API key and MongoDB URI, then create an admin
+              account.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={submitRegister} className="space-y-6">
@@ -373,7 +446,6 @@ export function LoginRegisterSplit() {
                 </Alert>
               ) : null}
 
-
               <div className="space-y-2">
                 <Label htmlFor="adminEmail">Admin Email</Label>
                 <Input
@@ -381,9 +453,18 @@ export function LoginRegisterSplit() {
                   type="email"
                   autoComplete="email"
                   value={registerValues.adminEmail}
-                  onChange={(e) => setRegisterValues((prev) => ({ ...prev, adminEmail: e.target.value }))}
+                  onChange={(e) =>
+                    setRegisterValues((prev) => ({
+                      ...prev,
+                      adminEmail: e.target.value,
+                    }))
+                  }
                 />
-                {fieldErrors.adminEmail ? <p className="text-sm text-red-600">{fieldErrors.adminEmail}</p> : null}
+                {fieldErrors.adminEmail ? (
+                  <p className="text-sm text-red-600">
+                    {fieldErrors.adminEmail}
+                  </p>
+                ) : null}
               </div>
 
               <div className="space-y-2">
@@ -393,9 +474,16 @@ export function LoginRegisterSplit() {
                   type="password"
                   autoComplete="new-password"
                   value={registerValues.password}
-                  onChange={(e) => setRegisterValues((prev) => ({ ...prev, password: e.target.value }))}
+                  onChange={(e) =>
+                    setRegisterValues((prev) => ({
+                      ...prev,
+                      password: e.target.value,
+                    }))
+                  }
                 />
-                {fieldErrors.password ? <p className="text-sm text-red-600">{fieldErrors.password}</p> : null}
+                {fieldErrors.password ? (
+                  <p className="text-sm text-red-600">{fieldErrors.password}</p>
+                ) : null}
               </div>
 
               <div className="space-y-2">
@@ -405,9 +493,18 @@ export function LoginRegisterSplit() {
                   type="password"
                   autoComplete="off"
                   value={registerValues.resendApiKey}
-                  onChange={(e) => setRegisterValues((prev) => ({ ...prev, resendApiKey: e.target.value }))}
+                  onChange={(e) =>
+                    setRegisterValues((prev) => ({
+                      ...prev,
+                      resendApiKey: e.target.value,
+                    }))
+                  }
                 />
-                {fieldErrors.resendApiKey ? <p className="text-sm text-red-600">{fieldErrors.resendApiKey}</p> : null}
+                {fieldErrors.resendApiKey ? (
+                  <p className="text-sm text-red-600">
+                    {fieldErrors.resendApiKey}
+                  </p>
+                ) : null}
               </div>
 
               <div className="space-y-2">
@@ -417,13 +514,21 @@ export function LoginRegisterSplit() {
                   type="password"
                   autoComplete="off"
                   value={registerValues.mongodbUri}
-                  onChange={(e) => setRegisterValues((prev) => ({ ...prev, mongodbUri: e.target.value }))}
+                  onChange={(e) =>
+                    setRegisterValues((prev) => ({
+                      ...prev,
+                      mongodbUri: e.target.value,
+                    }))
+                  }
                 />
-                {fieldErrors.mongodbUri ? <p className="text-sm text-red-600">{fieldErrors.mongodbUri}</p> : null}
+                {fieldErrors.mongodbUri ? (
+                  <p className="text-sm text-red-600">
+                    {fieldErrors.mongodbUri}
+                  </p>
+                ) : null}
               </div>
 
               <Button type="submit" className="w-full" disabled={loading}>
-
                 {loading ? (
                   <span className="inline-flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" /> Registering
@@ -434,12 +539,18 @@ export function LoginRegisterSplit() {
               </Button>
 
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                After registration, use the login form with your admin email and secure password.
+                After registration, use the login form with your admin email and
+                secure password.
               </p>
             </form>
 
             <div className="mt-4">
-              <Button type="button" className="w-full" variant="secondary" onClick={() => setMode("login")}>
+              <Button
+                type="button"
+                className="w-full"
+                variant="secondary"
+                onClick={() => setMode("login")}
+              >
                 Back to login
               </Button>
             </div>
@@ -451,7 +562,9 @@ export function LoginRegisterSplit() {
         <Card className="border-zinc-200 bg-white/60 shadow-sm min-w-2xl dark:border-zinc-800 dark:bg-zinc-900/30">
           <CardHeader>
             <CardTitle>Reset password</CardTitle>
-            <CardDescription>Choose a new password for your admin account.</CardDescription>
+            <CardDescription>
+              Choose a new password for your admin account.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={submitReset} className="space-y-4">
@@ -469,7 +582,9 @@ export function LoginRegisterSplit() {
                   type="password"
                   autoComplete="new-password"
                   value={resetValues.newPassword}
-                  onChange={(e) => setResetValues({ newPassword: e.target.value })}
+                  onChange={(e) =>
+                    setResetValues({ newPassword: e.target.value })
+                  }
                 />
               </div>
 
@@ -483,7 +598,12 @@ export function LoginRegisterSplit() {
                 )}
               </Button>
 
-              <Button type="button" className="w-full" variant="secondary" onClick={() => setMode("login")}>
+              <Button
+                type="button"
+                className="w-full"
+                variant="secondary"
+                onClick={() => setMode("login")}
+              >
                 Back to login
               </Button>
             </form>
@@ -493,4 +613,3 @@ export function LoginRegisterSplit() {
     </div>
   );
 }
-

@@ -1,19 +1,9 @@
 "use client";
 
+import { BarChart3, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  Menu, 
-  Sun, 
-  Moon, 
-  User, 
-  LogOut, 
-  BarChart3, 
-  Settings 
-} from "lucide-react";
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils"; // Standard shadcn utils
-
+import { useEffect, useState } from "react";
 // Shadcn UI Components
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -25,8 +15,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import MobileMenu from "./MobileMenu";
 import { topNavLinks } from "@/lib/admin/constants";
+import { cn } from "@/lib/utils"; // Standard shadcn utils
+import MobileMenu from "./MobileMenu";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -34,23 +25,27 @@ export default function Navbar() {
 
   // Simple Theme Toggle Logic
   useEffect(() => {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
       setIsDark(true);
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
       setIsDark(false);
     }
   }, []);
 
   const toggleTheme = () => {
     if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.theme = 'light';
+      document.documentElement.classList.remove("dark");
+      localStorage.theme = "light";
       setIsDark(false);
     } else {
-      document.documentElement.classList.add('dark');
-      localStorage.theme = 'dark';
+      document.documentElement.classList.add("dark");
+      localStorage.theme = "dark";
       setIsDark(true);
     }
   };
@@ -58,12 +53,11 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 z-50 w-full h-16 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container flex items-center justify-between h-full px-4 mx-auto">
-        
         {/* Left Section: Logo & Mobile Trigger */}
         <div className="flex items-center gap-4">
           {/* Mobile Menu Trigger */}
           <MobileMenu />
-          
+
           {/* Logo */}
           <Link href="/admin/dashboard" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">
@@ -83,7 +77,9 @@ export default function Navbar() {
               href={link.href}
               className={cn(
                 "text-sm font-medium transition-colors hover:text-primary",
-                pathname === link.href ? "text-primary" : "text-muted-foreground"
+                pathname === link.href
+                  ? "text-primary"
+                  : "text-muted-foreground",
               )}
             >
               {link.name}
@@ -95,7 +91,11 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           {/* Theme Toggle */}
           <Button variant="ghost" size="icon" onClick={toggleTheme}>
-            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            {isDark ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
           </Button>
 
           {/* Profile Dropdown */}

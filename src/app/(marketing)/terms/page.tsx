@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Terms & Conditions | Pawteller",
   description:
     "Read the Terms and Conditions for using Pawteller's tools, guides, and calculator resources. Learn about our usage policies and informational disclaimer.",
-  keywords:[],
+  keywords: [],
   alternates: {
     canonical: "https://pawteller.com/terms", // Adjust with your actual production domain
   },
@@ -77,8 +77,8 @@ export default function TermsPage() {
                   </div>
 
                   <p className="mt-4 text-base leading-7 text-slate-700 dark:text-slate-200 max-w-2xl">
-                    These Terms explain how Pawteller’s calculators, guides,
-                    and website are provided, outlining user guidelines and
+                    These Terms explain how Pawteller’s calculators, guides, and
+                    website are provided, outlining user guidelines and
                     essential medical safety data disclaimers.
                   </p>
 
@@ -116,9 +116,9 @@ export default function TermsPage() {
                       Acceptance of Terms
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-200">
-                      By accessing or using Pawteller, you agree to these
-                      Terms and to comply with all applicable laws and rules.
-                      If you do not agree, please do not use the website.
+                      By accessing or using Pawteller, you agree to these Terms
+                      and to comply with all applicable laws and rules. If you
+                      do not agree, please do not use the website.
                     </p>
                   </section>
 
@@ -348,4 +348,3 @@ export default function TermsPage() {
     </>
   );
 }
-
