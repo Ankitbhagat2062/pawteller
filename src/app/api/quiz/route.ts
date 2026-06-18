@@ -52,7 +52,9 @@ export async function POST(request: Request) {
 
   const QuizResultsSchema = z.object({
     userName: z.string(),
-    topMatches: z.array(TopMatchSchema),
+    topMatches: z
+      .array(TopMatchSchema)
+      .min(1, "At least one match is required"),
   });
 
   const QuizIdSchema = z
@@ -140,8 +142,22 @@ export async function POST(request: Request) {
       quizId: safeQuizId,
       status: "pending",
     });
-    await contact.save();
-
+    try {
+      await contact.save();
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "code" in err &&
+        (err as { code?: number }).code === 11000
+      ) {
+        return NextResponse.json(
+          { error: "You have already given quiz" },
+          { status: 400 },
+        );
+      }
+      throw err;
+    }
     try {
       const data = await resend.emails.send({
         from: correctedFrom,

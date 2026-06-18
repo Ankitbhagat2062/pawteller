@@ -287,18 +287,21 @@ export default function Home() {
             >
               <div className="mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(520px,0.95fr)] lg:items-center">
                 {dogLifesLeft?.map(
-                  (dog: {
-                    eyebrow: string;
-                    title: string;
-                    description: string;
-                    cta: { label: string; href: string; ariaLabel?: string };
-                  }) => (
+                  (
+                    dog: {
+                      eyebrow: string;
+                      title: string;
+                      description: string;
+                      cta: { label: string; href: string; ariaLabel?: string };
+                    },
+                    index,
+                  ) => (
                     <div key={dog.eyebrow} className="max-w-145">
                       <p className="text-[0.68rem] font-bold uppercase tracking-[0.42em] text-[#F1D9A8]">
                         {`${dog.eyebrow}`}
                       </p>
                       <h2
-                        id="dog-life-stage-title"
+                        id={index === 0 ? "dog-life-stage-title" : undefined}
                         className="mt-5 max-w-140 font-[Georgia,serif] text-4xl leading-[0.98] tracking-normal text-[#ffffff] sm:text-5xl lg:text-[3.35rem]"
                       >
                         {`${dog.title}`}

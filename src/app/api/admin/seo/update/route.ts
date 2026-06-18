@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json({ success: true });
-  } catch (e) {
+  } catch (_e) {
     return NextResponse.json(
       { error: "Failed to update SEO" },
       { status: 500 },

@@ -7,12 +7,12 @@ import SubscriberModel from "@/models/subscriber";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const fromMail: string = `${process.env.FROM_MAIL}`;
-export async function GET(request: Request) {
-  if (!RESEND_API_KEY) {
+export async function POST(request: Request) {
+  if (!RESEND_API_KEY || !fromMail) {
     return NextResponse.json(
       {
         error:
-          "Missing RESEND_API_KEY env var (expected process.env.RESEND_API_KEY)",
+          "Missing RESEND_API_KEY or FROM_MAIL env var (expected process.env.RESEND_API_KEY and process.env.FROM_MAIL)",
       },
       { status: 500 },
     );

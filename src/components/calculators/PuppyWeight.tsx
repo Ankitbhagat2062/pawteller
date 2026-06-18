@@ -576,6 +576,7 @@ export default function Index() {
                       alt={heroImage.alt}
                       fill
                       priority
+                      loading="eager"
                       className="object-cover"
                     />
                   </div>
@@ -1128,7 +1129,7 @@ export default function Index() {
                     className="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 text-sm focus:outline-none focus:border-brand/60"
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     disabled={isPending}
                     className="w-full py-3.5 rounded-xl bg-brand text-white font-bold text-sm hover:opacity-90 transition-opacity"
                   >

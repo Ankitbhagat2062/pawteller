@@ -38,7 +38,12 @@ export async function GET(request: Request) {
     // Single-use verification: update only if token matches, not already verified, and not expired.
     const now = new Date();
     const subscriber = await SubscriberModel.findOneAndUpdate(
-      { verificationToken: token, isVerified: false, expiresAt: { $gt: now } },
+      {
+        email,
+        verificationToken: token,
+        isVerified: false,
+        expiresAt: { $gt: now },
+      },
       { isVerified: true, verificationToken: null },
       { new: true },
     );

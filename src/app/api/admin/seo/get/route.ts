@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { verifyAdminToken } from "@/lib/admin/adminAuth";
 import connectDB from "@/lib/mongodb";
 import SeoPageModel from "@/models/seo";
 
@@ -9,6 +10,18 @@ const QuerySchema = z.object({
 
 export async function GET(request: Request) {
   try {
+    const authHeader = request.headers.get("authorization") ?? "";
+    const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+    if (!token) {
+      return NextResponse.json({ error: "Missing token" }, { status: 401 });
+    }
+
+    const verified = verifyAdminToken(token);
+
+    if (!verified.ok) {
+      return NextResponse.json({ error: verified.reason }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const pageKey = searchParams.get("pageKey");
 
@@ -22,6 +35,7 @@ export async function GET(request: Request) {
     const existing = await SeoPageModel.findOne({
       pageKey: parsed.data.pageKey,
     });
+
     if (!existing) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
@@ -32,7 +46,7 @@ export async function GET(request: Request) {
       description: existing.description,
       keywords: existing.keywords,
     });
-  } catch (e) {
+  } catch (_e) {
     return NextResponse.json({ error: "Failed to load SEO" }, { status: 500 });
   }
 }

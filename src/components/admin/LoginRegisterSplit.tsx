@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { z } from "zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -74,6 +74,7 @@ function getSafeAuthMessage(message: unknown, fallback: string) {
 }
 
 export function LoginRegisterSplit() {
+  const router = useRouter();
   const resetToken =
     typeof window !== "undefined"
       ? new URL(window.location.href).searchParams.get("resetToken")
@@ -87,7 +88,6 @@ export function LoginRegisterSplit() {
   const [fieldErrors, setFieldErrors] = React.useState<Record<string, string>>(
     {},
   );
-
   const [registerValues, setRegisterValues] =
     React.useState<AdminRegistrationInput>({
       adminEmail: "",
@@ -214,7 +214,7 @@ export function LoginRegisterSplit() {
       }
 
       setValidationBubble(data.message ?? "Login successful.");
-      if (data.message === "Login successful.") redirect("/admin/dashboard");
+      if (data.message === "Login successful.") router.push("/admin/dashboard");
     } finally {
       setLoading(false);
     }

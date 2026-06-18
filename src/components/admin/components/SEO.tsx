@@ -107,7 +107,9 @@ export default function SEO() {
 
   const token = useMemo(() => {
     if (typeof window === "undefined") return null;
-    const t = localStorage.getItem("adminAuth.token");
+    const t =
+      localStorage.getItem("adminAuth.token") ??
+      localStorage.getItem("adminAuth.token");
     return t;
   }, []);
 
@@ -115,7 +117,9 @@ export default function SEO() {
     // If token isn't stored by existing auth UI, try fallback key.
     // (Keeps backward compatibility with different token storage strategies.)
     if (typeof window === "undefined") return;
-    const existing = localStorage.getItem("adminAuth.token");
+    const existing =
+      localStorage.getItem("adminAuth.token") ??
+      localStorage.getItem("adminAuth.token");
     if (!existing) {
       const keys = Object.keys(localStorage);
       const match = keys.find((k) => k.startsWith("adminAuth."));
@@ -176,7 +180,7 @@ export default function SEO() {
     return () => {
       cancelled = true;
     };
-  }, [pageKey, reset]);
+  }, [pageKey, reset, SetError]);
 
   async function onSubmit(values: SeoFormValues) {
     setLoading(true);

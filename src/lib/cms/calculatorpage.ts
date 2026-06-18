@@ -76,7 +76,7 @@ export const backlinks: BacklinkItem[] = [
       "Find the perfect name for your furry friend in seconds based on personality and appearance.",
     cta: {
       label: "Generate Names",
-      href: "/calculators/name-generator",
+      href: "/calculators/dog-name",
       ariaLabel: "Generate the perfect dog name",
     },
     className:

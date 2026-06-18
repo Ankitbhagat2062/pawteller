@@ -28,6 +28,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [topBreedName, setTopBreedName] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -208,6 +209,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
           breedDatabase,
         )
       : null;
+    setTopBreedName(result?.topMatches[0].breed ?? "");
 
     type ContactPayload = {
       email: string;
@@ -236,7 +238,8 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
         quizData.url;
 
       const payload: ContactPayload = { email, quizId, results: result };
-
+      if (status === "loading") return;
+      setStatus("loading");
       const res = await axios.post<
         ContactSuccessResponse | ContactErrorResponse
       >("/api/quiz", payload, {
@@ -249,7 +252,9 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
         setTimeout(() => {
           router.push("/");
         }, 500);
+        return;
       }
+      setStatus("error");
     } catch (error: unknown) {
       const axiosError = error as AxiosError<ContactErrorResponse>;
 
@@ -275,8 +280,8 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
           </h2>
           <p className="mt-2 text-sm font-medium text-gray-600 dark:text-gray-300 sm:text-base">
             Your top breed is a{" "}
-            <span className="font-bold text-[#e0664d]">Poodle</span> ... plus 2
-            other strong matches.
+            <span className="font-bold text-[`#e0664d`]">{topBreedName}</span>{" "}
+            ... plus 2 other strong matches.
           </p>
 
           <div className="mt-6 rounded-2xl border border-orange-100/50 bg-[#fdf7f2] p-5 shadow-sm dark:border-gray-800 dark:bg-gray-800 sm:p-8">

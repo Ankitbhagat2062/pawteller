@@ -56,21 +56,17 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log("Received contact form submission:", {
-      name,
-      email,
-      topic,
-      message,
-    });
-
     // Save the contact message to the database
     const contact = new ContactModel({ name, email, topic, message });
     await contact.save();
 
     // Resend requires a valid email format: email@example.com or Name <email@example.com>
-    const from = fromMail.includes("<")
-      ? fromMail
-      : `Pawteller <contact${fromMail}>`;
+    const trimmed = fromMail.trim();
+    const from = trimmed.includes("<")
+      ? trimmed
+      : trimmed.includes("@")
+        ? `Pawteller <${trimmed}>`
+        : `Pawteller <contact@${trimmed.replace(`@`, "")}>`;
 
     const data = await resend.emails.send({
       from,
@@ -102,7 +98,7 @@ export async function POST(request: Request) {
       );
       url.searchParams.set("email", email);
       try {
-        await axios.get(url.toString());
+        await axios.get(url.toString(), { timeout: 5000 });
       } catch (error) {
         console.error("Failed to send welcome email:", error);
       }

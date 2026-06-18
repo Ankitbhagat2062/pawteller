@@ -113,7 +113,7 @@ export function ResultCard({ growthInfo, puppyImage }: ResultCardProps) {
                 boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
               }}
               labelStyle={{ color: "rgba(255,255,255,0.9)" }}
-              formatter={(value: any) => [`${value} lbs`, "Weight"]}
+              formatter={(value) => [`${value} lbs`, "Weight"]}
               labelFormatter={(label) => `Month ${label}`}
             />
 

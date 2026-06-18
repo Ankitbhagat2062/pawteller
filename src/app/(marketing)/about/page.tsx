@@ -80,7 +80,7 @@ export default function AboutPage() {
                       <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
                         {buttons?.map((btn: ctaProps) => (
                           <Link
-                            key={btn.href.replace("/", "")}
+                            key={`${btn.label}-${btn.href ?? "default-cta"}`}
                             href={btn.href || "/calculators/dog-age"}
                             aria-label={
                               btn.ariaLabel || "Calculate your dog’s age"

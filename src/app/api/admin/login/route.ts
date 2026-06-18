@@ -26,21 +26,16 @@ export async function POST(request: Request) {
     await connectDB();
 
     const admin = await AdminModel.findOne({ adminEmail });
-    if (!admin) {
+    const matches = admin
+      ? await bcrypt.compare(password, admin.passwordHash)
+      : false;
+    if (!admin || !matches) {
       return NextResponse.json(
         {
           ok: false,
-          code: "NOT_REGISTERED",
-          message: "Account not registered.",
+          code: "INVALID_CREDENTIALS",
+          message: "Invalid email or password.",
         },
-        { status: 404 },
-      );
-    }
-
-    const matches = await bcrypt.compare(password, admin.passwordHash);
-    if (!matches) {
-      return NextResponse.json(
-        { ok: false, code: "INVALID_PASSWORD", message: "Incorrect password." },
         { status: 401 },
       );
     }
