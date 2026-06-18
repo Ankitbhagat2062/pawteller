@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import dns from "dns";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createAdminToken } from "@/lib/admin/adminAuth";
+import { createAdminToken, verifyAdminToken } from "@/lib/admin/adminAuth";
 import connectDB from "@/lib/mongodb";
 import AdminModel from "@/models/admin";
 
@@ -12,7 +12,7 @@ const AdminRegistrationSchema = z.object({
 
   // Stored per admin (provided at registration)
   resendApiKey: z.string().min(1),
-  mongodbUri: z.string().min(1),
+  // NOTE: mongodbUri intentionally omitted to prevent SSRF/credential-injection.
 });
 
 export async function POST(request: Request) {
@@ -30,11 +30,24 @@ export async function POST(request: Request) {
       );
     }
 
-    const { adminEmail, password, resendApiKey, mongodbUri } = parsed.data;
+    const { adminEmail, password, resendApiKey } = parsed.data;
 
-    await connectDB(mongodbUri);
+    // This endpoint must be protected: never accept user-controlled DB connection details.
+    // Require an admin token (same pattern as other admin routes).
+    const authHeader = request.headers.get("authorization") ?? "";
+    const bearerToken = authHeader.replace(/^Bearer\s+/i, "").trim();
+    if (!bearerToken) {
+      return NextResponse.json({ message: "Missing token" }, { status: 401 });
+    }
+    const verified = verifyAdminToken(bearerToken);
+    if (!verified.ok) {
+      return NextResponse.json({ message: verified.reason }, { status: 401 });
+    }
+
+    await connectDB();
 
     const existing = await AdminModel.findOne({ adminEmail });
+
     if (existing) {
       return NextResponse.json(
         { ok: false, message: "Admin email is already registered." },
@@ -48,8 +61,8 @@ export async function POST(request: Request) {
       adminEmail,
       passwordHash,
       resendApiKey,
-      mongodbUri,
     });
+
     await admin.save();
 
     const token = createAdminToken({ adminEmail });

@@ -26,23 +26,45 @@ export async function POST(request: Request) {
 
     const now = new Date();
 
-    const admin = await AdminModel.findOne({
-      passwordResetToken: token,
-      passwordResetExpiresAt: { $gt: now },
-    });
+    const passwordHash = await bcrypt.hash(newPassword, 10);
 
-    if (!admin) {
+    // passwordResetToken is stored as a bcrypt hash.
+    // Fetch the admin(s) that have a non-expired reset token, then compare in memory.
+    // Minimal schema change: we don't add a separate deterministic index for lookup.
+    const candidates = await AdminModel.find(
+      {
+        passwordResetExpiresAt: { $gt: now },
+        passwordResetToken: { $ne: null },
+      },
+      { passwordResetToken: 1 },
+    );
+
+    let updated = null;
+    for (const admin of candidates) {
+      if (
+        admin.passwordResetToken &&
+        (await bcrypt.compare(token, admin.passwordResetToken))
+      ) {
+        updated = await AdminModel.findOneAndUpdate(
+          { _id: admin._id },
+          {
+            $set: {
+              passwordHash,
+              passwordResetToken: null,
+              passwordResetExpiresAt: null,
+            },
+          },
+        );
+        break;
+      }
+    }
+
+    if (!updated) {
       return NextResponse.json(
         { ok: false, message: "Invalid or expired token." },
         { status: 400 },
       );
     }
-
-    admin.passwordResetToken = null;
-    admin.passwordResetExpiresAt = null;
-    admin.passwordHash = await bcrypt.hash(newPassword, 10);
-
-    await admin.save();
 
     return NextResponse.json({
       ok: true,
@@ -50,7 +72,10 @@ export async function POST(request: Request) {
     });
   } catch (e: unknown) {
     return NextResponse.json(
-      { ok: false, message: e instanceof Error ? e.message : "Reset failed" },
+      {
+        ok: false,
+        message: e instanceof Error ? "Reset Failed" : "Reset failed",
+      },
       { status: 500 },
     );
   }

@@ -1,9 +1,9 @@
+import { AboutPageCms } from "@/lib/cms/aboutpage";
+import { blogPageSeo } from "@/lib/cms/blogpage";
+import { calculatorPageCms } from "@/lib/cms/calculatorpage";
+import { homepageCms } from "@/lib/cms/homepage";
+import { quizData } from "@/lib/cms/quizpage";
 import type { seoProps } from "@/lib/types";
-import { AboutPageCms } from "./aboutpage";
-import { blogPageSeo } from "./blogpage";
-import { calculatorPageCms } from "./calculatorpage";
-import { homepageCms } from "./homepage";
-import { quizData } from "./quizpage";
 
 export type SeoPageKey =
   | "home"

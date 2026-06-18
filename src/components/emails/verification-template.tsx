@@ -46,9 +46,9 @@ export default function VerifyEmail({ verificationLink }: VerifyEmailProps) {
                   Verify your email address
                 </Heading>
                 <Text className="text-[#333] dark:text-[#c1b5b5] text-[14px] leading-6 mt-6 mb-3.5 mx-0">
-                  Thanks for subscribing to Pawteller! We want to make sure it's
+                  {`Thanks for subscribing to Pawteller! We want to make sure it's
                   really you. Please click the verification link below. If you
-                  didn't request this, you can ignore this message.
+                  didn't request this, you can ignore this message.`}
                 </Text>
                 <Section className="flex items-center justify-center">
                   <Text className="text-[#333] dark:text-[#c1b5b5] m-0 font-bold text-center text-[14px]">

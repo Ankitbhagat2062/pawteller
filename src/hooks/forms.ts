@@ -33,12 +33,14 @@ export async function submitVerificationForm(
     // Important: server actions run on the server, so we should not rely on
     // client/browser cookies; just call the API directly.
     const url = new URL("/api/send-verification-email", appUrl);
-    url.searchParams.set("email", parsed.data.email);
-
-    // Use validateStatus so we can read the JSON body on non-2xx.
-    const res = await axios.get(url.toString(), {
-      validateStatus: () => true,
-    });
+    const res = await axios.post(
+      url.toString(),
+      { email: parsed.data.email },
+      {
+        validateStatus: () => true,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
 
     const apiData = res.data as { success?: boolean; error?: string };
 

@@ -3,7 +3,8 @@
 import { BarChart3, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import MobileMenu from "@/components/admin/components/shared/MobileMenu";
 // Shadcn UI Components
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -17,37 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { topNavLinks } from "@/lib/admin/constants";
 import { cn } from "@/lib/utils"; // Standard shadcn utils
-import MobileMenu from "./MobileMenu";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isDark, setIsDark] = useState(false);
-
-  // Simple Theme Toggle Logic
-  useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      setIsDark(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setIsDark(false);
-    }
-  }, []);
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove("dark");
-      localStorage.theme = "light";
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
-      setIsDark(true);
-    }
+    setTheme(isDark ? "light" : "dark");
   };
 
   return (

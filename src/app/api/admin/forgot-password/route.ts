@@ -1,9 +1,12 @@
+import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+
 import ResetPasswordEmail from "@/components/emails/reset-password-template";
 import connectDB from "@/lib/mongodb";
+
 import AdminModel from "@/models/admin";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -41,7 +44,10 @@ export async function POST(request: Request) {
       const token = uuidv4();
       const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
 
-      admin.passwordResetToken = token;
+      // Store only a hash of the token (avoid plaintext reset tokens in DB).
+      const tokenHash = await bcrypt.hash(token, 10);
+
+      admin.passwordResetToken = tokenHash;
       admin.passwordResetExpiresAt = expiresAt;
       await admin.save();
 
@@ -62,13 +68,16 @@ export async function POST(request: Request) {
       const fromAddress = fromMail.includes("@")
         ? `Welcome <noreply@${fromMail.split("@")[1]}>`
         : `Welcome <noreply${fromMail}>`;
-
-      await resend.emails.send({
-        from: fromAddress,
-        to: adminEmail,
-        subject: "Reset your password",
-        react: ResetPasswordEmail({ resetLink: resetUrl.toString() }),
-      });
+      try {
+        await resend.emails.send({
+          from: fromAddress,
+          to: adminEmail,
+          subject: "Reset your password",
+          react: ResetPasswordEmail({ resetLink: resetUrl.toString() }),
+        });
+      } catch (error) {
+        console.error("Error sending reset email:", error);
+      }
     }
 
     return NextResponse.json({
@@ -76,12 +85,13 @@ export async function POST(request: Request) {
       message: "If an account exists, a reset link has been sent.",
     });
   } catch (e: unknown) {
+    console.error("Forgot-password failed", e);
     return NextResponse.json(
       {
-        ok: false,
-        message: e instanceof Error ? e.message : "Failed to send reset email",
+        ok: true,
+        message: "If an account exists, a reset link has been sent.",
       },
-      { status: 500 },
+      { status: 200 },
     );
   }
 }

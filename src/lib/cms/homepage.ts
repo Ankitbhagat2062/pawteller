@@ -66,7 +66,7 @@ export const featuredCalculatorCards: featuredCalculatorCardProps[] = [
     darkBg: "dark:bg-[#203642]",
     className: "",
   },
-] as const;
+] satisfies featuredCalculatorCardProps[];
 
 export interface dogLifeStageProps {
   icon: string;
@@ -97,7 +97,7 @@ export const dogLifeStages: dogLifeStageProps[] = [
     weight: "~70 lbs",
     className: "lg:mt-14",
   },
-] as const;
+] satisfies dogLifeStageProps[];
 
 export type HomepageHeroCms = {
   id: string;

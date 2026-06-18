@@ -15,7 +15,7 @@ const ContactThankYouEmail = ({ name }: { name: string }) => {
     <Html lang="en" dir="ltr">
       <Head />
       <Preview>
-        Thanks for reaching out, {name}! I&apos;ll get back to you soon.
+        Thanks for reaching out, {name}! {`I'll get back to you soon.`}
       </Preview>
       <Tailwind>
         <Body className="dark:bg-black bg-amber-50 font-sans py-10">
@@ -33,18 +33,18 @@ const ContactThankYouEmail = ({ name }: { name: string }) => {
                 Hi {name}!
                 <br />
                 <br />
-                Thanks for reaching out—I've received your message and
-                appreciate you taking the time.
+                {` Thanks for reaching out—I've received your message and
+                appreciate you taking the time.`}
               </Text>
 
               <Text className="text-[16px] text-gray-800 dark:text-[#c1b5b5] mb-4 leading-6">
-                I&apos;ve reviewed your message and will get back to you within
-                24–48 hours.
+                {` I've reviewed your message and will get back to you within
+                24–48 hours.`}
               </Text>
 
               <Text className="text-[16px] text-gray-800 dark:text-[#c1b5b5] leading-6">
-                If your inquiry is urgent, please don&apos;t hesitate to follow
-                up.
+                {`If your inquiry is urgent, please don't hesitate to follow
+                up.`}
               </Text>
 
               <Text className="text-[16px] text-gray-800 dark:text-[#c1b5b5] leading-6">

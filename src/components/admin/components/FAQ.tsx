@@ -1,7 +1,6 @@
 "use client";
 
 import { Plus, Trash2 } from "lucide-react";
-import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -77,7 +76,7 @@ export default function FAQ() {
       );
 
       if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as any;
+        const data = await res.json().catch(() => null);
         throw new Error(data?.error ?? "Failed to load FAQ");
       }
 
@@ -101,7 +100,6 @@ export default function FAQ() {
 
   useEffect(() => {
     loadFaq(pageKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageKey]);
 
   async function onSubmit(values: FormValues) {
@@ -119,7 +117,7 @@ export default function FAQ() {
         items: values.items
           .filter(
             (it) =>
-              it.question.trim().length > 0 || it.answer.trim().length > 0,
+              it.question.trim().length > 0 && it.answer.trim().length > 0,
           )
           .map((it) => ({
             question: it.question.trim(),
@@ -137,7 +135,7 @@ export default function FAQ() {
       });
 
       if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as any;
+        const data = await res.json().catch(() => null);
         throw new Error(data?.error ?? "Failed to update FAQ");
       }
 
