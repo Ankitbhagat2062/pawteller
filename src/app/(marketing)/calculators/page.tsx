@@ -1,3 +1,4 @@
+import { cache } from "react";
 import {
   BookOpen,
   ChevronRight,
@@ -9,15 +10,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-
 import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getCalculatorPageCms } from "@/lib/cms/calculatorCmsDb";
 import { SchemaOrg } from "@/lib/seo-schema";
+const getCalculatorPageCmsCached = cache(getCalculatorPageCms);
 
 export async function generateMetadata(): Promise<Metadata> {
-  const calculatorPageCms = await getCalculatorPageCms();
+  const calculatorPageCms = await getCalculatorPageCmsCached();
   const seo = calculatorPageCms.seo;
 
   return {
@@ -78,7 +79,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 export default async function CalculatorsPage() {
-  const calculatorPageCms = await getCalculatorPageCms();
+  const calculatorPageCms = await getCalculatorPageCmsCached();
   const heroSection = calculatorPageCms.heroSection;
   const calculatorSection = calculatorPageCms.calculatorSection;
   const whyUsecalculatorSection = calculatorPageCms.whyUsecalculatorSection;

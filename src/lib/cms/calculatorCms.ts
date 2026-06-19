@@ -168,7 +168,7 @@ const SeoBlockSchema = z.object({
 });
 
 export const CalculatorCmsSchema = z.object({
-  slug: z.string().min(1).max(100).default("calculators-home"),
+  slug: z.literal("calculators-home").default("calculators-home"),
   seo: SeoSchema,
   heroSection: HeroSchema,
   calculatorSection: CalculatorSectionSchema,

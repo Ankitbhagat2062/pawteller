@@ -11,7 +11,7 @@ import {
   Sparkles,
   Trash2,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -110,6 +110,7 @@ export default function Calculators() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const rowKeysRef = useRef<Record<string, string[]>>({});
 
   const form = useForm<SerializedCalculatorPageCms>({
     defaultValues: defaultSerializedCalculatorPageCms,
@@ -127,6 +128,25 @@ export default function Calculators() {
   } = form;
 
   const values = watch();
+
+  function createRowKey() {
+    return globalThis.crypto?.randomUUID() ?? `${Date.now()}-${Math.random()}`;
+  }
+
+  function getRowKey(listName: string, index: number) {
+    rowKeysRef.current[listName] ??= [];
+    rowKeysRef.current[listName][index] ??= createRowKey();
+    return rowKeysRef.current[listName][index];
+  }
+
+  function appendRowKey(listName: string) {
+    rowKeysRef.current[listName] ??= [];
+    rowKeysRef.current[listName].push(createRowKey());
+  }
+
+  function removeRowKey(listName: string, index: number) {
+    rowKeysRef.current[listName]?.splice(index, 1);
+  }
 
   useEffect(() => {
     async function loadCalculatorsCms() {
@@ -237,12 +257,14 @@ export default function Calculators() {
   }
 
   function addHeroCta() {
+    appendRowKey("heroCta");
     setValue("heroSection.cta", [...getValues("heroSection.cta"), emptyCta()], {
       shouldDirty: true,
     });
   }
 
   function removeHeroCta(index: number) {
+    removeRowKey("heroCta", index);
     const next = getValues("heroSection.cta").filter((_, i) => i !== index);
     setValue("heroSection.cta", next.length ? next : [emptyCta()], {
       shouldDirty: true,
@@ -250,6 +272,7 @@ export default function Calculators() {
   }
 
   function addCalculator() {
+    appendRowKey("calculators");
     setValue(
       "calculatorSection.calculators",
       [...getValues("calculatorSection.calculators"), emptyCalculator()],
@@ -258,6 +281,7 @@ export default function Calculators() {
   }
 
   function removeCalculator(index: number) {
+    removeRowKey("calculators", index);
     const next = getValues("calculatorSection.calculators").filter(
       (_, i) => i !== index,
     );
@@ -269,6 +293,7 @@ export default function Calculators() {
   }
 
   function addReason() {
+    appendRowKey("reasons");
     setValue(
       "whyUsecalculatorSection.reasons",
       [...getValues("whyUsecalculatorSection.reasons"), emptyReason()],
@@ -277,6 +302,7 @@ export default function Calculators() {
   }
 
   function removeReason(index: number) {
+    removeRowKey("reasons", index);
     const next = getValues("whyUsecalculatorSection.reasons").filter(
       (_, i) => i !== index,
     );
@@ -288,6 +314,7 @@ export default function Calculators() {
   }
 
   function addFeatureCta() {
+    appendRowKey("featureCta");
     setValue(
       "whyUsecalculatorSection.feature.cta",
       [...getValues("whyUsecalculatorSection.feature.cta"), emptyCta()],
@@ -296,6 +323,7 @@ export default function Calculators() {
   }
 
   function removeFeatureCta(index: number) {
+    removeRowKey("featureCta", index);
     const next = getValues("whyUsecalculatorSection.feature.cta").filter(
       (_, i) => i !== index,
     );
@@ -309,6 +337,7 @@ export default function Calculators() {
   }
 
   function addFaq() {
+    appendRowKey("faqItems");
     setValue(
       "faqSection.faqItems",
       [...getValues("faqSection.faqItems"), emptyFaqItem()],
@@ -319,6 +348,7 @@ export default function Calculators() {
   }
 
   function removeFaq(index: number) {
+    removeRowKey("faqItems", index);
     const next = getValues("faqSection.faqItems").filter((_, i) => i !== index);
     setValue("faqSection.faqItems", next.length ? next : [emptyFaqItem()], {
       shouldDirty: true,
@@ -326,6 +356,7 @@ export default function Calculators() {
   }
 
   function addBacklinkCta() {
+    appendRowKey("backlinkCta");
     setValue(
       "backlinkblogSection.cta",
       [...getValues("backlinkblogSection.cta"), emptyCta()],
@@ -336,6 +367,7 @@ export default function Calculators() {
   }
 
   function removeBacklinkCta(index: number) {
+    removeRowKey("backlinkCta", index);
     const next = getValues("backlinkblogSection.cta").filter(
       (_, i) => i !== index,
     );
@@ -345,6 +377,7 @@ export default function Calculators() {
   }
 
   function addService() {
+    appendRowKey("services");
     setValue(
       "seoblockSection.services",
       [...getValues("seoblockSection.services"), emptyService()],
@@ -353,6 +386,7 @@ export default function Calculators() {
   }
 
   function removeService(index: number) {
+    removeRowKey("services", index);
     const next = getValues("seoblockSection.services").filter(
       (_, i) => i !== index,
     );
@@ -366,6 +400,7 @@ export default function Calculators() {
   }
 
   function addSeoFooterCta() {
+    appendRowKey("seoFooterCta");
     setValue(
       "seoblockSection.footer.cta",
       [...getValues("seoblockSection.footer.cta"), emptyCta()],
@@ -374,6 +409,7 @@ export default function Calculators() {
   }
 
   function removeSeoFooterCta(index: number) {
+    removeRowKey("seoFooterCta", index);
     const next = getValues("seoblockSection.footer.cta").filter(
       (_, i) => i !== index,
     );
@@ -519,9 +555,9 @@ export default function Calculators() {
                         Add CTA
                       </Button>
                     </div>
-                    {values.heroSection.cta.map((cta, index) => (
+                    {values.heroSection.cta.map((_cta, index) => (
                       <div
-                        key={`${cta.label}-${index}`}
+                        key={getRowKey("heroCta", index)}
                         className="grid gap-3 rounded-md border p-3 md:grid-cols-[1fr_1fr_1fr_auto]"
                       >
                         <Input
@@ -552,7 +588,7 @@ export default function Calculators() {
                   <div className="mt-6 grid gap-3 md:grid-cols-2">
                     {values.heroSection.buttons.map((button, index) => (
                       <div
-                        key={`${button.label}-${index}`}
+                        key={getRowKey("heroButtons", index)}
                         className="space-y-3 rounded-md border p-3"
                       >
                         <Label>Trust button {index + 1}</Label>
@@ -632,7 +668,7 @@ export default function Calculators() {
                     {values.calculatorSection.calculators.map(
                       (calculator, index) => (
                         <div
-                          key={`${calculator.title}-${index}`}
+                          key={getRowKey("calculators", index)}
                           className="space-y-3 rounded-md border p-4"
                         >
                           <div className="flex items-center justify-between gap-3">
@@ -748,7 +784,7 @@ export default function Calculators() {
                     {values.whyUsecalculatorSection.reasons.map(
                       (reason, index) => (
                         <div
-                          key={`${reason.title}-${index}`}
+                          key={getRowKey("reasons", index)}
                           className="grid gap-3 rounded-md border p-3 md:grid-cols-2"
                         >
                           <Input
@@ -806,9 +842,9 @@ export default function Calculators() {
                       </Button>
                     </div>
                     {values.whyUsecalculatorSection.feature.cta.map(
-                      (cta, index) => (
+                      (_cta, index) => (
                         <div
-                          key={`${cta.label}-${index}`}
+                          key={getRowKey("featureCta", index)}
                           className="grid gap-3 rounded-md border p-3 md:grid-cols-[1fr_1fr_1fr_auto]"
                         >
                           <Input
@@ -878,9 +914,9 @@ export default function Calculators() {
                         Add FAQ
                       </Button>
                     </div>
-                    {values.faqSection.faqItems.map((faq, index) => (
+                    {values.faqSection.faqItems.map((_faq, index) => (
                       <div
-                        key={`${faq.question}-${index}`}
+                        key={getRowKey("faqItems", index)}
                         className="grid gap-3 rounded-md border p-3 md:grid-cols-[1fr_auto]"
                       >
                         <div className="space-y-3">
@@ -980,9 +1016,9 @@ export default function Calculators() {
                         Add link
                       </Button>
                     </div>
-                    {values.backlinkblogSection.cta.map((cta, index) => (
+                    {values.backlinkblogSection.cta.map((_cta, index) => (
                       <div
-                        key={`${cta.label}-${index}`}
+                        key={getRowKey("backlinkCta", index)}
                         className="grid gap-3 rounded-md border p-3 md:grid-cols-[1fr_1fr_1fr_auto]"
                       >
                         <Input
@@ -1065,9 +1101,9 @@ export default function Calculators() {
                         Add service
                       </Button>
                     </div>
-                    {values.seoblockSection.services.map((service, index) => (
+                    {values.seoblockSection.services.map((_service, index) => (
                       <div
-                        key={`${service.title}-${index}`}
+                        key={getRowKey("services", index)}
                         className="flex gap-3 rounded-md border p-3"
                       >
                         <Input
@@ -1102,9 +1138,9 @@ export default function Calculators() {
                         Add CTA
                       </Button>
                     </div>
-                    {values.seoblockSection.footer.cta.map((cta, index) => (
+                    {values.seoblockSection.footer.cta.map((_cta, index) => (
                       <div
-                        key={`${cta.label}-${index}`}
+                        key={getRowKey("seoFooterCta", index)}
                         className="grid gap-3 rounded-md border p-3 md:grid-cols-[1fr_1fr_1fr_auto]"
                       >
                         <Input
