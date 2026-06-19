@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BREED_NAMES } from "@/lib/cms/dogGrowthpage";
+import { BREED_NAMES } from "@/lib/cms/calculators/dogGrowthpage";
 import type { PuppyFormProps } from "@/lib/types";
 
 export function PuppyForm({ onSubmit, disabled }: PuppyFormProps) {

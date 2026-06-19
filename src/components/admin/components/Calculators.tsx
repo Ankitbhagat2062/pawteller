@@ -39,7 +39,7 @@ import {
   calculatorCmsIconNames,
   defaultSerializedCalculatorPageCms,
   type SerializedCalculatorPageCms,
-} from "@/lib/cms/calculatorCms";
+} from "@/hooks/calculatorCms";
 
 function getTokenFromStorage() {
   if (typeof window === "undefined") return null;

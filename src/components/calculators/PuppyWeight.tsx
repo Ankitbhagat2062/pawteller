@@ -30,7 +30,7 @@ import {
   infographicSection,
   type PredictionStep,
   puppyWeightPageCms,
-} from "@/lib/cms/puppyweight";
+} from "@/lib/cms/calculators/puppyweight";
 import type { FormState } from "@/lib/types";
 
 // ─── Data ────────────────────────────────────────────────────────────────────

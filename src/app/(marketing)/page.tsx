@@ -11,7 +11,7 @@ import Link from "next/link";
 import Script from "next/script";
 import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
-import type { CalculatorProps } from "@/lib/cms/calculatorpage";
+import type { CalculatorProps } from "@/lib/cms/calculators/calculatorpage";
 import { type HomepageHeroCms, homepageCms } from "@/lib/cms/homepage";
 import type { SectionHeaderProps } from "@/lib/types";
 

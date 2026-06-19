@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyAdminToken } from "@/lib/admin/adminAuth";
-import { CalculatorCmsSchema } from "@/lib/cms/calculatorCms";
+import { CalculatorCmsSchema } from "@/hooks/calculatorCms";
 import connectDB from "@/lib/mongodb";
 import CalculatorCmsModel from "@/models/calculatorCms";
 

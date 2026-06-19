@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertTriangle } from "lucide-react";
-import type { whySectionProps } from "@/lib/cms/dogfoodpage";
+import type { whySectionProps } from "@/lib/cms/calculators/dogfoodpage";
 
 export function WhySection({ title, bullets, disclaimer }: whySectionProps) {
   return (

@@ -7,7 +7,7 @@ import { FilterSection } from "@/components/calculators/dogNameComponents/Filter
 import HowToChooseSection from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
 import { FaqSection } from "@/components/shared/FaqSection";
-import { faqItems, generateDogNames } from "@/lib/cms/dognamepage";
+import { faqItems, generateDogNames } from "@/lib/cms/calculators/dognamepage";
 import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
 
 const INITIAL_GENDER: DogGender | "All" = "All";

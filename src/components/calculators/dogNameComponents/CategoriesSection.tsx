@@ -1,6 +1,6 @@
 "use client";
 
-import { categories } from "@/lib/cms/dognamepage";
+import { categories } from "@/lib/cms/calculators/dognamepage";
 
 export function CategoriesSection() {
   return (

@@ -3,7 +3,7 @@ import { verifyAdminToken } from "@/lib/admin/adminAuth";
 import {
   CalculatorCmsSchema,
   defaultSerializedCalculatorPageCms,
-} from "@/lib/cms/calculatorCms";
+} from "@/hooks/calculatorCms";
 import connectDB from "@/lib/mongodb";
 import CalculatorCmsModel from "@/models/calculatorCms";
 

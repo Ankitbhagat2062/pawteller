@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import type { BacklinkItem } from "@/lib/cms/calculatorpage";
+import type { BacklinkItem } from "@/lib/cms/calculators/calculatorpage";
 
 const BacklinkCalculatorCard = (card: BacklinkItem) => {
   return (

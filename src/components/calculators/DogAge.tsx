@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/select";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { blogPosts } from "@/lib/cms/blogpage";
-import { backlinks } from "@/lib/cms/calculatorpage";
-import { dogAgePageCms } from "@/lib/cms/dogagepage";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
+import { dogAgePageCms } from "@/lib/cms/calculators/dogagepage";
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import BlogCard from "../shared/BlogCard";
 
