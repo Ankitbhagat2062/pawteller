@@ -1,3 +1,4 @@
+import { cache } from "react";
 import {
   BookOpen,
   ChevronRight,
@@ -9,72 +10,76 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-
 import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { calculatorPageCms } from "@/lib/cms/calculatorpage";
+import { getCalculatorPageCms } from "@/lib/cms/calculatorCmsDb";
 import { SchemaOrg } from "@/lib/seo-schema";
+const getCalculatorPageCmsCached = cache(getCalculatorPageCms);
 
-const seo = calculatorPageCms.seo;
-export const metadata: Metadata = {
-  title: seo.title || "Dog Growth & Health Calculators | Pawteller",
-  description:
-    seo.description ||
-    "Use Pawteller’s vet-informed dog calculators to estimate growth, convert dog age to human years, plan nutrition, and track key life stages. Fast, mobile-friendly, SEO-first.",
-  keywords: seo.keywords || [
-    "dog growth calculator",
-    "dog age calculator",
-    "puppy weight calculator",
-    "dog food calculator",
-    "dog pregnancy calculator",
-    "dog name generator",
-    "pet care calculators",
-    "veterinary pet care",
-    "dog years to human years",
-    "feeding calculator",
-  ],
-  authors: [{ name: "Pet Care Team" }],
-  alternates: {
-    canonical: "https://pawteller.com/calculators",
-  },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const calculatorPageCms = await getCalculatorPageCmsCached();
+  const seo = calculatorPageCms.seo;
+
+  return {
     title: seo.title || "Dog Growth & Health Calculators | Pawteller",
     description:
       seo.description ||
-      "Explore science-informed calculators for dog age, puppy growth, feeding, and pregnancy milestones.",
-    type: "website",
-    locale: "en_US",
-    url: "https://pawteller.com/calculators",
-    images: [
-      {
-        url: "https://pawteller.com/dog-2.png",
-        width: 1200,
-        height: 630,
-        alt: "pawteller calculators",
-      },
+      "Use Pawteller's vet-informed dog calculators to estimate growth, convert dog age to human years, plan nutrition, and track key life stages. Fast, mobile-friendly, SEO-first.",
+    keywords: seo.keywords || [
+      "dog growth calculator",
+      "dog age calculator",
+      "puppy weight calculator",
+      "dog food calculator",
+      "dog pregnancy calculator",
+      "dog name generator",
+      "pet care calculators",
+      "veterinary pet care",
+      "dog years to human years",
+      "feeding calculator",
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: seo.title || "Dog Growth & Health Calculators | Pawteller",
-    description:
-      seo.description ||
-      "Fast dog growth and nutrition calculators for smarter pet care decisions.",
-    images: ["https://pawteller.com/dog-2.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    authors: [{ name: "Pet Care Team" }],
+    alternates: {
+      canonical: "https://pawteller.com/calculators",
+    },
+    openGraph: {
+      title: seo.title || "Dog Growth & Health Calculators | Pawteller",
+      description:
+        seo.description ||
+        "Explore science-informed calculators for dog age, puppy growth, feeding, and pregnancy milestones.",
+      type: "website",
+      locale: "en_US",
+      url: "https://pawteller.com/calculators",
+      images: [
+        {
+          url: "https://pawteller.com/dog-2.png",
+          width: 1200,
+          height: 630,
+          alt: "pawteller calculators",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title || "Dog Growth & Health Calculators | Pawteller",
+      description:
+        seo.description ||
+        "Fast dog growth and nutrition calculators for smarter pet care decisions.",
+      images: ["https://pawteller.com/dog-2.png"],
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      },
     },
-  },
-};
-
-export default function CalculatorsPage() {
+  };
+}
+export default async function CalculatorsPage() {
+  const calculatorPageCms = await getCalculatorPageCmsCached();
   const heroSection = calculatorPageCms.heroSection;
   const calculatorSection = calculatorPageCms.calculatorSection;
   const whyUsecalculatorSection = calculatorPageCms.whyUsecalculatorSection;
