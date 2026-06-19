@@ -1,18 +1,8 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { verifyAdminToken } from "@/lib/admin/adminAuth";
+import { HomepageContentSchema } from "@/lib/cms/homepage";
 import connectDB from "@/lib/mongodb";
-import FaqPageModel from "@/models/faq";
-
-const BodyItemSchema = z.object({
-  question: z.string().min(1).max(500),
-  answer: z.string().min(1).max(5000),
-});
-
-const BodySchema = z.object({
-  pageKey: z.string().min(1).max(200),
-  items: z.array(BodyItemSchema).max(200),
-});
+import HomepageCmsModel from "@/models/homepageCms";
 
 export async function POST(request: Request) {
   try {
@@ -28,34 +18,30 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: verified.reason }, { status: 401 });
     }
 
-    const body = await request.json();
-    const parsed = BodySchema.safeParse(body);
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
 
+    const parsed = HomepageContentSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 });
     }
 
     await connectDB();
 
-    const { pageKey, items } = parsed.data;
-
-    await FaqPageModel.updateOne(
-      { pageKey },
-      {
-        $set: {
-          items: items.map((it) => ({
-            question: it.question,
-            answer: it.answer,
-          })),
-        },
-      },
+    await HomepageCmsModel.updateOne(
+      { slug: "home" },
+      { $set: parsed.data },
       { upsert: true },
     );
 
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json(
-      { error: "Failed to update FAQ" },
+      { error: "Failed to update homepage CMS" },
       { status: 500 },
     );
   }

@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { blogPosts } from "@/lib/cms/blogpage";
-import { type CalculatorProps, calculators } from "@/lib/cms/calculators/calculatorpage";
+import {
+  type CalculatorProps,
+  calculators,
+} from "@/lib/cms/calculators/calculatorpage";
 import type { seoProps } from "@/lib/types";
 
 export interface featuredCalculatorCardProps {
