@@ -15,7 +15,7 @@ import { z } from "zod";
 import {
   calculatorPageCms,
   type calculatorPageCmsProps,
-} from "@/lib/cms/calculatorpage";
+} from "@/lib/cms/calculators/calculatorpage";
 
 export const calculatorCmsIconNames = [
   "Baby",

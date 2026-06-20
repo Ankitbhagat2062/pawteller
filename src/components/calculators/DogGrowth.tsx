@@ -8,11 +8,11 @@ import { PuppyForm } from "@/components/calculators/doggrowthcomponents/PuppyFor
 import { ResultCard } from "@/components/calculators/doggrowthcomponents/ResultCard";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { FaqSection } from "@/components/shared/FaqSection";
-import { backlinks } from "@/lib/cms/calculatorpage";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import {
   calculatePuppyGrowth,
   dogGrowthPageCms,
-} from "@/lib/cms/dogGrowthpage";
+} from "@/lib/cms/calculators/dogGrowthpage";
 import type { GrowthInfo } from "@/lib/types";
 
 const PUPPY_IMAGE =

@@ -13,7 +13,7 @@ import Script from "next/script";
 import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getCalculatorPageCms } from "@/lib/cms/calculatorCmsDb";
+import { getCalculatorPageCms } from "@/db/calculatorCmsDb";
 import { SchemaOrg } from "@/lib/seo-schema";
 const getCalculatorPageCmsCached = cache(getCalculatorPageCms);
 

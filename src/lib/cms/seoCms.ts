@@ -1,6 +1,6 @@
 import { AboutPageCms } from "@/lib/cms/aboutpage";
 import { blogPageSeo } from "@/lib/cms/blogpage";
-import { calculatorPageCms } from "@/lib/cms/calculatorpage";
+import { calculatorPageCms } from "@/lib/cms/calculators/calculatorpage";
 import { homepageCms } from "@/lib/cms/homepage";
 import { quizData } from "@/lib/cms/quizpage";
 import type { seoProps } from "@/lib/types";

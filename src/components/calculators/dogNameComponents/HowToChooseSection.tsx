@@ -1,7 +1,7 @@
 import {
   DOG_NAME_GUIDE_CONTENT,
   type DogNameGuideTip,
-} from "@/lib/cms/dognamepage";
+} from "@/lib/cms/calculators/dognamepage";
 
 export default function HowToChooseSection() {
   const { sectionTitle, tips } = DOG_NAME_GUIDE_CONTENT;

@@ -16,12 +16,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { blogPosts } from "@/lib/cms/blogpage";
-import { backlinks } from "@/lib/cms/calculatorpage";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import {
   ACTIVITY_MULTIPLIERS,
   dogFoodPageCms,
   LIFE_STAGE_MULTIPLIERS,
-} from "@/lib/cms/dogfoodpage";
+} from "@/lib/cms/calculators/dogfoodpage";
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import type { CalculatorState, Results } from "@/lib/types";
 import { WhySection } from "./dogfoodcomponents/WhySection";

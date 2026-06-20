@@ -17,7 +17,7 @@ import {
   dogPregnancyCms,
   GESTATION_DAYS,
   SECTIONS_DATA,
-} from "@/lib/cms/dogpregnancypage";
+} from "@/lib/cms/calculators/dogpregnancypage";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
 

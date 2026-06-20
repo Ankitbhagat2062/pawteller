@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   getNamesByPersonality,
   personalityGroups,
-} from "@/lib/cms/dognamepage";
+} from "@/lib/cms/calculators/dognamepage";
 import type { DogName } from "@/lib/types";
 
 export function BestNamesSection() {

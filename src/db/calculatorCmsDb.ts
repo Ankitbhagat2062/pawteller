@@ -1,8 +1,8 @@
 import {
   CalculatorCmsSchema,
   hydrateCalculatorPageCms,
-} from "@/lib/cms/calculatorCms";
-import { calculatorPageCms } from "@/lib/cms/calculatorpage";
+} from "@/hooks/calculatorCms";
+import { calculatorPageCms } from "@/lib/cms/calculators/calculatorpage";
 import connectDB from "@/lib/mongodb";
 import CalculatorCmsModel from "@/models/calculatorCms";
 

@@ -6,13 +6,15 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
-import type { CalculatorProps } from "@/lib/cms/calculatorpage";
-import { type HomepageHeroCms, homepageCms } from "@/lib/cms/homepage";
+import type { CalculatorProps } from "@/lib/cms/calculators/calculatorpage";
+import type { HomepageHeroCms } from "@/lib/cms/homepage";
+import { getHomepageCms } from "@/lib/cms/homepageCmsDb";
 import type { SectionHeaderProps } from "@/lib/types";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
@@ -29,25 +31,39 @@ function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
     </div>
   );
 }
-const heroSection = homepageCms.hero
-  ? Array.isArray(homepageCms.hero)
-    ? homepageCms.hero
-    : [homepageCms.hero]
-  : [];
-const featureSection = homepageCms.featuredCalculators;
-const featuredCalculatorCards = homepageCms.featuredCalculators.cards;
-const dogLifeStages = homepageCms.dogLifes.right.dogLifeStages;
-const dogLifesLeft = homepageCms.dogLifes.left
-  ? Array.isArray(homepageCms.dogLifes.left)
-    ? homepageCms.dogLifes.left
-    : [homepageCms.dogLifes.left]
-  : [];
-const breedQuiz = homepageCms.breedQuizCtas
-  ? Array.isArray(homepageCms.breedQuizCtas.feature)
-    ? homepageCms.breedQuizCtas.feature
-    : [homepageCms.breedQuizCtas.feature]
-  : [];
-export default function Home() {
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getHomepageCms();
+  const seo = cms.seo;
+
+  return {
+    title: seo.title || "Pawteller | Premium Growth & Pet Health Insights",
+    description:
+      seo.description ||
+      "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
+    keywords: seo.keywords || [],
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: seo.title || "Pawteller | Premium Growth & Pet Health Insights",
+      description:
+        seo.description ||
+        "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
+      url: "https://pawteller.com",
+      siteName: "Pawteller",
+      type: "website",
+    },
+  };
+}
+
+export default async function Home() {
+  const homepageCms = await getHomepageCms();
+  const heroSection = [homepageCms.hero];
+  const featureSection = homepageCms.featuredCalculators;
+  const featuredCalculatorCards = homepageCms.featuredCalculators.cards;
+  const dogLifeStages = homepageCms.dogLifes.right.dogLifeStages;
+  const dogLifesLeft = [homepageCms.dogLifes.left];
+  const breedQuiz = [homepageCms.breedQuizCtas.feature];
   const jsonLdSchema = homepageCms.seo.jsonLd ?? {};
 
   return (

@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing token" }, { status: 401 });
     }
 
-    const verified = verifyAdminToken(token);
+    const verified = await verifyAdminToken(token);
     if (!verified.ok) {
       return NextResponse.json({ error: verified.reason }, { status: 401 });
     }
