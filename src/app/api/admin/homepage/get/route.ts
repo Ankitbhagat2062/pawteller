@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyAdminToken } from "@/lib/admin/adminAuth";
-import { getHomepageAdminCms } from "@/lib/cms/homepageCmsDb";
+import { getHomepageAdminCms } from "@/db/homepageCmsDb";
 
 export async function GET(request: Request) {
   try {
