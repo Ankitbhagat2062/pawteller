@@ -12,7 +12,7 @@ const AdminRegistrationSchema = z.object({
 
   // Stored per admin (provided at registration)
   resendApiKey: z.string().min(1),
-  // NOTE: mongodbUri intentionally omitted to prevent SSRF/credential-injection.
+  mongodbUri: z.string().min(1),
 });
 
 export async function POST(request: Request) {
@@ -30,9 +30,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const { adminEmail, password, resendApiKey } = parsed.data;
+    const { adminEmail, password, mongodbUri, resendApiKey } = parsed.data;
 
-    // This endpoint must be protected: never accept user-controlled DB connection details.
+    // This endpoint is protected because it stores credential-like connection details.
     // Require an admin token (same pattern as other admin routes).
     const authHeader = request.headers.get("authorization") ?? "";
     const bearerToken = authHeader.replace(/^Bearer\s+/i, "").trim();
@@ -60,12 +60,13 @@ export async function POST(request: Request) {
     const admin = new AdminModel({
       adminEmail,
       passwordHash,
+      mongodbUri,
       resendApiKey,
     });
 
     await admin.save();
 
-    const token = createAdminToken({ adminEmail });
+    const token = await createAdminToken({ adminEmail });
     return NextResponse.json({
       ok: true,
       message: "Registration successful. You may now log in.",

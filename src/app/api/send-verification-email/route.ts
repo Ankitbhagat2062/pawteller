@@ -2,13 +2,15 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { v4 as uuidv4 } from "uuid";
 import VerifyEmail from "@/components/emails/verification-template";
+import { getGlobalKeysForRequest } from "@/db/globalKeys";
 import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const fromMail= process.env.FROM_MAIL?.trim();
+const fromMail = process.env.FROM_MAIL?.trim();
 export async function POST(request: Request) {
-  if (!RESEND_API_KEY || !fromMail) {
+  const { mongodbUri, resendApiKey } = await getGlobalKeysForRequest(request);
+
+  if (!resendApiKey || !fromMail) {
     return NextResponse.json(
       {
         error:
@@ -18,10 +20,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const resend = new Resend(RESEND_API_KEY);
-  const body = (await request.json().catch(() => null)) as
-    | { email?: string }
-    | null;
+  const resend = new Resend(resendApiKey);
+  const body = (await request.json().catch(() => null)) as {
+    email?: string;
+  } | null;
   const email = body?.email?.trim();
 
   if (!email) {
@@ -38,7 +40,7 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
-    await connectDB();
+    await connectDB(mongodbUri);
 
     // If email is already registered (unique index), prevent creating a new subscriber record.
     const existingSubscriber = await SubscriberModel.findOne({ email });

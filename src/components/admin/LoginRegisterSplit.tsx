@@ -129,9 +129,17 @@ export function LoginRegisterSplit() {
     }
 
     try {
+      const existingToken =
+        localStorage.getItem("adminAuth.token") ??
+        localStorage.getItem("adminAuthToken");
       const res = await fetch("/api/admin/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(existingToken
+            ? { Authorization: `Bearer ${existingToken}` }
+            : {}),
+        },
         body: JSON.stringify(parsed.data),
       });
 
@@ -146,8 +154,10 @@ export function LoginRegisterSplit() {
 
       const token = (data as { token?: string }).token;
       localStorage.setItem("adminExists", "true");
+      localStorage.setItem("adminEmail", parsed.data.adminEmail);
       if (token) {
         localStorage.setItem("adminAuthToken", token);
+        localStorage.setItem("adminAuth.token", token);
       }
 
       setValidationBubble(
@@ -210,7 +220,9 @@ export function LoginRegisterSplit() {
       const token = (data as { token?: string }).token;
       if (token) {
         localStorage.setItem("adminAuthToken", token);
+        localStorage.setItem("adminAuth.token", token);
         localStorage.setItem("adminExists", "true");
+        localStorage.setItem("adminEmail", parsed.data.adminEmail);
       }
 
       setValidationBubble(data.message ?? "Login successful.");

@@ -2,6 +2,7 @@ import dns from "dns";
 import mongoose from "mongoose";
 
 let cachedConnection: mongoose.Mongoose["connection"] | null = null;
+let cachedUri: string | null = null;
 
 function sanitizeUri(mongoUri: string): string {
   // Normalize whitespace
@@ -31,11 +32,9 @@ const connectDB = async (
   mongodburi?: string,
 ): Promise<mongoose.Mongoose["connection"]> => {
   dns.setServers(["1.1.1.1", "8.8.8.8", "0.0.0.0"]); // Use system default DNS servers
-  if (cachedConnection || mongoose.connection.readyState === 1) {
-    return cachedConnection ?? mongoose.connection;
-  }
 
-  const mongoUriRaw = process.env.MONGODB_URI || mongodburi;
+  const mongoUriRaw =
+    mongodburi || process.env.MONGODB_URI || process.env.MONGO_URI;
   if (!mongoUriRaw) {
     throw new Error(
       "Missing MongoDB connection string. Set MONGODB_URI or MONGO_URI.",
@@ -48,6 +47,25 @@ const connectDB = async (
   // If the provided URI already targets a DB, don't append another "/pawteller".
   const finalUri = alreadyHasDb ? mongoUri : `${mongoUri}/pawteller`;
 
+  if (
+    cachedConnection &&
+    cachedUri === finalUri &&
+    mongoose.connection.readyState === 1
+  ) {
+    return cachedConnection;
+  }
+
+  if (mongoose.connection.readyState === 1 && cachedUri === finalUri) {
+    cachedConnection = mongoose.connection;
+    return cachedConnection;
+  }
+
+  if (mongoose.connection.readyState !== 0 && cachedUri !== finalUri) {
+    await mongoose.disconnect();
+    cachedConnection = null;
+    cachedUri = null;
+  }
+
   try {
     // makes the failure surface faster.
     const conn = await mongoose.connect(finalUri, {
@@ -56,6 +74,7 @@ const connectDB = async (
     });
 
     cachedConnection = conn.connection;
+    cachedUri = finalUri;
 
     // Avoid leaking credentials. Show host only.
     const host = conn.connection.host;

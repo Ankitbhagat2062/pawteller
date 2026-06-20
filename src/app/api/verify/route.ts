@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import PawtellerWelcomeEmail from "@/components/emails/welcome-template";
+import { getGlobalKeysForRequest } from "@/db/globalKeys";
 import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const fromMail: string = `${process.env.FROM_MAIL}`;
 
 export async function GET(request: Request) {
-  if (!RESEND_API_KEY) {
+  const { mongodbUri, resendApiKey } = await getGlobalKeysForRequest(request);
+
+  if (!resendApiKey) {
     return NextResponse.json(
       {
         error:
@@ -18,7 +20,7 @@ export async function GET(request: Request) {
     );
   }
 
-  const resend = new Resend(RESEND_API_KEY);
+  const resend = new Resend(resendApiKey);
   const { searchParams } = new URL(request.url);
   const token = searchParams.get("token");
   const email = searchParams.get("email");
@@ -33,7 +35,7 @@ export async function GET(request: Request) {
     );
 
   try {
-    await connectDB();
+    await connectDB(mongodbUri);
 
     // Single-use verification: update only if token matches, not already verified, and not expired.
     const now = new Date();

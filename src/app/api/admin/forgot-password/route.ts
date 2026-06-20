@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 import ResetPasswordEmail from "@/components/emails/reset-password-template";
+import { getGlobalKeysByAdminEmail } from "@/db/globalKeys";
 import connectDB from "@/lib/mongodb";
 
 import AdminModel from "@/models/admin";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const fromMail: string = `${process.env.FROM_MAIL}`;
 
 const ForgotSchema = z.object({
@@ -18,13 +18,6 @@ const ForgotSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    if (!RESEND_API_KEY) {
-      return NextResponse.json(
-        { error: "Missing RESEND_API_KEY env var" },
-        { status: 500 },
-      );
-    }
-
     const body = await request.json();
     const parsed = ForgotSchema.safeParse(body);
     if (!parsed.success) {
@@ -35,6 +28,13 @@ export async function POST(request: Request) {
     }
 
     const { adminEmail } = parsed.data;
+    const { resendApiKey } = await getGlobalKeysByAdminEmail(adminEmail);
+    if (!resendApiKey) {
+      return NextResponse.json(
+        { error: "Missing RESEND_API_KEY env var" },
+        { status: 500 },
+      );
+    }
 
     await connectDB();
 
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       admin.passwordResetExpiresAt = expiresAt;
       await admin.save();
 
-      const resend = new Resend(RESEND_API_KEY);
+      const resend = new Resend(resendApiKey);
       const appUrl = process.env.NEXT_PUBLIC_APP_URL;
       if (!appUrl) {
         return NextResponse.json(
