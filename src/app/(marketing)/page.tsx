@@ -58,24 +58,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const homepageCms = await getHomepageCms();
-  const heroSection = homepageCms.hero
-    ? Array.isArray(homepageCms.hero)
-      ? homepageCms.hero
-      : [homepageCms.hero]
-    : [];
+  const heroSection = [homepageCms.hero];
   const featureSection = homepageCms.featuredCalculators;
   const featuredCalculatorCards = homepageCms.featuredCalculators.cards;
   const dogLifeStages = homepageCms.dogLifes.right.dogLifeStages;
-  const dogLifesLeft = homepageCms.dogLifes.left
-    ? Array.isArray(homepageCms.dogLifes.left)
-      ? homepageCms.dogLifes.left
-      : [homepageCms.dogLifes.left]
-    : [];
-  const breedQuiz = homepageCms.breedQuizCtas
-    ? Array.isArray(homepageCms.breedQuizCtas.feature)
-      ? homepageCms.breedQuizCtas.feature
-      : [homepageCms.breedQuizCtas.feature]
-    : [];
+  const dogLifesLeft = [homepageCms.dogLifes.left];
+  const breedQuiz = [homepageCms.breedQuizCtas.feature];
   const jsonLdSchema = homepageCms.seo.jsonLd ?? {};
 
   return (

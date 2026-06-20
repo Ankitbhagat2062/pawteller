@@ -264,8 +264,7 @@ export const defaultHomepageContent: HomepageContent = {
     id: "section-hero-1",
     badgeText: "For dog parents who care deeply",
     h1: "Smart Calculators for your best friend",
-    descriptionLines:
-      "Predict your puppy's adult size. Decode dog years. Plan portions. Find the perfect breed. All in one beautifully simple place â€” backed by veterinary science.",
+    descriptionLines:"Predict your puppy's adult size. Decode dog years. Plan portions. Find the perfect breed. All in one beautifully simple place — backed by veterinary science.",
     primaryCta: {
       label: "Start with Puppy Weight",
       href: "/calculators/puppy-weight",

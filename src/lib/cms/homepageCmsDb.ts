@@ -43,8 +43,13 @@ export const getHomepageCms = cache(async (): Promise<HomepageCms> => {
       blogPosts,
     };
   } catch {
-    const calculatorPageCms = await getCalculatorPageCms();
-
+    let calculatorPageCms;
+    try {
+      calculatorPageCms = await getCalculatorPageCms();
+    } catch {
+      // Return fully static fallback when both CMS sources fail
+      return homepageCms;
+    }
     return {
       ...homepageCms,
       featuredCalculators: {
@@ -72,10 +77,10 @@ export async function getHomepageAdminCms() {
       ...(parsed.success ? parsed.data : defaultHomepageContent),
       seo: seo
         ? {
-            title: seo.title,
-            description: seo.description,
-            keywords: seo.keywords,
-          }
+          title: seo.title,
+          description: seo.description,
+          keywords: seo.keywords,
+        }
         : homepageCms.seo,
       faqItems:
         faq?.items.map((item) => ({
