@@ -36,7 +36,7 @@ const aboutCmsSchema = new Schema(
       left: {
         title: { type: String, required: true },
         speed: { type: String, required: true },
-        Clarity: { type: String, required: true },
+        clarity: { type: String, required: true },
         footertext: { type: String, required: true },
         owner: { type: String, required: true },
       },

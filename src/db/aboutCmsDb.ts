@@ -13,11 +13,17 @@ import type { FAQItem } from "@/lib/types";
 import AboutCmsModel from "@/models/aboutCms";
 import FaqPageModel from "@/models/faq";
 import SeoPageModel from "@/models/seo";
+import { error } from "console";
 
 export type AboutPageCmsWithFaq = ReturnType<typeof hydrateAboutPageCms> & {
   faqItems: FAQItem[];
 };
-
+function mapFaqItems(faq: { items: Array<{ question: string; answer: string }> } | null): FAQItem[] {
+  return faq?.items.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })) ?? [];
+}
 export const getAboutPageCms = cache(async (): Promise<AboutPageCmsWithFaq> => {
   try {
     await connectDB();
@@ -40,11 +46,7 @@ export const getAboutPageCms = cache(async (): Promise<AboutPageCmsWithFaq> => {
         keywords: seo?.keywords ?? AboutPageCms.seo.keywords,
         jsonLd: AboutPageCms.seo.jsonLd,
       }),
-      faqItems:
-        faq?.items.map((item) => ({
-          question: item.question,
-          answer: item.answer,
-        })) ?? [],
+      faqItems: mapFaqItems(faq),
     };
   } catch {
     return {
@@ -85,11 +87,7 @@ export async function getAboutAdminCms(): Promise<
         description: seo?.description ?? AboutPageCms.seo.description,
         keywords: seo?.keywords ?? AboutPageCms.seo.keywords,
       },
-      faqItems:
-        faq?.items.map((item) => ({
-          question: item.question,
-          answer: item.answer,
-        })) ?? [],
+      faqItems: mapFaqItems(faq),
       calculatorOptions: calculatorPageCms.calculatorSection.calculators.map(
         (calculator) => ({
           title: calculator.title,
@@ -98,7 +96,8 @@ export async function getAboutAdminCms(): Promise<
         }),
       ),
     };
-  } catch {
+  } catch (error) {
+    console.error('[getAboutPageCms] Failed to load About CMS from database:', error);
     const calculatorPageCms = await getCalculatorPageCms();
 
     return {

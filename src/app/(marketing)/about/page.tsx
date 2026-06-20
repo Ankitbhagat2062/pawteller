@@ -2,7 +2,6 @@ import { FileText, Flame, Heart, PawPrint, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import { cache } from "react";
 import { FaqSection } from "@/components/shared/FaqSection";
 import { getAboutPageCms } from "@/db/aboutCmsDb";
 import type {
@@ -11,10 +10,8 @@ import type {
   rightProps,
 } from "@/lib/cms/aboutpage";
 
-const getAboutPageCmsCached = cache(getAboutPageCms);
-
 export async function generateMetadata(): Promise<Metadata> {
-  const aboutPageCms = await getAboutPageCmsCached();
+  const aboutPageCms = await getAboutPageCms();
   const seo = aboutPageCms.seo;
 
   return {
@@ -30,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const aboutPageCms = await getAboutPageCmsCached();
+  const aboutPageCms = await getAboutPageCms();
   const jsonLdSchema = aboutPageCms.seo.jsonLd ?? {};
   const heroSection = aboutPageCms.heroSection;
   const missionSection = aboutPageCms.missionSection;
