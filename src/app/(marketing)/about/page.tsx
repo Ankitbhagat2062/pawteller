@@ -2,34 +2,43 @@ import { FileText, Flame, Heart, PawPrint, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import {
-  type AboutPageBottomCtaBandProps,
-  AboutPageCms,
-  type ctaProps,
-  type rightProps,
+import { cache } from "react";
+import { FaqSection } from "@/components/shared/FaqSection";
+import { getAboutPageCms } from "@/db/aboutCmsDb";
+import type {
+  AboutPageBottomCtaBandProps,
+  ctaProps,
+  rightProps,
 } from "@/lib/cms/aboutpage";
 
-// 1. PERFECT SEO SETUP WITH TARGETED SEO PLACEMENT
-const seo = AboutPageCms.seo;
-export const metadata: Metadata = {
-  title: seo.title || "About Pawteller | Reliable & Fast Dog Insights",
-  description:
-    seo.description ||
-    "Learn more about Pawteller's mission. We provide ultra-fast calculators, custom quiz funnels, and bite-sized practical guides for everyday dog owners.",
-  keywords: seo.keywords || [],
-  alternates: {
-    canonical: "https://pawteller.com/about", // Replace with your production domain
-  },
-};
+const getAboutPageCmsCached = cache(getAboutPageCms);
 
-export default function AboutPage() {
-  const jsonLdSchema = AboutPageCms.seo.jsonLd ?? {};
-  const heroSection = AboutPageCms.heroSection;
-  const missionSection = AboutPageCms.missionSection;
-  const trustPrincipleSection = AboutPageCms.trustPrincipleSection;
-  const actionblockSection = AboutPageCms.actionblockSection;
-  const medicalWarningSection = AboutPageCms.medicalWarningSection;
-  const bottomCtaBandSection = AboutPageCms.bottomCtaBand;
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutPageCms = await getAboutPageCmsCached();
+  const seo = aboutPageCms.seo;
+
+  return {
+    title: seo.title || "About Pawteller | Reliable & Fast Dog Insights",
+    description:
+      seo.description ||
+      "Learn more about Pawteller's mission. We provide ultra-fast calculators, custom quiz funnels, and bite-sized practical guides for everyday dog owners.",
+    keywords: seo.keywords || [],
+    alternates: {
+      canonical: "https://pawteller.com/about",
+    },
+  };
+}
+
+export default async function AboutPage() {
+  const aboutPageCms = await getAboutPageCmsCached();
+  const jsonLdSchema = aboutPageCms.seo.jsonLd ?? {};
+  const heroSection = aboutPageCms.heroSection;
+  const missionSection = aboutPageCms.missionSection;
+  const trustPrincipleSection = aboutPageCms.trustPrincipleSection;
+  const actionblockSection = aboutPageCms.actionblockSection;
+  const medicalWarningSection = aboutPageCms.medicalWarningSection;
+  const bottomCtaBandSection = aboutPageCms.bottomCtaBand;
+  const faqItems = aboutPageCms.faqItems;
   return (
     <>
       <Script
@@ -382,6 +391,15 @@ export default function AboutPage() {
               })()}
             </section>
           )}
+
+          {faqItems.length > 0 ? (
+            <section
+              className="mt-10"
+              aria-label="About frequently asked questions"
+            >
+              <FaqSection items={faqItems} />
+            </section>
+          ) : null}
         </main>
       </div>
     </>
