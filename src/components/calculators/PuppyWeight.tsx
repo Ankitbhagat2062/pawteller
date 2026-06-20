@@ -32,6 +32,8 @@ import {
   puppyWeightPageCms,
 } from "@/lib/cms/calculators/puppyweight";
 import type { FormState } from "@/lib/types";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -729,11 +731,10 @@ export default function Index() {
                       type="button"
                       key={s}
                       onClick={() => setSex(s)}
-                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${
-                        sex === s
+                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${sex === s
                           ? "border-brand bg-brand-light text-brand"
                           : "border-border bg-card text-muted-foreground hover:border-brand/50"
-                      }`}
+                        }`}
                     >
                       {s === "Male" ? (
                         <Mars
@@ -756,7 +757,8 @@ export default function Index() {
               <Button
                 type="button"
                 onClick={handleCalculate}
-                className="w-full py-4 rounded-xl bg-brand text-white font-extrabold text-base flex items-center justify-center gap-3 hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_10px_20px_-5px_rgba(32,201,151,0.35)]"
+                className="w-full py-4 rounded-xl bg-brand text-blue-900 dark:text-white font-extrabold text-base flex items-center 
+                justify-center gap-3 hover:text-white active:scale-[0.98] transition-all shadow-[0_10px_20px_-5px_rgba(32,201,151,0.35)]"
               >
                 Predict Adult Weight
                 <ArrowRight className="w-4 h-4" color="#fff" />
@@ -1066,9 +1068,8 @@ export default function Index() {
                     {growthRows.map((row: GrowthRow, i: number) => (
                       <tr
                         key={row.cat}
-                        className={`border-b border-border last:border-0 ${
-                          i % 2 === 0 ? "bg-card" : "bg-muted/30"
-                        }`}
+                        className={`border-b border-border last:border-0 ${i % 2 === 0 ? "bg-card" : "bg-muted/30"
+                          }`}
                       >
                         <td className="px-5 py-4 text-muted-foreground">
                           {row.cat}
@@ -1145,6 +1146,31 @@ export default function Index() {
         </section>
       )}
 
+      {/* Backlinks || Other Calculators and services */}
+      {(() => {
+        // Map only 2 random calculators (exclude Dog Age itself)
+        const eligibleCards = backlinks.filter(
+          (card) => card.cta.href !== "/calculators/puppy-weight",
+        );
+
+        const stableIndexSeed = result
+          ? `${result.breedName}-${result.predictedMid}-${result.percentGrown}-${result.size}`
+          : "fallback-4";
+        let hash = 0;
+        for (let i = 0; i < stableIndexSeed.length; i++) {
+          hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+        }
+
+        const start =
+          eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+        const cards = [
+          eligibleCards[start],
+          eligibleCards[(start + 1) % eligibleCards.length],
+        ].filter(Boolean);
+
+        return <BacklinkCalculatorCard cards={cards} />
+      })()}
+      
       {/* ── FAQ ── */}
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">
         <div className="max-w-200 mx-auto px-5 md:px-10">
@@ -1154,40 +1180,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── Other Tools ── */}
-      <section className="max-w-360 mx-auto px-5 md:px-10 lg:px-24 py-16 lg:py-24">
-        <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
-          Other Useful Tools
-        </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {puppyWeightPageCms.backlinks?.map((tool) => (
-            <div
-              key={tool.title}
-              className="bg-card border border-border rounded-2xl p-7 hover:shadow-md transition-shadow"
-            >
-              <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${tool.iconBg}`}
-              >
-                <span className={`text-xl ${tool.emojiColor}`}>
-                  {tool.emoji}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                {tool.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                {tool.desc}
-              </p>
-              <Link
-                href={tool.href}
-                className={`text-sm font-bold ${tool.linkColor} hover:opacity-75 transition-opacity`}
-              >
-                Explore Tool →
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

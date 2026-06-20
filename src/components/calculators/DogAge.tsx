@@ -349,37 +349,21 @@ const DogAgeCalculator = () => {
             </section>
           )}
 
-          {/* Backlinks || Other Calculators and services */}
-          <section className="mt-16">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                Other calculators you may need
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Continue exploring Pawteller’s tools to support your dog’s
-                nutrition and growth.
-              </p>
-            </div>
+          {/* Backlink Section */}
+          {(() => {
+            // Pick 2 calculators deterministically to avoid SSR hydration mismatch (no Math.random during render)
+            const eligibleCards = backlinks.filter(
+              (card) => card.cta.href !== "/calculators/dog-age",
+            );
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {(() => {
-                // Pick 2 calculators deterministically to avoid SSR hydration mismatch (no Math.random during render)
-                const eligibleCards = backlinks.filter(
-                  (card) => card.cta.href !== "/calculators/dog-age",
-                );
+            const stableIndexSeed = `${dogAge}-${dogSize}`;
+            const cards = selectBacklinkCards(
+              eligibleCards,
+              stableIndexSeed,
+            );
 
-                const stableIndexSeed = `${dogAge}-${dogSize}`;
-                const cards = selectBacklinkCards(
-                  eligibleCards,
-                  stableIndexSeed,
-                );
-
-                return cards.map((card) => (
-                  <BacklinkCalculatorCard key={card.title} {...card} />
-                ));
-              })()}
-            </div>
-          </section>
+            return <BacklinkCalculatorCard cards={cards} />
+          })()}
 
           {/* FAQ Section */}
           <section className="mt-16 max-w-3xl mx-auto">

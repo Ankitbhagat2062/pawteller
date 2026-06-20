@@ -9,6 +9,7 @@ import Quiz from "@/components/admin/components/Quiz";
 import SEO from "@/components/admin/components/SEO";
 import AsideWrapper from "@/components/admin/components/shared/AsideWrapper";
 import Navbar from "@/components/admin/components/shared/Navbar";
+import { cookies } from "next/headers";
 
 const SLUG_TO_COMPONENT = {
   dashboard: Dashboard,
@@ -31,6 +32,8 @@ export default async function CalculatorPage({ params }: PageProps) {
   const { slug } = await params;
   const normalizedSlug = slug?.toLowerCase() as ComponentSlug | undefined;
 
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
@@ -46,7 +49,7 @@ export default async function CalculatorPage({ params }: PageProps) {
             <Navbar />
             <div className="flex-1 flex items-center justify-center">
               <AsideWrapper />
-              <Component />
+              <Component token={token} />
             </div>
           </section>
         ) : (

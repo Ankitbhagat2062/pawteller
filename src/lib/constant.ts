@@ -1,3 +1,4 @@
+import { fetchSeo } from "@/db/seoCmsDb";
 import type { FooterSection, SectionProps } from "@/lib/types";
 
 export const navItems = [
@@ -112,3 +113,8 @@ export const SECTIONS: SectionProps[] = [
       "Questions about this Privacy Policy, privacy requests, or data concerns can be sent to: support@pawteller.com. We will respond as soon as reasonably possible.",
   },
 ] as const;
+
+export const fetchData = async ({pageKey , adminToken}: {pageKey: string, adminToken?: string}) => {
+  const seoData = await fetchSeo(pageKey, adminToken);
+  return seoData;
+}

@@ -3,16 +3,36 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import ContactForm from "@/components/shared/ContactForm";
+import { seoDefaults } from "@/lib/cms/seoCms";
+import { fetchData } from "@/lib/constant";
+import { cookies } from "next/headers";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY
-export const metadata: Metadata = {
-  title: "Contact Us | Pawteller",
-  description:
-    "Have questions, feedback, or content suggestions? Get in touch with the Pawteller team for reliable pet calculator support and partnership options.",
-  alternates: {
-    canonical: "https://pawteller.com/contact",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  // Read the token securely from the browser cookies on the server side
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminToken")?.value;
+  const seo = await fetchData({ pageKey: "contact", adminToken: adminToken }) || seoDefaults.contact;
+  return {
+    title: seo.title || "Contact Us | Pawteller",
+    description:
+      seo.description ||
+      "Have questions, feedback, or content suggestions? Get in touch with the Pawteller team for reliable pet calculator support and partnership options.",
+    keywords: seo.keywords || [
+      "contact pawteller",
+      "dog care questions",
+      "pet calculator support",
+      "partnership inquiries",
+    ],
+    openGraph: {
+      title: seo.title || "Contact Us | Pawteller",
+      description: seo.description || "Have questions, feedback, or content suggestions? Get in touch with the Pawteller team for reliable pet calculator support and partnership options.",
+    },
+    alternates: {
+      canonical: "https://pawteller.com/contact",
+    },
+  };
+}
 
 export default function Contact() {
   return (

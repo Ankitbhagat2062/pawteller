@@ -15,27 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-const passwordComplexity = z
-  .string()
-  .min(10, { message: "Password must be at least 10 characters." })
-  .regex(/[A-Z]/, {
-    message: "Password must include at least one uppercase letter.",
-  })
-  .regex(/[a-z]/, {
-    message: "Password must include at least one lowercase letter.",
-  })
-  .regex(/[0-9]/, { message: "Password must include at least one number." })
-  .regex(/[^A-Za-z0-9]/, {
-    message: "Password must include at least one symbol.",
-  });
-
-export const AdminRegistrationSchema = z.object({
-  adminEmail: z.string().email({ message: "Enter a valid email address." }),
-  password: passwordComplexity,
-  resendApiKey: z.string().min(1, { message: "Resend API key is required." }),
-  mongodbUri: z.string().min(1, { message: "MongoDB URI is required." }),
-});
+import { AdminRegistrationSchema, passwordComplexity } from "@/lib/validations/admin";
 
 type AdminRegistrationInput = z.infer<typeof AdminRegistrationSchema>;
 
@@ -157,7 +137,7 @@ export function LoginRegisterSplit() {
       localStorage.setItem("adminEmail", parsed.data.adminEmail);
       if (token) {
         localStorage.setItem("adminAuthToken", token);
-        localStorage.setItem("adminAuth.token", token);
+        document.cookie = `adminAuthToken=${token}; path=/; max-age=31536000; secure; samesite=strict`;
       }
 
       setValidationBubble(
@@ -220,7 +200,7 @@ export function LoginRegisterSplit() {
       const token = (data as { token?: string }).token;
       if (token) {
         localStorage.setItem("adminAuthToken", token);
-        localStorage.setItem("adminAuth.token", token);
+        document.cookie = `adminAuthToken=${token}; path=/; max-age=31536000; secure; samesite=strict`;
         localStorage.setItem("adminExists", "true");
         localStorage.setItem("adminEmail", parsed.data.adminEmail);
       }

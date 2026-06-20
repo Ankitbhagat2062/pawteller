@@ -542,6 +542,7 @@ export default async function CalculatorsPage() {
         )}
 
         {/* Ads Space goes here */}
+        
       </main>
     </>
   );

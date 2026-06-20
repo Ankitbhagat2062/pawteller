@@ -65,11 +65,6 @@ const BlogCmsFormSchema = z.object({
 
 type BlogCmsFormValues = z.infer<typeof BlogCmsFormSchema>;
 
-function getTokenFromStorage() {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("adminAuth.token");
-}
-
 type ServerShape = {
   slug: string;
   posts: BlogPost[];
@@ -97,14 +92,12 @@ function emptyPost(): BlogPost {
   };
 }
 
-export default function Blog() {
+export default async function Blog({token}: {token?: string}) {
   const [slug, setSlug] = useState<BlogSlug>(BLOG_SLUGS[0].value);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
-  const token = useMemo(() => getTokenFromStorage(), []);
 
   const {
     register,
@@ -130,7 +123,7 @@ export default function Blog() {
       setSuccess(null);
 
       try {
-        const authToken = getTokenFromStorage() ?? token;
+        const authToken = token;
         if (!authToken) throw new Error("Missing admin token. Login again.");
 
         const res = await fetch(
@@ -181,7 +174,7 @@ export default function Blog() {
     setSuccess(null);
 
     try {
-      const authToken = getTokenFromStorage() ?? token;
+      const authToken = token;
       if (!authToken) throw new Error("Missing admin token. Login again.");
 
       const parsed = BlogCmsFormSchema.safeParse(values);

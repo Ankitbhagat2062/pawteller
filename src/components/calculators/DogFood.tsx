@@ -281,18 +281,6 @@ export default function DogFood() {
         </div>
 
         {/* Backlinks || Other Calculators and services */}
-        <div className="mt-16">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Other calculators you may need
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Continue exploring Pawteller’s tools to support your dog’s
-              nutrition and growth.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(() => {
               // Map only 2 random calculators (exclude Dog Age itself)
               const eligibleCards = backlinks.filter(
@@ -302,12 +290,8 @@ export default function DogFood() {
               const stableIndexSeed = `${state.weight}-${4}`;
               const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
 
-              return cards.map((card) => (
-                <BacklinkCalculatorCard key={card.title} {...card} />
-              ));
+              return <BacklinkCalculatorCard cards={cards} />
             })()}
-          </div>
-        </div>
 
         {/* Why you should use this calculator */}
         <WhySection

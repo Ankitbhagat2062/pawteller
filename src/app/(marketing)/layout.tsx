@@ -8,6 +8,9 @@ import Navbar from "@/components/shared/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { homepageCms } from "@/lib/cms/homepage";
 import { SchemaOrg } from "@/lib/seo-schema";
+import { seoDefaults } from "@/lib/cms/seoCms";
+import { fetchData } from "@/lib/constant";
+import { cookies } from "next/headers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,40 +24,45 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
 };
-const metaContent = homepageCms.seo;
-export const metadata: Metadata = {
-  title:
-    metaContent.title || "Pawteller | Premium Growth & Pet Health Insights",
-  // Google site verification
-  other: {
-    "google-site-verification": "ZyaMR3UjskuwYs7Po4SO9sz0NlVrUcelBO4ED4F1-KA",
-  },
-  description:
-    metaContent.description ||
-    "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
-  keywords: metaContent.keywords || [
-    "dog weight calculator",
-    "puppy growth chart",
-    "dog age quiz",
-    "dog food calculator",
-    "pet care tips",
-  ],
-  metadataBase: new URL("https://pawteller.com"),
-  alternates: {
-    canonical: "/",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  // Read the token securely from the browser cookies on the server side
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminToken")?.value;
+  const seo = await fetchData({ pageKey: "home", adminToken: adminToken }) || seoDefaults.home || homepageCms.seo;
+  return {
+    title:
+      seo.title || "Pawteller | Premium Growth & Pet Health Insights",
+    // Google site verification
+    other: {
+      "google-site-verification": "ZyaMR3UjskuwYs7Po4SO9sz0NlVrUcelBO4ED4F1-KA",
+    },
+    description:
+      seo.description ||
+      "Accurate dog growth calculators, vet-informed insights, and interactive health tracking features.",
+    keywords: seo.keywords || [
+      "dog weight calculator",
+      "puppy growth chart",
+      "dog age quiz",
+      "dog food calculator",
+      "pet care tips",
+    ],
+    metadataBase: new URL("https://pawteller.com"),
+    alternates: {
+      canonical: "/",
+    },
+    robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
-  },
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
+    icons: {
+      icon: "/favicon.ico",
+    },
+  };
+}
 
 export default function RootLayout({
   children,
