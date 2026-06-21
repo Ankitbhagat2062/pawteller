@@ -1,8 +1,10 @@
 export async function fetchSeo(pageKey: string, token?: string): Promise<any | null> {
   try {
     // 1. Build the URL with the required pageKey query parameter
-    const url = `/admin/seo/get?pageKey=${encodeURIComponent(pageKey)}`;
-
+   const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!baseUrl) throw new Error("Missing SITE_URL/NEXT_PUBLIC_SITE_URL");
+    const url = new URL("/admin/seo/get", baseUrl);
+    url.searchParams.set("pageKey", pageKey);
     // 2. Set up headers, adding the Authorization header if a token is provided
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -12,7 +14,7 @@ export async function fetchSeo(pageKey: string, token?: string): Promise<any | n
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const res = await fetch(url, {
+    const res = await fetch(url.toString(), {
       method: 'GET',
       headers,
       cache: 'no-store'

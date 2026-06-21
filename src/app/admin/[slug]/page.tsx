@@ -34,6 +34,9 @@ export default async function CalculatorPage({ params }: PageProps) {
 
   const cookieStore = await cookies();
   const token = cookieStore.get("adminAuthToken")?.value;
+  if (!token) {
+    notFound();
+  }
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;

@@ -10,7 +10,7 @@ import { seoDefaults } from "@/lib/cms/seoCms";
 export async function generateMetadata(): Promise<Metadata> {
   // Read the token securely from the browser cookies on the server side
   const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminToken")?.value;
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
   const seo = await fetchData({ pageKey: "blog", adminToken: adminToken }) || seoDefaults.blog || blogPageSeo;
   return {
     title: seo.title || "Expert Pet Care Guides, Tips & Calculators | Pawteller",

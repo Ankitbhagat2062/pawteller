@@ -109,16 +109,10 @@ export function LoginRegisterSplit() {
     }
 
     try {
-      const existingToken =
-        localStorage.getItem("adminAuth.token") ??
-        localStorage.getItem("adminAuthToken");
       const res = await fetch("/api/admin/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(existingToken
-            ? { Authorization: `Bearer ${existingToken}` }
-            : {}),
         },
         body: JSON.stringify(parsed.data),
       });
@@ -132,13 +126,8 @@ export function LoginRegisterSplit() {
         return;
       }
 
-      const token = (data as { token?: string }).token;
       localStorage.setItem("adminExists", "true");
       localStorage.setItem("adminEmail", parsed.data.adminEmail);
-      if (token) {
-        localStorage.setItem("adminAuthToken", token);
-        document.cookie = `adminAuthToken=${token}; path=/; max-age=31536000; secure; samesite=strict`;
-      }
 
       setValidationBubble(
         data.message ?? "Registration successful. You may now log in.",

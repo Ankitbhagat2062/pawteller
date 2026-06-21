@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   // Read the token securely from the browser cookies on the server side
   const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminToken")?.value;
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
   const seo = await fetchData({ pageKey: "home", adminToken: adminToken }) || seoDefaults.home || homepageCms.seo;
   return {
     title:

@@ -150,7 +150,7 @@ export default function DogGrowth() {
       {(() => {
         // Map only 2 random calculators (exclude Dog Age itself)
         const eligibleCards = backlinks.filter(
-          (card) => card.cta.href !== "/calculators/dog-food",
+          (card) => card.cta.href !== "/calculators/dog-growth",
         );
 
         const stableIndexSeed = growthInfo

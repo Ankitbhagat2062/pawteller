@@ -72,10 +72,10 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const specificBlog = await fetchBlog("how-to-train-your-dog", adminToken);
-  const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const { blogPost } = await params;
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const specificBlog = await fetchBlog(blogPost, adminToken);
+  const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const post = blogs.find((p) => p.url.replace("/blog/", "") === blogPost);
 
   if (!post) {
@@ -133,7 +133,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {blogPosts
             .filter((article) => article.url !== post.url)
             .map((article) => (
-              BlogCard(article)
+              <BlogCard key={article.url} {...article} />
             ))}
         </div>
 

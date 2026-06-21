@@ -9,7 +9,6 @@ import { AdminRegistrationSchema } from "@/lib/validations/admin";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-console.log(body);
     // Validate inputs safely
     const parsed = AdminRegistrationSchema.safeParse(body);
     if (!parsed.success) {

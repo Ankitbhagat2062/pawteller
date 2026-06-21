@@ -1,4 +1,4 @@
-'use server';
+
 import { cookies } from "next/headers";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -77,9 +77,15 @@ export default async function BlogListing() {
   const specificBlog = await fetchBlog("how-to-train-your-dog", adminToken);
   const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const featuredPost = blogs.length
-    ? blogs[Math.floor(Math.random() * blogs.length)]
+    ? (() => {
+      const seed = blogs[0]?.url ?? "fallback";
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+      }
+      return blogs[hash % blogs.length];
+    })()
     : undefined;
-  console.log("Fetched blogs:", blogs);
   return (
     <section
       className="bg-background text-foreground px-4 py-12 mx-auto md:px-6 md:py-16 lg:px-8 lg:py-20"
@@ -144,7 +150,7 @@ export default async function BlogListing() {
             <BlogCard key={article.url} {...article} />
           ))}
       </div>
-      
+
       {/* FAQ */}
       {faqItems.length > 0 ? (
         <section

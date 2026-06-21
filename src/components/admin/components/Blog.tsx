@@ -92,7 +92,7 @@ function emptyPost(): BlogPost {
   };
 }
 
-export default async function Blog({token}: {token?: string}) {
+export default function Blog({token}: {token?: string}) {
   const [slug, setSlug] = useState<BlogSlug>(BLOG_SLUGS[0].value);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);

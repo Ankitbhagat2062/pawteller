@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     }
 
     const { adminEmail } = parsed.data;
-    const { resendApiKey } = await getGlobalKeysByAdminEmail(adminEmail);
+    const { resendApiKey, mongodbUri } = await getGlobalKeysByAdminEmail(adminEmail);
     if (!resendApiKey) {
       return NextResponse.json(
         { error: "Missing RESEND_API_KEY env var" },
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await connectDB();
+    await connectDB(mongodbUri);
 
     const admin = await AdminModel.findOne({ adminEmail });
     // For security, always respond with success.

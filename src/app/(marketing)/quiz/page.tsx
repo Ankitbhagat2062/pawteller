@@ -16,7 +16,7 @@ export async function generateMetadata({
   const quizParam = (await searchParams)?.quiz;
   const cookieStore = await cookies();
   const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const quizData = await fetchQuiz(`${quizParam}`, adminToken);
+  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
@@ -83,7 +83,7 @@ export default async function QuizPage({
   const quizParam = (await searchParams)?.quiz;
   const cookieStore = await cookies();
   const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const quizData = await fetchQuiz(`${quizParam}`, adminToken);
+  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
