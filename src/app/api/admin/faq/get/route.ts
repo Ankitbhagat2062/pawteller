@@ -41,7 +41,6 @@ export async function GET(request: Request) {
         { status: 200 },
       );
     }
-
     return NextResponse.json({
       pageKey: existing.pageKey,
       items: existing.items.map((it) => ({

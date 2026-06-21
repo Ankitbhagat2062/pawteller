@@ -6,6 +6,8 @@ import ContactForm from "@/components/shared/ContactForm";
 import { seoDefaults } from "@/lib/cms/seoCms";
 import { fetchData } from "@/lib/constant";
 import { cookies } from "next/headers";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY
 export async function generateMetadata(): Promise<Metadata> {
@@ -34,7 +36,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function Contact() {
+export default async function Contact() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
+
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("contact", token);
+  const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   return (
     <>
       <Script
@@ -194,32 +202,9 @@ export default function Contact() {
 
               <div className="lg:col-span-7">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {[
-                    {
-                      q: "Do you provide veterinary advice?",
-                      a: "pawteller content is educational only. If you are worried about your dog, contact a qualified veterinarian.",
-                    },
-                    {
-                      q: "How fast will you respond?",
-                      a: "Most messages get a reply within a few days (often sooner).",
-                    },
-                    {
-                      q: "Can I suggest a calculator or article?",
-                      a: "Yes—use the form and choose Content suggestions. We review ideas regularly.",
-                    },
-                  ].map((item) => (
-                    <article
-                      key={item.q}
-                      className="rounded-2xl bg-emerald-500/5 p-5 shadow-sm ring-1 ring-emerald-900/10 dark:bg-emerald-500/10 dark:ring-emerald-500/20"
-                    >
-                      <p className="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">
-                        {item.q}
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-zinc-300">
-                        {item.a}
-                      </p>
-                    </article>
-                  ))}
+                  {faqItems.length > 0 ? (
+                    <FaqSection items={faqItems} />
+                  ) : null}
                 </div>
               </div>
             </div>

@@ -21,8 +21,10 @@ import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import { dogAgePageCms } from "@/lib/cms/calculators/dogagepage";
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import BlogCard from "../shared/BlogCard";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
-const DogAgeCalculator = () => {
+const DogAgeCalculator = async() => {
   const [dogAge, setDogAge] = useState<number>(10);
   const [dogSize, setDogSize] = useState<
     "small" | "medium" | "large" | "giant"
@@ -136,6 +138,12 @@ const DogAgeCalculator = () => {
   const informationSection = dogAgePageCms.informationSection;
   const faqSection = dogAgePageCms.faqSection;
   const callToActionSection = dogAgePageCms.callToActionSection;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
+
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("dog-age", token);
+  const faqItems = faqData?.items ? faqData : faqSection; // Fallback to an empty array if empty or missing
   return (
     <TooltipProvider>
       <div className="min-h-screen ">
@@ -368,7 +376,7 @@ const DogAgeCalculator = () => {
           {/* FAQ Section */}
           <section className="mt-16 max-w-3xl mx-auto">
             <div className="space-y-4">
-              {faqSection && <FaqSection items={faqSection} />}
+              {faqItems.length > 0 && <FaqSection items={faqItems} />}
             </div>
           </section>
 

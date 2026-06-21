@@ -7,10 +7,12 @@ import { FilterSection } from "@/components/calculators/dogNameComponents/Filter
 import HowToChooseSection from "@/components/calculators/dogNameComponents/HowToChooseSection";
 import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsGrid";
 import { FaqSection } from "@/components/shared/FaqSection";
-import { faqItems, generateDogNames } from "@/lib/cms/calculators/dognamepage";
+import { DogNameFaqItems, generateDogNames } from "@/lib/cms/calculators/dognamepage";
 import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";
@@ -27,7 +29,7 @@ function toSupportedSize(
     | "All";
 }
 
-export function DogNameGenerator() {
+export async function DogNameGenerator() {
   const [gender, setGender] = useState<DogGender | "All">(INITIAL_GENDER);
   const [size, setSize] = useState<DogSize | "All">(INITIAL_SIZE);
   const [startingLetter, setStartingLetter] = useState<StartingLetter>(
@@ -65,7 +67,12 @@ export function DogNameGenerator() {
   const handleLetterChange = (value: StartingLetter) => {
     setStartingLetter(value);
   };
+const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
 
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("dog-name", token);
+  const faqItems = faqData?.items ? faqData : DogNameFaqItems; // Fallback to the default FAQ items if empty or missing
   return (
     <div className="min-h-screen bg-background dark:bg-slate-950 py-8 md:py-12 px-4">
       <div className="max-w-6xl mx-auto space-y-16 md:space-y-20">
