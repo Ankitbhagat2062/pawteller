@@ -4,6 +4,12 @@ import { calculatorPageCms } from "@/lib/cms/calculators/calculatorpage";
 import { homepageCms } from "@/lib/cms/homepage";
 import { quizData } from "@/lib/cms/quizpage";
 import type { seoProps } from "@/lib/types";
+import { dogAgePageCms } from "./calculators/dogagepage";
+import { puppyWeightPageCms } from "./calculators/puppyweight";
+import { dogGrowthPageCms } from "./calculators/dogGrowthpage";
+import { dogFoodPageCms } from "./calculators/dogfoodpage";
+import { DogNamePageCms } from "./calculators/dognamepage";
+import { dogPregnancyCms } from "./calculators/dogpregnancypage";
 
 export type SeoPageKey =
   | "home"
@@ -18,7 +24,8 @@ export type SeoPageKey =
   | "dog-pregnancy"
   | "dog-growth"
   | "puppy-weight"
-  | "blog";
+  | "blog"
+  | "calculator";
 
 // Static defaults (used when MongoDB has no entry yet)
 export const seoDefaults: Record<SeoPageKey, seoProps> = {
@@ -30,13 +37,14 @@ export const seoDefaults: Record<SeoPageKey, seoProps> = {
     description: "Take our interactive dog quiz.",
     keywords: ["dog quiz"],
   },
+  calculator: calculatorPageCms.seo,
   // Calculators
-  "dog-age": calculatorPageCms.seo,
-  "dog-food": calculatorPageCms.seo,
-  "dog-name": calculatorPageCms.seo,
-  "dog-pregnancy": calculatorPageCms.seo,
-  "dog-growth": calculatorPageCms.seo,
-  "puppy-weight": calculatorPageCms.seo,
+  "dog-age":dogAgePageCms.seo,
+  "dog-food": dogFoodPageCms.seo,
+  "dog-name": DogNamePageCms.seo,
+  "dog-pregnancy": dogPregnancyCms.seo,
+  "dog-growth": dogGrowthPageCms.seo,
+  "puppy-weight": puppyWeightPageCms.seo,
   // These pages don’t have CMS files in repo yet—use reasonable placeholders.
   contact: {
     title: "Contact Pawteller | Pet Care Questions",
