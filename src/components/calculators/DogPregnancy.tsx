@@ -22,6 +22,8 @@ import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -107,7 +109,7 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-export default function DogPregnancy() {
+export default async function DogPregnancy() {
   const [matingDate, setMatingDate] = useState(getTodayString());
   const [breedSize, setBreedSize] = useState<BreedSize>("small");
   const [result, setResult] = useState<PregnancyResult | null>(null);
@@ -124,7 +126,12 @@ export default function DogPregnancy() {
   const heroSection = dogPregnancyCms.heroSection;
   const timelineSection = dogPregnancyCms.timelineSection;
   const faqSection = dogPregnancyCms.faqSection;
-  const backlinkSection = dogPregnancyCms.backlinkSection;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
+
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("dog-pregnancy", token);
+  const faqItems = faqData?.items ? faqData : dogPregnancyCms.faqSection; // Fallback to an empty array if empty or missing
   return (
     <div className="w-full min-h-screen bg-white dark:bg-gray-950">
       {/* ── HERO ── */}
@@ -473,16 +480,6 @@ export default function DogPregnancy() {
         </div>
       </section>
 
-      {/* ── FAQ ── */}
-      <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
-            Frequently Asked Questions
-          </h2>
-          {faqSection && <FaqSection items={faqSection} />}
-        </div>
-      </section>
-
       {/* Backlinks || Other Calculators and services */}
       {(() => {
         // Map only 2 stable calculators (exclude Dog Pregnancy itself)
@@ -503,8 +500,18 @@ export default function DogPregnancy() {
           eligibleCards[(start + 1) % eligibleCards.length],
         ].filter(Boolean);
 
-          return <BacklinkCalculatorCard cards={cards} />
+        return <BacklinkCalculatorCard cards={cards} />
       })()}
+
+      {/* ── FAQ ── */}
+      <section className="bg-[#E6F7F5] dark:bg-teal-950 py-24 px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
+            Frequently Asked Questions
+          </h2>
+          {faqItems.length > 0 && <FaqSection items={faqItems} />}
+        </div>
+      </section>
 
       {/* ── DISCLAIMER ── */}
       {disclaimerSection && (

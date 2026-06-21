@@ -16,6 +16,9 @@ import type { CalculatorProps } from "@/lib/cms/calculators/calculatorpage";
 import type { HomepageHeroCms } from "@/lib/cms/homepage";
 import { getHomepageCms } from "@/db/homepageCmsDb";
 import type { SectionHeaderProps } from "@/lib/types";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {
   return (
@@ -65,7 +68,12 @@ export default async function Home() {
   const dogLifesLeft = [homepageCms.dogLifes.left];
   const breedQuiz = [homepageCms.breedQuizCtas.feature];
   const jsonLdSchema = homepageCms.seo.jsonLd ?? {};
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
 
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("home", token);
+  const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   return (
     <>
       {/* JSON-LD gtag should be in head for best practice; using Next Script with ids */}
@@ -515,6 +523,15 @@ export default async function Home() {
               </section>
             );
           })()}
+          
+          {faqItems.length > 0 ? (
+            <section
+              className="mt-10"
+              aria-label="About frequently asked questions"
+            >
+              <FaqSection items={faqItems} />
+            </section>
+          ) : null}
         </main>
       </div>
     </>

@@ -7,8 +7,9 @@ import BlogCard from "@/components/shared/BlogCard";
 import { type BlogPost, blogPosts } from "@/lib/cms/blogpage";
 import { fetchBlog } from "@/db/blogCmsDb";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
-import { backlinks, faqItems } from "@/lib/cms/calculators/calculatorpage";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import { FaqSection } from "@/components/shared/FaqSection";
+import { fetchFaq } from "@/db/faqCmsDb";
 
 function FeaturedBlogCard({ post }: { post: BlogPost }) {
   return (
@@ -74,6 +75,9 @@ function FeaturedBlogCard({ post }: { post: BlogPost }) {
 export default async function BlogListing() {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get("adminAuthToken")?.value;
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("blog", adminToken);
+  const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   const specificBlog = await fetchBlog("how-to-train-your-dog", adminToken);
   const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const featuredPost = blogs.length

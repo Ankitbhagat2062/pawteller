@@ -14,11 +14,13 @@ import {
   dogGrowthPageCms,
 } from "@/lib/cms/calculators/dogGrowthpage";
 import type { GrowthInfo } from "@/lib/types";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
 
-export default function DogGrowth() {
+export default async function DogGrowth() {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,6 +66,12 @@ export default function DogGrowth() {
   }, [initialized]); // Only tracks the initialized boolean flag
   const headerSection = dogGrowthPageCms.header;
   const seoContent = dogGrowthPageCms.seoContent;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
+
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("dog-age", token);
+  const faqItems = faqData?.items ? faqData : dogGrowthPageCms.faqSection; // Fallback to an empty array if empty or missing
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -210,7 +218,7 @@ export default function DogGrowth() {
       </div>
 
       {/* FAQ */}
-      <FaqSection items={dogGrowthPageCms.faqSection} />
+      {faqItems.length > 0 && <FaqSection items={faqItems} />}
     </div>
   );
 }

@@ -25,6 +25,8 @@ import {
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import type { CalculatorState, Results } from "@/lib/types";
 import { WhySection } from "./dogfoodcomponents/WhySection";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
 const calculateCalories = (state: CalculatorState): Results => {
   const { weight, lifeStage, activityLevel } = state;
@@ -48,7 +50,7 @@ const calculateCalories = (state: CalculatorState): Results => {
   return { dailyCalories, cupsPerDay };
 };
 
-export default function DogFood() {
+export default async function DogFood() {
   const [state, setState] = useState<CalculatorState>({
     weight: 30,
     lifeStage: "Adult",
@@ -74,6 +76,12 @@ export default function DogFood() {
     setState((prev) => ({ ...prev, activityLevel: value }));
   };
   const header = dogFoodPageCms.header;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
+
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("dog-food", token);
+  const faqItems = faqData?.items ? faqData : dogFoodPageCms.faqSection; // Fallback to an empty array if empty or missing
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -281,17 +289,17 @@ export default function DogFood() {
         </div>
 
         {/* Backlinks || Other Calculators and services */}
-            {(() => {
-              // Map only 2 random calculators (exclude Dog Age itself)
-              const eligibleCards = backlinks.filter(
-                (card) => card.cta.href !== "/calculators/dog-food",
-              );
+        {(() => {
+          // Map only 2 random calculators (exclude Dog Age itself)
+          const eligibleCards = backlinks.filter(
+            (card) => card.cta.href !== "/calculators/dog-food",
+          );
 
-              const stableIndexSeed = `${state.weight}-${4}`;
-              const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
+          const stableIndexSeed = `${state.weight}-${4}`;
+          const cards = selectBacklinkCards(eligibleCards, stableIndexSeed);
 
-              return <BacklinkCalculatorCard cards={cards} />
-            })()}
+          return <BacklinkCalculatorCard cards={cards} />
+        })()}
 
         {/* Why you should use this calculator */}
         <WhySection
@@ -299,9 +307,6 @@ export default function DogFood() {
           bullets={dogFoodPageCms.whySection.bullets}
           disclaimer={dogFoodPageCms.whySection.disclaimer}
         />
-
-        {/* FAQ */}
-        <FaqSection items={dogFoodPageCms.faqSection} />
 
         {/* Blog */}
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -317,6 +322,10 @@ export default function DogFood() {
             ));
           })()}
         </div>
+
+        {/* FAQ */}
+        <FaqSection items={faqItems} />
+
       </div>
     </main>
   );

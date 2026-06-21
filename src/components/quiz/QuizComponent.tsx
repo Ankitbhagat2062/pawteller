@@ -5,17 +5,21 @@ import { ArrowLeft, ArrowRight, Dog, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
-import { QuizFaqSection } from "@/components/quiz/QuizFaqSection";
 import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { blogPosts } from "@/lib/cms/blogpage";
-import { type Breed, breedDatabase } from "@/lib/cms/quizpage";
+import { type Breed, breedDatabase, getQuizFaqItems } from "@/lib/cms/quizpage";
 import type { quizDataProps } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { FaqSection } from "../shared/FaqSection";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
-export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
+export async function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const router = useRouter();
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
     Array(quizData.totalQuestions).fill(null),
@@ -32,6 +36,10 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const QuizfaqItems = getQuizFaqItems(quizData.url);
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("quiz", token);
+  const faqItems = faqData?.items ? faqData : QuizfaqItems; // Fallback to an empty array if empty or missing
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;
@@ -205,14 +213,14 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
     e.preventDefault();
     const result = isComplete
       ? generateBreedResult(
-          firstName,
-          selectedAnswers as string[],
-          breedDatabase,
-        )
+        firstName,
+        selectedAnswers as string[],
+        breedDatabase,
+      )
       : null;
-      
-      type ContactPayload = {
-        email: string;
+
+    type ContactPayload = {
+      email: string;
       quizId: string;
       results: DogBreedEmailProps;
     };
@@ -221,27 +229,27 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
       success: true;
       data: unknown;
     };
-    
+
     type ContactErrorResponse = {
       success?: false;
       error?: string;
     };
-    
+
     if (!result) {
       setStatus("error");
       return;
     }
-    
+
     try {
       const quizId =
-      new URLSearchParams(quizData.url.split("?")[1] ?? "").get("quiz") ??
-      quizData.url;
-      
+        new URLSearchParams(quizData.url.split("?")[1] ?? "").get("quiz") ??
+        quizData.url;
+
       const payload: ContactPayload = { email, quizId, results: result };
       if (status === "loading") return;
       setStatus("loading");
       const res = await axios.post<
-      ContactSuccessResponse | ContactErrorResponse
+        ContactSuccessResponse | ContactErrorResponse
       >("/api/quiz", payload, {
         headers: { "Content-Type": "application/json" },
       });
@@ -281,7 +289,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
           </h2>
           <p className="mt-2 text-sm font-medium text-gray-600 dark:text-gray-300 sm:text-base">
             Your top breed is a{" "}
-           <span className="font-bold text-[`#e0664d`]">{topBreedName}</span>{" "}
+            <span className="font-bold text-[`#e0664d`]">{topBreedName}</span>{" "}
             ... plus 2 other strong matches.
           </p>
 
@@ -348,7 +356,14 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
             </Button>
           </div>
         </div>
-        <QuizFaqSection quizSlug={quizData.url} />
+        {faqItems.length > 0 ? (
+          <section
+            className="mt-10"
+            aria-label="About frequently asked questions"
+          >
+            <FaqSection items={faqItems} />
+          </section>
+        ) : null}
         <div className="mt-8 grid items-center justify-center grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {(() => {
             const quizblogPosts = blogPosts.filter(

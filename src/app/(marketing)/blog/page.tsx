@@ -84,7 +84,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
-export default async function Blog() {
+export default function Blog() {
   return (
     <>
       <Script

@@ -4,6 +4,8 @@ import Script from "next/script";
 import { fetchData, toc } from "@/lib/constant";
 import { seoDefaults } from "@/lib/cms/seoCms";
 import { cookies } from "next/headers";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,7 +25,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const lastUpdated = "May 17, 2026";
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
+
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("terms", token);
+  const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   return (
     <>
       <Script
@@ -350,6 +358,15 @@ export default function TermsPage() {
               </div>
             </div>
           </section>
+
+          {faqItems.length > 0 ? (
+            <section
+              className="mt-10"
+              aria-label="About frequently asked questions"
+            >
+              <FaqSection items={faqItems} />
+            </section>
+          ) : null}
         </main>
       </div>
     </>

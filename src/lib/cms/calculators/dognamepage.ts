@@ -8,7 +8,7 @@ import type {
   StartingLetter,
 } from "@/lib/types";
 
-export const faqItems: FAQItem[] = [
+export const DogNameFaqItems: FAQItem[] = [
   {
     question: "How many dog names should I consider?",
     answer:

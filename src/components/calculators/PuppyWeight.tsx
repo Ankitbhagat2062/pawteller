@@ -34,6 +34,8 @@ import {
 import type { FormState } from "@/lib/types";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { fetchFaq } from "@/db/faqCmsDb";
+import { cookies } from "next/headers";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -449,7 +451,7 @@ function GrowthChart({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function Index() {
+export default async function Index() {
   // Form state
   const [selectedBreed, setSelectedBreed] = useState("Golden Retriever");
   const [ageValue, setAgeValue] = useState("3");
@@ -462,7 +464,12 @@ export default function Index() {
   // Result state
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [hasCalculated, setHasCalculated] = useState(false);
+const cookieStore = await cookies();
+  const token = cookieStore.get("adminAuthToken")?.value;
 
+  // Fetch the FAQ array for this specific page layout string
+  const faqData = await fetchFaq("puppy-weight", token);
+  const faqItems = faqData?.items ? faqData : puppyWeightPageCms.faqSection; // Fallback to an empty array if empty or missing
   const handleCalculate = () => {
     const ageMonths =
       ageUnit === "weeks" ? parseFloat(ageValue) / 4.33 : parseFloat(ageValue);
@@ -1175,7 +1182,7 @@ export default function Index() {
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">
         <div className="max-w-200 mx-auto px-5 md:px-10">
           {puppyWeightPageCms.faqSection && (
-            <FaqSection items={puppyWeightPageCms.faqSection} />
+            <FaqSection items={faqItems} />
           )}
         </div>
       </section>
