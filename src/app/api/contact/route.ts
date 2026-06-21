@@ -2,15 +2,15 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import ContactThankYouEmail from "@/components/emails/contact-template";
+import { getGlobalKeysForRequest } from "@/db/globalKeys";
 import connectDB from "@/lib/mongodb";
 import ContactModel from "@/models/contact";
 import SubscriberModel from "@/models/subscriber";
 
-// Initialize Resend with your API key from .env.local
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-
 export async function POST(request: Request) {
-  if (!RESEND_API_KEY) {
+  const { mongodbUri, resendApiKey } = await getGlobalKeysForRequest(request);
+
+  if (!resendApiKey) {
     return NextResponse.json(
       {
         error:
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const resend = new Resend(RESEND_API_KEY);
+  const resend = new Resend(resendApiKey);
   try {
     const { name, email, topic, message } = await request.json();
 
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await connectDB();
+    await connectDB(mongodbUri);
 
     const existingContact = await ContactModel.findOne({
       email,

@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import { toc } from "@/lib/constant";
+import { fetchData, toc } from "@/lib/constant";
+import { seoDefaults } from "@/lib/cms/seoCms";
+import { cookies } from "next/headers";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
-export const metadata: Metadata = {
-  title: "Terms & Conditions | Pawteller",
-  description:
-    "Read the Terms and Conditions for using Pawteller's tools, guides, and calculator resources. Learn about our usage policies and informational disclaimer.",
-  keywords: [],
-  alternates: {
-    canonical: "https://pawteller.com/terms", // Adjust with your actual production domain
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  // Read the token securely from the browser cookies on the server side
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const seo = await fetchData({ pageKey: "terms", adminToken: adminToken }) || seoDefaults.terms;
+  return {
+    title: seo.title || "Terms & Conditions | Pawteller",
+    description: seo.description || "Read the Terms and Conditions for using Pawteller's tools, guides, and calculator resources. Learn about our usage policies and informational disclaimer.",
+    keywords: seo.keywords || [],
+    alternates: {
+      canonical: "https://pawteller.com/terms", // Adjust with your actual production domain
+    },
+  };
 };
 
 const lastUpdated = "May 17, 2026";

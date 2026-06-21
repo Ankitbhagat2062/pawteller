@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { QuizComponent } from "@/components/quiz/QuizComponent";
 import { quizData as allQuizData } from "@/lib/cms/quizpage";
 import type { quizDataProps } from "@/lib/types";
+import { fetchQuiz } from "@/db/quizCmsDb";
+import { cookies } from "next/headers";
 
 // Used as a fallback when `quiz` query param is missing/invalid.
 const fallbackSeo = allQuizData[0]?.seo;
@@ -12,12 +14,14 @@ export async function generateMetadata({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const quizParam = (await searchParams)?.quiz;
-
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
 
-  const seo = selectedQuiz?.seo ?? fallbackSeo;
+  const seo = quizData?.seo ? quizData.seo : selectedQuiz?.seo ? selectedQuiz.seo : fallbackSeo;
 
   return {
     title: seo?.title || "Interactive Dog Breed & Health Quiz | Pawteller",
@@ -77,12 +81,14 @@ export default async function QuizPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const quizParam = (await searchParams)?.quiz;
-
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
   // Fallback: if quiz is missing/invalid, show the first quiz.
-  const quizToRender = selectedQuiz ?? allQuizData[0];
+  const quizToRender = quizData ? quizData : selectedQuiz ?? allQuizData[0];
 
   return (
     <main>

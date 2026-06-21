@@ -147,45 +147,29 @@ export default function DogGrowth() {
       </div>
 
       {/* Backlinks || Other Calculators and services */}
-      <div className="mt-16">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-            Other calculators you may need
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Continue exploring Pawteller’s tools to support your dog’s nutrition
-            and growth.
-          </p>
-        </div>
+      {(() => {
+        // Map only 2 random calculators (exclude Dog Age itself)
+        const eligibleCards = backlinks.filter(
+          (card) => card.cta.href !== "/calculators/dog-growth",
+        );
 
-        <div className="grid m-10 grid-cols-1 md:grid-cols-2 gap-4">
-          {(() => {
-            // Map only 2 random calculators (exclude Dog Age itself)
-            const eligibleCards = backlinks.filter(
-              (card) => card.cta.href !== "/calculators/dog-food",
-            );
+        const stableIndexSeed = growthInfo
+          ? `${growthInfo.predictedWeight}-${growthInfo.monthsToMaturity}-${growthInfo.percentageGrown}`
+          : "fallback-4";
+        let hash = 0;
+        for (let i = 0; i < stableIndexSeed.length; i++) {
+          hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+        }
 
-            const stableIndexSeed = growthInfo
-              ? `${growthInfo.predictedWeight}-${growthInfo.monthsToMaturity}-${growthInfo.percentageGrown}`
-              : "fallback-4";
-            let hash = 0;
-            for (let i = 0; i < stableIndexSeed.length; i++) {
-              hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
-            }
+        const start =
+          eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+        const cards = [
+          eligibleCards[start],
+          eligibleCards[(start + 1) % eligibleCards.length],
+        ].filter(Boolean);
 
-            const start =
-              eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
-            const cards = [
-              eligibleCards[start],
-              eligibleCards[(start + 1) % eligibleCards.length],
-            ].filter(Boolean);
-
-            return cards.map((card) => (
-              <BacklinkCalculatorCard key={card.title} {...card} />
-            ));
-          })()}
-        </div>
-      </div>
+         return <BacklinkCalculatorCard cards={cards} />
+      })()}
 
       {/* Additional SEO Content */}
       <div className="border-t my-10 border-border bg-muted/50">

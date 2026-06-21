@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { BlogContent } from "@/components/blog/blog-content";
@@ -9,26 +7,25 @@ import { BlogHeader } from "@/components/blog/blog-header";
 import { CtaCard } from "@/components/blog/cta-card";
 import type { BlogPost, BlogPostPageProps } from "@/lib/cms/blogpage";
 import { blogPosts } from "@/lib/cms/blogpage";
-
+import { backlinks, faqItems } from "@/lib/cms/calculators/calculatorpage";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { FaqSection } from "@/components/shared/FaqSection";
+import BlogCard from "@/components/shared/BlogCard";
+import { fetchBlog } from "@/db/blogCmsDb";
+import { cookies } from "next/headers";
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.url === `/blog/${slug}`);
-}
-
-export function getAllBlogSlugs(): string[] {
-  return blogPosts.map((post) => post.url.replace("/blog/", ""));
-}
-
-export async function generateStaticParams() {
-  const slugs = getAllBlogSlugs();
-  return slugs.map((blogPost) => ({ blogPost }));
 }
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { blogPost } = await params;
-
-  const post = getBlogPostBySlug(blogPost);
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const specificBlog = await fetchBlog(blogPost, adminToken);
+  const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
+  const post = blogs.find((p) => p.url.replace("/blog/", "") === blogPost);
 
   if (!post) {
     return {
@@ -74,8 +71,12 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const cookieStore = await cookies();
   const { blogPost } = await params;
-  const post = getBlogPostBySlug(blogPost);
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const specificBlog = await fetchBlog(blogPost, adminToken);
+  const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
+  const post = blogs.find((p) => p.url.replace("/blog/", "") === blogPost);
 
   if (!post) {
     notFound();
@@ -84,7 +85,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Extract read time from totalTime (e.g., "Nutrition · 6 min" -> "6 min")
   const readTimeMatch = post.totalTime.match(/(\d+\s*min)/i);
   const readTime = readTimeMatch ? readTimeMatch[1] : "5 min";
-
   return (
     <>
       <Script
@@ -109,60 +109,43 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           <CtaCard />
         </div>
+
+        {/* Backlinks || Other Calculators and services */}
+        {(() => {
+          const stableIndexSeed = blogPosts[0]?.url ?? "fallback-4";
+          let hash = 0;
+          for (let i = 0; i < stableIndexSeed.length; i++) {
+            hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+          }
+
+          const start =
+            backlinks.length === 0 ? 0 : hash % backlinks.length;
+          const cards = [
+            backlinks[start],
+            backlinks[(start + 1) % backlinks.length],
+          ].filter(Boolean);
+
+          return <BacklinkCalculatorCard cards={cards} />
+        })()}
+
+        {/* Related Blog Posts */}
         <div className="mt-8 max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts
             .filter((article) => article.url !== post.url)
             .map((article) => (
-              <article
-                key={article.url}
-                className={`mb-6 inline-block w-full break-inside-avoid rounded-2xl p-5 shadow-sm ring-1 ring-slate-200/60 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800 
-                `}
-              >
-                <div className="flex min-h-full flex-col justify-between">
-                  <div>
-                    <div className="overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                      <div className="relative aspect-video w-full">
-                        <Image
-                          src={article.imageSrc || "/dog-1.png"}
-                          alt={article.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 350px"
-                          className="object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between gap-3">
-                      <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                        {article.totalTime} read
-                      </span>
-                    </div>
-
-                    <h3 className="mt-3 text-base font-bold tracking-tight text-slate-900 dark:text-slate-50">
-                      {article.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                      {article.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
-                    <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
-                      {article.totalTime}
-                    </span>
-                    <Link
-                      href={article.url}
-                      aria-label={`Read articles about ${article.title}`}
-                      className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
-                    >
-                      {"Read Article"}
-                    </Link>
-                  </div>
-                </div>
-              </article>
+              <BlogCard key={article.url} {...article} />
             ))}
         </div>
+
+        {/* FAQ */}
+        {faqItems.length > 0 ? (
+          <section
+            className="mt-10"
+            aria-label="About frequently asked questions"
+          >
+            <FaqSection items={faqItems} />
+          </section>
+        ) : null}
       </main>
     </>
   );

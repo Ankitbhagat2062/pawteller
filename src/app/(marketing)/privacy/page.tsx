@@ -1,37 +1,44 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import { SECTIONS } from "@/lib/constant";
+import { fetchData, SECTIONS } from "@/lib/constant";
+import { seoDefaults } from "@/lib/cms/seoCms";
+import { cookies } from "next/headers";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA
-export const metadata: Metadata = {
-  title: "Privacy Policy | Pawteller",
-  description:
-    "Learn how Pawteller collects, secures, and handles your data safely. Read our straightforward privacy commitments and data practices.",
-  keywords: [
-    "Pawteller",
-    "privacy policy",
-    "data privacy",
-    "personal information",
-    "how we use data",
-    "data collection",
-    "device data",
-    "usage analytics",
-    "cookies",
-    "cookie policy",
-    "interest-based advertising",
-    "third-party services",
-    "data rights",
-    "access request",
-    "delete my data",
-    "privacy request",
-    "contact support",
-    "pet health information",
-  ],
-  alternates: {
-    canonical: "https://pawteller.com/privacy",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  // Read the token securely from the browser cookies on the server side
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const seo = await fetchData({ pageKey: "privacy", adminToken: adminToken }) || seoDefaults.privacy;
+  return {
+    title: seo.title || "Privacy Policy | Pawteller",
+    description: seo.description || "Learn how Pawteller collects, secures, and handles your data safely. Read our straightforward privacy commitments and data practices.",
+    keywords: seo.keywords || [
+      "Pawteller",
+      "privacy policy",
+      "data privacy",
+      "personal information",
+      "how we use data",
+      "data collection",
+      "device data",
+      "usage analytics",
+      "cookies",
+      "cookie policy",
+      "interest-based advertising",
+      "third-party services",
+      "data rights",
+      "access request",
+      "delete my data",
+      "privacy request",
+      "contact support",
+      "pet health information",
+    ],
+    alternates: {
+      canonical: "https://pawteller.com/privacy",
+    },
+  };
+}
 
 export default function Privacy() {
   return (

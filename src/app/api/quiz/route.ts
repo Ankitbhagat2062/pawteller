@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import DogBreed from "@/components/emails/DogBreed-template";
+import { getGlobalKeysForRequest } from "@/db/globalKeys";
 import connectDB from "@/lib/mongodb";
 import QuizModel from "@/models/quiz";
 
-// Initialize Resend with your API key from .env.local
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-
 export async function POST(request: Request) {
-  if (!RESEND_API_KEY) {
+  const { mongodbUri, resendApiKey } = await getGlobalKeysForRequest(request);
+
+  if (!resendApiKey) {
     return NextResponse.json(
       {
         error:
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const resend = new Resend(RESEND_API_KEY);
+  const resend = new Resend(resendApiKey);
 
   const TopMatchSchema = z.object({
     rank: z.number(),
@@ -109,7 +109,7 @@ export async function POST(request: Request) {
 
     const safeResults = parsed.data;
 
-    await connectDB();
+    await connectDB(mongodbUri);
 
     const existingQuiz = await QuizModel.findOne({ email, quizId: safeQuizId });
 

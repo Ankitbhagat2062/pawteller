@@ -14,7 +14,7 @@ import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
 import type { CalculatorProps } from "@/lib/cms/calculators/calculatorpage";
 import type { HomepageHeroCms } from "@/lib/cms/homepage";
-import { getHomepageCms } from "@/lib/cms/homepageCmsDb";
+import { getHomepageCms } from "@/db/homepageCmsDb";
 import type { SectionHeaderProps } from "@/lib/types";
 
 function SectionHeader({ eyebrow, title }: SectionHeaderProps) {

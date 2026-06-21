@@ -9,6 +9,8 @@ import { ResultsGrid } from "@/components/calculators/dogNameComponents/ResultsG
 import { FaqSection } from "@/components/shared/FaqSection";
 import { faqItems, generateDogNames } from "@/lib/cms/calculators/dognamepage";
 import type { DogGender, DogName, DogSize, StartingLetter } from "@/lib/types";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 
 const INITIAL_GENDER: DogGender | "All" = "All";
 const INITIAL_SIZE: DogSize | "All" = "All";
@@ -104,6 +106,31 @@ export function DogNameGenerator() {
 
         {/* How to Choose Section */}
         <HowToChooseSection />
+        
+        {/* Backlinks || Other Calculators and services */}
+        {(() => {
+          // Map only 2 stable calculators (exclude Dog Name itself)
+          const eligibleCards = backlinks.filter(
+            (card) => card.cta.href !== "/calculators/dog-name",
+          );
+
+          const stableIndexSeed =
+            eligibleCards.map((card) => card.title).sort().join("|") ||
+            "dog-name-generator";
+          let hash = 0;
+          for (let i = 0; i < stableIndexSeed.length; i++) {
+            hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+          }
+
+          const start =
+            eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+          const cards = [
+            eligibleCards[start],
+            eligibleCards[(start + 1) % eligibleCards.length],
+          ].filter(Boolean);
+
+          return <BacklinkCalculatorCard cards={cards} />
+        })()}
 
         {/* FAQ Section */}
         <FaqSection items={faqItems} />

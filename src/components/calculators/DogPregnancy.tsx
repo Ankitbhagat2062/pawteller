@@ -20,6 +20,8 @@ import {
 } from "@/lib/cms/calculators/dogpregnancypage";
 import type { BreedSize, PregnancyResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { backlinks } from "@/lib/cms/calculators/calculatorpage";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -481,33 +483,28 @@ export default function DogPregnancy() {
         </div>
       </section>
 
-      {/* ── EXPLORE TOOLS ── */}
-      <section className="py-16 px-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
-        {backlinkSection && (
-          <div className="max-w-6xl mx-auto">
-            <p className="text-[#1A2B3C]/40 dark:text-gray-500 text-xs font-black tracking-[4px] uppercase text-center mb-8">
-              {backlinkSection.title
-                ? backlinkSection.title
-                : `Explore Other Dog Tools`}
-            </p>
-            <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
-              {backlinkSection.cta?.map((cta) => (
-                <Link
-                  key={cta.label}
-                  aria-label={cta.ariaLabel}
-                  href={cta.href}
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-[#E6F7F5] dark:bg-teal-900/50 flex items-center justify-center shrink-0"></div>
-                  <span className="text-[#1A2B3C] dark:text-white text-base font-bold group-hover:text-[#00C2A8] transition-colors">
-                    {cta.label}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
+      {/* Backlinks || Other Calculators and services */}
+      {(() => {
+        // Map only 2 stable calculators (exclude Dog Pregnancy itself)
+        const eligibleCards = backlinks.filter(
+          (card) => card.cta.href !== "/calculators/dog-pregnancy",
+        );
+
+        const stableIndexSeed = `${matingDate}-${breedSize}`;
+        let hash = 0;
+        for (let i = 0; i < stableIndexSeed.length; i++) {
+          hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+        }
+
+        const start =
+          eligibleCards.length === 0 ? 0 : hash % eligibleCards.length;
+        const cards = [
+          eligibleCards[start],
+          eligibleCards[(start + 1) % eligibleCards.length],
+        ].filter(Boolean);
+
+          return <BacklinkCalculatorCard cards={cards} />
+      })()}
 
       {/* ── DISCLAIMER ── */}
       {disclaimerSection && (

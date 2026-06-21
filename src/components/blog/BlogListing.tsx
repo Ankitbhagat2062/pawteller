@@ -1,8 +1,14 @@
+
+import { cookies } from "next/headers";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import BlogCard from "@/components/shared/BlogCard";
 import { type BlogPost, blogPosts } from "@/lib/cms/blogpage";
+import { fetchBlog } from "@/db/blogCmsDb";
+import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
+import { backlinks, faqItems } from "@/lib/cms/calculators/calculatorpage";
+import { FaqSection } from "@/components/shared/FaqSection";
 
 function FeaturedBlogCard({ post }: { post: BlogPost }) {
   return (
@@ -65,16 +71,27 @@ function FeaturedBlogCard({ post }: { post: BlogPost }) {
     </article>
   );
 }
-const featuredPost =
-  blogPosts.length > 0
-    ? blogPosts[Math.floor(Math.random() * blogPosts.length)]
+export default async function BlogListing() {
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("adminAuthToken")?.value;
+  const specificBlog = await fetchBlog("how-to-train-your-dog", adminToken);
+  const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
+  const featuredPost = blogs.length
+    ? (() => {
+      const seed = blogs[0]?.url ?? "fallback";
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+      }
+      return blogs[hash % blogs.length];
+    })()
     : undefined;
-export default function BlogListing() {
   return (
     <section
       className="bg-background text-foreground px-4 py-12 mx-auto md:px-6 md:py-16 lg:px-8 lg:py-20"
       aria-labelledby="blog-section-title"
     >
+      {/* Header */}
       <div className="mx-auto max-w-6xl">
         {/* Header Section */}
         <header className="mb-10 md:mb-14">
@@ -106,13 +123,43 @@ export default function BlogListing() {
           ) : null}
         </div>
       </div>
+
+      {/* Backlinks || Other Calculators and services */}
+      {(() => {
+        const stableIndexSeed = blogs[0]?.url ?? "fallback-4";
+        let hash = 0;
+        for (let i = 0; i < stableIndexSeed.length; i++) {
+          hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+        }
+
+        const start =
+          backlinks.length === 0 ? 0 : hash % backlinks.length;
+        const cards = [
+          backlinks[start],
+          backlinks[(start + 1) % backlinks.length],
+        ].filter(Boolean);
+
+        return <BacklinkCalculatorCard cards={cards} />
+      })()}
+
+      {/* Blog Posts Grid */}
       <div className="mt-8 max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {blogPosts
+        {blogs
           .filter((article) => article.url !== featuredPost?.url)
           .map((article) => (
             <BlogCard key={article.url} {...article} />
           ))}
       </div>
+
+      {/* FAQ */}
+      {faqItems.length > 0 ? (
+        <section
+          className="mt-10"
+          aria-label="About frequently asked questions"
+        >
+          <FaqSection items={faqItems} />
+        </section>
+      ) : null}
     </section>
   );
 }
