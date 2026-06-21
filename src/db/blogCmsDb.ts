@@ -1,9 +1,10 @@
 export async function fetchBlog(slug: string = "blog-home", token?: string): Promise<any | null> {
   try {
     // 1. Build the URL with the required slug query parameter
-    const url = `/admin/blog/get?slug=${encodeURIComponent(slug)}`;
-
-    // 2. Set up headers, including the token if provided
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!baseUrl) throw new Error("Missing SITE_URL/NEXT_PUBLIC_SITE_URL");
+    const url = new URL("/admin/blog/get", baseUrl);
+    url.searchParams.set("slug", slug);
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
