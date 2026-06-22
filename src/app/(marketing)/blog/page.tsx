@@ -85,18 +85,20 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 export default function Blog() {
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
       ></Script>
       <Script id="ga-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-ZVQNS9QQHG');
+          gtag('config', '${GTM_ID}',);
         `}
       </Script>
       <BlogListingPage />

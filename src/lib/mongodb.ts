@@ -1,5 +1,6 @@
 import dns from "dns";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import mongoose from "mongoose";
+
 // Fix local DNS resolution issues on fragile local network routers
 if (process.env.NODE_ENV === "development") {
   try {
@@ -9,6 +10,9 @@ if (process.env.NODE_ENV === "development") {
     console.warn("Could not set DNS resolution order:", e);
   }
 }
+
+let cachedConnection: mongoose.Mongoose["connection"] | null = null;
+let cachedUri: string | null = null;
 
 function sanitizeUri(mongoUri: string): string {
   const trimmed = mongoUri.trim();
@@ -26,42 +30,57 @@ export const connectDB = async (
   mongodburi?: string,
 ) => {
   const mongoUriRaw =
-    mongodburi || process.env.MONGODB_URI || process.env.MONGO_URI;
-
+  mongodburi || process.env.MONGODB_URI || process.env.MONGO_URI;
+  
   if (!mongoUriRaw) {
     throw new Error(
       "Missing MongoDB connection string. Set MONGODB_URI or MONGO_URI.",
     );
   }
-
   const mongoUri = sanitizeUri(mongoUriRaw);
   const alreadyHasDb = getDatabaseName(mongoUri);
   const finalUri = alreadyHasDb ? mongoUri : `${mongoUri}/pawteller`;
+  
 
-
-  // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-  const client = new MongoClient(finalUri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
-
-  async function run() {
-    try {
-      // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
-      // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
-    }
+  if (
+    cachedConnection &&
+    cachedUri === finalUri &&
+    mongoose.connection.readyState === 1
+  ) {
+    return cachedConnection;
   }
- run().catch(console.dir);
 
+  if (mongoose.connection.readyState === 1 && cachedUri === finalUri) {
+    cachedConnection = mongoose.connection;
+    return cachedConnection;
+  }
+
+  if (mongoose.connection.readyState !== 0 && cachedUri !== finalUri) {
+    await mongoose.disconnect();
+    cachedConnection = null;
+    cachedUri = null;
+  }
+
+  try {
+    const conn = await mongoose.connect(finalUri, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000, // Increased timeout to give DNS lookups breathing room
+    });
+
+    cachedConnection = conn.connection;
+    cachedUri = finalUri;
+
+    const host = conn.connection.host;
+    console.log(`MongoDB Connected (host): ${host}`);
+
+    return cachedConnection;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("MongoDB connection error:", error.message);
+      throw error;
+    }
+    throw new Error("MongoDB connection error");
+  }
 };
 
 export default connectDB;

@@ -4,11 +4,13 @@ import Script from "next/script";
 import { Button } from "@/components/ui/button";
 
 export default function BlogNotFound() {
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
       ></Script>
       <main className="min-h-screen bg-background flex items-center justify-center">
         <div className="max-w-md mx-auto px-4 text-center">

@@ -104,11 +104,13 @@ export default async function CalculatorPage({ params }: PageProps) {
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
+    const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
       ></Script>
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {Component ? (

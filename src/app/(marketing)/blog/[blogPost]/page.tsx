@@ -85,11 +85,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Extract read time from totalTime (e.g., "Nutrition · 6 min" -> "6 min")
   const readTimeMatch = post.totalTime.match(/(\d+\s*min)/i);
   const readTime = readTimeMatch ? readTimeMatch[1] : "5 min";
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
       ></Script>
       <main className="min-h-screen bg-background mx-auto px-4 my-4">
         <div className="max-w-2xl mx-auto px-4 py-6 md:py-10">

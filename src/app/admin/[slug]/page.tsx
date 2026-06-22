@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import About from "@/components/admin/components/About";
 import Blog from "@/components/admin/components/Blog";
 import Calculators from "@/components/admin/components/Calculators";
@@ -40,12 +39,9 @@ export default async function CalculatorPage({ params }: PageProps) {
   const Component = normalizedSlug
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
+
   return (
     <>
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
-      ></Script>
       <main className="mx-auto w-full ">
         {Component ? (
           <section className="">
