@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import dns from "dns";
+import mongoose from "mongoose";
 
 // Fix local DNS resolution issues on fragile local network routers
 if (process.env.NODE_ENV === "development") {
@@ -28,19 +28,19 @@ function getDatabaseName(mongoUri: string): string | null {
 
 export const connectDB = async (
   mongodburi?: string,
-): Promise<mongoose.Mongoose["connection"]> => {
+) => {
   const mongoUriRaw =
-    mongodburi || process.env.MONGODB_URI || process.env.MONGO_URI;
-    
+  mongodburi || process.env.MONGODB_URI || process.env.MONGO_URI;
+  
   if (!mongoUriRaw) {
     throw new Error(
       "Missing MongoDB connection string. Set MONGODB_URI or MONGO_URI.",
     );
   }
-
   const mongoUri = sanitizeUri(mongoUriRaw);
   const alreadyHasDb = getDatabaseName(mongoUri);
   const finalUri = alreadyHasDb ? mongoUri : `${mongoUri}/pawteller`;
+  
 
   if (
     cachedConnection &&

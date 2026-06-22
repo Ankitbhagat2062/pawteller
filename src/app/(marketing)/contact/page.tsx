@@ -43,11 +43,13 @@ export default async function Contact() {
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("contact", token);
   const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
       ></Script>
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 font-sans">
         {/* Hero Header Area */}

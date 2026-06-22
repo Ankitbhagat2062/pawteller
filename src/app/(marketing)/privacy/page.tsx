@@ -49,11 +49,13 @@ export default async function Privacy() {
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("privacy", token);
   const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZVQNS9QQHG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
       ></Script>
       <div className="w-full min-h-screen bg-white text-slate-900 dark:bg-zinc-950 dark:text-slate-50 font-sans pb-16">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
