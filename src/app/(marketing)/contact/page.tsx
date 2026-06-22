@@ -1,4 +1,4 @@
-import { PawPrint, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { ShieldCheck, Sparkles, Users } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
@@ -8,6 +8,7 @@ import { fetchData } from "@/lib/constant";
 import { cookies } from "next/headers";
 import { fetchFaq } from "@/db/faqCmsDb";
 import { FaqSection } from "@/components/shared/FaqSection";
+import Image from "next/image";
 
 // 1. GENERATE PERFECT 100/100 SEO METADATA HIERARCHY
 export async function generateMetadata(): Promise<Metadata> {
@@ -59,7 +60,14 @@ export default async function Contact() {
         >
           <div className="max-w-2xl">
             <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
-              <PawPrint className="h-4 w-4" aria-hidden />
+              <Image
+                src="/logo.png"
+                alt="Pawteller logo"
+                className="h-5 w-5 rounded-full w-auto"
+                width={200}
+                height={40}
+                aria-hidden="true"
+              />
               Contact Pawteller
             </p>
 

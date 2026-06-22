@@ -4,7 +4,6 @@ import {
   Calculator,
   HelpCircle,
   ListPlus,
-  PawPrint,
   Save,
   Search,
   ShieldAlert,
@@ -40,6 +39,7 @@ import {
   aboutCmsIconNames,
   defaultAboutAdminCms,
 } from "@/hooks/aboutCms";
+import Image from "next/image";
 
 type AboutAdminResponse = AboutAdminCms & {
   calculatorOptions?: Array<{
@@ -253,7 +253,14 @@ export default function About() {
           <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <CardTitle className="flex items-center gap-2 text-2xl">
-                <PawPrint className="size-5" />
+                <Image
+                  src="/logo.png"
+                  alt="Pawteller logo"
+                  className="h-5 w-5 rounded-full w-auto"
+                  width={200}
+                  height={40}
+                  aria-hidden="true"
+                />
                 About CMS
               </CardTitle>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">

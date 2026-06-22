@@ -1,11 +1,12 @@
 "use client";
 
-import { PawPrint, X } from "lucide-react";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/lib/constant";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,8 +16,14 @@ const Navbar = () => {
       <div className="mx-auto w-full max-w-360 px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-900 dark:bg-emerald-400/15 dark:text-emerald-100">
-              <PawPrint className="h-5 w-5" aria-hidden />
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl text-emerald-900 dark:text-emerald-100">
+              <Image
+                src="/logo.png"
+                alt="Pawteller logo"
+                className="h-8 w-8 rounded-full w-auto"
+                width={200}
+                height={40}
+              />
             </div>
             <div className="leading-tight">
               <p className="text-lg font-extrabold tracking-tight text-navy dark:text-navy-50">

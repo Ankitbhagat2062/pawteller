@@ -1,7 +1,6 @@
 import {
   ArrowRight,
   Cake,
-  PawPrint,
   Scale,
   Sparkles,
   Star,
@@ -99,7 +98,14 @@ export default async function Home() {
                     className="inline-flex h-7 items-center gap-2 rounded-full bg-[#ead8cd] px-4 text-[0.5rem] sm:text-[0.72rem] font-medium 
                 uppercase tracking-[0.28em] text-[#3f342f] dark:bg-emerald-500/10 dark:text-emerald-300"
                   >
-                    <PawPrint className="h-3.5 w-3.5" aria-hidden="true" />
+                    <Image
+                      src="/logo.png"
+                      alt="Pawteller logo"
+                      className="h-5 w-5 rounded-full w-auto"
+                      width={200}
+                      height={40}
+                      aria-hidden="true"
+                    />
                     {hero.badgeText}
                   </p>
                   {(() => {
@@ -523,7 +529,7 @@ export default async function Home() {
               </section>
             );
           })()}
-          
+
           {faqItems.length > 0 ? (
             <section
               className="mt-10"

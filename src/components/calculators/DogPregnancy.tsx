@@ -2,7 +2,6 @@
 import {
   CalendarDays,
   CheckCircle2,
-  PawPrint,
   ShieldAlert,
 } from "lucide-react";
 import Image from "next/image";
@@ -138,11 +137,13 @@ export default async function DogPregnancy() {
       <section className="relative bg-[#E6F7F5] dark:bg-teal-950 overflow-hidden py-20 px-6 flex items-center justify-center min-h-105">
         {/* Decorative heart */}
         <div className="absolute right-[8%] top-[12%] opacity-20 pointer-events-none select-none hidden md:block">
-          <PawPrint
+          <Image
+            src="/logo.png"
+            alt="Pawteller logo"
+            className="h-20 w-20 rounded-full w-auto"
+            width={200}
+            height={40}
             aria-hidden="true"
-            size={120}
-            color="#FF85A2"
-            className="shrink-0"
           />
         </div>
         {/* Decorative calendar */}
