@@ -8,7 +8,6 @@ import {
   ChevronRight,
   HeartPulse,
   Mars,
-  PawPrint,
   Sparkles,
   Venus,
   X,
@@ -464,7 +463,7 @@ export default async function Index() {
   // Result state
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [hasCalculated, setHasCalculated] = useState(false);
-const cookieStore = await cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
@@ -503,7 +502,14 @@ const cookieStore = await cookies();
 
   const iconMap = {
     PawPrint: (
-      <PawPrint className="w-4 h-4 text-white/80" fill="currentColor" />
+      <Image
+        src="/logo.png"
+        alt="Pawteller logo"
+        className="h-5 w-5 rounded-full w-auto"
+        width={200}
+        height={40}
+        aria-hidden="true"
+      />
     ),
     BadgeCheck: <BadgeCheck className="w-4.5 h-4 text-white/80" />,
   };
@@ -739,8 +745,8 @@ const cookieStore = await cookies();
                       key={s}
                       onClick={() => setSex(s)}
                       className={`py-3 px-4 rounded-xl border-2 font-bold text-sm flex items-center justify-center gap-2 transition-colors ${sex === s
-                          ? "border-brand bg-brand-light text-brand"
-                          : "border-border bg-card text-muted-foreground hover:border-brand/50"
+                        ? "border-brand bg-brand-light text-brand"
+                        : "border-border bg-card text-muted-foreground hover:border-brand/50"
                         }`}
                     >
                       {s === "Male" ? (
@@ -908,7 +914,14 @@ const cookieStore = await cookies();
               /* Empty state */
               <div className="bg-card border border-border rounded-3xl p-10 shadow-sm flex flex-col items-center justify-center text-center min-h-100">
                 <div className="w-20 h-20 rounded-3xl bg-brand-light flex items-center justify-center mb-5">
-                  <PawPrint className="w-9 h-9 text-brand" />
+                  <Image
+                    src="/logo.png"
+                    alt="Pawteller logo"
+                    className="h-5 w-5 rounded-full w-auto"
+                    width={200}
+                    height={40}
+                    aria-hidden="true"
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-2">
                   Ready to Predict
@@ -1177,7 +1190,7 @@ const cookieStore = await cookies();
 
         return <BacklinkCalculatorCard cards={cards} />
       })()}
-      
+
       {/* ── FAQ ── */}
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">
         <div className="max-w-200 mx-auto px-5 md:px-10">

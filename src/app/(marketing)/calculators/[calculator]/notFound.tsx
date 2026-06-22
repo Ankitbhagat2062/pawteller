@@ -1,4 +1,5 @@
-import { ArrowLeft, PawPrint } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 
@@ -26,7 +27,14 @@ const NotFound = () => {
           <div className="relative grid gap-8 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
             <section>
               <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.26em] text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200">
-                <PawPrint className="h-4 w-4" aria-hidden="true" />
+                <Image
+                  src="/logo.png"
+                  alt="Pawteller logo"
+                  className="h-5 w-5 rounded-full w-auto"
+                  width={200}
+                  height={40}
+                  aria-hidden="true"
+                />
                 <span>Calculator not found</span>
               </div>
 
@@ -96,7 +104,14 @@ const NotFound = () => {
                 >
                   <div className="text-center">
                     <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/70 ring-1 ring-slate-900/5 dark:bg-zinc-950/50 dark:ring-white/10">
-                      <PawPrint className="h-8 w-8 text-emerald-600 dark:text-emerald-300" />
+                      <Image
+                        src="/logo.png"
+                        alt="Pawteller logo"
+                        className="h-8 w-8 rounded-full text-emerald-600 dark:text-emerald-300"
+                        width={200}
+                        height={40}
+                        aria-hidden="true"
+                      />
                     </div>
                     <p className="mt-4 text-sm font-semibold text-slate-900 dark:text-slate-50">
                       Tip: browse by goal

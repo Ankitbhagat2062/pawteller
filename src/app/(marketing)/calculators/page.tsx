@@ -2,7 +2,6 @@ import { cache } from "react";
 import {
   BookOpen,
   ChevronRight,
-  PawPrint,
   Scale,
   Sparkles,
 } from "lucide-react";
@@ -104,7 +103,14 @@ export default async function CalculatorsPage() {
               <div className="lg:col-span-6">
                 {heroSection.logo && (
                   <div className="inline-flex items-center gap-2 rounded-full bg-[#ead8cd] px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#3f342f] dark:bg-emerald-500/10 dark:text-emerald-200">
-                    <PawPrint className="h-4 w-4" aria-hidden="true" />
+                    <Image
+                      src="/logo.png"
+                      alt="Pawteller logo"
+                      className="h-5 w-5 rounded-full w-auto"
+                      width={200}
+                      height={40}
+                      aria-hidden="true"
+                    />
                     <span>{heroSection.logo.title}</span>
                   </div>
                 )}
@@ -544,7 +550,7 @@ export default async function CalculatorsPage() {
         )}
 
         {/* Ads Space goes here */}
-        
+
       </main>
     </>
   );

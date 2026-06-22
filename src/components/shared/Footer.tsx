@@ -93,9 +93,9 @@ export function Footer() {
               aria-label="Pawteller Home"
             >
               <Image
-                src="/vercel.svg"
+                src="/logo.png"
                 alt="Pawteller logo"
-                className="h-8 w-auto"
+                className="h-8 w-8 rounded-full w-auto"
                 width={200}
                 height={40}
               />

@@ -1,4 +1,4 @@
-import { FileText, Flame, Heart, PawPrint, Search } from "lucide-react";
+import { FileText, Flame, Heart, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
@@ -9,6 +9,7 @@ import type {
   ctaProps,
   rightProps,
 } from "@/lib/cms/aboutpage";
+import Image from "next/image";
 
 export async function generateMetadata(): Promise<Metadata> {
   const aboutPageCms = await getAboutPageCms();
@@ -72,7 +73,14 @@ export default async function AboutPage() {
                   return right.map(({ title, description, buttons }) => (
                     <div key={title} className="lg:col-span-7">
                       <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
-                        <PawPrint className="h-4 w-4" aria-hidden />
+                        <Image
+                          src="/logo.png"
+                          alt="Pawteller logo"
+                          className="h-5 w-5 rounded-full w-auto"
+                          width={200}
+                          height={40}
+                          aria-hidden="true"
+                        />
                         {title}
                       </p>
 
