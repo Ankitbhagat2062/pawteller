@@ -9,8 +9,8 @@ const AsideWrapper = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex md:w-64 md:flex-col md:gap-2">
-      <div className="sticky top-24 rounded-xl border bg-background/60 p-3 backdrop-blur">
+    <aside className="fixed left-0 hidden md:flex w-1/5 md:flex-col md:gap-2">
+      <div className="rounded-xl border bg-background/60 p-3 backdrop-blur">
         <nav className="flex flex-col gap-1">
           {sideNavLinks.map((link) => (
             <Link

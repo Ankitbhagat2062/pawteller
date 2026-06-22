@@ -1,4 +1,6 @@
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+
 import About from "@/components/admin/components/About";
 import Blog from "@/components/admin/components/Blog";
 import Calculators from "@/components/admin/components/Calculators";
@@ -8,9 +10,12 @@ import Quiz from "@/components/admin/components/Quiz";
 import SEO from "@/components/admin/components/SEO";
 import AsideWrapper from "@/components/admin/components/shared/AsideWrapper";
 import Navbar from "@/components/admin/components/shared/Navbar";
-import { cookies } from "next/headers";
+
+import AdminSlugClient from "./AdminSlugClient";
+import { LoginRegisterSplit } from "@/components/admin/LoginRegisterSplit";
 
 const SLUG_TO_COMPONENT = {
+  admin: LoginRegisterSplit,
   dashboard: Dashboard,
   "blog-settings": Blog,
   seo: SEO,
@@ -27,34 +32,36 @@ type PageProps = {
     slug?: string;
   }>;
 };
+
 export default async function CalculatorPage({ params }: PageProps) {
   const { slug } = await params;
   const normalizedSlug = slug?.toLowerCase() as ComponentSlug | undefined;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
-  if (!token) {
+  if (!normalizedSlug || !(normalizedSlug in SLUG_TO_COMPONENT)) {
     notFound();
   }
-  const Component = normalizedSlug
-    ? SLUG_TO_COMPONENT[normalizedSlug]
-    : undefined;
+
+  const cookieStore = await cookies();
+  const tokenFromCookie = cookieStore.get("adminAuthToken")?.value;
 
   return (
-    <>
-      <main className="mx-auto w-full ">
-        {Component ? (
-          <section className="">
-            <Navbar />
-            <div className="flex-1 flex items-center justify-center">
-              <AsideWrapper />
-              <Component token={token} />
-            </div>
-          </section>
-        ) : (
-          notFound()
-        )}
-      </main>
-    </>
+    <main className="mx-auto w-full ">
+      <section className=" flex flex-col items-start">
+        <Navbar />
+        <div className="flex-1 w-full flex items-start">
+          <div className="w-1/5">
+            <AsideWrapper />
+          </div>
+          <div className="w-4/5">
+            <AdminSlugClient
+              tokenFromServer={tokenFromCookie}
+              normalizedSlug={normalizedSlug}
+              componentMap={SLUG_TO_COMPONENT}
+            />
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
+

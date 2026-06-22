@@ -256,7 +256,7 @@ export default function About() {
                 <Image
                   src="/logo.png"
                   alt="Pawteller logo"
-                  className="h-5 w-5 rounded-full w-auto"
+                  className="h-5 w-5 rounded-full"
                   width={200}
                   height={40}
                   aria-hidden="true"

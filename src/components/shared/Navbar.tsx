@@ -20,7 +20,7 @@ const Navbar = () => {
               <Image
                 src="/logo.png"
                 alt="Pawteller logo"
-                className="h-8 w-8 rounded-full w-auto"
+                className="h-8 w-8 rounded-full"
                 width={200}
                 height={40}
               />

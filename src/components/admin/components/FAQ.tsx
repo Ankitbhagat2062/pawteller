@@ -233,7 +233,7 @@ export default function FAQ() {
                         <Label className="text-sm">Answer {index + 1}</Label>
                         <Input
                           placeholder="Type the answer…"
-                          className="min-h-[120px]"
+                          className="min-h-30"
                           {...register(`items.${index}.answer` as const)}
                         />
                       </div>
