@@ -26,7 +26,6 @@ import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import type { CalculatorState, Results } from "@/lib/types";
 import { WhySection } from "./dogfoodcomponents/WhySection";
 import { fetchFaq } from "@/db/faqCmsDb";
-import { cookies } from "next/headers";
 
 const calculateCalories = (state: CalculatorState): Results => {
   const { weight, lifeStage, activityLevel } = state;
@@ -50,7 +49,7 @@ const calculateCalories = (state: CalculatorState): Results => {
   return { dailyCalories, cupsPerDay };
 };
 
-export default async function DogFood() {
+export default async function DogFood({token}:{token:string}) {
   const [state, setState] = useState<CalculatorState>({
     weight: 30,
     lifeStage: "Adult",
@@ -76,8 +75,6 @@ export default async function DogFood() {
     setState((prev) => ({ ...prev, activityLevel: value }));
   };
   const header = dogFoodPageCms.header;
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("dog-food", token);

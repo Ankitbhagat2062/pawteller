@@ -40,22 +40,17 @@ import {
   defaultAboutAdminCms,
 } from "@/hooks/aboutCms";
 import Image from "next/image";
+import useAdminToken from "@/hooks/token";
+
 
 type AboutAdminResponse = AboutAdminCms & {
+
   calculatorOptions?: Array<{
     title: string;
     href: string;
     description: string;
   }>;
 };
-
-function getTokenFromStorage() {
-  if (typeof window === "undefined") return null;
-  return (
-    localStorage.getItem("adminAuth.token") ??
-    localStorage.getItem("adminAuthToken")
-  );
-}
 
 function emptyCta() {
   return { label: "", href: "", ariaLabel: "" };
@@ -131,6 +126,7 @@ export default function About() {
   });
   const actionCtas = useFieldArray({ control, name: "actionblockSection.cta" });
   const faqItems = useFieldArray({ control, name: "faqItems" });
+  const { adminAuthToken: token } = useAdminToken();
 
   useEffect(() => {
     async function loadAboutCms() {
@@ -139,7 +135,6 @@ export default function About() {
       setSuccess(null);
 
       try {
-        const token = getTokenFromStorage();
         if (!token) throw new Error("Missing admin token. Login again.");
 
         const response = await fetch("/api/admin/about/get", {
@@ -172,7 +167,7 @@ export default function About() {
     }
 
     void loadAboutCms();
-  }, [reset]);
+  }, [reset, token]);
 
   async function onSubmit(nextValues: AboutAdminCms) {
     setSaving(true);
@@ -180,7 +175,6 @@ export default function About() {
     setSuccess(null);
 
     try {
-      const token = getTokenFromStorage();
       if (!token) throw new Error("Missing admin token. Login again.");
 
       const parsed = AboutAdminCmsSchema.safeParse(nextValues);
@@ -256,7 +250,7 @@ export default function About() {
                 <Image
                   src="/logo.png"
                   alt="Pawteller logo"
-                  className="h-5 w-5 rounded-full w-auto"
+                  className="h-5 w-5 rounded-full"
                   width={200}
                   height={40}
                   aria-hidden="true"

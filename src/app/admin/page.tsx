@@ -1,5 +1,9 @@
-import { LoginRegisterSplit } from "@/components/admin/LoginRegisterSplit";
+import { LoginRegisterSplit } from '@/components/admin/LoginRegisterSplit';
 
-export default function AdminPage() {
-  return <LoginRegisterSplit />;
+const page = () => {
+  return (
+    <LoginRegisterSplit />
+  )
 }
+
+export default page

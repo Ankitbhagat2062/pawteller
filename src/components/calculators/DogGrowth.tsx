@@ -15,12 +15,11 @@ import {
 } from "@/lib/cms/calculators/dogGrowthpage";
 import type { GrowthInfo } from "@/lib/types";
 import { fetchFaq } from "@/db/faqCmsDb";
-import { cookies } from "next/headers";
 
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
 
-export default async function DogGrowth() {
+export default async function DogGrowth({token}:{token:string}) {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -66,8 +65,6 @@ export default async function DogGrowth() {
   }, [initialized]); // Only tracks the initialized boolean flag
   const headerSection = dogGrowthPageCms.header;
   const seoContent = dogGrowthPageCms.seoContent;
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("dog-age", token);

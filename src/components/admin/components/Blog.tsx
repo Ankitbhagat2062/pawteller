@@ -419,7 +419,7 @@ export default function Blog({token}: {token?: string}) {
                       <TextArea
                         {...register(`posts.${postIndex}.description`)}
                         placeholder="Short summary shown on cards"
-                        className="min-h-[120px]"
+                        className="min-h-30"
                       />
                     </div>
                   </div>
@@ -494,7 +494,7 @@ export default function Blog({token}: {token?: string}) {
                                   `posts.${postIndex}.content.${contentIndex}.description`,
                                 )}
                                 placeholder="Paragraph text"
-                                className="min-h-[120px]"
+                                className="min-h-30"
                               />
                             </div>
                           </div>

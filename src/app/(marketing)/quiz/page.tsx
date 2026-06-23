@@ -92,7 +92,7 @@ export default async function QuizPage({
 
   return (
     <main>
-      <QuizComponent quizData={quizToRender} />
+      <QuizComponent quizData={quizToRender} token={adminToken ?? ""} />
     </main>
   );
 }

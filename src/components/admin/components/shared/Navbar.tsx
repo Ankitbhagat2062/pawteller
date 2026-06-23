@@ -18,18 +18,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { topNavLinks } from "@/lib/admin/constants";
 import { cn } from "@/lib/utils"; // Standard shadcn utils
+import React from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
+
+  // Avoid hydration mismatch: don't render icon based on theme until mounted.
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full h-16 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-50 w-full h-16 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container flex items-center justify-between h-full px-4 mx-auto">
         {/* Left Section: Logo & Mobile Trigger */}
         <div className="flex items-center gap-4">
@@ -38,8 +45,14 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">
-              P
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold">
+              <Image
+                src="/logo.png"
+                alt="Pawteller logo"
+                className="h-8 w-8 rounded-full"
+                width={200}
+                height={40}
+              />
             </div>
             <span className="text-xl font-bold tracking-tight hidden md:inline-block">
               Pawteller

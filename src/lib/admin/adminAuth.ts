@@ -31,7 +31,10 @@ export async function verifyAdminToken(token: string) {
   }
 
   const secret = process.env.ADMIN_JWT_SECRET;
-  if (!secret) return { ok: false as const, reason: "NO_SECRET" };
+  if (!secret) {
+    console.log('No Secret')
+    return { ok: false as const, reason: "NO_SECRET" };
+  }
 
   const raw = token.slice(TOKEN_PREFIX.length);
 
@@ -45,6 +48,7 @@ export async function verifyAdminToken(token: string) {
     ) 
 
     if (typeof payload.sub !== "string") {
+      console.log('Invalid Payload')
       return { ok: false as const, reason: "INVALID_PAYLOAD" };
     }
 
@@ -55,8 +59,9 @@ export async function verifyAdminToken(token: string) {
         role: typeof payload.role === "string" ? payload.role : "admin",
       },
     };
-  } catch {
+  } catch(err) {
     // jwtVerify throws for malformed tokens, bad signature, and expiration
+    console.log(err)
     return { ok: false as const, reason: "INVALID" };
   }
 }

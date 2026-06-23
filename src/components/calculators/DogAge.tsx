@@ -22,9 +22,10 @@ import { dogAgePageCms } from "@/lib/cms/calculators/dogagepage";
 import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import BlogCard from "../shared/BlogCard";
 import { fetchFaq } from "@/db/faqCmsDb";
-import { cookies } from "next/headers";
 
-const DogAgeCalculator = async() => {
+type DogAgeCalculatorProps = { token: string };
+
+const DogAgeCalculator = async({ token }: DogAgeCalculatorProps) => {
   const [dogAge, setDogAge] = useState<number>(10);
   const [dogSize, setDogSize] = useState<
     "small" | "medium" | "large" | "giant"
@@ -138,8 +139,6 @@ const DogAgeCalculator = async() => {
   const informationSection = dogAgePageCms.informationSection;
   const faqSection = dogAgePageCms.faqSection;
   const callToActionSection = dogAgePageCms.callToActionSection;
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("dog-age", token);

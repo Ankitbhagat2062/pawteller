@@ -8,6 +8,6 @@ export const sideNavLinks = [
   { name: "Dashboard", href: "/admin/dashboard" }, // Home is the Dashboard
   { name: "About", href: "/admin/about" },
   { name: "Calculators", href: "/admin/calculators" },
-  { name: "Blog", href: "/admin/blog" },
+  { name: "Blog", href: "/admin/blog-settings" },
   { name: "Quiz", href: "/admin/quiz" },
 ];
