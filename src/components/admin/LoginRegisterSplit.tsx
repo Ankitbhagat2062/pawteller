@@ -52,9 +52,13 @@ function getSafeAuthMessage(message: unknown, fallback: string) {
   if (sensitive.some((k) => msg.includes(k))) return fallback;
   return message;
 }
-
+import useAdminToken from '@/hooks/token';
 export function LoginRegisterSplit() {
   const router = useRouter();
+  const { adminAuthToken: token } = useAdminToken();
+  if(token){
+    router.push('/admin/dashboard')
+  }
   const resetToken =
     typeof window !== "undefined"
       ? new URL(window.location.href).searchParams.get("resetToken")

@@ -18,36 +18,17 @@ export default function AdminSlugClient({
   normalizedSlug?: string;
   componentMap: SLUG_TO_COMPONENT;
 }) {
-  const [tokenFromLocalStorage, setTokenFromLocalStorage] = useState<string | null>(null);
-
-  // Read localStorage only after mount (avoids timing/race issues)
-  useEffect(() => {
-    setTokenFromLocalStorage(window.localStorage.getItem("adminAuthToken"));
-  }, []);
-
-  const token = useMemo(
-    () => tokenFromServer ?? tokenFromLocalStorage,
-    [tokenFromServer, tokenFromLocalStorage]
-  );
-
+   const token = tokenFromServer
   // If slug is missing, redirect right away
   useEffect(() => {
-    if (!normalizedSlug) redirect("/admin");
+    if (!normalizedSlug || !token) redirect("/admin");
   }, [normalizedSlug]);
 
-  // Redirect once we definitively know there's no token
-  useEffect(() => {
-    if (tokenFromServer) return; // server provided it
-    if (tokenFromLocalStorage === null) return; // localStorage not loaded yet
-    if (!token) redirect("/admin");
-  }, [token, tokenFromLocalStorage, tokenFromServer]);
 
   const Component = normalizedSlug ? componentMap[normalizedSlug] : undefined;
-  if (!Component) return null;
+  if (!Component || !token) return null;
 
   // Wait until token is known
-  if (!token) return null;
-
   return <Component token={token} />;
 }
 

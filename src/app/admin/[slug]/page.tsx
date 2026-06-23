@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 import About from "@/components/admin/components/About";
@@ -13,6 +12,7 @@ import Navbar from "@/components/admin/components/shared/Navbar";
 
 import AdminSlugClient from "./AdminSlugClient";
 import { LoginRegisterSplit } from "@/components/admin/LoginRegisterSplit";
+import { cookies } from "next/headers";
 
 const SLUG_TO_COMPONENT = {
   admin: LoginRegisterSplit,
@@ -43,7 +43,6 @@ export default async function CalculatorPage({ params }: PageProps) {
 
   const cookieStore = await cookies();
   const tokenFromCookie = cookieStore.get("adminAuthToken")?.value;
-
   return (
     <main className="mx-auto w-full ">
       <section className=" flex flex-col items-start">
