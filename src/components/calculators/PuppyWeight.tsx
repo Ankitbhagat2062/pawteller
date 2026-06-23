@@ -34,7 +34,6 @@ import type { FormState } from "@/lib/types";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { fetchFaq } from "@/db/faqCmsDb";
-import { cookies } from "next/headers";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -450,7 +449,7 @@ function GrowthChart({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default async function Index() {
+export default async function Index({token}:{token:string}) {
   // Form state
   const [selectedBreed, setSelectedBreed] = useState("Golden Retriever");
   const [ageValue, setAgeValue] = useState("3");
@@ -463,8 +462,6 @@ export default async function Index() {
   // Result state
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [hasCalculated, setHasCalculated] = useState(false);
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("puppy-weight", token);
@@ -505,7 +502,7 @@ export default async function Index() {
       <Image
         src="/logo.png"
         alt="Pawteller logo"
-        className="h-5 w-5 rounded-full w-auto"
+        className="h-5 w-5 rounded-full"
         width={200}
         height={40}
         aria-hidden="true"
@@ -917,7 +914,7 @@ export default async function Index() {
                   <Image
                     src="/logo.png"
                     alt="Pawteller logo"
-                    className="h-5 w-5 rounded-full w-auto"
+                    className="h-5 w-5 rounded-full"
                     width={200}
                     height={40}
                     aria-hidden="true"

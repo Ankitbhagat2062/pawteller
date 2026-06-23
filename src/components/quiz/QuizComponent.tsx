@@ -14,12 +14,9 @@ import type { quizDataProps } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { FaqSection } from "../shared/FaqSection";
 import { fetchFaq } from "@/db/faqCmsDb";
-import { cookies } from "next/headers";
 
-export async function QuizComponent({ quizData }: { quizData: quizDataProps }) {
+export async function QuizComponent({ quizData ,token}: { quizData: quizDataProps ,token:string}) {
   const router = useRouter();
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
     Array(quizData.totalQuestions).fill(null),

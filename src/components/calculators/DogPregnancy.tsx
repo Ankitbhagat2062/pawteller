@@ -5,7 +5,6 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -22,7 +21,6 @@ import { cn } from "@/lib/utils";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { fetchFaq } from "@/db/faqCmsDb";
-import { cookies } from "next/headers";
 
 function addDaysToDate(date: Date, days: number): Date {
   const result = new Date(date);
@@ -108,7 +106,7 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-export default async function DogPregnancy() {
+export default async function DogPregnancy({token}:{token:string}) {
   const [matingDate, setMatingDate] = useState(getTodayString());
   const [breedSize, setBreedSize] = useState<BreedSize>("small");
   const [result, setResult] = useState<PregnancyResult | null>(null);
@@ -125,8 +123,6 @@ export default async function DogPregnancy() {
   const heroSection = dogPregnancyCms.heroSection;
   const timelineSection = dogPregnancyCms.timelineSection;
   const faqSection = dogPregnancyCms.faqSection;
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("dog-pregnancy", token);
@@ -140,7 +136,7 @@ export default async function DogPregnancy() {
           <Image
             src="/logo.png"
             alt="Pawteller logo"
-            className="h-20 w-20 rounded-full w-auto"
+            className="h-20 w-20 rounded-full"
             width={200}
             height={40}
             aria-hidden="true"
