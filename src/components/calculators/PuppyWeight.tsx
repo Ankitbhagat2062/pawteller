@@ -34,6 +34,9 @@ import type { FormState } from "@/lib/types";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { fetchFaq } from "@/db/faqCmsDb";
+import BlogCard from "../shared/BlogCard";
+import { BlogPost, blogPosts } from "@/lib/cms/blogpage";
+import fetchBlog from "@/db/blogCmsDb";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -467,18 +470,28 @@ export default function PuppyWeight({ token }: { token: string }) {
   const [faqItems, setFaqItems] = useState(
     () => puppyWeightPageCms.faqSection ?? [],
   );
+  const [blogs, setBlogs] = useState(
+    () => blogPosts ?? [],
+  );
 
   useEffect(() => {
     let isCurrent = true;
 
     void (async () => {
       const faqData = await fetchFaq("puppy-weight", token);
+      const specificBlog = await fetchBlog("how-to-train-your-dog", token);
+
       if (!isCurrent) return;
 
       setFaqItems(
         Array.isArray(faqData?.items)
           ? faqData.items
           : (puppyWeightPageCms.faqSection ?? []),
+      );
+      setBlogs(
+        Array.isArray(specificBlog?.posts)
+          ? specificBlog.posts
+          : (blogPosts ?? []),
       );
     })();
     return () => {
@@ -1206,6 +1219,19 @@ export default function PuppyWeight({ token }: { token: string }) {
 
         return <BacklinkCalculatorCard cards={cards} />
       })()}
+      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {(() => {
+          const nutritionPosts = blogs.filter(
+            (post) => post.category === "Nutrition",
+          );
+          if (nutritionPosts.length === 0) return null;
+
+          // 2. Map over the array of matching blog posts
+          return nutritionPosts.map((article) => (
+            <BlogCard key={article.url} {...article} />
+          ));
+        })()}
+      </div>
 
       {/* ── FAQ ── */}
       <section className="bg-muted/30 py-16 lg:py-24 border-y border-border">

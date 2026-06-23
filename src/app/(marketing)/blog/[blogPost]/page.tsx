@@ -13,9 +13,6 @@ import { FaqSection } from "@/components/shared/FaqSection";
 import BlogCard from "@/components/shared/BlogCard";
 import { fetchBlog } from "@/db/blogCmsDb";
 import { cookies } from "next/headers";
-export function getBlogPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.url === `/blog/${slug}`);
-}
 
 export async function generateMetadata({
   params,
@@ -132,7 +129,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Related Blog Posts */}
         <div className="mt-8 max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {blogPosts
+          {blogs
             .filter((article) => article.url !== post.url)
             .map((article) => (
               <BlogCard key={article.url} {...article} />

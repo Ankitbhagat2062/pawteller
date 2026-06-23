@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, Trash2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -17,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import type { BlogPost } from "@/lib/cms/blogpage";
 
 function TextArea(props: React.ComponentProps<"textarea">) {
@@ -40,6 +39,21 @@ type BlogSlug = (typeof BLOG_SLUGS)[number]["value"];
 
 type ContentItem = BlogPost["content"][number];
 
+type HyperLink = {
+  label: string;
+  href: string;
+  ariaLabel: string;
+};
+
+type HyperLinkFormValues = HyperLink & { enabled?: boolean };
+
+const HyperLinkSchema = z.object({
+  enabled: z.boolean().optional().default(false),
+  label: z.string().min(1).max(200).optional().default(""),
+  href: z.string().min(1).max(500).optional().default(""),
+  ariaLabel: z.string().min(1).max(200).optional().default(""),
+});
+
 const ContentItemSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().min(1).max(8000),
@@ -56,6 +70,7 @@ const BlogPostSchema = z.object({
   category: z.string().min(1).max(200),
   date: z.string().max(200).optional().default(""),
   bgColor: z.string().max(200).optional().default(""),
+  cta: HyperLinkSchema,
 });
 
 const BlogCmsFormSchema = z.object({
@@ -78,7 +93,16 @@ function emptyContentItem(): ContentItem {
   };
 }
 
-function emptyPost(): BlogPost {
+function emptyHyperLink(): HyperLinkFormValues {
+  return {
+    enabled: false,
+    label: "",
+    href: "",
+    ariaLabel: "",
+  };
+}
+
+function emptyPost(): BlogPost & { cta: HyperLinkFormValues } {
   return {
     imageSrc: "",
     title: "",
@@ -88,6 +112,11 @@ function emptyPost(): BlogPost {
     category: "",
     date: "",
     bgColor: "",
+    cta: {
+      label: "",
+      href: "",
+      ariaLabel: "",
+    },
     content: [emptyContentItem()],
   };
 }
@@ -108,7 +137,7 @@ export default function Blog({ token }: { token?: string }) {
   } = useForm<BlogCmsFormValues>({
     defaultValues: {
       slug,
-      posts: [emptyPost()],
+      posts: [emptyPost() as unknown as BlogPost],
     },
     mode: "onChange",
   });
@@ -147,16 +176,22 @@ export default function Blog({ token }: { token?: string }) {
             ...p,
             date: p.date ?? "",
             bgColor: p.bgColor ?? "",
+            cta: {
+              enabled: Boolean(p.cta?.href || p.cta?.label || p.cta?.ariaLabel),
+              label: p.cta?.label ?? "",
+              href: p.cta?.href ?? "",
+              ariaLabel: p.cta?.ariaLabel ?? "",
+            },
             content: (p.content ?? []).length
               ? p.content
               : [emptyContentItem()],
-          })),
+          })) as unknown as BlogCmsFormValues["posts"],
         };
 
         reset(normalized);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to load blog");
-        reset({ slug: nextSlug, posts: [emptyPost()] });
+        reset({ slug: nextSlug, posts: [emptyPost() as unknown as BlogPost] });
       } finally {
         setLoading(false);
       }
@@ -192,6 +227,13 @@ export default function Blog({ token }: { token?: string }) {
             ...c,
             time: c.time ?? "",
           })),
+          cta: p.cta?.enabled
+            ? {
+                label: p.cta.label ?? "",
+                href: p.cta.href ?? "",
+                ariaLabel: p.cta.ariaLabel ?? "",
+              }
+            : undefined,
         })),
       };
 
@@ -222,14 +264,13 @@ export default function Blog({ token }: { token?: string }) {
   }
 
   function addPost() {
-    const next = [...(posts ?? []), emptyPost()];
-    reset({ slug, posts: next });
+    const next = [...(posts ?? []), emptyPost() as unknown as BlogPost];
+    reset({ slug, posts: next as unknown as BlogCmsFormValues["posts"] });
 
-    // Use setTimeout to wait for React to finish rendering the new post
     setTimeout(() => {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
-        behavior: 'smooth' // Optional: makes the scroll animation smooth
+        behavior: "smooth",
       });
     }, 0);
   }
@@ -237,10 +278,10 @@ export default function Blog({ token }: { token?: string }) {
   function removePost(index: number) {
     const next = (posts ?? []).filter((_, i) => i !== index);
     if (!next.length) {
-      reset({ slug, posts: [emptyPost()] });
+      reset({ slug, posts: [emptyPost() as unknown as BlogPost] });
       return;
     }
-    reset({ slug, posts: next });
+    reset({ slug, posts: next as unknown as BlogCmsFormValues["posts"] });
   }
 
   function addContentItem(postIndex: number) {
@@ -249,7 +290,7 @@ export default function Blog({ token }: { token?: string }) {
       ...nextPosts[postIndex],
       content: [...(nextPosts[postIndex].content ?? []), emptyContentItem()],
     };
-    reset({ slug, posts: nextPosts });
+    reset({ slug, posts: nextPosts as unknown as BlogCmsFormValues["posts"] });
   }
 
   function removeContentItem(postIndex: number, contentIndex: number) {
@@ -263,7 +304,7 @@ export default function Blog({ token }: { token?: string }) {
       content: nextContent.length ? nextContent : [emptyContentItem()],
     };
 
-    reset({ slug, posts: nextPosts });
+    reset({ slug, posts: nextPosts as unknown as BlogCmsFormValues["posts"] });
   }
 
   return (
@@ -277,10 +318,7 @@ export default function Blog({ token }: { token?: string }) {
             <div className="lg:col-span-1 space-y-4">
               <div className="space-y-2">
                 <Label className="text-sm">Blog section</Label>
-                <Select
-                  value={slug}
-                  onValueChange={(v) => setSlug(v as BlogSlug)}
-                >
+                <Select value={slug} onValueChange={(v) => setSlug(v as BlogSlug)}>
                   <SelectTrigger className="mt-2 w-full">
                     <SelectValue placeholder="Select blog section" />
                   </SelectTrigger>
@@ -323,9 +361,8 @@ export default function Blog({ token }: { token?: string }) {
               </form>
 
               <p className="text-xs text-muted-foreground">
-                This editor updates blog posts stored in MongoDB. Per-post
-                rendering uses the same BlogPost structure as{" "}
-                <code>src/lib/cms/blogpage.ts</code>.
+                This editor updates blog posts stored in MongoDB. Per-post rendering
+                uses the same BlogPost structure as <code>src/lib/cms/blogpage.ts</code>.
               </p>
 
               <Button
@@ -350,9 +387,7 @@ export default function Blog({ token }: { token?: string }) {
                       <h3 className="text-base font-semibold">
                         Post {postIndex + 1}
                       </h3>
-                      <p className="text-xs text-muted-foreground">
-                        Edit fields below.
-                      </p>
+                      <p className="text-xs text-muted-foreground">Edit fields below.</p>
                     </div>
                     {posts && posts.length > 1 ? (
                       <Button
@@ -430,6 +465,43 @@ export default function Blog({ token }: { token?: string }) {
                         className="min-h-30 w-full rounded-2xl p-4"
                       />
                     </div>
+
+                    {/* Optional CTA / Hyperlink */}
+                    <div className="space-y-2 md:col-span-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <Label className="text-sm">Optional: link to explore other services</Label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            {...register(`posts.${postIndex}.cta.enabled`)}
+                            className="h-4 w-4"
+                          />
+                          <span className="text-xs text-muted-foreground">Enable</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Link label</Label>
+                      <Input
+                        {...register(`posts.${postIndex}.cta.label`)}
+                        placeholder="Explore calculators"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Href</Label>
+                      <Input
+                        {...register(`posts.${postIndex}.cta.href`)}
+                        placeholder="/calculators"
+                      />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label>aria-label</Label>
+                      <Input
+                        {...register(`posts.${postIndex}.cta.ariaLabel`)}
+                        placeholder="Explore other services"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-3">
@@ -454,9 +526,7 @@ export default function Blog({ token }: { token?: string }) {
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div>
-                              <Label className="text-sm">
-                                Block {contentIndex + 1}
-                              </Label>
+                              <Label className="text-sm">Block {contentIndex + 1}</Label>
                               <p className="text-xs text-muted-foreground">
                                 Heading + description
                               </p>
@@ -466,9 +536,7 @@ export default function Blog({ token }: { token?: string }) {
                                 type="button"
                                 variant="destructive"
                                 size="sm"
-                                onClick={() =>
-                                  removeContentItem(postIndex, contentIndex)
-                                }
+                                onClick={() => removeContentItem(postIndex, contentIndex)}
                               >
                                 <Trash2 className="h-4 w-4" />
                                 Remove
@@ -521,3 +589,4 @@ export default function Blog({ token }: { token?: string }) {
     </div>
   );
 }
+

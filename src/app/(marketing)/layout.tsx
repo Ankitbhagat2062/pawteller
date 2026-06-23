@@ -114,6 +114,18 @@ export default function RootLayout({
         </ThemeProvider>
         <Analytics />
       </body>
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HMHF7H2RN5');
+        `}
+      </Script>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-HMHF7H2RN5"
+        strategy="afterInteractive"
+      />
     </html>
   );
 }
