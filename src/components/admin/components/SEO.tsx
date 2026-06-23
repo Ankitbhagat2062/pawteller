@@ -85,7 +85,7 @@ function buildKeywordsArray(keywordsCsv: string) {
     .filter(Boolean);
 }
 
-export default function SEO() {
+export default function SEO({token}: {token?: string}) {
   const [pageKey, setPageKey] = useState<PageKey>("home");
   const [loading, setLoading] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
@@ -104,34 +104,6 @@ export default function SEO() {
       keywords: "",
     },
   });
-
-  const token =
-    typeof window !== "undefined"
-      ? (localStorage.getItem("adminAuth.token") ?? null)
-      : null;
-
-  useEffect(() => {
-    // If token isn't stored by existing auth UI, try fallback key.
-
-    // (Keeps backward compatibility with different token storage strategies.)
-    if (typeof window === "undefined") return;
-    const existing =
-      localStorage.getItem("adminAuth.token") ??
-      localStorage.getItem("adminAuth.token");
-    if (!existing) {
-      const keys = Object.keys(localStorage);
-      const match = keys.find((k) => k.startsWith("adminAuth."));
-      if (match) {
-        localStorage.setItem(
-          "adminAuth.token",
-          localStorage.getItem(match) || "",
-        );
-      }
-    }
-    if (!localStorage.getItem("adminAuth.token") && existing) {
-      localStorage.setItem("adminAuth.token", existing);
-    }
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -204,10 +176,7 @@ export default function SEO() {
     }
 
     try {
-      const authToken =
-        typeof window !== "undefined"
-          ? localStorage.getItem("adminAuth.token")
-          : token;
+      const authToken = token;
 
       if (!authToken) {
         throw new Error(

@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect,useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -98,17 +98,12 @@ function buildDefaultFromQuiz(
   };
 }
 
-export default function Quiz() {
+export default function Quiz({token}: {token?: string}) {
   const [quizId, setQuizId] = useState<string>(quizOptionList[0]?.quizId ?? "");
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const [token, setToken] = useState<string | null>(null);
-  useEffect(() => {
-    setToken(localStorage.getItem("adminAuth.token"));
-  }, []);
   const match = quizOptionList.find((x) => x.quizId === quizId);
   const q = match
     ? (quizData.find((it) => it.url.includes(match.quizId)) ?? quizData[0])
@@ -127,7 +122,7 @@ export default function Quiz() {
     setLoading(true);
     setError(null);
     try {
-      const authToken = localStorage.getItem("adminAuth.token") ?? token;
+      const authToken = localStorage.getItem("adminAuthToken") ?? token;
       if (!authToken)
         throw new Error("Admin token missing. Please login again.");
 
@@ -203,7 +198,7 @@ export default function Quiz() {
     setSaving(true);
     setError(null);
     try {
-      const authToken = localStorage.getItem("adminAuth.token") ?? token;
+      const authToken = localStorage.getItem("adminAuthToken") ?? token;
       if (!authToken)
         throw new Error("Admin token missing. Please login again.");
 

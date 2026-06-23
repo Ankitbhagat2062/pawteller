@@ -41,11 +41,6 @@ import {
   type SerializedCalculatorPageCms,
 } from "@/hooks/calculatorCms";
 
-function getTokenFromStorage() {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("adminAuth.token");
-}
-
 function emptyCta() {
   return { label: "", href: "", ariaLabel: "" };
 }
@@ -105,7 +100,7 @@ function IconSelect({ value, onValueChange }: IconSelectProps) {
   );
 }
 
-export default function Calculators() {
+export default function Calculators({token}: {token?: string}) {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -155,7 +150,6 @@ export default function Calculators() {
       setSuccess(null);
 
       try {
-        const token = getTokenFromStorage();
         if (!token) throw new Error("Missing admin token. Login again.");
 
         const response = await fetch("/api/admin/calculators/get", {
@@ -196,7 +190,6 @@ export default function Calculators() {
     setSuccess(null);
 
     try {
-      const token = getTokenFromStorage();
       if (!token) throw new Error("Missing admin token. Login again.");
 
       const parsed = CalculatorCmsSchema.safeParse(nextValues);
