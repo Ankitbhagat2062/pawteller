@@ -3,7 +3,7 @@ export async function fetchFaq(pageKey: string, token?: string): Promise<any | n
     // 1. Build the URL with the required pageKey query parameter
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
     if (!baseUrl) throw new Error("Missing NEXT_PUBLIC_APP_URL");
-    const url = new URL("/admin/faq/get", baseUrl);
+    const url = new URL("/api/admin/faq/get", baseUrl);
     url.searchParams.set("pageKey", pageKey);
     // 2. Set up headers, including the token if provided
     const headers: Record<string, string> = {

@@ -25,7 +25,7 @@ import { fetchFaq } from "@/db/faqCmsDb";
 
 type DogAgeCalculatorProps = { token: string };
 
-const DogAgeCalculator = async({ token }: DogAgeCalculatorProps) => {
+const DogAgeCalculator = ({ token }: DogAgeCalculatorProps) => {
   const [dogAge, setDogAge] = useState<number>(10);
   const [dogSize, setDogSize] = useState<
     "small" | "medium" | "large" | "giant"
@@ -141,8 +141,11 @@ const DogAgeCalculator = async({ token }: DogAgeCalculatorProps) => {
   const callToActionSection = dogAgePageCms.callToActionSection;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("dog-age", token);
-  const faqItems = faqData?.items ? faqData : faqSection; // Fallback to an empty array if empty or missing
+  let faqItems = faqSection;
+  (async () => {
+    const faqData = await fetchFaq("dog-age", token);
+    faqItems = faqData?.items ? faqData : faqSection; // Fallback to an empty array if empty or missing
+  })()
   return (
     <TooltipProvider>
       <div className="min-h-screen ">

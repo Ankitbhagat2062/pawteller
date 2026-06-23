@@ -19,7 +19,7 @@ import { fetchFaq } from "@/db/faqCmsDb";
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
 
-export default async function DogGrowth({token}:{token:string}) {
+export default function DogGrowth({token}:{token:string}) {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,8 +67,11 @@ export default async function DogGrowth({token}:{token:string}) {
   const seoContent = dogGrowthPageCms.seoContent;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("dog-age", token);
-  const faqItems = faqData?.items ? faqData : dogGrowthPageCms.faqSection; // Fallback to an empty array if empty or missing
+  let faqItems = dogGrowthPageCms.faqSection;
+    (async () => {
+      const faqData = await fetchFaq("dog-age", token);
+      faqItems = faqData?.items ? faqData : dogGrowthPageCms.faqSection; // Fallback to an empty array if empty or missing
+    })()
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">

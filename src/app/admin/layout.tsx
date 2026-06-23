@@ -49,7 +49,7 @@ export default function AdminLayout({
       suppressHydrationWarning
       className={`h-full font-sans antialiased ${inter.variable}`}
     >
-      <body className="flex min-h-full flex-col bg-[#FDF8F1] dark:bg-zinc-950 transition-colors duration-300">
+      <body className="flex min-h-screen flex-col bg-[#FDF8F1] dark:bg-zinc-950 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <main className="flex-1 flex items-center justify-center">
             {children}

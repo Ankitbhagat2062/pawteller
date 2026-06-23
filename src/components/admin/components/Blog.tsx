@@ -92,7 +92,7 @@ function emptyPost(): BlogPost {
   };
 }
 
-export default function Blog({token}: {token?: string}) {
+export default function Blog({ token }: { token?: string }) {
   const [slug, setSlug] = useState<BlogSlug>(BLOG_SLUGS[0].value);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -224,6 +224,14 @@ export default function Blog({token}: {token?: string}) {
   function addPost() {
     const next = [...(posts ?? []), emptyPost()];
     reset({ slug, posts: next });
+
+    // Use setTimeout to wait for React to finish rendering the new post
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth' // Optional: makes the scroll animation smooth
+      });
+    }, 0);
   }
 
   function removePost(index: number) {
@@ -265,7 +273,7 @@ export default function Blog({token}: {token?: string}) {
           <CardTitle>Blog CMS</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-start">
+          <div className=" grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-start">
             <div className="lg:col-span-1 space-y-4">
               <div className="space-y-2">
                 <Label className="text-sm">Blog section</Label>
@@ -419,7 +427,7 @@ export default function Blog({token}: {token?: string}) {
                       <TextArea
                         {...register(`posts.${postIndex}.description`)}
                         placeholder="Short summary shown on cards"
-                        className="min-h-30"
+                        className="min-h-30 w-full rounded-2xl p-4"
                       />
                     </div>
                   </div>
@@ -494,7 +502,7 @@ export default function Blog({token}: {token?: string}) {
                                   `posts.${postIndex}.content.${contentIndex}.description`,
                                 )}
                                 placeholder="Paragraph text"
-                                className="min-h-30"
+                                className="min-h-30 w-full rounded-2xl p-4"
                               />
                             </div>
                           </div>

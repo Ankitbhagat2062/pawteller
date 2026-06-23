@@ -49,7 +49,7 @@ const calculateCalories = (state: CalculatorState): Results => {
   return { dailyCalories, cupsPerDay };
 };
 
-export default async function DogFood({token}:{token:string}) {
+export default function DogFood({ token }: { token: string }) {
   const [state, setState] = useState<CalculatorState>({
     weight: 30,
     lifeStage: "Adult",
@@ -77,8 +77,11 @@ export default async function DogFood({token}:{token:string}) {
   const header = dogFoodPageCms.header;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("dog-food", token);
-  const faqItems = faqData?.items ? faqData : dogFoodPageCms.faqSection; // Fallback to an empty array if empty or missing
+  let faqItems = dogFoodPageCms.faqSection;
+  (async () => {
+    const faqData = await fetchFaq("dog-food", token);
+    faqItems = faqData?.items ? faqData : dogFoodPageCms.faqSection; // Fallback to an empty array if empty or missing
+  })()
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
