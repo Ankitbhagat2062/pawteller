@@ -107,6 +107,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <BlogContent content={post.content} />
 
           <CtaCard />
+
         </div>
 
         {/* Backlinks || Other Calculators and services */}

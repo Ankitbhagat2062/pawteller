@@ -34,8 +34,8 @@ import type { FormState } from "@/lib/types";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { fetchFaq } from "@/db/faqCmsDb";
-import BlogCard from "../shared/BlogCard";
-import { BlogPost, blogPosts } from "@/lib/cms/blogpage";
+import BlogCard from "@/components/shared/BlogCard";
+import { blogPosts } from "@/lib/cms/blogpage";
 import fetchBlog from "@/db/blogCmsDb";
 
 // ─── Data ────────────────────────────────────────────────────────────────────

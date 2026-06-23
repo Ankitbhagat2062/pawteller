@@ -83,7 +83,23 @@ export default async function Privacy() {
               </div>
             </div>
           </header>
+          {/* Backlinks || Other Calculators and services */}
+          {(() => {
+            const stableIndexSeed = "privacy-policy";
+            let hash = 0;
+            for (let i = 0; i < stableIndexSeed.length; i++) {
+              hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
+            }
 
+            const start =
+              backlinks.length === 0 ? 0 : hash % backlinks.length;
+            const cards = [
+              backlinks[start],
+              backlinks[(start + 1) % backlinks.length],
+            ].filter(Boolean);
+
+            return <BacklinkCalculatorCard cards={cards} />;
+          })()}
           <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
             {/* Static Document Layout Directory (No Hydration Shift Layout) */}
             <aside
@@ -109,24 +125,6 @@ export default async function Privacy() {
                 </ul>
               </nav>
             </aside>
-            
-            {/* Backlinks || Other Calculators and services */}
-            {(() => {
-              const stableIndexSeed = "privacy-policy";
-              let hash = 0;
-              for (let i = 0; i < stableIndexSeed.length; i++) {
-                hash = (hash * 31 + stableIndexSeed.charCodeAt(i)) >>> 0;
-              }
-
-              const start =
-                backlinks.length === 0 ? 0 : hash % backlinks.length;
-              const cards = [
-                backlinks[start],
-                backlinks[(start + 1) % backlinks.length],
-              ].filter(Boolean);
-
-              return <BacklinkCalculatorCard cards={cards} />;
-            })()}
             {/* Optimized Frame Content Container */}
             <main className="lg:col-span-8">
               <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60 dark:bg-white/5 dark:ring-white/10 sm:p-8">

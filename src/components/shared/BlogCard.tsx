@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogPost } from "@/lib/cms/blogpage";
+import { OptionalServicesCta } from "../blog/optional-services-cta";
 
 const BlogCard = (article: BlogPost) => {
   return (
@@ -53,6 +54,12 @@ const BlogCard = (article: BlogPost) => {
           </Link>
         </div>
       </div>
+
+      <OptionalServicesCta
+        label={article.cta?.label}
+        href={article.cta?.href}
+        ariaLabel={article.cta?.ariaLabel}
+      />
     </article>
   );
 };

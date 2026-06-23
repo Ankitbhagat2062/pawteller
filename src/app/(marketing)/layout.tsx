@@ -113,19 +113,23 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
         <Analytics />
-      </body>
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
+        {GTM_ID && (
+          <>
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-HMHF7H2RN5');
-        `}
-      </Script>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-HMHF7H2RN5"
-        strategy="afterInteractive"
-      />
+          gtag('config', '${GTM_ID}');
+          `}
+            </Script>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+              strategy="afterInteractive"
+            />
+          </>
+        )}
+      </body>
     </html>
   );
 }

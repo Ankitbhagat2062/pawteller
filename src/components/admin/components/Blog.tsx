@@ -49,9 +49,19 @@ type HyperLinkFormValues = HyperLink & { enabled?: boolean };
 
 const HyperLinkSchema = z.object({
   enabled: z.boolean().optional().default(false),
-  label: z.string().min(1).max(200).optional().default(""),
-  href: z.string().min(1).max(500).optional().default(""),
-  ariaLabel: z.string().min(1).max(200).optional().default(""),
+  label: z.string().max(200).optional().default(""),
+  href: z.string().max(500).optional().default(""),
+  ariaLabel: z.string().max(200).optional().default(""),
+}).superRefine((value, ctx) => {
+  if (
+    value.enabled &&
+    (!value.label.trim() || !value.href.trim() || !value.ariaLabel.trim())
+  ) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Fill all CTA fields when CTA is enabled.",
+    });
+  }
 });
 
 const ContentItemSchema = z.object({
@@ -229,10 +239,10 @@ export default function Blog({ token }: { token?: string }) {
           })),
           cta: p.cta?.enabled
             ? {
-                label: p.cta.label ?? "",
-                href: p.cta.href ?? "",
-                ariaLabel: p.cta.ariaLabel ?? "",
-              }
+              label: p.cta.label ?? "",
+              href: p.cta.href ?? "",
+              ariaLabel: p.cta.ariaLabel ?? "",
+            }
             : undefined,
         })),
       };
