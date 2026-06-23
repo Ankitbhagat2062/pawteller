@@ -1,51 +1,40 @@
-"use client";
+"use client"
 
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
 
 export default function ThemeToggle() {
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  // Safely delay interactivity signals until hydration completes
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
 
-  // HIGH-PERFORMANCE SKELETON: Uses absolute matching geometry dimensions
-  // and no font/emoji characters to completely eliminate layout shifting (CLS).
-  if (!mounted) {
-    return (
-      <div
-        className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white/50 dark:border-slate-800 dark:bg-slate-900/50"
-        aria-hidden="true"
-      >
-        <div className="h-5 w-5 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
-      </div>
-    );
-  }
-
-  const isDark = resolvedTheme === "dark";
+  const isDark = theme === "dark"
 
   return (
-    <button
-      type="button"
-      aria-label="Toggle dark and light theme mode"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-800 shadow-sm transition-colors duration-200 hover:bg-white hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-50"
-    >
-      {isDark ? (
-        <Sun
-          className="h-5 w-5 transition-transform duration-300 rotate-0 scale-100"
-          aria-hidden="true"
-        />
-      ) : (
-        <Moon
-          className="h-5 w-5 transition-transform duration-300 rotate-0 scale-100"
-          aria-hidden="true"
-        />
-      )}
-    </button>
-  );
+    <div className="flex flex-col items-start gap-2">
+      {/* Switch - matches the pill shape from your image */}
+      <Switch
+        checked={isDark}
+        onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+        className="h-7 w-12 rounded-full 
+                   data-[state=checked]:bg-zinc-700 
+                   data-[state=unchecked]:bg-zinc-300
+                   [&>span]:h-6 [&>span]:w-6 
+                   [&>span]:bg-white 
+                   [&>span]:rounded-full 
+                   [&>span]:shadow-sm
+                   data-[state=checked]:[&>span]:translate-x-5
+                   transition-all duration-200"
+      />
+      
+      {/* Label below switch, changes with theme */}
+      <Label className="text-base font-medium text-foreground pl-1">
+        {isDark ? "Dark" : "Light"}
+      </Label>
+    </div>
+  )
 }

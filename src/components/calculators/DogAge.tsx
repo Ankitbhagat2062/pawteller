@@ -2,7 +2,7 @@
 
 import { Info } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
@@ -141,11 +141,23 @@ const DogAgeCalculator = ({ token }: DogAgeCalculatorProps) => {
   const callToActionSection = dogAgePageCms.callToActionSection;
 
   // Fetch the FAQ array for this specific page layout string
-  let faqItems = faqSection;
-  (async () => {
-    const faqData = await fetchFaq("dog-age", token);
-    faqItems = faqData?.items ? faqData : faqSection; // Fallback to an empty array if empty or missing
-  })()
+  const [faqItems, setFaqItems] = useState(faqSection);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const faqData = await fetchFaq("dog-age", token);
+      const nextFaqItems =
+        Array.isArray(faqData?.items) && faqData.items.length > 0
+          ? faqData.items : faqSection;
+      if (!cancelled) setFaqItems(nextFaqItems);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [token, faqSection]);
   return (
     <TooltipProvider>
       <div className="min-h-screen ">

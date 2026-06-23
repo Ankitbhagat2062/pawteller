@@ -7,7 +7,7 @@ import {
 import Image from "next/image";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
 import {
@@ -125,11 +125,24 @@ export default function DogPregnancy({ token }: { token: string }) {
   const faqSection = dogPregnancyCms.faqSection;
 
   // Fetch the FAQ array for this specific page layout string
-  let faqItems=faqSection;
-  (async () => {
-    const faqData = await fetchFaq("dog-pregnancy", token);
-    faqItems = faqData?.items ? faqData : faqSection; // Fallback to an empty array if empty or missing
-  })()
+  const [faqItems, setFaqItems] = useState(faqSection);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const faqData = await fetchFaq("dog-pregnancy", token);
+      const nextFaqItems =
+        Array.isArray(faqData?.items) && faqData.items.length > 0
+          ? faqData.items
+          : faqSection;
+
+      if (!cancelled) setFaqItems(nextFaqItems);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [token, faqSection]);
   return (
     <div className="w-full min-h-screen bg-white dark:bg-gray-950">
       {/* ── HERO ── */}

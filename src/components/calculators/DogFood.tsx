@@ -75,13 +75,27 @@ export default function DogFood({ token }: { token: string }) {
     setState((prev) => ({ ...prev, activityLevel: value }));
   };
   const header = dogFoodPageCms.header;
+  const faqSection = dogFoodPageCms.faqSection;
 
   // Fetch the FAQ array for this specific page layout string
-  let faqItems = dogFoodPageCms.faqSection;
-  (async () => {
-    const faqData = await fetchFaq("dog-food", token);
-    faqItems = faqData?.items ? faqData : dogFoodPageCms.faqSection; // Fallback to an empty array if empty or missing
-  })()
+  const [faqItems, setFaqItems] = useState(faqSection);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const faqData = await fetchFaq("dog-food", token);
+      const nextFaqItems =
+        Array.isArray(faqData?.items) && faqData.items.length > 0
+          ? faqData.items
+          : faqSection;
+
+      if (!cancelled) setFaqItems(nextFaqItems);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [token, faqSection]);
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">

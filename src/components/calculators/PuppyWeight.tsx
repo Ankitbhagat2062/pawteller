@@ -464,11 +464,27 @@ export default function PuppyWeight({ token }: { token: string }) {
   const [hasCalculated, setHasCalculated] = useState(false);
 
   // Fetch the FAQ array for this specific page layout string
-  let faqItems=puppyWeightPageCms.faqSection;
-  (async () => {
-    const faqData = await fetchFaq("puppy-weight", token);
-   faqItems = faqData?.items ? faqData : puppyWeightPageCms.faqSection; // Fallback to an empty array if empty or missing
-  })()
+  const [faqItems, setFaqItems] = useState(
+    () => puppyWeightPageCms.faqSection ?? [],
+  );
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    void (async () => {
+      const faqData = await fetchFaq("puppy-weight", token);
+      if (!isCurrent) return;
+
+      setFaqItems(
+        Array.isArray(faqData?.items)
+          ? faqData.items
+          : (puppyWeightPageCms.faqSection ?? []),
+      );
+    })();
+    return () => {
+      isCurrent = false;
+    };
+  }, [token]);
   const handleCalculate = () => {
     const ageMonths =
       ageUnit === "weeks" ? parseFloat(ageValue) / 4.33 : parseFloat(ageValue);
