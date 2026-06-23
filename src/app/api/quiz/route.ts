@@ -74,6 +74,7 @@ export async function POST(request: Request) {
     });
     const submission = SubmissionSchema.safeParse(await request.json());
     if (!submission.success) {
+      console.log('Zod Validation failed')
       return NextResponse.json(
         { error: "Invalid quiz payload" },
         { status: 400 },
@@ -83,6 +84,7 @@ export async function POST(request: Request) {
 
     // Ensure required fields are present (keep existing behavior for email/results)
     if (!email || !quizId || !results) {
+      console.log('Email , quizId or results is not present')
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 },
@@ -91,6 +93,7 @@ export async function POST(request: Request) {
 
     const parsedQuizId = QuizIdSchema.safeParse(quizId);
     if (!parsedQuizId.success) {
+      console.log('QuizId schema failed')
       return NextResponse.json(
         { error: parsedQuizId.error.issues[0]?.message ?? "Invalid quizId" },
         { status: 400 },
@@ -101,6 +104,7 @@ export async function POST(request: Request) {
 
     const parsed = QuizResultsSchema.safeParse(results);
     if (!parsed.success) {
+      console.log('Results schema failed')
       return NextResponse.json(
         { error: "Invalid results payload" },
         { status: 400 },
@@ -114,6 +118,7 @@ export async function POST(request: Request) {
     const existingQuiz = await QuizModel.findOne({ email, quizId: safeQuizId });
 
     if (existingQuiz) {
+      console.log('Already Given Quiz')
       return NextResponse.json(
         { error: "You have already given quiz" },
         { status: 400 },
@@ -151,6 +156,7 @@ export async function POST(request: Request) {
         "code" in err &&
         (err as { code?: number }).code === 11000
       ) {
+      console.log('Already Given Quiz')
         return NextResponse.json(
           { error: "You have already given quiz" },
           { status: 400 },

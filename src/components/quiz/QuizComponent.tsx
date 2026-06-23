@@ -4,6 +4,7 @@ import axios, { type AxiosError } from "axios";
 import { ArrowLeft, ArrowRight, Dog, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import type { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
 import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
@@ -27,8 +28,16 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
   const progress = Math.round((currentStep / quizData.totalQuestions) * 100);
   const currentQuestion = quizData.steps[currentStep];
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<{ firstName: string; email: string }>({
+    defaultValues: {
+      firstName: "",
+      email: "",
+    },
+  });
   const [topBreedName, setTopBreedName] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -209,8 +218,8 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
     setIsComplete(false);
     setTopBreedName("");
   };
-  const handleSubmitResults = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: { firstName: string; email: string }) => {
+    const { firstName, email } = data;
     const result = isComplete
       ? generateBreedResult(
         firstName,
@@ -255,8 +264,6 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
       });
       if (res.data && "success" in res.data && res.data.success === true) {
         setStatus("success");
-        setFirstName("");
-        setEmail("");
         setTopBreedName(result?.topMatches[0].breed ?? "");
         setTimeout(() => {
           router.push("/");
@@ -310,36 +317,34 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
               </p>
             )}
 
-            <form onSubmit={handleSubmitResults} className="space-y-3">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
               <div>
                 <Input
                   type="text"
-                  value={firstName}
-                  name="firstName"
-                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Your first name"
-                  required
+                  disabled={status === "loading"}
                   className="w-full rounded-xl border border-gray-200/80 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#e0664d] focus:ring-1 focus:ring-[#e0664d] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-[#e0664d]"
+                  {...register("firstName", { required: true })}
                 />
               </div>
 
               <div>
                 <Input
                   type="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  required
+                  disabled={status === "loading"}
                   className="w-full rounded-xl border border-gray-200/80 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#e0664d] focus:ring-1 focus:ring-[#e0664d] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-[#e0664d]"
+                  {...register("email", { required: true })}
                 />
               </div>
 
               <Button
                 type="submit"
-                className="mt-2 w-full rounded-xl bg-[#e0664d] py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_-18px_rgba(224,102,77,0.65)] shadow-[#e0664d]/30 ring-1 ring-[#e0664d]/30 transition-all duration-200 hover:bg-[#cb553d] hover:shadow-[0_18px_55px_-22px_rgba(203,85,61,0.9)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-              >
-                Reveal my top 3 breeds
+                disabled={status === "loading"}
+                aria-disabled={status === "loading"}
+                className="mt-2 w-full rounded-xl bg-[#e0664d] py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_-18px_rgba(224,102,77,0.65)] shadow-[#e0664d]/30 ring-1 ring-[#e0664d]/30 transition-all duration-200 hover:bg-[#cb553d] hover:shadow-[0_18px_55px_-22px_rgba(203,85,61,0.9)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                {status==='loading' ?'Submitting' :`Reveal my top 3 breeds`}
               </Button>
             </form>
 
