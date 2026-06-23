@@ -122,7 +122,7 @@ export default function Quiz({token}: {token?: string}) {
     setLoading(true);
     setError(null);
     try {
-      const authToken = localStorage.getItem("adminAuthToken") ?? token;
+      const authToken =  token;
       if (!authToken)
         throw new Error("Admin token missing. Please login again.");
 
@@ -190,7 +190,7 @@ export default function Quiz({token}: {token?: string}) {
   useEffect(() => {
     if (!quizId) return;
     void loadQuiz(quizId);
-  }, [quizId]);
+  }, [quizId,token]);
 
   const stepsWatch = watch("steps");
 
@@ -198,7 +198,7 @@ export default function Quiz({token}: {token?: string}) {
     setSaving(true);
     setError(null);
     try {
-      const authToken = localStorage.getItem("adminAuthToken") ?? token;
+      const authToken = token;
       if (!authToken)
         throw new Error("Admin token missing. Please login again.");
 
