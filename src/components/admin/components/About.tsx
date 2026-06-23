@@ -40,7 +40,6 @@ import {
   defaultAboutAdminCms,
 } from "@/hooks/aboutCms";
 import Image from "next/image";
-import useAdminToken from "@/hooks/token";
 
 
 type AboutAdminResponse = AboutAdminCms & {
@@ -97,7 +96,7 @@ function IconSelect({ value, onValueChange }: IconSelectProps) {
   );
 }
 
-export default function About() {
+export default function About({token}: {token?: string}) {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -126,7 +125,6 @@ export default function About() {
   });
   const actionCtas = useFieldArray({ control, name: "actionblockSection.cta" });
   const faqItems = useFieldArray({ control, name: "faqItems" });
-  const { adminAuthToken: token } = useAdminToken();
 
   useEffect(() => {
     async function loadAboutCms() {

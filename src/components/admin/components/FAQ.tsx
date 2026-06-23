@@ -21,26 +21,16 @@ import type { FAQItem } from "@/lib/types";
 
 const emptyFaq: FAQItem[] = [{ question: "", answer: "" }];
 
-function getTokenFromStorage() {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("adminAuthToken");
-}
-
 type FormValues = {
   items: FAQItem[];
 };
 
-export default function FAQ() {
+export default function FAQ({token}: {token?: string}) {
   const [pageKey, setPageKey] = useState<FaqPageKey>("home");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
-  const token = useMemo(() => {
-    if (typeof window === "undefined") return null;
-    return getTokenFromStorage();
-  }, []);
 
   const {
     control,
@@ -63,7 +53,7 @@ export default function FAQ() {
     setSuccess(null);
 
     try {
-      const authToken = getTokenFromStorage();
+      const authToken = token
       if (!authToken)
         throw new Error("Missing admin token. Please login again.");
 
@@ -108,7 +98,7 @@ export default function FAQ() {
     setSuccess(null);
 
     try {
-      const authToken = getTokenFromStorage() ?? token;
+      const authToken = token;
       if (!authToken)
         throw new Error("Missing admin token. Please login again.");
 

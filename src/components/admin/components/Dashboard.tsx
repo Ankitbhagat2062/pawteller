@@ -40,14 +40,6 @@ type HomepageAdminResponse = HomepageContent & {
   calculatorSection: calculatorSectionProps;
 };
 
-function getTokenFromStorage() {
-  if (typeof window === "undefined") return null;
-  return (
-    localStorage.getItem("adminAuth.token") ??
-    localStorage.getItem("adminAuthToken")
-  );
-}
-
 function emptyCalculatorCard() {
   return {
     title: "",
@@ -72,7 +64,7 @@ function emptyDogLifeStage() {
   };
 }
 
-export default function Dashboard() {
+export default function Dashboard({token}: {token?: string}) {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -105,7 +97,6 @@ export default function Dashboard() {
       setError(null);
 
       try {
-        const token = getTokenFromStorage();
         if (!token) throw new Error("Missing admin token. Login again.");
 
         const response = await fetch("/api/admin/homepage/get", {
@@ -147,7 +138,6 @@ export default function Dashboard() {
     setError(null);
 
     try {
-      const token = getTokenFromStorage();
       if (!token) throw new Error("Missing admin token. Login again.");
 
       const parsed = HomepageContentSchema.safeParse(nextValues);
