@@ -71,6 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
+  const G_ID = process.env.NEXT_PUBLIC_GTM_ID || 'G-HMHF7H2RN5';
   return (
     <html
       lang="en"
@@ -98,7 +99,7 @@ export default function RootLayout({
         {/* 2. Safe Noscript Iframe for non-JS execution */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-MRMZHPN5"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
@@ -113,18 +114,18 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
         <Analytics />
-        {GTM_ID && (
+        {G_ID && (
           <>
             <Script id="google-analytics" strategy="afterInteractive">
               {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${GTM_ID}');
+          gtag('config', '${G_ID}');
           `}
             </Script>
             <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=${G_ID}`}
               strategy="afterInteractive"
             />
           </>
