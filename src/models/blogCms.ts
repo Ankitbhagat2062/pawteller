@@ -22,6 +22,12 @@ const BlogPostSchema = new Schema(
     category: { type: String, required: true },
     date: { type: String, default: "" },
     bgColor: { type: String, default: "" },
+    cta: {
+      label: { type: String },
+      href: { type: String },
+      ariaLabel: { type: String },
+    },
+
   },
   { _id: false },
 );

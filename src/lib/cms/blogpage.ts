@@ -19,7 +19,13 @@ export interface BlogPost {
   category: string;
   date?: string;
   bgColor?: string;
+  cta?: {
+    label?: string;
+    href?: string;
+    ariaLabel?: string;
+  };
 }
+
 
 export interface BlogPostPageProps {
   params: Promise<{ blogPost: string }>;

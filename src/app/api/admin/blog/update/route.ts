@@ -10,6 +10,14 @@ const ContentItemSchema = z.object({
   time: z.string().max(200).optional().default(""),
 });
 
+const HyperLinkSchema = z
+  .object({
+    label: z.string().min(1).max(200).optional().default(""),
+    href: z.string().min(1).max(500).optional().default(""),
+    ariaLabel: z.string().min(1).max(200).optional().default(""),
+  })
+  .partial();
+
 const PostSchema = z.object({
   imageSrc: z.string().min(1).max(2000),
   title: z.string().min(1).max(200),
@@ -20,7 +28,9 @@ const PostSchema = z.object({
   category: z.string().min(1).max(200),
   date: z.string().max(200).optional().default(""),
   bgColor: z.string().max(200).optional().default(""),
+  cta: HyperLinkSchema.optional(),
 });
+
 
 const BodySchema = z.object({
   slug: z.string().min(1).max(200),
