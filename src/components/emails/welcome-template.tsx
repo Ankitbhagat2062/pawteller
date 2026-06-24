@@ -23,8 +23,8 @@ export const PawtellerWelcomeEmail = ({
   userFirstname,
 }: PawtellerWelcomeEmailProps) => (
   <Html lang="en">
-    <Head />
     <Tailwind>
+      <Head />
       <Body className="dark:bg-black bg-[#f6f7fb] font-sans">
         <Preview>Welcome to Pawteller — here’s what to expect next.</Preview>
 

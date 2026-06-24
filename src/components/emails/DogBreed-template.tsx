@@ -45,11 +45,11 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
   const winner = topMatches[0];
   return (
     <Html>
-      <Head />
-
-      <Preview>Your perfect dog breed match is {winner.breed} 🐶</Preview>
-
       <Tailwind>
+        <Head />
+
+        <Preview>Your perfect dog breed match is {winner.breed} 🐶</Preview>
+
         <Body className="bg-slate-100 py-10">
           <Container className="mx-auto max-w-2xl overflow-hidden rounded-3xl bg-white shadow-xl">
             {/* Hero */}
@@ -58,12 +58,12 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
 
               <Heading
                 as="h1"
-                className="m-0 mt-4 text-3xl sm:text-4xl font-bold text-white"
+                className="m-0 mt-4 text-3xl sm:text-4xl font-bold text-black"
               >
                 Your Personalized Dog Breed Report
               </Heading>
 
-              <Text className="mt-4 text-xl sm:text-2xl text-white/95">
+              <Text className="mt-4 text-xl sm:text-2xl text-black">
                 Based on your lifestyle, activity level, family situation,
                 grooming preferences, and ideal dog size.
               </Text>
@@ -81,15 +81,15 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
               </Text>
             </Section>
 
-            <Section className="mx-8 rounded-2xl border border-green-200 bg-green-50 p-5">
+            <Section className="mx-8 max-w-2xl rounded-2xl border border-green-200 bg-green-50 p-5">
               <Text className="m-0 text-center text-green-900">
-                ✓ Personalized from 6 lifestyle factors
+                <br />✓ Personalized from 6 lifestyle factors
                 <br />✓ Compared against multiple compatible breeds
                 <br />✓ Ranked using a weighted compatibility system
               </Text>
             </Section>
 
-            <Section className="px-6 sm:px-8 py-10">
+            <Section className="px-6 sm:px-8 py-10 mx-auto">
               <Heading
                 as="h2"
                 className="mb-6 text-2xl sm:text-3xl text-center"
@@ -199,7 +199,7 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
             {topMatches.map((dog) => (
               <Section
                 key={`${dog.breed}-score`}
-                className="mx-8 mb-6 rounded-2xl bg-slate-50 p-6"
+                className="mx-8 mb-6 rounded-2xl max-w-2xl bg-slate-50 p-6"
               >
                 <Heading className="mb-4 text-xl">
                   {dog.breed} Match Analysis
@@ -264,8 +264,8 @@ const DogBreed = ({ userName, topMatches }: DogBreedEmailProps) => {
 
               <Text className="leading-8 text-slate-700">
                 Among all evaluated breeds,
-                <strong> {topMatches[0].breed}</strong>
-                achieved the highest compatibility score. However, all three
+                <strong> {topMatches[0].breed} </strong>
+                 achieved the highest compatibility score. However, all three
                 recommendations would fit your lifestyle well and could become
                 excellent companions depending on individual temperament,
                 training, and environment.

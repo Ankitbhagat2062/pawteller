@@ -6,17 +6,30 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { DogBreedEmailProps } from "@/components/emails/DogBreed-template";
-import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { blogPosts } from "@/lib/cms/blogpage";
-import { type Breed, breedDatabase, getQuizFaqItems } from "@/lib/cms/quizpage";
+import { type Breed, breedDatabase, quizFaqBase } from "@/lib/cms/quizpage";
 import type { quizDataProps } from "@/lib/types";
+import { FaqBlogBacklink } from "@/components/shared/FaqBlogBackLink";
 import { cn } from "@/lib/utils";
-import { FaqSection } from "../shared/FaqSection";
-import { fetchFaq } from "@/db/faqCmsDb";
 
-export function QuizComponent({ quizData, token }: { quizData: quizDataProps, token: string }) {
+type ContactPayload = {
+  email: string;
+  quizId: string;
+  results?: DogBreedEmailProps;
+};
+
+type ContactSuccessResponse = {
+  success: true;
+  data: unknown;
+};
+
+type ContactErrorResponse = {
+  success?: false;
+  error?: string;
+};
+
+export function QuizComponent({ quizData }: { quizData: quizDataProps, token: string }) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
@@ -31,7 +44,6 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
   } = useForm<{ firstName: string; email: string }>({
     defaultValues: {
       firstName: "",
@@ -42,13 +54,33 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
-  const QuizfaqItems = getQuizFaqItems(quizData.url);
-  // Fetch the FAQ array for this specific page layout string
-  let faqItems = QuizfaqItems;
-  (async () => {
-    const faqData = await fetchFaq("quiz", token);
-    faqItems = faqData?.items ? faqData : QuizfaqItems; // Fallback to an empty array if empty or missing
-  })()
+  const [quizExist, setQuizExist] = useState<true | false>(false)
+  useEffect(() => {
+    (async () => {
+      const quizId = new URLSearchParams(quizData.url.split("?")[1] ?? "").get("quiz") ?? quizData.url;
+      const email = localStorage.getItem('adminEmail') ?? '';
+
+      // Safety check: don't make an empty request if there is no email in localStorage
+      if (!email) return;
+
+      try {
+        const payload = { email, quizId };
+
+        const res = await axios.post<{ message?: string; success?: boolean }>(
+          "/api/quiz",
+          payload,
+          { headers: { "Content-Type": "application/json" } }
+        );
+        console.log(res.data)
+        // Check if response is successful (status 200) and contains your custom message
+        if (res.status === 200 && res.data?.message === "You have already given quiz") {
+          setQuizExist(true);
+        }
+      } catch (error) {
+        console.error("Error checking existing quiz status:", error);
+      }
+    })();
+  }, [quizData.url]);
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;
@@ -227,23 +259,6 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
         breedDatabase,
       )
       : null;
-
-    type ContactPayload = {
-      email: string;
-      quizId: string;
-      results: DogBreedEmailProps;
-    };
-
-    type ContactSuccessResponse = {
-      success: true;
-      data: unknown;
-    };
-
-    type ContactErrorResponse = {
-      success?: false;
-      error?: string;
-    };
-
     if (!result) {
       setStatus("error");
       return;
@@ -259,7 +274,7 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
       setStatus("loading");
       const res = await axios.post<
         ContactSuccessResponse | ContactErrorResponse
-      >("/api/quiz", payload, {
+      >("/api/quiz/get", payload, {
         headers: { "Content-Type": "application/json" },
       });
       if (res.data && "success" in res.data && res.data.success === true) {
@@ -268,12 +283,14 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
         setTimeout(() => {
           router.push("/");
         }, 500);
+        if (res.status === 421) {
+          setQuizExist(true)
+        }
         return;
       }
       setStatus("error");
     } catch (error: unknown) {
       const axiosError = error as AxiosError<ContactErrorResponse>;
-
       console.error("Quiz submit failed", {
         message: axiosError.message,
         data: axiosError.response?.data,
@@ -343,8 +360,8 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
                 disabled={status === "loading"}
                 aria-disabled={status === "loading"}
                 className="mt-2 w-full rounded-xl bg-[#e0664d] py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_-18px_rgba(224,102,77,0.65)] shadow-[#e0664d]/30 ring-1 ring-[#e0664d]/30 transition-all duration-200 hover:bg-[#cb553d] hover:shadow-[0_18px_55px_-22px_rgba(203,85,61,0.9)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
-                >
-                {status==='loading' ?'Submitting' :`Reveal my top 3 breeds`}
+              >
+                {status === 'loading' ? 'Submitting' : `Reveal my top 3 breeds`}
               </Button>
             </form>
 
@@ -361,25 +378,97 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
             </Button>
           </div>
         </div>
-        {faqItems.length > 0 ? (
-          <section
-            className="mt-10"
-            aria-label="About frequently asked questions"
-          >
-            <FaqSection items={faqItems} />
-          </section>
-        ) : null}
-        <div className="mt-8 grid items-center justify-center grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {(() => {
-            const quizblogPosts = blogPosts.filter(
-              (post) => post.category === quizData.category,
-            );
-            if (quizblogPosts.length === 0) return null;
-            return quizblogPosts.map((article) => (
-              <BlogCard key={article.url} {...article} />
-            ));
-          })()}
-        </div>
+        <FaqBlogBacklink page="quiz" category="Lifestyle" faqSection={quizFaqBase} />
+      </div>
+    );
+  }
+  if (quizExist) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <header className="pt-8 sm:pt-12 md:pt-16 pb-6 sm:pb-8 px-4 sm:px-6 text-center">
+          <div className="mx-auto flex w-fit items-center justify-center gap-2 text-primary mb-4">
+            <Dog className="h-5 w-5" />
+            <span className="text-sm font-medium tracking-wide uppercase">
+              {quizData.banner}
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-foreground mb-3 text-balance">
+            You’ve already taken this quiz
+          </h1>
+          <p className="mx-auto max-w-2xl text-muted-foreground text-sm sm:text-base">
+            Thanks! We already have your answers tied to your email. Sit tight—your personalized result is on the way.
+          </p>
+        </header>
+
+        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-8 sm:pb-10">
+          <div className="mx-auto w-full max-w-3xl">
+            <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+              <div className="pointer-events-none absolute inset-0 opacity-70">
+                <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#e0664d]/20 blur-3xl dark:bg-[#e0664d]/25" />
+                <div className="absolute -bottom-28 -right-24 h-72 w-72 rounded-full bg-[#e0664d]/10 blur-3xl dark:bg-[#e0664d]/15" />
+              </div>
+
+              <div className="relative p-6 sm:p-8">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-semibold text-card-foreground">
+                        Check your inbox
+                      </h2>
+                      <p className="mt-1 text-sm sm:text-base text-muted-foreground">
+                        If you don’t see it, check your spam folder. We’ll send your full top-breed matches shortly.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                    <Button
+                      type="button"
+                      onClick={() => router.push("/")}
+                      className="w-full sm:w-auto rounded-xl bg-[#e0664d] py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_-18px_rgba(224,102,77,0.65)] shadow-[#e0664d]/30 ring-1 ring-[#e0664d]/30 transition-all duration-200 hover:bg-[#cb553d] hover:shadow-[0_18px_55px_-22px_rgba(203,85,61,0.9)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                    >
+                      Go to homepage
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        // Reloading keeps user on the same quiz route while re-checking existence
+                        router.refresh();
+                      }}
+                      className="w-full sm:w-auto rounded-xl border-border bg-transparent px-4 py-3.5 text-sm font-semibold text-card-foreground transition-all duration-200 hover:-translate-y-px hover:border-primary/50 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0664d] focus-visible:ring-offset-2 dark:hover:bg-primary/10"
+                    >
+                      Re-check status
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="rounded-2xl border border-border/60 bg-background/30 p-4">
+                    <p className="text-xs font-medium text-muted-foreground">What happens next?</p>
+                    <p className="mt-1 text-sm font-semibold text-card-foreground">We email your results</p>
+                  </div>
+                  <div className="rounded-2xl border border-border/60 bg-background/30 p-4">
+                    <p className="text-xs font-medium text-muted-foreground">Your quiz is saved</p>
+                    <p className="mt-1 text-sm font-semibold text-card-foreground">No need to retake</p>
+                  </div>
+                  <div className="rounded-2xl border border-border/60 bg-background/30 p-4">
+                    <p className="text-xs font-medium text-muted-foreground">Need help?</p>
+                    <p className="mt-1 text-sm font-semibold text-card-foreground">Explore our FAQ</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <FaqBlogBacklink page="quiz" category="Lifestyle" faqSection={quizFaqBase} />
+        </main>
+
       </div>
     );
   }
@@ -478,4 +567,5 @@ export function QuizComponent({ quizData, token }: { quizData: quizDataProps, to
       </main>
     </div>
   );
+
 }

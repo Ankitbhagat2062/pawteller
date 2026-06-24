@@ -441,7 +441,8 @@ export const quizData: quizDataProps[] = [
     ],
   },
 ];
-const quizFaqBase: FAQItem[] = [
+
+export const quizFaqBase: FAQItem[] = [
   {
     question: "How does the quiz work?",
     answer:
@@ -469,11 +470,6 @@ const quizFaqBase: FAQItem[] = [
   },
 ];
 
-export function getQuizFaqItems(_quizSlug?: string): FAQItem[] {
-  // Keep it simple: return a solid shared FAQ for now.
-  // (You can extend this later using _quizSlug if needed.)
-  return quizFaqBase;
-}
 
 export interface Breed {
   name: string;

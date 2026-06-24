@@ -13,11 +13,11 @@ import {
 const ContactThankYouEmail = ({ name }: { name: string }) => {
   return (
     <Html lang="en" dir="ltr">
+      <Tailwind>
       <Head />
       <Preview>
         Thanks for reaching out, {name}! {`I'll get back to you soon.`}
       </Preview>
-      <Tailwind>
         <Body className="dark:bg-black bg-amber-50 font-sans py-10">
           <Container className="bg-white dark:bg-[#252f3d] rounded-[8px] max-w-150 mx-auto p-10">
             {/* Header */}
