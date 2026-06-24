@@ -28,7 +28,7 @@ function toSupportedSize(
     | "All";
 }
 
-export async function DogNameGenerator({token}:{token:string}) {
+export function DogNameGenerator({ token }: { token: string }) {
   const [gender, setGender] = useState<DogGender | "All">(INITIAL_GENDER);
   const [size, setSize] = useState<DogSize | "All">(INITIAL_SIZE);
   const [startingLetter, setStartingLetter] = useState<StartingLetter>(
@@ -68,8 +68,23 @@ export async function DogNameGenerator({token}:{token:string}) {
   };
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("dog-name", token);
-  const faqItems = faqData?.items ? faqData : DogNameFaqItems; // Fallback to the default FAQ items if empty or missing
+  const [faqItems, setFaqItems] = useState(DogNameFaqItems);
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    void (async () => {
+      const faqData = await fetchFaq("dog-name", token);
+      if (!isCurrent) return;
+
+      setFaqItems(
+        Array.isArray(faqData?.items) ? faqData.items : DogNameFaqItems,
+      );
+    })();
+    return () => {
+      isCurrent = false;
+    };
+  }, [token]);
   return (
     <div className="min-h-screen bg-background dark:bg-slate-950 py-8 md:py-12 px-4">
       <div className="max-w-6xl mx-auto space-y-16 md:space-y-20">

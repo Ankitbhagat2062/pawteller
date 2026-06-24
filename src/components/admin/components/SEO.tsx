@@ -112,10 +112,15 @@ export default function SEO({token}: {token?: string}) {
       SetError("root", { type: "manual", message: "" });
 
       try {
+        if(!token){
+           throw new Error("Admin token missing. Please log in again.");
+        }
         const res = await fetch(
           `/api/admin/seo/get?pageKey=${encodeURIComponent(pageKey)}`,
           {
             method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+            cache: "no-store",
           },
         );
 
@@ -153,7 +158,7 @@ export default function SEO({token}: {token?: string}) {
     return () => {
       cancelled = true;
     };
-  }, [pageKey, reset, SetError]);
+  }, [pageKey, reset, SetError ,token]);
 
   async function onSubmit(values: SeoFormValues) {
     setLoading(true);
@@ -180,7 +185,7 @@ export default function SEO({token}: {token?: string}) {
 
       if (!authToken) {
         throw new Error(
-          "Admin token missing. Login in admin first (token stored in localStorage).",
+          "Admin token missing.Please Login in Again.",
         );
       }
 

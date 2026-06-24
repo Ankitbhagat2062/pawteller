@@ -131,7 +131,7 @@ export default function Dashboard({token}: {token?: string}) {
     }
 
     void loadHomepageCms();
-  }, [reset]);
+  }, [reset,token]);
 
   async function onSubmit(nextValues: HomepageContent) {
     setSaving(true);

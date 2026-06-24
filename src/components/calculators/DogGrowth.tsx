@@ -19,7 +19,7 @@ import { fetchFaq } from "@/db/faqCmsDb";
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
 
-export default async function DogGrowth({token}:{token:string}) {
+export default function DogGrowth({ token }: { token: string }) {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -65,10 +65,28 @@ export default async function DogGrowth({token}:{token:string}) {
   }, [initialized]); // Only tracks the initialized boolean flag
   const headerSection = dogGrowthPageCms.header;
   const seoContent = dogGrowthPageCms.seoContent;
+  const faqSection = dogGrowthPageCms.faqSection;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("dog-age", token);
-  const faqItems = faqData?.items ? faqData : dogGrowthPageCms.faqSection; // Fallback to an empty array if empty or missing
+  const [faqItems, setFaqItems] = useState(faqSection);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const faqData = await fetchFaq("dog-growth", token);
+      const nextFaqItems =
+        Array.isArray(faqData?.items) && faqData.items.length > 0
+          ? faqData.items
+          : faqSection;
+
+      if (!cancelled) setFaqItems(nextFaqItems);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [token, faqSection]);
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -173,7 +191,7 @@ export default async function DogGrowth({token}:{token:string}) {
           eligibleCards[(start + 1) % eligibleCards.length],
         ].filter(Boolean);
 
-         return <BacklinkCalculatorCard cards={cards} />
+        return <BacklinkCalculatorCard cards={cards} />
       })()}
 
       {/* Additional SEO Content */}

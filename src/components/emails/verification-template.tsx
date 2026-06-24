@@ -27,8 +27,8 @@ export default function VerifyEmail({ verificationLink }: VerifyEmailProps) {
   const currentYear = new Date().getFullYear();
   return (
     <Html>
-      <Head />
       <Tailwind>
+        <Head />
         <Body className="bg-white dark:bg-black dark:text-white font-aws text-[#212121]">
           <Preview>Pawteller Email Verification</Preview>
           <Container className="p-5 mx-auto bg-[#eee] dark:bg-[#252f3d] rounded">
@@ -57,7 +57,7 @@ export default function VerifyEmail({ verificationLink }: VerifyEmailProps) {
                     please ignore this email.
                   </Text>
 
-                  <Text className="text-[#333] dark:text-[#c1b5b5] text-[36px] my-2.5 mx-0 font-bold text-center">
+                  <Text className="text-[#333] dark:text-[#c1b5b5] text-sm my-2.5 mx-0 font-bold text-center">
                     Click the button below to verify your email address
                   </Text>
 

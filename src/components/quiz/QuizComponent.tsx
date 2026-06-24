@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { FaqSection } from "../shared/FaqSection";
 import { fetchFaq } from "@/db/faqCmsDb";
 
-export async function QuizComponent({ quizData ,token}: { quizData: quizDataProps ,token:string}) {
+export function QuizComponent({ quizData, token }: { quizData: quizDataProps, token: string }) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
@@ -35,8 +35,11 @@ export async function QuizComponent({ quizData ,token}: { quizData: quizDataProp
   >("idle");
   const QuizfaqItems = getQuizFaqItems(quizData.url);
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("quiz", token);
-  const faqItems = faqData?.items ? faqData : QuizfaqItems; // Fallback to an empty array if empty or missing
+  let faqItems = QuizfaqItems;
+  (async () => {
+    const faqData = await fetchFaq("quiz", token);
+    faqItems = faqData?.items ? faqData : QuizfaqItems; // Fallback to an empty array if empty or missing
+  })()
   const handleOptionSelect = (option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentStep] = option;

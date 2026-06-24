@@ -7,7 +7,7 @@ import {
 import Image from "next/image";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaqSection } from "@/components/shared/FaqSection";
 import { Button } from "@/components/ui/button";
 import {
@@ -106,7 +106,7 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-export default async function DogPregnancy({token}:{token:string}) {
+export default function DogPregnancy({ token }: { token: string }) {
   const [matingDate, setMatingDate] = useState(getTodayString());
   const [breedSize, setBreedSize] = useState<BreedSize>("small");
   const [result, setResult] = useState<PregnancyResult | null>(null);
@@ -125,8 +125,24 @@ export default async function DogPregnancy({token}:{token:string}) {
   const faqSection = dogPregnancyCms.faqSection;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("dog-pregnancy", token);
-  const faqItems = faqData?.items ? faqData : dogPregnancyCms.faqSection; // Fallback to an empty array if empty or missing
+  const [faqItems, setFaqItems] = useState(faqSection);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const faqData = await fetchFaq("dog-pregnancy", token);
+      const nextFaqItems =
+        Array.isArray(faqData?.items) && faqData.items.length > 0
+          ? faqData.items
+          : faqSection;
+
+      if (!cancelled) setFaqItems(nextFaqItems);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [token, faqSection]);
   return (
     <div className="w-full min-h-screen bg-white dark:bg-gray-950">
       {/* ── HERO ── */}
@@ -506,7 +522,7 @@ export default async function DogPregnancy({token}:{token:string}) {
           <h2 className="text-3xl sm:text-4xl font-black text-[#1A2B3C] dark:text-white text-center tracking-tight mb-12">
             Frequently Asked Questions
           </h2>
-          {faqItems.length > 0 && <FaqSection items={faqItems} />}
+          {faqItems?.length > 0 && <FaqSection items={faqItems ?? []} />}
         </div>
       </section>
 

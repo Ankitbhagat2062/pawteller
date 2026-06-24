@@ -182,7 +182,7 @@ export default function Calculators({token}: {token?: string}) {
     }
 
     void loadCalculatorsCms();
-  }, [reset]);
+  }, [reset,token]);
 
   async function onSubmit(nextValues: SerializedCalculatorPageCms) {
     setSaving(true);

@@ -90,7 +90,7 @@ export default function FAQ({token}: {token?: string}) {
 
   useEffect(() => {
     loadFaq(pageKey);
-  }, [pageKey]);
+  }, [pageKey,token]);
 
   async function onSubmit(values: FormValues) {
     setSaving(true);
