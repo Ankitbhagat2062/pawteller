@@ -74,6 +74,10 @@ const adminSchema = new Schema(
     adminEmail: { type: String, required: true, unique: true, index: true },
     passwordHash: { type: String, required: true },
 
+    fullName: { type: String, default: "" },
+    authorBio: { type: String, default: "" },
+    avatarUrl: { type: String, default: "" },
+
     // Stored per admin (provided at registration)
     // Encrypted at rest via schema middleware.
     resendApiKey: {
