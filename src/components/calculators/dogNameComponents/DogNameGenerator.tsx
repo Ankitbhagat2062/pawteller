@@ -74,7 +74,7 @@ export function DogNameGenerator({ token }: { token: string }) {
     let isCurrent = true;
 
     void (async () => {
-      const faqData = await fetchFaq("dog-name", token);
+      const faqData = await fetchFaq("dog-name");
       if (!isCurrent) return;
 
       setFaqItems(

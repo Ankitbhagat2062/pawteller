@@ -131,7 +131,7 @@ export default function DogPregnancy({ token }: { token: string }) {
     let cancelled = false;
 
     (async () => {
-      const faqData = await fetchFaq("dog-pregnancy", token);
+      const faqData = await fetchFaq("dog-pregnancy");
       const nextFaqItems =
         Array.isArray(faqData?.items) && faqData.items.length > 0
           ? faqData.items

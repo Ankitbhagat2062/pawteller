@@ -67,11 +67,9 @@ export default async function Home() {
   const dogLifesLeft = [homepageCms.dogLifes.left];
   const breedQuiz = [homepageCms.breedQuizCtas.feature];
   const jsonLdSchema = homepageCms.seo.jsonLd ?? {};
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("home", token);
+  const faqData = await fetchFaq("home");
   const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   return (
     <>
@@ -385,9 +383,7 @@ export default async function Home() {
           )}
 
           {/* Ads Space goes here */}
-          <section className="m-6 rounded-3xl flex items-center justify-center bg-amber-100 p-6 shadow-sm ring-1 ring-black/5 text-slate-950 min-h-62.5">
-            Ads Space Goes here
-          </section>
+          
 
           {/* Breed Quiz Cta's */}
           {breedQuiz && (

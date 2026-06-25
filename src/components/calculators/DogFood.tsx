@@ -84,7 +84,7 @@ export default function DogFood({ token }: { token: string }) {
     let cancelled = false;
 
     (async () => {
-      const faqData = await fetchFaq("dog-food", token);
+      const faqData = await fetchFaq("dog-food");
       const nextFaqItems =
         Array.isArray(faqData?.items) && faqData.items.length > 0
           ? faqData.items

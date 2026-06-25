@@ -53,14 +53,9 @@ export default function FAQ({token}: {token?: string}) {
     setSuccess(null);
 
     try {
-      const authToken = token
-      if (!authToken)
-        throw new Error("Missing admin token. Please login again.");
-
       const res = await fetch(
         `/api/admin/faq/get?pageKey=${encodeURIComponent(nextPageKey)}`,
         {
-          headers: { Authorization: `Bearer ${authToken}` },
           cache: "no-store",
         },
       );

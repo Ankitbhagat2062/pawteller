@@ -38,11 +38,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Contact() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("contact", token);
+  const faqData = await fetchFaq("contact");
   const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
 
