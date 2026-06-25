@@ -136,7 +136,6 @@ export default function About({token}: {token?: string}) {
         if (!token) throw new Error("Missing admin token. Login again.");
 
         const response = await fetch("/api/admin/about/get", {
-          headers: { Authorization: `Bearer ${token}` },
           cache: "no-store",
         });
 

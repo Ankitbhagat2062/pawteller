@@ -150,10 +150,8 @@ export default function Calculators({token}: {token?: string}) {
       setSuccess(null);
 
       try {
-        if (!token) throw new Error("Missing admin token. Login again.");
 
         const response = await fetch("/api/admin/calculators/get", {
-          headers: { Authorization: `Bearer ${token}` },
           cache: "no-store",
         });
 

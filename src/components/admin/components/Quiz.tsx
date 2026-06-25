@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -98,7 +98,7 @@ function buildDefaultFromQuiz(
   };
 }
 
-export default function Quiz({token}: {token?: string}) {
+export default function Quiz({ token }: { token?: string }) {
   const [quizId, setQuizId] = useState<string>(quizOptionList[0]?.quizId ?? "");
 
   const [loading, setLoading] = useState(false);
@@ -122,14 +122,10 @@ export default function Quiz({token}: {token?: string}) {
     setLoading(true);
     setError(null);
     try {
-      const authToken =  token;
-      if (!authToken)
-        throw new Error("Admin token missing. Please login again.");
 
       const res = await fetch(
         `/api/admin/quiz/get?quizId=${encodeURIComponent(nextQuizId)}`,
         {
-          headers: { Authorization: `Bearer ${authToken}` },
           cache: "no-store",
         },
       );
@@ -190,7 +186,7 @@ export default function Quiz({token}: {token?: string}) {
   useEffect(() => {
     if (!quizId) return;
     void loadQuiz(quizId);
-  }, [quizId,token]);
+  }, [quizId, token]);
 
   const stepsWatch = watch("steps");
 

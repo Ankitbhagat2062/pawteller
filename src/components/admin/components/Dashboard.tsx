@@ -100,7 +100,6 @@ export default function Dashboard({token}: {token?: string}) {
         if (!token) throw new Error("Missing admin token. Login again.");
 
         const response = await fetch("/api/admin/homepage/get", {
-          headers: { Authorization: `Bearer ${token}` },
           cache: "no-store",
         });
 
