@@ -81,7 +81,7 @@ export default async function QuizPage({
   const quizParam = (await searchParams)?.quiz;
   const cookieStore = await cookies();
   const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
+  const quizData = quizParam ? await fetchQuiz(quizParam as string) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
