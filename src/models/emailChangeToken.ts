@@ -5,10 +5,11 @@ const emailChangeTokenSchema = new Schema(
     adminEmail: { type: String, required: true, index: true },
     newEmail: { type: String, required: true, index: true },
 
-    // Stored raw token; single-use when verified.
+    // One-way hash of the raw bearer token; single-use when verified.
     token: { type: String, required: true, unique: true, index: true },
 
     expiresAt: { type: Date, required: true, index: true },
+
     usedAt: { type: Date, default: null, index: true },
   },
   {

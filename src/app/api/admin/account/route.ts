@@ -5,14 +5,13 @@ import { verifyAdminToken } from "@/lib/admin/adminAuth";
 import { getGlobalKeysForRequest } from "@/db/globalKeys";
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization") ?? "";
-  const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+  const authHeader = request.headers.get("authorization")?.trim() ?? "";
 
-  if (!token) {
+  if (!authHeader) {
     return NextResponse.json({ ok: false, error: "Missing auth token" }, { status: 401 });
   }
 
-  const verified = await verifyAdminToken(token);
+  const verified = await verifyAdminToken(authHeader);
   if (!verified.ok) {
     return NextResponse.json({ ok: false, error: "Invalid auth token" }, { status: 401 });
   }
@@ -26,7 +25,7 @@ export async function GET(request: Request) {
     await connectDB(mongodbUri);
 
     const admin = await AdminModel.findOne({ adminEmail: verified.payload.adminEmail }).select(
-      "fullName email authorBio avatarUrl penName role emailVerified",
+      "fullName adminEmail authorBio avatarUrl emailVerified",
     );
 
     if (!admin) {

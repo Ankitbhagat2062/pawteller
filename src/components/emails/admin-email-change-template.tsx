@@ -66,7 +66,7 @@ export default function AdminEmailChangeTemplate({
                 <Section className="mt-5">
                   <Button
                     href={verificationLink}
-                    className="bg-[#252f3d] dark:bg-[#a0a8b3] text-[#6b6465] dark:text-white no-underline text-center font-bold py-3 px-6 rounded"
+                    className="bg-[`#252f3d`] dark:bg-[`#a0a8b3`] text-white no-underline text-center font-bold py-3 px-6 rounded"
                   >
                     Confirm Email Change
                   </Button>

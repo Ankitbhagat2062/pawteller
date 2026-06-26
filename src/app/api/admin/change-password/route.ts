@@ -21,8 +21,7 @@ const changePasswordSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const authHeader = request.headers.get("authorization") ?? "";
-  const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+  const token = request.headers.get("authorization")?.trim() ?? "";
   if (!token) {
     return NextResponse.json({ ok: false, error: "Missing auth token" }, { status: 401 });
   }

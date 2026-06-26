@@ -84,7 +84,7 @@ export function DogNameGenerator({ token }: { token: string }) {
     return () => {
       isCurrent = false;
     };
-  }, [token]);
+  }, []);
   return (
     <div className="min-h-screen bg-background dark:bg-slate-950 py-8 md:py-12 px-4">
       <div className="max-w-6xl mx-auto space-y-16 md:space-y-20">

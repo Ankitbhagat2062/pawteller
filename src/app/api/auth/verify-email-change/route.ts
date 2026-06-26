@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import crypto from "crypto";
+
 import connectDB from "@/lib/mongodb";
 import { getGlobalKeysForRequest } from "@/db/globalKeys";
 import AdminModel from "@/models/admin";
@@ -12,6 +14,8 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: false, error: "Missing token" }, { status: 400 });
   }
 
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+
   const { mongodbUri } = await getGlobalKeysForRequest(request);
   if (!mongodbUri) {
     return NextResponse.json({ ok: false, error: "Missing MongoDB configuration" }, { status: 500 });
@@ -23,10 +27,10 @@ export async function GET(request: Request) {
     const now = new Date();
 
     // Single-use atomic verification:
-    // 1) match token, expiry, and not-yet-used
+    // 1) match token hash, expiry, and not-yet-used
     // 2) capture adminEmail + newEmail
     const emailToken = await EmailChangeTokenModel.findOne({
-      token,
+      token: tokenHash,
       expiresAt: { $gt: now },
       usedAt: null,
     });

@@ -1,16 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-// Note: this repo does not include @hookform/resolvers.
-// Zod validation is performed via schema.safeParse on submit.
-
-
-
-
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 
@@ -35,10 +29,8 @@ import {
   Bell,
   Mail,
   User,
-  Laptop,
   Smartphone,
   Monitor,
-  RotateCcw,
   Save,
   RotateCcw as RotateCcwIcon,
 } from "lucide-react";
@@ -46,34 +38,21 @@ import {
 import {
   BarChart3,
   Globe,
-  ExternalLink,
-  BadgeCheck,
 } from "lucide-react";
-
-import { Tabs as ShadTabs } from "@/components/ui/tabs";
-
 // --------------------
 // Mock MongoDB-like document types
 // --------------------
 
 type Role = "Administrator" | "Editor";
 
-type SocialLinks = {
-  website?: string;
-  twitter?: string;
-  linkedin?: string;
-};
-
 type AdminUserDoc = {
   _id: string;
   fullName: string;
-  penName: string;
   email: string;
   emailVerified: boolean;
   role: Role;
   authorBio: string;
   avatarUrl?: string;
-  social: SocialLinks;
 };
 
 type ActiveSessionDevice = {
@@ -87,18 +66,12 @@ type ActiveSessionDevice = {
 const MOCK_USER: AdminUserDoc = {
   _id: "admin_001",
   fullName: "Manish Jha",
-  penName: "Pawteller",
   email: "manish@pawteller.com",
   emailVerified: true,
   role: "Administrator",
   authorBio:
     "Dog-obsessed writer bringing practical tips and heartwarming stories to the Pawteller community.",
   avatarUrl: undefined,
-  social: {
-    website: "https://example.com",
-    twitter: "https://twitter.com/example",
-    linkedin: "https://linkedin.com/in/example",
-  },
 };
 
 const MOCK_SESSIONS: ActiveSessionDevice[] = [
@@ -129,27 +102,6 @@ export const publicProfileSchema = z.object({
     .max(300, "Bio must be 300 characters or fewer.")
     .optional()
     .or(z.literal("")),
-  website: z
-    .string()
-    .optional()
-    .or(z.literal(""))
-    .refine((v) => !v || /^https?:\/\//i.test(v), {
-      message: "Website must start with http:// or https://",
-    }),
-  twitter: z
-    .string()
-    .optional()
-    .or(z.literal(""))
-    .refine((v) => !v || /^https?:\/\//i.test(v), {
-      message: "Twitter link must start with http:// or https://",
-    }),
-  linkedin: z
-    .string()
-    .optional()
-    .or(z.literal(""))
-    .refine((v) => !v || /^https?:\/\//i.test(v), {
-      message: "LinkedIn link must start with http:// or https://",
-    }),
 });
 
 export type PublicProfileValues = z.infer<typeof publicProfileSchema>;
@@ -227,7 +179,7 @@ type AccountFormValues = {
   authorBio: string;
 };
 
-export default function Account() {
+export default function Account({ token }: { token?: string }) {
   const router = useRouter();
   const { theme } = useTheme();
 
@@ -250,7 +202,6 @@ export default function Account() {
 
   const publicForm = useForm<AccountFormValues>({
     mode: "onChange",
-
     defaultValues: {
       fullName: user.fullName,
       authorBio: user.authorBio,
@@ -267,34 +218,23 @@ export default function Account() {
 
   const publicValues = publicForm.watch();
 
-  const initialPublicValues = useMemo<PublicProfileValues>(
-    () => ({
-      fullName: MOCK_USER.fullName,
-      penName: MOCK_USER.penName,
-      email: MOCK_USER.email,
-      authorBio: MOCK_USER.authorBio,
-      website: MOCK_USER.social.website ?? "",
-      twitter: MOCK_USER.social.twitter ?? "",
-      linkedin: MOCK_USER.social.linkedin ?? "",
-    }),
-    []
-  );
+  const initialPublicValues:PublicProfileValues = MOCK_USER
 
   const securityForm = useForm<SecurityValues>({
     mode: "onSubmit",
   });
 
 
-  const notifDirty = useMemo(() => !isSameSimpleObject(notifs, initialNotifs), [notifs, initialNotifs]);
-  const publicDirty = useMemo(() => !isSameSimpleObject(publicValues, initialPublicValues), [publicValues, initialPublicValues]);
+  const notifDirty = !isSameSimpleObject(notifs, initialNotifs)
+  const publicDirty = !isSameSimpleObject(publicValues, initialPublicValues);
 
   const dirty = publicDirty || notifDirty;
 
   const passwordPw = securityForm.watch("newPassword") ?? "";
-  const strength = useMemo(() => passwordStrength(passwordPw), [passwordPw]);
+  const strength = passwordStrength(passwordPw);
 
   async function sendSecurityAlertStub(payload: {
-    type: "password_changed" | "session_revoked";
+    type: "password_changed" | "session_revoked" | 'profile_updated';
     toEmail: string;
     meta?: Record<string, string>;
   }) {
@@ -349,7 +289,7 @@ export default function Account() {
 
     // Stubbed email security alert
     await sendSecurityAlertStub({
-      type: "password_changed",
+      type: "profile_updated",
       toEmail: updatedUser.email,
       meta: { tab: activeTab, themeName },
     });
@@ -369,7 +309,10 @@ export default function Account() {
           confirmNewPassword: values.confirmNewPassword,
         },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
         },
       );
 
@@ -482,7 +425,6 @@ export default function Account() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <div className="font-semibold truncate">{user.fullName}</div>
-                          <div className="mt-1 text-sm text-muted-foreground">@{user.penName}</div>
 
                           <div className="mt-3 flex items-center gap-2 flex-wrap">
                             <Badge variant="secondary" className="capitalize">
@@ -648,9 +590,6 @@ export default function Account() {
                                   className="h-2 rounded-full transition-all"
                                   style={{ width: `${strength.score}%` }}
                                   aria-hidden
-                                  // Tailwind color decisions via inline map
-                                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                  // @ts-ignore
                                   data-strength={strength.label}
                                 />
                               </div>

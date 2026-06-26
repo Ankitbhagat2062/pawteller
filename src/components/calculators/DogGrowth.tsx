@@ -86,7 +86,7 @@ export default function DogGrowth({ token }: { token: string }) {
     return () => {
       cancelled = true;
     };
-  }, [token, faqSection]);
+  }, [faqSection]);
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">

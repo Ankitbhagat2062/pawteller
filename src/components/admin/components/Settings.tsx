@@ -1,7 +1,6 @@
 "use client";
 
-import * as React from "react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -21,7 +20,7 @@ import { Progress } from "@/components/ui/progress";
 
 const changeEmailSchema = z.object({
   newEmailAddress: z.string().trim().email("Enter a valid email address."),
-  currentPassword: z.string().trim().min(1, "Current password is required."),
+  currentPassword: z.string().min(1, "Current password is required."),
 });
 
 type ChangeEmailValues = z.infer<typeof changeEmailSchema>;
@@ -40,9 +39,9 @@ const strongPasswordSchema = z
 
 const changePasswordSchema = z
   .object({
-    currentPassword: z.string().trim().min(1, "Current password is required."),
+    currentPassword: z.string().min(1, "Current password is required."),
     newPassword: strongPasswordSchema,
-    confirmNewPassword: z.string().trim().min(1, "Please confirm your new password."),
+    confirmNewPassword: z.string().min(1, "Please confirm your new password."),
   })
   .refine((v) => v.newPassword === v.confirmNewPassword, {
     path: ["confirmNewPassword"],
@@ -96,7 +95,7 @@ export default function Settings({ token }: { token?: string }) {
   });
 
   const newPw = passwordForm.watch("newPassword") ?? "";
-  const strength = useMemo(() => passwordStrength(newPw), [newPw]);
+  const strength = passwordStrength(newPw);
 
   async function onChangeEmailSubmit(values: ChangeEmailValues) {
     setEmailLoading(true);

@@ -23,18 +23,21 @@ import ThemeToggle from "@/components/shared/ThemeToggle";
 export default function Navbar() {
   const pathname = usePathname();
 
-  const logout = () => {
-    // Clear cookies
+  const logout = async () => {
+    // Client-side cleanup as a fallback.
     if (typeof document !== "undefined") {
-      const cookies = document.cookie?.split(";") ?? [];
-      for (const cookie of cookies) {
-        const [name] = cookie.trim().split("=");
-        if (!name) continue;
-        document.cookie = `${name}=; Max-Age=0; path=/;`;
-        document.cookie = `${name}=; Max-Age=0; path=/admin;`;
+      try {
+        const cookies = document.cookie?.split(";") ?? [];
+        for (const cookie of cookies) {
+          const [name] = cookie.trim().split("=");
+          if (!name) continue;
+          document.cookie = `${name}=; Max-Age=0; path=/;`;
+          document.cookie = `${name}=; Max-Age=0; path=/admin;`;
+        }
+      } catch {
+        // ignore
       }
 
-      // Clear localStorage
       try {
         window.localStorage.clear();
       } catch {
@@ -42,10 +45,14 @@ export default function Navbar() {
       }
     }
 
-    // Hard reload to re-render auth-protected routes
-    if (typeof window !== "undefined") {
-      window.location.href = "/admin";
+    // Server-backed logout to explicitly expire the adminAuthToken cookie.
+    try {
+      await fetch("/admin/logout", { method: "POST" });
+    } catch {
+      // ignore; still redirect below
     }
+
+    window.location.href = "/admin";
   }
 
   return (
@@ -118,30 +125,28 @@ export default function Navbar() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href={`/admin/account`} className="flex items-center justify-center">
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/account`} className="flex items-center">
                   <User className="mr-2 h-4 w-4" />
                   <span>Account</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={`/admin/analytics`} className="flex items-center justify-center">
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/analytics`} className="flex items-center">
                   <BarChart3 className="mr-2 h-4 w-4" />
                   <span>Analytics</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={`/admin/settings`} className="flex items-center justify-center">
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/settings`} className="flex items-center">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Settings</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className=" text-red-600 focus:text-red-600">
-                <Button onClick={logout} className="cursor-pointer">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </Button>
+              <DropdownMenuItem variant="destructive" onSelect={logout} className=" text-red-600 focus:text-red-600">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

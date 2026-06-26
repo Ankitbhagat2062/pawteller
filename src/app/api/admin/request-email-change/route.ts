@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import { Resend } from "resend";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
@@ -21,7 +22,7 @@ const TOKEN_TTL_MINUTES = 15;
 
 export async function POST(request: Request) {
   const authHeader = request.headers.get("authorization") ?? "";
-  const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+  const token = authHeader.trim();
   if (!token) {
     return NextResponse.json({ ok: false, error: "Missing auth token" }, { status: 401 });
   }
@@ -75,16 +76,23 @@ export async function POST(request: Request) {
     const token = uuidv4();
     const expiresAt = new Date(Date.now() + TOKEN_TTL_MINUTES * 60 * 1000);
 
+    const tokenHash = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+
     // Replace any existing outstanding token(s) for this admin.
     await EmailChangeTokenModel.deleteMany({ adminEmail: admin.adminEmail });
 
     const emailChange = new EmailChangeTokenModel({
       adminEmail: admin.adminEmail,
       newEmail,
-      token,
+      token: tokenHash,
       expiresAt,
       usedAt: null,
     });
+
     await emailChange.save();
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -119,7 +127,8 @@ export async function POST(request: Request) {
 
     if (data.error && typeof data.error === "object" && "message" in data.error) {
       // Best-effort cleanup so we don't leave dangling tokens.
-      await EmailChangeTokenModel.deleteOne({ token });
+      await EmailChangeTokenModel.deleteOne({ token: tokenHash });
+
       return NextResponse.json({ ok: false, error: "Failed to send email" }, { status: 422 });
     }
 

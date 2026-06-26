@@ -157,7 +157,7 @@ const DogAgeCalculator = ({ token }: DogAgeCalculatorProps) => {
     return () => {
       cancelled = true;
     };
-  }, [token, faqSection]);
+  }, [faqSection]);
   return (
     <TooltipProvider>
       <div className="min-h-screen ">

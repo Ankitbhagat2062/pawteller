@@ -29,7 +29,7 @@ type ContactErrorResponse = {
   error?: string;
 };
 
-export function QuizComponent({ quizData }: { quizData: quizDataProps, token: string }) {
+export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
