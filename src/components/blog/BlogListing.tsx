@@ -1,5 +1,4 @@
 
-import { cookies } from "next/headers";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -73,12 +72,10 @@ function FeaturedBlogCard({ post }: { post: BlogPost }) {
   );
 }
 export default async function BlogListing() {
-  const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminAuthToken")?.value;
   // Fetch the FAQ array for this specific page layout string
   const faqData = await fetchFaq("blog");
   const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
-  const specificBlog = await fetchBlog("how-to-train-your-dog", adminToken);
+  const specificBlog = await fetchBlog("how-to-train-your-dog");
   const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const featuredPost = blogs.length
     ? (() => {

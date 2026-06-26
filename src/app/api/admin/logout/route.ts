@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const res = NextResponse.redirect(new URL("/admin", request.url), {
+  const baseUrl =   process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
+  const res = NextResponse.redirect(new URL("/admin", baseUrl), {
     status: 303,
   });
   // Expire the auth cookie so server components stop accepting the session.

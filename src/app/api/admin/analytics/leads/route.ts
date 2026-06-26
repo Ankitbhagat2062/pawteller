@@ -6,11 +6,8 @@ import SubscriberModel from "@/models/subscriber";
 import QuizModel from "@/models/quiz";
 import ContactModel from "@/models/contact";
 
-const QuizTopMatchSchema = z.object({
-  rank: z.number(),
-  breed: z.string(),
-  compatibility: z.number(),
-});
+import { verifyAdminToken } from "@/lib/admin/adminAuth";
+
 
 const LeadStatusSchema = z.enum(["subscriber", "non-subscriber"]);
 
@@ -18,6 +15,9 @@ const LeadsListItemSchema = z.object({
   email: z.string().email(),
   name: z.string().nullable().optional(),
   status: LeadStatusSchema,
+  // Explicitly include verification state so the admin UI / KPIs
+  // don't assume all subscribers are verified.
+  isVerified: z.boolean(),
   sources: z.array(z.enum(["quiz", "contact", "newsletter"])),
   lastActiveAt: z.string(),
   joinedAt: z.string(),
@@ -87,11 +87,23 @@ function parseBucketStartFromKey(period: "weekly" | "monthly", key: string) {
   return new Date(`${key}T00:00:00.000Z`);
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const authHeader = request.headers.get("authorization")?.trim() ?? "";
+
+  if (!authHeader) {
+    return NextResponse.json({ ok: false, error: "Missing auth token" }, { status: 401 });
+  }
+
+  const verified = await verifyAdminToken(authHeader);
+  if (!verified.ok) {
+    return NextResponse.json({ ok: false, error: "Invalid auth token" }, { status: 401 });
+  }
+
   try {
     await connectDB();
 
     const [subscribers, quizzes, contacts] = await Promise.all([
+
       SubscriberModel.find(
         {},
         { email: 1, isVerified: 1, createdAt: 1 } as any,
@@ -228,15 +240,20 @@ export async function GET() {
       if (dates.length === 0) return [];
 
       const latest = dates[dates.length - 1];
-      const earliest = new Date(latest);
 
-      if (period === "monthly") earliest.setUTCMonth(earliest.getUTCMonth() - 5);
-      else earliest.setUTCDate(earliest.getUTCDate() - 42);
+      // Normalize the cutoff to the first bucket boundary so we don't partially exclude leads
+      // that fall in the earliest bucket.
+      const earliestRaw = new Date(latest);
+      if (period === "monthly") earliestRaw.setUTCMonth(earliestRaw.getUTCMonth() - 5);
+      else earliestRaw.setUTCDate(earliestRaw.getUTCDate() - 42);
+
+      const earliestBoundaryKey = bucketKey(earliestRaw, period);
+      const earliestBoundary = parseBucketStartFromKey(period, earliestBoundaryKey);
 
       const bucketMap = new Map<string, number>();
       for (const l of leads) {
         const d = l.joinedAt;
-        if (d < earliest) continue;
+        if (d < earliestBoundary) continue;
         const key = bucketKey(d, period);
         bucketMap.set(key, (bucketMap.get(key) ?? 0) + 1);
       }
@@ -257,12 +274,13 @@ export async function GET() {
     const leadsList = leads.map((l) => {
       const subscriber = subscriberByEmail.get(l.email);
       const status: "subscriber" | "non-subscriber" = subscriber ? "subscriber" : "non-subscriber";
-      const sources = Array.from(l.sources);
       return {
         email: l.email,
         name: l.name,
         status,
-        sources,
+        // Preserve explicit subscriber verification state from source data.
+        isVerified: subscriber ? subscriber.isVerified : false,
+        sources: Array.from(l.sources),
         lastActiveAt: toISO(l.lastActiveAt),
         joinedAt: toISO(l.joinedAt),
       };

@@ -12,15 +12,12 @@ import BacklinkCalculatorCard from "@/components/shared/BacklinkCalculatorCard";
 import { FaqSection } from "@/components/shared/FaqSection";
 import BlogCard from "@/components/shared/BlogCard";
 import { fetchBlog } from "@/db/blogCmsDb";
-import { cookies } from "next/headers";
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { blogPost } = await params;
-  const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const specificBlog = await fetchBlog(blogPost, adminToken);
+  const specificBlog = await fetchBlog(blogPost);
   const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const post = blogs.find((p) => p.url.replace("/blog/", "") === blogPost);
 
@@ -68,10 +65,8 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const cookieStore = await cookies();
   const { blogPost } = await params;
-  const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const specificBlog = await fetchBlog(blogPost, adminToken);
+  const specificBlog = await fetchBlog(blogPost);
   const blogs: BlogPost[] = specificBlog ? specificBlog?.posts : blogPosts;
   const post = blogs.find((p) => p.url.replace("/blog/", "") === blogPost);
 

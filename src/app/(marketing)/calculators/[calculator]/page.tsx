@@ -105,8 +105,6 @@ export default async function CalculatorPage({ params }: PageProps) {
     ? SLUG_TO_COMPONENT[normalizedSlug]
     : undefined;
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   return (
     <>
@@ -117,7 +115,7 @@ export default async function CalculatorPage({ params }: PageProps) {
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {Component ? (
           <section className="">
-            <Component token={token ?? ""} />
+            <Component />
           </section>
         ) : (
           notFound()

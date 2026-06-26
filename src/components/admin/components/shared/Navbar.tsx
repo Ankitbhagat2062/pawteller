@@ -25,7 +25,10 @@ export default function Navbar() {
 
   const logout = async () => {
     try {
-      await fetch("/api/admin/logout", { method: "POST" });
+      const response = await fetch("/api/admin/logout", { method: "POST" });
+      if (!response.ok) {
+        throw new Error(`Logout failed with status ${response.status}`);
+      }
       if (typeof document !== "undefined") {
         window.localStorage.clear();
         const cookies = document.cookie?.split(";") ?? [];
