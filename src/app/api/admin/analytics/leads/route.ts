@@ -94,11 +94,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: false, error: "Missing auth token" }, { status: 401 });
   }
 
-  const verified = await verifyAdminToken(authHeader);
-  if (!verified.ok) {
-    return NextResponse.json({ ok: false, error: "Invalid auth token" }, { status: 401 });
+  const authResult = await verifyAdminToken(authHeader);
+
+  if (!authResult.ok) {
+    return NextResponse.json(
+      { error: `Verification failed: ${authResult.reason}` },
+      { status: 401 }
+    );
   }
 
+  // Proceed with your MongoDB aggregation logic safely...
   try {
     await connectDB();
 

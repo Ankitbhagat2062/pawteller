@@ -30,6 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useAdminToken from "@/hooks/token";
 
 type LeadSource = "newsletter" | "quiz" | "contact_form";
 
@@ -129,15 +130,21 @@ export default function Analytics() {
   const [fetchState, setFetchState] = useState<FetchState>({ status: "loading" });
   const [query, setQuery] = useState("");
   const [sourceFilter, setSourceFilter] = useState<"all" | LeadSource>("all");
-
+  const { adminAuthToken } = useAdminToken();
   useEffect(() => {
     let cancelled = false;
-
     async function run() {
       setFetchState({ status: "loading" });
+      if (!adminAuthToken) return;
       try {
         const res = await axios.get<AnalyticsResponse>(
           "/api/admin/analytics/leads",
+          {
+            headers: {
+              // Attaches the token as a Bearer token or direct token depending on your API setup
+              Authorization: `Bearer ${adminAuthToken}`,
+            },
+          }
         );
 
         if (cancelled) return;
@@ -161,7 +168,7 @@ export default function Analytics() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [adminAuthToken]);
 
   const { leads, kpis } = useMemo((): {
     leads: UnifiedLead[];
