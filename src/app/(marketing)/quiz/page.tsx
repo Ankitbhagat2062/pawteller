@@ -3,7 +3,6 @@ import { QuizComponent } from "@/components/quiz/QuizComponent";
 import { quizData as allQuizData } from "@/lib/cms/quizpage";
 import type { quizDataProps } from "@/lib/types";
 import { fetchQuiz } from "@/db/quizCmsDb";
-import { cookies } from "next/headers";
 
 // Used as a fallback when `quiz` query param is missing/invalid.
 const fallbackSeo = allQuizData[0]?.seo;
@@ -14,9 +13,7 @@ export async function generateMetadata({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const quizParam = (await searchParams)?.quiz;
-  const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
+  const quizData = quizParam ? await fetchQuiz(quizParam as string) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
@@ -81,9 +78,7 @@ export default async function QuizPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const quizParam = (await searchParams)?.quiz;
-  const cookieStore = await cookies();
-  const adminToken = cookieStore.get("adminAuthToken")?.value;
-  const quizData = quizParam ? await fetchQuiz(quizParam as string, adminToken) : null;
+  const quizData = quizParam ? await fetchQuiz(quizParam as string) : null;
   const selectedQuiz: quizDataProps | undefined = allQuizData.find((q) =>
     q.url.includes(`quiz=${quizParam}`),
   );
@@ -92,7 +87,7 @@ export default async function QuizPage({
 
   return (
     <main>
-      <QuizComponent quizData={quizToRender} token={adminToken ?? ""} />
+      <QuizComponent quizData={quizToRender} />
     </main>
   );
 }

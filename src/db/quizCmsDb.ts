@@ -1,4 +1,4 @@
-export async function fetchQuiz(quizId: string, token?: string): Promise<any | null> {
+export async function fetchQuiz(quizId: string): Promise<any | null> {
   try {
     // 1. Build the URL with the required quizId query parameter
     const url = `/api/admin/quiz/get?quizId=${encodeURIComponent(quizId)}`;
@@ -7,10 +7,6 @@ export async function fetchQuiz(quizId: string, token?: string): Promise<any | n
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
-
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
 
     const res = await fetch(url, {
       method: 'GET',

@@ -147,7 +147,7 @@ const DogAgeCalculator = ({ token }: DogAgeCalculatorProps) => {
     let cancelled = false;
 
     (async () => {
-      const faqData = await fetchFaq("dog-age", token);
+      const faqData = await fetchFaq("dog-age");
       const nextFaqItems =
         Array.isArray(faqData?.items) && faqData.items.length > 0
           ? faqData.items : faqSection;
@@ -157,7 +157,7 @@ const DogAgeCalculator = ({ token }: DogAgeCalculatorProps) => {
     return () => {
       cancelled = true;
     };
-  }, [token, faqSection]);
+  }, [faqSection]);
   return (
     <TooltipProvider>
       <div className="min-h-screen ">

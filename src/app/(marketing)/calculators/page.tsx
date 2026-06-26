@@ -363,50 +363,12 @@ export default async function CalculatorsPage() {
 
         {/* Ads space goes here */}
 
-        {/* FAQ */}
-        {faqSection && (
-          <section className="mt-14">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-emerald-800 dark:text-emerald-300">
-                  {faqSection.id ? faqSection.id : `FAQ`}
-                </p>
-                <h2 className="mt-2 font-[Georgia,serif] text-3xl font-bold tracking-normal text-slate-900 dark:text-slate-50">
-                  {faqSection.title
-                    ? faqSection.title
-                    : `Questions about dog calculators`}
-                </h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
-                  {faqSection.description
-                    ? faqSection.description
-                    : `Quick answers to help you choose the right tool and understand
-                  what the results mean.`}
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <span
-                  className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-emerald-300"
-                  aria-hidden="true"
-                >
-                  ?
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              {faqSection.faqItems && (
-                <FaqSection items={faqSection.faqItems} />
-              )}
-            </div>
-          </section>
-        )}
-
         {/* Backlinks + Blog */}
         {backlinkblogSection && (
-          <section className="mt-14 grid gap-6 lg:grid-cols-12">
+          <section className="mt-14 grid gap-6">
             {/* Backlinks + Blog */}
-            <div className="lg:col-span-5">
-              <div className="min-h-62.5 rounded-[24px] bg-white/70 p-6 ring-1 ring-border dark:bg-zinc-950/30">
+            <div className="lg:col-span-5 w-full">
+              <div className="min-h-62.5 rounded-[24px] w-full bg-white/70 p-6 ring-1 ring-border dark:bg-zinc-950/30">
                 <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
                   {backlinkblogSection.title
                     ? backlinkblogSection.title
@@ -551,6 +513,43 @@ export default async function CalculatorsPage() {
 
         {/* Ads Space goes here */}
 
+        {/* FAQ */}
+        {faqSection && (
+          <section className="mt-14">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-emerald-800 dark:text-emerald-300">
+                  {faqSection.id ? faqSection.id : `FAQ`}
+                </p>
+                <h2 className="mt-2 font-[Georgia,serif] text-3xl font-bold tracking-normal text-slate-900 dark:text-slate-50">
+                  {faqSection.title
+                    ? faqSection.title
+                    : `Questions about dog calculators`}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  {faqSection.description
+                    ? faqSection.description
+                    : `Quick answers to help you choose the right tool and understand
+                  what the results mean.`}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-emerald-300"
+                  aria-hidden="true"
+                >
+                  ?
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              {faqSection.faqItems && (
+                <FaqSection items={faqSection.faqItems} />
+              )}
+            </div>
+          </section>
+        )}
       </main>
     </>
   );

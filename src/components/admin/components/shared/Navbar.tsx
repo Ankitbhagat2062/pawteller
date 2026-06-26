@@ -1,9 +1,8 @@
 "use client";
 
-import { BarChart3, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { BarChart3, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import MobileMenu from "@/components/admin/components/shared/MobileMenu";
 // Shadcn UI Components
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -18,22 +17,43 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { topNavLinks } from "@/lib/admin/constants";
 import { cn } from "@/lib/utils"; // Standard shadcn utils
-import React from "react";
 import Image from "next/image";
+import ThemeToggle from "@/components/shared/ThemeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { resolvedTheme, setTheme } = useTheme();
 
-  // Avoid hydration mismatch: don't render icon based on theme until mounted.
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const logout = async () => {
+    // Client-side cleanup as a fallback.
+    if (typeof document !== "undefined") {
+      try {
+        const cookies = document.cookie?.split(";") ?? [];
+        for (const cookie of cookies) {
+          const [name] = cookie.trim().split("=");
+          if (!name) continue;
+          document.cookie = `${name}=; Max-Age=0; path=/;`;
+          document.cookie = `${name}=; Max-Age=0; path=/admin;`;
+        }
+      } catch {
+        // ignore
+      }
 
-  const isDark = mounted && resolvedTheme === "dark";
+      try {
+        window.localStorage.clear();
+      } catch {
+        // ignore
+      }
+    }
 
-  const toggleTheme = () => {
-    setTheme(isDark ? "light" : "dark");
-  };
+    // Server-backed logout to explicitly expire the adminAuthToken cookie.
+    try {
+      await fetch("/admin/logout", { method: "POST" });
+    } catch {
+      // ignore; still redirect below
+    }
+
+    window.location.href = "/admin";
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full h-16 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -81,13 +101,7 @@ export default function Navbar() {
         {/* Right Section: Actions */}
         <div className="flex items-center gap-2">
           {/* Theme Toggle */}
-          <Button variant="ghost" size="icon" onClick={toggleTheme}>
-            {isDark ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
-          </Button>
+          <ThemeToggle />
 
           {/* Profile Dropdown */}
           <DropdownMenu>
@@ -111,20 +125,26 @@ export default function Navbar() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Account</span>
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/account`} className="flex items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Account</span>
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BarChart3 className="mr-2 h-4 w-4" />
-                <span>Analytics</span>
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/analytics`} className="flex items-center">
+                  <BarChart3 className="mr-2 h-4 w-4" />
+                  <span>Analytics</span>
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/settings`} className="flex items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600 focus:text-red-600">
+              <DropdownMenuItem variant="destructive" onSelect={logout} className=" text-red-600 focus:text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>

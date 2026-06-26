@@ -119,7 +119,6 @@ export default function SEO({token}: {token?: string}) {
           `/api/admin/seo/get?pageKey=${encodeURIComponent(pageKey)}`,
           {
             method: "GET",
-            headers: { Authorization: `Bearer ${token}` },
             cache: "no-store",
           },
         );

@@ -26,11 +26,9 @@ export async function generateMetadata(): Promise<Metadata> {
 const lastUpdated = "May 17, 2026";
 
 export default async function TermsPage() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("adminAuthToken")?.value;
 
   // Fetch the FAQ array for this specific page layout string
-  const faqData = await fetchFaq("terms", token);
+  const faqData = await fetchFaq("terms");
   const faqItems = faqData?.items ?? []; // Fallback to an empty array if empty or missing
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MRMZHPN5';
 

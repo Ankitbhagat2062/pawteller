@@ -19,13 +19,10 @@ export function FaqBlogBacklink({ page, category, faqSection }: { page: String, 
         const token = adminAuthToken ?? '';
 
         void (async () => {
-            const faqData = await fetchFaq(`${page}`, token);
+            const faqData = await fetchFaq(`${page}`);
             const specificBlog = await fetchBlog("how-to-train-your-dog", token);
 
             if (!isCurrent) return;
-
-            // If FAQ fetch fails or returns no items, fall back to the prop.
-            // If you prefer “show nothing” instead, replace `faqSection` with `[]`.
             setFaqItems(Array.isArray(faqData?.items) ? faqData.items : faqSection);
 
             setBlogs(

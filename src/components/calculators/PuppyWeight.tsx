@@ -478,7 +478,7 @@ export default function PuppyWeight({ token }: { token: string }) {
     let isCurrent = true;
 
     void (async () => {
-      const faqData = await fetchFaq("puppy-weight", token);
+      const faqData = await fetchFaq("puppy-weight");
       const specificBlog = await fetchBlog("how-to-train-your-dog", token);
 
       if (!isCurrent) return;

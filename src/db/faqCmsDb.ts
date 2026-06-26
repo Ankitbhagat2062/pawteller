@@ -1,4 +1,4 @@
-export async function fetchFaq(pageKey: string, token?: string): Promise<any | null> {
+export async function fetchFaq(pageKey: string): Promise<any | null> {
   try {
     // 1. Build the URL with the required pageKey query parameter
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -9,11 +9,6 @@ export async function fetchFaq(pageKey: string, token?: string): Promise<any | n
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
-
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
     const res = await fetch(url.toString(), {
       method: 'GET',
       headers,

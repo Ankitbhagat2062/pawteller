@@ -13,6 +13,8 @@ import Navbar from "@/components/admin/components/shared/Navbar";
 import AdminSlugClient from "./AdminSlugClient";
 import { LoginRegisterSplit } from "@/components/admin/LoginRegisterSplit";
 import { cookies } from "next/headers";
+import Settings from "@/components/admin/components/Settings";
+import Account from "@/components/admin/components/Account";
 
 const SLUG_TO_COMPONENT = {
   admin: LoginRegisterSplit,
@@ -23,6 +25,8 @@ const SLUG_TO_COMPONENT = {
   about: About,
   calculators: Calculators,
   quiz: Quiz,
+  settings: Settings,
+  account: Account,
 } as const;
 
 type ComponentSlug = keyof typeof SLUG_TO_COMPONENT;

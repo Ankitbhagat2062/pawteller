@@ -29,7 +29,7 @@ type ContactErrorResponse = {
   error?: string;
 };
 
-export function QuizComponent({ quizData }: { quizData: quizDataProps, token: string }) {
+export function QuizComponent({ quizData }: { quizData: quizDataProps }) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
@@ -401,7 +401,7 @@ export function QuizComponent({ quizData }: { quizData: quizDataProps, token: st
           </p>
         </header>
 
-        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-8 sm:pb-10">
+        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-8 sm:pb-10 max-w-5xl mx-auto">
           <div className="mx-auto w-full max-w-3xl">
             <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
               <div className="pointer-events-none absolute inset-0 opacity-70">

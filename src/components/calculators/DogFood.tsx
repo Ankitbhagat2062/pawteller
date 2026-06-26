@@ -84,7 +84,7 @@ export default function DogFood({ token }: { token: string }) {
     let cancelled = false;
 
     (async () => {
-      const faqData = await fetchFaq("dog-food", token);
+      const faqData = await fetchFaq("dog-food");
       const nextFaqItems =
         Array.isArray(faqData?.items) && faqData.items.length > 0
           ? faqData.items
@@ -95,7 +95,7 @@ export default function DogFood({ token }: { token: string }) {
     return () => {
       cancelled = true;
     };
-  }, [token, faqSection]);
+  }, [faqSection]);
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">

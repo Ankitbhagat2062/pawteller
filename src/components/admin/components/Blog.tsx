@@ -168,7 +168,6 @@ export default function Blog({ token }: { token?: string }) {
         const res = await fetch(
           `/api/admin/blog/get?slug=${encodeURIComponent(nextSlug)}`,
           {
-            headers: { Authorization: `Bearer ${authToken}` },
             cache: "no-store",
           },
         );
