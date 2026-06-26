@@ -1,9 +1,10 @@
+import Analytics from "@/components/admin/components/Analytics"
 
 const page = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <Analytics />
+    </>
   )
 }
 
