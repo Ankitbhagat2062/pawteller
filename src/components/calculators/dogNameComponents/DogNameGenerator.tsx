@@ -28,7 +28,7 @@ function toSupportedSize(
     | "All";
 }
 
-export function DogNameGenerator({ token }: { token: string }) {
+export function DogNameGenerator() {
   const [gender, setGender] = useState<DogGender | "All">(INITIAL_GENDER);
   const [size, setSize] = useState<DogSize | "All">(INITIAL_SIZE);
   const [startingLetter, setStartingLetter] = useState<StartingLetter>(

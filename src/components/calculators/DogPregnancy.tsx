@@ -106,7 +106,7 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-export default function DogPregnancy({ token }: { token: string }) {
+export default function DogPregnancy() {
   const [matingDate, setMatingDate] = useState(getTodayString());
   const [breedSize, setBreedSize] = useState<BreedSize>("small");
   const [result, setResult] = useState<PregnancyResult | null>(null);

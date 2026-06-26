@@ -49,7 +49,7 @@ const calculateCalories = (state: CalculatorState): Results => {
   return { dailyCalories, cupsPerDay };
 };
 
-export default function DogFood({ token }: { token: string }) {
+export default function DogFood() {
   const [state, setState] = useState<CalculatorState>({
     weight: 30,
     lifeStage: "Adult",

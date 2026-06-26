@@ -19,7 +19,7 @@ import { fetchFaq } from "@/db/faqCmsDb";
 const PUPPY_IMAGE =
   "https://plus.unsplash.com/premium_photo-1726783313963-634203cb6402?q=80&w=1201&auto=format&fit=crop";
 
-export default function DogGrowth({ token }: { token: string }) {
+export default function DogGrowth() {
   const [growthInfo, setGrowthInfo] = useState<GrowthInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

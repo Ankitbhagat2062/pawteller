@@ -24,9 +24,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const logout = async () => {
-    // Client-side cleanup as a fallback.
-    if (typeof document !== "undefined") {
-      try {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+      if (typeof document !== "undefined") {
+        window.localStorage.clear();
         const cookies = document.cookie?.split(";") ?? [];
         for (const cookie of cookies) {
           const [name] = cookie.trim().split("=");
@@ -34,22 +35,9 @@ export default function Navbar() {
           document.cookie = `${name}=; Max-Age=0; path=/;`;
           document.cookie = `${name}=; Max-Age=0; path=/admin;`;
         }
-      } catch {
-        // ignore
       }
-
-      try {
-        window.localStorage.clear();
-      } catch {
-        // ignore
-      }
-    }
-
-    // Server-backed logout to explicitly expire the adminAuthToken cookie.
-    try {
-      await fetch("/admin/logout", { method: "POST" });
-    } catch {
-      // ignore; still redirect below
+    } catch (error) {
+      console.log(error)
     }
 
     window.location.href = "/admin";
@@ -153,5 +141,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  );
+  )
 }
