@@ -5,6 +5,11 @@ import VerifyEmail from "@/components/emails/verification-template";
 import { getGlobalKeysForRequest } from "@/db/globalKeys";
 import connectDB from "@/lib/mongodb";
 import SubscriberModel from "@/models/subscriber";
+import {
+  normalizeSubscriberEmail,
+  subscriberEmailSchema,
+} from "@/lib/subscriberEmailSecurity";
+
 
 const fromMail = process.env.FROM_MAIL?.trim();
 export async function POST(request: Request) {
@@ -23,8 +28,16 @@ export async function POST(request: Request) {
   const resend = new Resend(resendApiKey);
   const body = (await request.json().catch(() => null)) as {
     email?: string;
+    // Honeypot field; bots often populate it.
+    website?: unknown;
   } | null;
   const email = body?.email?.trim();
+  const honeypot = body?.website;
+
+  // If honeypot is filled, return generic success without DB writes or emails.
+  if (typeof honeypot === "string" && honeypot.trim().length > 0) {
+    return NextResponse.json({ success: true }, { status: 201 });
+  }
 
   if (!email) {
     return NextResponse.json(
@@ -40,10 +53,18 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+    const parsedEmail = subscriberEmailSchema.safeParse(email);
+    if (!parsedEmail.success) {
+      // Bot-like traffic: respond generically without writing.
+      return NextResponse.json({ success: true }, { status: 201 });
+    }
+
+    const normalizedEmail = normalizeSubscriberEmail(parsedEmail.data);
+
     await connectDB(mongodbUri);
 
     // If email is already registered (unique index), prevent creating a new subscriber record.
-    const existingSubscriber = await SubscriberModel.findOne({ email });
+    const existingSubscriber = await SubscriberModel.findOne({ email: normalizedEmail });
     if (existingSubscriber) {
       return NextResponse.json(
         { success: false, error: "Already Registered User " },
@@ -55,7 +76,7 @@ export async function POST(request: Request) {
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
     const subscriber = new SubscriberModel({
-      email,
+      email: normalizedEmail,
       verificationToken,
       expiresAt,
       isVerified: false,
@@ -64,7 +85,7 @@ export async function POST(request: Request) {
     await subscriber.save();
 
     const tokenVerifyUrl = new URL(
-      `/api/verify?email=${email}&token=${verificationToken}`,
+      `/api/verify?email=${normalizedEmail}&token=${verificationToken}`,
       appUrl,
     );
     const fromAddress: string = fromMail.includes("@")
@@ -73,7 +94,8 @@ export async function POST(request: Request) {
     // Deliver the Welcome Email and Features Overview
     const data = await resend.emails.send({
       from: fromAddress,
-      to: email,
+      to: normalizedEmail,
+
       subject: "Verify your email",
       react: VerifyEmail({ verificationLink: tokenVerifyUrl.toString() }),
     });
@@ -83,13 +105,14 @@ export async function POST(request: Request) {
       "message" in data.error
     ) {
       console.error("Error sending verification email:", data.error);
-      await SubscriberModel.deleteOne({ email });
+      await SubscriberModel.deleteOne({ email: normalizedEmail });
+
       return NextResponse.json(
         { error: "Failed to send verification email" },
         { status: 422 },
       );
     }
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { status: 201 });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

@@ -92,10 +92,20 @@ export async function GET() {
     await connectDB();
 
     const [subscribers, quizzes, contacts] = await Promise.all([
-      SubscriberModel.find({}, { email: 1, isVerified: 1, createdAt: 1 }).lean(),
-      QuizModel.find({}, { email: 1, quizId: 1, results: 1, createdAt: 1 }).lean(),
-      ContactModel.find({}, { name: 1, email: 1, topic: 1, createdAt: 1 }).lean(),
+      SubscriberModel.find(
+        {},
+        { email: 1, isVerified: 1, createdAt: 1 } as any,
+      ).lean(),
+      QuizModel.find(
+        {},
+        { email: 1, quizId: 1, results: 1, createdAt: 1 } as any,
+      ).lean(),
+      ContactModel.find(
+        {},
+        { name: 1, email: 1, topic: 1, createdAt: 1 } as any,
+      ).lean(),
     ]);
+
 
     const subscriberByEmail = new Map<string, { isVerified: boolean; createdAt?: Date }>();
     for (const s of subscribers) {

@@ -9,12 +9,18 @@ export async function submitVerificationForm(
 ): Promise<FormState> {
   try {
     const formSchema = z.object({
-      email: z.email(),
-      // kept for backward compatibility with the form UI,
+      email: z.string().email(),
       // but the backend will generate a single-use link.
     });
 
-    const parsed = formSchema.safeParse(Object.fromEntries(formData.entries()));
+    // Honeypot (invisible field). If filled, drop silently (no Axios call).
+    const payload = Object.fromEntries(formData.entries()) as Record<string, unknown>;
+    const honeypotValue = payload.website;
+    if (typeof honeypotValue === "string" && honeypotValue.trim().length > 0) {
+      return { success: true, message: "" };
+    }
+
+    const parsed = formSchema.safeParse(payload);
     if (!parsed.success) {
       return {
         success: false,
@@ -35,7 +41,7 @@ export async function submitVerificationForm(
     const url = new URL("/api/send-verification-email", appUrl);
     const res = await axios.post(
       url.toString(),
-      { email: parsed.data.email },
+      { email: parsed.data.email, website: payload.website },
       {
         validateStatus: () => true,
         headers: { "Content-Type": "application/json" },
