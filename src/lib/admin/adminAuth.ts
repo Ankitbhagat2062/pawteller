@@ -67,8 +67,7 @@ export async function verifyAdminToken(token: string) {
         role: typeof payload.role === "string" ? payload.role : "admin",
       },
     };
-  } catch(err) {
-    console.log(err);
+  } catch {
     return { ok: false as const, reason: "INVALID" };
   }
 }
