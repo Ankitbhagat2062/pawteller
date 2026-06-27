@@ -15,6 +15,7 @@ import { LoginRegisterSplit } from "@/components/admin/LoginRegisterSplit";
 import { cookies } from "next/headers";
 import Settings from "@/components/admin/components/Settings";
 import Account from "@/components/admin/components/Account";
+import Analytics from "@/components/admin/components/Analytics";
 
 const SLUG_TO_COMPONENT = {
   admin: LoginRegisterSplit,
@@ -27,6 +28,7 @@ const SLUG_TO_COMPONENT = {
   quiz: Quiz,
   settings: Settings,
   account: Account,
+  analytics:Analytics,
 } as const;
 
 type ComponentSlug = keyof typeof SLUG_TO_COMPONENT;

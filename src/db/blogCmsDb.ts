@@ -1,5 +1,8 @@
-export async function fetchBlog(slug: string = "blog-home", token?: string): Promise<any | null> {
+import useAdminToken from "@/hooks/token";
+
+export async function fetchBlog(slug: string = "blog-home",): Promise<any | null> {
   try {
+    const { adminAuthToken: token } = useAdminToken()
     // 1. Build the URL with the required slug query parameter
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
     if (!baseUrl) throw new Error("Missing NEXT_PUBLIC_APP_URL");

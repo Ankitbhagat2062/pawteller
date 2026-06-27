@@ -39,9 +39,6 @@ import {
   BarChart3,
   Globe,
 } from "lucide-react";
-// --------------------
-// Mock MongoDB-like document types
-// --------------------
 
 type Role = "Administrator" | "Editor";
 

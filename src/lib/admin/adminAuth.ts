@@ -26,17 +26,25 @@ export async function createAdminToken(payload: AdminTokenPayload) {
 }
 
 export async function verifyAdminToken(token: string) {
-  if (!token.startsWith(TOKEN_PREFIX)) {
+  // 1. Clean the token string if it includes "Bearer "
+  let cleanToken = token.trim();
+  if (cleanToken.startsWith("Bearer ")) {
+    cleanToken = cleanToken.substring(7).trim();
+  }
+
+  // 2. Now it will perfectly match "adminAuth."
+  if (!cleanToken.startsWith(TOKEN_PREFIX)) {
     return { ok: false as const, reason: "INVALID" };
   }
 
   const secret = process.env.ADMIN_JWT_SECRET;
   if (!secret) {
-    console.log('No Secret')
+    console.log('No Secret');
     return { ok: false as const, reason: "NO_SECRET" };
   }
 
-  const raw = token.slice(TOKEN_PREFIX.length);
+  // 3. Slice using the cleaned token string
+  const raw = cleanToken.slice(TOKEN_PREFIX.length);
 
   try {
     const { payload } = await jwtVerify(
@@ -45,10 +53,10 @@ export async function verifyAdminToken(token: string) {
       {
         algorithms: ["HS256"],
       },
-    ) 
+    );
 
     if (typeof payload.sub !== "string") {
-      console.log('Invalid Payload')
+      console.log('Invalid Payload');
       return { ok: false as const, reason: "INVALID_PAYLOAD" };
     }
 
@@ -59,9 +67,7 @@ export async function verifyAdminToken(token: string) {
         role: typeof payload.role === "string" ? payload.role : "admin",
       },
     };
-  } catch(err) {
-    // jwtVerify throws for malformed tokens, bad signature, and expiration
-    console.log(err)
+  } catch {
     return { ok: false as const, reason: "INVALID" };
   }
 }

@@ -1,14 +1,16 @@
 export async function fetchQuiz(quizId: string): Promise<any | null> {
   try {
     // 1. Build the URL with the required quizId query parameter
-    const url = `/api/admin/quiz/get?quizId=${encodeURIComponent(quizId)}`;
-
+     const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!baseUrl) throw new Error("Missing NEXT_PUBLIC_APP_URL");
+    const url = new URL("/api/admin/quiz/get", baseUrl);
+    url.searchParams.set("quizId", quizId);
     // 2. Set up headers, including the token if provided
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
 
-    const res = await fetch(url, {
+    const res = await fetch(url.toString(), {
       method: 'GET',
       headers,
       cache: 'no-store'

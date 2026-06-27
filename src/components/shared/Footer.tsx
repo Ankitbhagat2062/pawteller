@@ -45,6 +45,25 @@ export function Footer() {
               <Label htmlFor="email" className="sr-only">
                 {"Email address"}
               </Label>
+
+              {/* Honeypot (invisible to humans). Bots often fill it. */}
+              <input
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                className="sr-only"
+              />
+
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                placeholder="John Doe"
+                 tabIndex={-1}
+                 autoComplete="off"
+                className="h-12 hidden flex-1 rounded-full border border-border bg-background py-3 px-4 text-base text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:px-5"
+              />
               <input
                 id="email"
                 name="email"
@@ -95,7 +114,7 @@ export function Footer() {
               <Image
                 src="/logo.png"
                 alt="Pawteller logo"
-                className="h-8 w-8 rounded-full w-auto"
+                className="h-8 w-8 rounded-full"
                 width={200}
                 height={40}
               />

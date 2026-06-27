@@ -23,9 +23,8 @@ import { selectBacklinkCards } from "@/lib/selectBacklinkCards";
 import BlogCard from "../shared/BlogCard";
 import { fetchFaq } from "@/db/faqCmsDb";
 
-type DogAgeCalculatorProps = { token: string };
 
-const DogAgeCalculator = ({ token }: DogAgeCalculatorProps) => {
+const DogAgeCalculator = () => {
   const [dogAge, setDogAge] = useState<number>(10);
   const [dogSize, setDogSize] = useState<
     "small" | "medium" | "large" | "giant"

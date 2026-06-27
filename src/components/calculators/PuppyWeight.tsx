@@ -452,7 +452,7 @@ function GrowthChart({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function PuppyWeight({ token }: { token: string }) {
+export default function PuppyWeight() {
   // Form state
   const [selectedBreed, setSelectedBreed] = useState("Golden Retriever");
   const [ageValue, setAgeValue] = useState("3");
@@ -479,7 +479,7 @@ export default function PuppyWeight({ token }: { token: string }) {
 
     void (async () => {
       const faqData = await fetchFaq("puppy-weight");
-      const specificBlog = await fetchBlog("how-to-train-your-dog", token);
+      const specificBlog = await fetchBlog("how-to-train-your-dog");
 
       if (!isCurrent) return;
 
@@ -497,7 +497,7 @@ export default function PuppyWeight({ token }: { token: string }) {
     return () => {
       isCurrent = false;
     };
-  }, [token]);
+  }, []);
   const handleCalculate = () => {
     const ageMonths =
       ageUnit === "weeks" ? parseFloat(ageValue) / 4.33 : parseFloat(ageValue);

@@ -6,21 +6,18 @@ import BacklinkCalculatorCard from "./BacklinkCalculatorCard";
 import { backlinks } from "@/lib/cms/calculators/calculatorpage";
 import { blogPosts } from "@/lib/cms/blogpage";
 import fetchBlog from "@/db/blogCmsDb";
-import useAdminToken from "@/hooks/token";
 import { FAQItem } from "@/lib/types";
 
 export function FaqBlogBacklink({ page, category, faqSection }: { page: String, category: String, faqSection: FAQItem[] }) {
     // Fetch the FAQ array for this specific page layout string
     const [faqItems, setFaqItems] = useState(faqSection);
     const [blogs, setBlogs] = useState(blogPosts);
-    const { adminAuthToken } = useAdminToken();
     useEffect(() => {
         let isCurrent = true;
-        const token = adminAuthToken ?? '';
 
         void (async () => {
             const faqData = await fetchFaq(`${page}`);
-            const specificBlog = await fetchBlog("how-to-train-your-dog", token);
+            const specificBlog = await fetchBlog("how-to-train-your-dog");
 
             if (!isCurrent) return;
             setFaqItems(Array.isArray(faqData?.items) ? faqData.items : faqSection);
@@ -35,7 +32,7 @@ export function FaqBlogBacklink({ page, category, faqSection }: { page: String, 
         return () => {
             isCurrent = false;
         };
-    }, [adminAuthToken, page, category, faqSection]);
+    }, [page, category, faqSection]);
     return (
         <>
             {/* Backlinks || Other Calculators and services */}

@@ -57,24 +57,31 @@ export async function POST(request: Request) {
     }
 
     // Save the contact message to the database
+    // Save the contact message to the database
     const contact = new ContactModel({ name, email, topic, message });
     await contact.save();
 
-    // Resend requires a valid email format: email@example.com or Name <email@example.com>
     const trimmed = fromMail.trim();
-    const from = trimmed.includes("<")
-      ? trimmed
-      : trimmed.includes("@")
-        ? `Pawteller <${trimmed}>`
-        : `Pawteller <contact@${trimmed.replace(`@`, "")}>`;
+    let fromAddress = "";
 
+    if (trimmed.startsWith("@")) {
+      // Fixes '@pawteller.com' by prefixing a standard mailbox name
+      fromAddress = `Pawteller <contact${trimmed}>`;
+    } else if (trimmed.includes("<") && trimmed.includes(">")) {
+      fromAddress = trimmed;
+    } else if (trimmed.includes("@")) {
+      fromAddress = `Pawteller <${trimmed}>`;
+    } else {
+      fromAddress = `Pawteller <noreply@${trimmed}>`;
+    }
+
+    // Now Resend receives a perfectly formatted string like: "Pawteller <contact@pawteller.com>"
     const data = await resend.emails.send({
-      from,
-      to: email, // Where YOU want to receive the messages
+      from: fromAddress,
+      to: email,
       subject: `New Contact Form Submission from ${name}`,
-      react: ContactThankYouEmail({ name }), // Use the React email template for the email body
+      react: ContactThankYouEmail({ name }),
     });
-
     if (
       data.error &&
       typeof data.error === "object" &&
