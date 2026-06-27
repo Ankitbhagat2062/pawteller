@@ -23,7 +23,7 @@ function normalizeGmailLocalPart(email: string): string {
   if (!GMAIL_DOMAINS.has(domain)) return email;
 
   // Strip dots only for DB normalization matching
-  const local = rawLocal.replaceAll(".", "");
+  const local = rawLocal.split("+")[0].replaceAll(".", "");
   return `${local}@${domain}`;
 }
 
@@ -34,9 +34,8 @@ export function normalizeSubscriberEmail(email: string): string {
 }
 
 export const subscriberEmailSchema = z
-  .string()
   .email()
-  .superRefine((value, ctx) => {
+  .superRefine((value: string, ctx: z.RefinementCtx) => {
     const trimmed = value.trim();
     const [local, domain] = trimmed.split("@");
     if (!local || !domain) {

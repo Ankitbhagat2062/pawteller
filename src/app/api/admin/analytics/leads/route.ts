@@ -102,6 +102,12 @@ export async function GET(request: Request) {
       { status: 401 }
     );
   }
+  const normalizeEmail = (value: unknown) => {
+    if (typeof value !== "string") return null;
+    const email = value.trim().toLowerCase();
+    return z.string().email().safeParse(email).success ? email : null;
+  };
+
 
   // Proceed with your MongoDB aggregation logic safely...
   try {
@@ -126,8 +132,9 @@ export async function GET(request: Request) {
 
     const subscriberByEmail = new Map<string, { isVerified: boolean; createdAt?: Date }>();
     for (const s of subscribers) {
-      if (!s?.email) continue;
-      subscriberByEmail.set(s.email.toLowerCase(), {
+      const email = normalizeEmail(s?.email);
+      if (!email) continue;
+      subscriberByEmail.set(email, {
         isVerified: !!s.isVerified,
         createdAt: s.createdAt ? new Date(s.createdAt) : undefined,
       });

@@ -58,10 +58,10 @@ export function Footer() {
               <input
                 id="firstName"
                 name="firstName"
-                type="email"
+                type="text"
                 placeholder="John Doe"
-                required
-                disabled={isPending}
+                 tabIndex={-1}
+                 autoComplete="off"
                 className="h-12 hidden flex-1 rounded-full border border-border bg-background py-3 px-4 text-base text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:px-5"
               />
               <input
